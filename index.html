@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>李玉涛 · 个人技术主页</title>
+<style>
+  :root{
+    --bg:#f6f8fb; --card:#ffffff; --ink:#1f2937; --sub:#6b7280;
+    --line:#e5e7eb; --brand:#2563eb; --brand2:#0ea5e9; --tag:#eef2ff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.7;}
+  .wrap{max-width:880px;margin:0 auto;padding:28px 20px 60px;}
+  header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;
+    border-radius:18px;padding:34px 30px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+  header.hero h1{font-size:30px;letter-spacing:1px;}
+  header.hero .role{margin-top:8px;opacity:.95;font-size:15px;}
+  header.hero .meta{margin-top:14px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:8px 16px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:22px 24px;margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .card h2{font-size:18px;margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+  .card h2::before{content:"";width:4px;height:18px;background:var(--brand);border-radius:3px;}
+  .about p{color:var(--sub);font-size:15px;}
+  .tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+  .tag{background:var(--tag);color:#374151;padding:6px 14px;border-radius:999px;font-size:13px;font-weight:500;}
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .proj{border:1px solid var(--line);border-radius:12px;padding:16px;background:#fcfdff;}
+  .proj h3{font-size:15px;color:var(--brand);}
+  .proj .kind{font-size:12px;color:var(--sub);margin:4px 0 8px;}
+  .proj p{font-size:13.5px;color:#4b5563;}
+  .contact a{color:var(--brand);text-decoration:none;font-weight:500;}
+  .contact a:hover{text-decoration:underline;}
+  .contact li{list-style:none;padding:6px 0;font-size:15px;border-bottom:1px dashed var(--line);}
+  .contact li:last-child{border-bottom:none;}
+  footer{margin-top:30px;text-align:center;color:var(--sub);font-size:13px;}
+  /* 备案号占位：备案通过后取消注释并填入粤ICP备XXXXXXXX号 */
+  footer .beian{display:none;}
+  @media(max-width:640px){.projects{grid-template-columns:1fr;}header.hero h1{font-size:24px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>李玉涛（Leo）</h1>
+    <div class="role">数据科学与大数据技术 · 理学学士 + 数学双学位 · 在校学生</div>
+    <div class="meta">
+      <span>📍 常驻东莞</span>
+      <span>💻 Java 后端 / AI 应用方向</span>
+      <span>🎓 2027 届</span>
+    </div>
+  </header>
+
+  <section class="card about">
+    <h2>关于我</h2>
+    <p>我是李玉涛，一名在校大学生，平时折腾 Java 后端开发、AI 应用（RAG / Agent）与数据分析，喜欢把学过的技术做成小项目练手。本页记录我的学习与实践作品，欢迎交流。</p>
+  </section>
+
+  <section class="card">
+    <h2>技能方向</h2>
+    <div class="tags">
+      <span class="tag">Java / Spring Boot</span>
+      <span class="tag">Python</span>
+      <span class="tag">数据分析</span>
+      <span class="tag">SQL</span>
+      <span class="tag">AI 应用（RAG / Agent）</span>
+      <span class="tag">机器学习基础</span>
+      <span class="tag">前端基础</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>实践项目</h2>
+    <div class="projects">
+      <div class="proj">
+        <h3>SmartClass 智学在线</h3>
+        <div class="kind">课程实践项目</div>
+        <p>面向 K12 的学情分析与在线学习小系统，含学习数据记录与练习模块。</p>
+      </div>
+      <div class="proj">
+        <h3>OrderBoss 订单聚合</h3>
+        <div class="kind">后端练习项目</div>
+        <p>基于 Spring Boot 3 的订单聚合练习系统，用于巩固 Java Web 与数据库开发。</p>
+      </div>
+      <div class="proj">
+        <h3>燎原火 AI 学习平台</h3>
+        <div class="kind">个人 AI 实践</div>
+        <p>本地 + 云端大模型搭建的 AI 助手练习项目，探索 RAG 与 Agent 应用。</p>
+      </div>
+      <div class="proj">
+        <h3>更多作品</h3>
+        <div class="kind">持续更新</div>
+        <p>后续练习项目会逐步补充到本页，作为个人技术成长的记录。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="card contact">
+    <h2>联系我</h2>
+    <ul>
+      <li>GitHub：<a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">github.com/Leo-Li638</a></li>
+      <li>邮箱：<a href="mailto:you@example.com">you@example.com</a>（请替换为你的邮箱）</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div>© 2026 李玉涛 · 个人技术主页</div>
+    <!-- 备案通过后：将下方 .beian 的 display 改为 block，并填入备案号、链接工信部 -->
+    <div class="beian">
+      <a href="https://beian.miit.gov.cn" target="_blank" rel="noopener">粤ICP备XXXXXXXX号</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
