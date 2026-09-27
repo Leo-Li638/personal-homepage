@@ -223,7 +223,28 @@
   .splash-skip{display:inline-block;margin-top:16px;font-size:13px;color:#9fb6cc;text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.2s both;}
   .splash-skip:hover{color:#fff;text-decoration:underline;}
   /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」立绘版：待机漂浮+拍拍反应+抛掷物理，可拖拽） */
-  .splash-npc{position:relative;width:190px;margin:0 auto 10px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;}
+  .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;perspective:750px;}
+  .npc-stage{position:relative;transform-style:preserve-3d;}
+  .npc-backlight{position:absolute;inset:0;transform:translateZ(-46px) scale(1.06);filter:blur(15px) saturate(1.75) brightness(1.3);opacity:.5;pointer-events:none;}
+  .npc-backlight img{width:100%;height:auto;display:block;}
+  #sp-npc-img{position:relative;z-index:2;}
+  .npc-orb{position:absolute;left:50%;top:44%;width:7px;height:7px;margin:-3px;border-radius:50%;pointer-events:none;z-index:3;
+    background:radial-gradient(circle,#fff,#8fd0ff 70%);box-shadow:0 0 12px 3px rgba(140,200,255,.85);
+    animation:npc-orbit 3.4s linear infinite;transform:translateZ(26px);}
+  .npc-orb.o2{width:5px;height:5px;margin:-2px;animation-duration:4.8s;animation-delay:-2.2s;
+    background:radial-gradient(circle,#fff,#ffe9a8 70%);box-shadow:0 0 10px 2px rgba(255,230,160,.8);}
+  @keyframes npc-orbit{from{transform:rotate(0deg) translateX(80px) translateZ(26px)}to{transform:rotate(360deg) translateX(80px) translateZ(26px)}}
+  .npc-podium{position:relative;height:24px;margin-top:-4px;pointer-events:none;perspective:320px;}
+  .npc-podium i{position:absolute;left:50%;top:6px;width:148px;height:36px;margin-left:-74px;border-radius:50%;
+    background:radial-gradient(ellipse at center,rgba(125,192,255,.5),rgba(80,140,220,.14) 55%,transparent 74%);
+    transform:rotateX(63deg);}
+  .npc-podium i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px dashed rgba(160,210,255,.55);
+    animation:podium-spin 9s linear infinite;}
+  @keyframes podium-spin{to{transform:rotate(360deg)}}
+  .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
+  .npc-mirror img{width:100%;height:auto;display:block;transform:scaleY(-1);filter:blur(1.5px) saturate(1.25) brightness(1.05);}
   .splash-npc.grab{cursor:grabbing;}
   .splash-npc img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(10,25,50,.45));animation:npc-idle 3.6s ease-in-out infinite;will-change:transform;}
   .splash-npc.grab img,.splash-npc.air img{animation:none;}
@@ -302,7 +323,14 @@
   <div class="splash-veil"></div>
   <div class="splash-inner">
     <div class="splash-npc" id="sp-npc">
-      <img id="sp-npc-img" src="assets/npc_maid.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
+      <div class="npc-stage" id="sp-npc-stage">
+        <div class="npc-backlight" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
+        <img id="sp-npc-img" src="assets/npc_maid.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
+        <div class="npc-orb" aria-hidden="true"></div>
+        <div class="npc-orb o2" aria-hidden="true"></div>
+      </div>
+      <div class="npc-podium" aria-hidden="true"><i></i></div>
+      <div class="npc-mirror" id="sp-npc-mirror" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
       <div class="npc-talk" id="sp-npc-talk" aria-live="polite"></div>
       <div class="splash-npc-name" id="sp-npc-name"></div>
     </div>
@@ -465,7 +493,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～要看看 Leo 的项目吗？"],pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～","这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨"}}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨"}}
   },
   en: {
     htmlLang:"en",
@@ -593,7 +621,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!","GitHub: Leo-Li638 — find it in Contact!"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨"}}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨"}}
   }
 };
 
@@ -833,9 +861,63 @@ function renderContent(t){
   // NPC 立绘交互引擎：拍拍反应 / 拖拽 / 抛掷物理（大肥鱼 · 鲸鱼娘）
   const npcEl=document.getElementById('sp-npc');
   if(npcEl){
-    const npcImg=document.getElementById('sp-npc-img'), talkEl=document.getElementById('sp-npc-talk');
+    const npcImg=document.getElementById('sp-npc-img'), talkEl=document.getElementById('sp-npc-talk'),
+          stageEl=document.getElementById('sp-npc-stage'), mirrorEl=document.getElementById('sp-npc-mirror');
+
+    /* ---- 自主持续学习引擎：ε-greedy 多臂老虎机 + 访客记忆（localStorage 跨会话持久化） ---- */
+    const brain=(function(){
+      let d; try{ d=JSON.parse(localStorage.getItem('npc_brain'))||{}; }catch(e){ d={}; }
+      if(!d||typeof d!=='object') d={};
+      d.arms=d.arms||{}; d.clicks=d.clicks||{}; d.pats=d.pats||0; d.visits=d.visits||0;
+      const now=Date.now();
+      if(!d.lastVisit||now-d.lastVisit>1800000) d.visits++;   // 间隔30分钟以上算新会话
+      d.lastVisit=now;
+      function save(){ try{ localStorage.setItem('npc_brain',JSON.stringify(d)); }catch(err){} }
+      function bump(arm,r){ const a=d.arms[arm]=d.arms[arm]||{w:0,n:0}; a.n+=1; a.w+=r; save(); }
+      function best(prefix){ let bk=null,bs=-1;
+        for(const k in d.arms){ if(k.indexOf(prefix)!==0)continue;
+          const a=d.arms[k], s=(a.w+1)/(a.n+2); if(s>bs){bs=s;bk=k;} }
+        return bk; }
+      save();
+      return { d:d, save:save, bump:bump, best:best };
+    })();
+    const INFO_ARMS=['info:proj','info:gh','info:whale'];
+    let lastArm=null,lastArmT=0,armPending=false;
+    function pickInfo(){
+      let arm;
+      if(Math.random()<0.12) arm=INFO_ARMS[Math.floor(Math.random()*3)];        // 12% 探索
+      else arm=brain.best('info:')||'info:proj';                                 // 88% 利用
+      const t=L(), fav=Object.keys(brain.d.clicks).sort(function(a,b){return brain.d.clicks[b]-brain.d.clicks[a];})[0];
+      let msg;
+      if(arm==='info:proj'){ msg=(fav&&t.infoFav)?t.infoFav.replace('{p}',fav):pick(t.infoProj)||pick(t.info)||''; }
+      else if(arm==='info:gh'){ msg=pick(t.infoGh)||pick(t.info)||''; }
+      else{ msg=pick(t.infoWhale)||pick(t.info)||''; }
+      lastArm=arm; lastArmT=performance.now(); armPending=true;
+      return msg;
+    }
+    function brainReport(){
+      const en=getLang()==='en', a=brain.d.arms;
+      const bk=brain.best('info:');
+      const names={'info:proj':en?'project tours':'项目介绍','info:gh':en?'GitHub guides':'GitHub 引导','info:whale':en?'whale stories':'鲸鱼故事'};
+      if(bk&&(a[bk]||{}).n>1){ const pct=Math.round((a[bk].w+1)/(a[bk].n+2)*100);
+        return en?'Learning report: turns out you like '+names[bk]+' (preference '+pct+'%). I evolve between visits ✨'
+                 :'学习汇报：我发现你最爱「'+names[bk]+'」（偏好度 '+pct+'%），每次见面我都在进化哦 ✨'; }
+      return en?'Learning report: visit #'+brain.d.visits+', '+brain.d.pats+' pats collected. I remember everything ✨'
+               :'学习汇报：这是你我第 '+brain.d.visits+' 次见面，累计被拍 '+brain.d.pats+' 次，我都记着呢 ✨';
+    }
+    (function chatter(){ setTimeout(function(){          // 自主搭话：说学到的最优话题
+      if(document.visibilityState==='visible'&&!talkEl.classList.contains('show')&&state==='idle'){
+        const m=pickInfo(); if(m)talk(m,4200);
+      }
+      chatter(); },34000+Math.random()*22000); })();
+    document.addEventListener('click',function(e){       // 项目偏好追踪
+      const c=e.target&&e.target.closest&&e.target.closest('.proj'); if(!c)return;
+      const cov=c.querySelector('.proj-cover');
+      const key=(((cov?cov.textContent:c.textContent)||'').replace(/^[^\u4e00-\u9fa5A-Za-z0-9]+/,'').trim().slice(0,22))||'project';
+      brain.d.clicks[key]=(brain.d.clicks[key]||0)+1; brain.save();
+    },{passive:true});
     let W=innerWidth,H=innerHeight,x=0,y=0,vx=0,vy=0,state='idle',engine=false;
-    let rot=0,rotTarget=0,landT=-1,patT=-1,lastT=performance.now();
+    let rot=0,rotTarget=0,stTurn=0,stCur=0,landT=-1,patT=-1,lastT=performance.now();
     let gox=0,goy=0,dnX=0,dnY=0,dnT=0,moved=0,vel={x:0,y:0},lpx=0,lpy=0,lpt=0;
     let talkTimer=null,patCount=0; try{patCount=+localStorage.getItem('npc_pats')||0;}catch(e){}
     const FLY=['💙','🐋','✨','🩵','💫'];
@@ -857,8 +939,15 @@ function renderContent(t){
         document.body.appendChild(s);
         s.addEventListener('animationend',function(){this.remove();}); } }
     function pat(){ patCount++; try{localStorage.setItem('npc_pats',patCount);}catch(e){}
-      const t=L(); vy=-330; state='air'; npcEl.classList.add('air'); patT=performance.now();
-      if(patCount%10===0){talk(t.egg,4200);hearts(8);}else{talk(pick(t.pat),2600);hearts(4);} }
+      brain.d.pats++;
+      const now=performance.now();
+      if(lastArm&&armPending){ brain.bump(lastArm, now-lastArmT<7000?1:-0.25); armPending=false; } // 台词吸引力反馈
+      brain.save();
+      const t=L(); vy=-330; state='air'; npcEl.classList.add('air'); patT=now;
+      if(patCount%10===0){talk(t.egg,4200);hearts(8);}
+      else if(patCount%15===0){talk(brainReport(),5400);hearts(6);}
+      else if(patCount===5){talk(pickInfo(),4400);hearts(5);}
+      else{talk(pick(t.pat),2600);hearts(4);} }
     npcEl.addEventListener('pointerdown',function(e){
       e.preventDefault();
       if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
@@ -892,6 +981,10 @@ function renderContent(t){
       talk(L().spin,2200); hearts(5);
       npcImg.addEventListener('animationend',function h(){npcImg.classList.remove('spin');npcImg.removeEventListener('animationend',h);}); });
     addEventListener('resize',function(){ W=innerWidth; H=innerHeight; });
+    // 舞台待机转身：NPC 随鼠标位置 3D rotateY（仅未领养态；领养后由物理引擎接管）
+    addEventListener('mousemove',function(e){ if(engine||!stageEl)return;
+      const r=stageEl.getBoundingClientRect(); if(!r.width)return;
+      stTurn=Math.max(-24,Math.min(24,(e.clientX-(r.left+r.width/2))/(r.width*2)*40)); },{passive:true});
     // 进主站时收编 NPC 为全站伴宠（放到右下角地面）
     addEventListener('npc:adopt',function(){
       if(npcEl.parentNode===document.body)return;
@@ -904,8 +997,8 @@ function renderContent(t){
     });
     (function frame(t){
       const dt=Math.min(.032,(t-lastT)/1000)||.016; lastT=t;
+      const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
       if(engine){
-        const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
         if(state==='air'){ vy+=2500*dt; x+=vx*dt; y+=vy*dt;
           if(x<4){x=4;vx=Math.abs(vx)*.5;}
           if(x>W-w-4){x=W-w-4;vx=-Math.abs(vx)*.5;}
@@ -920,11 +1013,20 @@ function renderContent(t){
         p=(t-landT)/320; if(p>=0&&p<1){ const k=1-p; sy=1-.18*k*k; sx=1+.14*k*k; }
         p=(t-patT)/300; if(p>=0&&p<1){ const k=1-p; sy=1+.1*k; sx=1-.08*k; }
         npcEl.style.transform='translate3d('+x+'px,'+y+'px,0) rotate('+rot.toFixed(2)+'deg) scale('+sx.toFixed(3)+','+sy.toFixed(3)+')';
+        const airH=Math.max(0,groundY-y);
+        if(mirrorEl) mirrorEl.style.opacity=Math.max(.08,.3-airH/2600).toFixed(2);
         if(talkEl.classList.contains('show'))placeTalk();
       }
+      if(stageEl){ let lean;
+        if(state==='grab'||state==='air') lean=Math.max(-26,Math.min(26,(state==='grab'?vel.x:vx)*0.02));
+        else if(engine) lean=0;
+        else { stCur+=(stTurn-stCur)*.08; lean=stCur; }
+        stageEl.style.transform='rotateX('+(-3-Math.abs(lean)*0.1).toFixed(1)+'deg) rotateY('+lean.toFixed(1)+'deg)'; }
       requestAnimationFrame(frame);
     })(performance.now());
-    setTimeout(function(){ const t=L(); if(t.hi)talk(pick(t.hi),4600); },1200);
+    setTimeout(function(){ const t=L();
+      let line=(brain.d.visits>1&&t.hiBack)?t.hiBack.replace('{n}',brain.d.visits):pick(t.hi);
+      if(line)talk(line,4600); },1200);
   }
 })();
 </script>
