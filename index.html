@@ -28,7 +28,11 @@
   /* ===== 虚化蒙德风固定背景 ===== */
   .bg{position:fixed;inset:0;z-index:-2;
     background:#d7e6ef url(assets/mondstadt-hero.jpg) center/cover no-repeat;
-    filter:blur(7px) saturate(1.06);transform:scale(1.08);}
+    filter:blur(3px) saturate(1.12);transform:scale(1.1);
+    animation:kenburns 40s ease-in-out infinite alternate;}
+  @keyframes kenburns{0%{transform:scale(1.08) translate(0,0)}100%{transform:scale(1.16) translate(-1.5%,-1.5%)}}
+  .bg::after{content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(247,250,245,.42),rgba(228,240,235,.58));}
   @media(max-width:640px){.bg{background-image:url(assets/mondstadt-hero-small.jpg);}}
   .bg::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(247,250,245,.70),rgba(228,240,235,.82));}
@@ -98,8 +102,12 @@
   /* ===== 项目 ===== */
   .projects{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   .proj{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(251,253,249,.78);
-    transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column;text-decoration:none;}
+    transition:transform .18s,box-shadow .18s;display:flex;flex-direction:column;text-decoration:none;position:relative;}
   .proj:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(61,127,181,.14);}
+  .proj::after{content:"";position:absolute;top:0;left:-60%;width:55%;height:100%;pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);transform:skewX(-18deg);}
+  .proj:hover::after{animation:shine .9s ease;}
+  @keyframes shine{to{left:130%;}}
   .proj-cover{height:62px;display:flex;align-items:center;gap:10px;padding:0 16px;color:#fff;
     font-size:15px;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.25);}
   .proj-cover .pico{font-size:24px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3));}
@@ -169,6 +177,10 @@
     opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;}
   #backtop.show{opacity:1;pointer-events:auto;}
   #backtop:hover{transform:translateY(-3px);}
+  /* ===== 顶部阅读进度条 ===== */
+  #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:70;
+    background:linear-gradient(90deg,var(--sky),var(--sky2),var(--grass),var(--gold));
+    box-shadow:0 1px 8px rgba(61,127,181,.45);transition:width .12s linear;}
   @media(max-width:900px){
     .layout{display:block;}
     .sidebar{position:fixed;top:0;left:0;right:0;width:100%;height:auto;flex-direction:row;align-items:center;
@@ -239,6 +251,7 @@
 </head>
 <body>
 <div class="bg"></div>
+<div id="progress"></div>
 <div class="layout">
 
   <!-- 左侧固定信息栏 -->
@@ -283,10 +296,10 @@
 
     <section class="stats reveal" id="stats">
       <div class="grid">
-        <div class="stat"><b>178+</b><i>条 AI 引擎采样样本</i></div>
-        <div class="stat"><b>8</b><i>大 AI 平台实测覆盖</i></div>
-        <div class="stat g"><b>3</b><i>个开源实践项目</i></div>
-        <div class="stat g"><b>90+</b><i>道探针题库（8 个题型组）</i></div>
+        <div class="stat"><b><span class="cnt" data-to="178" data-suffix="+">0</span></b><i>条 AI 引擎采样样本</i></div>
+        <div class="stat"><b><span class="cnt" data-to="8" data-suffix="">0</span></b><i>大 AI 平台实测覆盖</i></div>
+        <div class="stat g"><b><span class="cnt" data-to="3" data-suffix="">0</span></b><i>个开源实践项目</i></div>
+        <div class="stat g"><b><span class="cnt" data-to="90" data-suffix="+">0</span></b><i>道探针题库（8 个题型组）</i></div>
         <div class="stat y"><b>国三 + S 奖</b><i>数学竞赛与美赛获奖</i></div>
         <div class="stat y"><b>前 10%</b><i>专业绩点排名</i></div>
       </div>
@@ -681,16 +694,36 @@
     typedEl.textContent = line.slice(0, ci);
     setTimeout(tick, del ? 28 : 95);
   })();
-  /* 滚动淡入 */
+  /* 滚动淡入 + 数字滚动计数 */
+  function animateCount(el){
+    var to = +el.getAttribute('data-to'), suf = el.getAttribute('data-suffix') || '';
+    var dur = 1200, st = null;
+    function step(ts){ if(!st) st = ts; var p = Math.min((ts-st)/dur,1); var e = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(e*to)+suf; if(p<1) requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  }
   var reveals = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+      es.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('on');
+          e.target.querySelectorAll('.cnt').forEach(animateCount);
+          io.unobserve(e.target);
+        }
+      });
     }, { threshold: 0.08 });
     reveals.forEach(function (el) { io.observe(el); });
   } else {
-    reveals.forEach(function (el) { el.classList.add('on'); });
+    reveals.forEach(function (el) { el.classList.add('on'); el.querySelectorAll('.cnt').forEach(animateCount); });
   }
+  /* 顶部阅读进度条 */
+  var prog = document.getElementById('progress');
+  window.addEventListener('scroll', function () {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    prog.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }, { passive: true });
   /* 侧边导航 scrollspy */
   var navLinks = Array.prototype.slice.call(document.querySelectorAll('.sbnav a[href^="#"]'));
   var secMap = {};
