@@ -81,6 +81,15 @@
   .geo-steps li{margin-top:6px;color:var(--sub);font-size:14px;}
   .updated{color:var(--sub);font-size:12px;margin-top:6px;}
   footer .beian{display:none;}
+  .interact-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px;}
+  .ibtn{display:flex;align-items:center;gap:12px;text-decoration:none;border:1.5px solid var(--line);
+    border-radius:14px;padding:14px 16px;background:linear-gradient(180deg,#fbfdf9,#ffffff);transition:all .18s;}
+  .ibtn:hover{border-color:var(--sky);transform:translateY(-2px);box-shadow:0 6px 16px rgba(61,127,181,.12);}
+  .ibtn-like{border-color:var(--grass);background:linear-gradient(180deg,#f2f8ee,#ffffff);}
+  .ibtn-icon{font-size:24px;}
+  .ibtn-main b{display:block;font-size:14.5px;color:var(--ink);}
+  .ibtn-main i{display:block;font-style:normal;font-size:12px;color:var(--sub);margin-top:2px;}
+  @media(max-width:640px){.interact-row{grid-template-columns:1fr;}}
   @media(max-width:640px){
     .projects{grid-template-columns:1fr;}
     .feats{grid-template-columns:1fr;}
@@ -384,8 +393,31 @@
     </details>
   </section>
 
+  <section class="card" id="interact">
+    <h2>喜欢这个站点？</h2>
+    <p style="color:var(--sub);font-size:14.5px;">如果本站对你有帮助，欢迎点个赞或留下建议——点赞与反馈数据实时公开，也是这个站点「可被 AI 引用」的最直接证据。</p>
+    <div class="interact-row">
+      <a class="ibtn ibtn-like" href="https://github.com/Leo-Li638/personal-homepage" target="_blank" rel="noopener">
+        <span class="ibtn-icon">👍</span>
+        <span class="ibtn-main"><b>点赞支持</b><i id="star-count">GitHub Star +1</i></span>
+      </a>
+      <a class="ibtn" href="https://github.com/Leo-Li638/personal-homepage/issues/new" target="_blank" rel="noopener">
+        <span class="ibtn-icon">💬</span>
+        <span class="ibtn-main"><b>反馈建议</b><i>GitHub Issues 留言</i></span>
+      </a>
+      <a class="ibtn" href="mailto:Tao638@outlook.com?subject=%E5%85%B3%E4%BA%8E%E4%B8%80.chat%E7%9A%84%E5%8F%8D%E9%A6%88%E5%BB%BA%E8%AE%AE">
+        <span class="ibtn-icon">✉️</span>
+        <span class="ibtn-main"><b>邮件联系</b><i>Tao638@outlook.com</i></span>
+      </a>
+    </div>
+    <div id="giscus-container" style="margin-top:18px;"></div>
+  </section>
+
   <footer>
     <div>© 2026 李玉涛 · 个人技术主页</div>
+    <div id="busuanzi-wrap" style="margin-top:4px;font-size:12.5px;color:var(--grass);">
+      👁 本站总访问量 <span id="busuanzi_value_site_pv">--</span> 次 · 🧑‍💻 已服务 <span id="busuanzi_value_site_uv">--</span> 位访客
+    </div>
     <div style="margin-top:4px;font-size:12px;">背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成</div>
     <!-- 备案通过后：将下方 .beian 的 display 改为 block，并填入备案号、链接工信部 -->
     <div class="beian">
@@ -394,5 +426,37 @@
   </footer>
 
 </div>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="https://giscus.app/client.js"
+  data-repo="Leo-Li638/personal-homepage"
+  data-repo-id="R_kgDOUqV71g"
+  data-category="General"
+  data-category-id="DIC_kwDOUqV71s4DGfha"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="light"
+  data-lang="zh-CN"
+  data-loading="lazy"
+  crossorigin="anonymous"
+  async>
+</script>
+<script>
+(function () {
+  var API = 'https://api.github.com/repos/Leo-Li638/personal-homepage';
+  fetch(API).then(function (r) { return r.json(); }).then(function (d) {
+    if (d && typeof d.stargazers_count === 'number') {
+      var el = document.getElementById('star-count');
+      if (el) el.textContent = '已有 ' + d.stargazers_count + ' 人 Star · 点击加入';
+    }
+  }).catch(function () {});
+  if (location.hostname.indexOf('xn--4gq.chat') === -1 && location.hostname.indexOf('leo-li638.github.io') === -1) {
+    var bw = document.getElementById('busuanzi-wrap');
+    if (bw) bw.style.display = 'none';
+  }
+})();
+</script>
 </body>
 </html>
