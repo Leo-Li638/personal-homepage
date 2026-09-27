@@ -222,6 +222,18 @@
   .splash-enter:hover{background:rgba(109,179,220,.22);border-color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,127,181,.4);}
   .splash-skip{display:inline-block;margin-top:16px;font-size:13px;color:#9fb6cc;text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.2s both;}
   .splash-skip:hover{color:#fff;text-decoration:underline;}
+  /* 前置页 NPC（原创 AI 向导「小一」，合法原创，无 IP） */
+  .splash-npc{position:relative;width:138px;margin:0 auto 14px;animation:sp-float 4.5s ease-in-out infinite;}
+  @keyframes sp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  .splash-npc svg{display:block;width:100%;height:auto;overflow:visible;}
+  .splash-npc-name{margin-top:4px;font-size:13px;letter-spacing:.18em;color:#cfe6f7;opacity:0;animation:sp-fade 1s ease .4s both;}
+  .npc-eye{transform-box:fill-box;transform-origin:center;animation:npc-blink 4.2s infinite;}
+  @keyframes npc-blink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.12)}}
+  .npc-arm{transform-box:fill-box;transform-origin:top center;animation:npc-wave 3.4s ease-in-out infinite;}
+  @keyframes npc-wave{0%,58%,100%{transform:rotate(0)}70%{transform:rotate(-24deg)}82%{transform:rotate(-8deg)}}
+  .npc-dot{animation:npc-dot 1.4s infinite;}
+  .npc-dot.b{animation-delay:.2s}.npc-dot.c{animation-delay:.4s}
+  @keyframes npc-dot{0%,60%,100%{opacity:.25;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
   @media(prefers-reduced-motion:reduce){#splash *{animation:none!important;}}
 </style>
 <script type="application/ld+json">
@@ -280,6 +292,56 @@
   <div class="splash-bg"></div>
   <div class="splash-veil"></div>
   <div class="splash-inner">
+    <div class="splash-npc" id="sp-npc">
+      <svg viewBox="0 0 160 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="一.chat AI 向导 小一">
+        <defs>
+          <linearGradient id="npcHair" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8fe0ec"/><stop offset="1" stop-color="#3fa9cf"/>
+          </linearGradient>
+          <linearGradient id="npcShirt" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6db3dc"/><stop offset="1" stop-color="#3d7fb5"/>
+          </linearGradient>
+        </defs>
+        <!-- 头顶聊天气泡（品牌 motif：聊） -->
+        <g transform="translate(94,4)">
+          <rect x="0" y="0" width="58" height="34" rx="12" fill="#ffffff" opacity=".92"/>
+          <path d="M14 33 l0 12 l15 -12 z" fill="#ffffff" opacity=".92"/>
+          <circle class="npc-dot" cx="16" cy="17" r="4" fill="#3d7fb5"/>
+          <circle class="npc-dot b" cx="29" cy="17" r="4" fill="#3d7fb5"/>
+          <circle class="npc-dot c" cx="42" cy="17" r="4" fill="#3d7fb5"/>
+        </g>
+        <!-- 身体 -->
+        <path d="M52 108 q28 -14 56 0 l-4 46 q-24 10 -48 0 z" fill="url(#npcShirt)"/>
+        <!-- 左臂 -->
+        <rect x="44" y="112" width="14" height="34" rx="7" fill="url(#npcShirt)"/>
+        <!-- 右臂（挥手） -->
+        <g class="npc-arm">
+          <rect x="102" y="100" width="14" height="34" rx="7" fill="url(#npcShirt)"/>
+          <circle cx="109" cy="100" r="8" fill="#ffe0c8"/>
+        </g>
+        <!-- 头 -->
+        <circle cx="80" cy="74" r="33" fill="#ffe0c8"/>
+        <!-- 后发 -->
+        <path d="M47 74 a33 33 0 0 1 66 0 q0 -42 -33 -44 q-33 2 -33 44 z" fill="url(#npcHair)"/>
+        <!-- 刘海 -->
+        <path d="M50 70 q4 -26 30 -28 q26 2 30 28 q-14 -12 -30 -10 q-16 -2 -30 10 z" fill="url(#npcHair)"/>
+        <!-- 眼睛（眨眼） -->
+        <g class="npc-eye">
+          <ellipse cx="68" cy="76" rx="5.5" ry="7" fill="#ffffff"/>
+          <ellipse cx="92" cy="76" rx="5.5" ry="7" fill="#ffffff"/>
+          <circle cx="69" cy="77" r="3.4" fill="#2b3a4a"/>
+          <circle cx="93" cy="77" r="3.4" fill="#2b3a4a"/>
+          <circle cx="70.2" cy="75.6" r="1.1" fill="#fff"/>
+          <circle cx="94.2" cy="75.6" r="1.1" fill="#fff"/>
+        </g>
+        <!-- 腮红 -->
+        <circle cx="60" cy="86" r="4" fill="#ffb3a0" opacity=".5"/>
+        <circle cx="100" cy="86" r="4" fill="#ffb3a0" opacity=".5"/>
+        <!-- 嘴 -->
+        <path d="M74 90 q6 6 12 0" stroke="#c1614f" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
+      <div class="splash-npc-name" id="sp-npc-name"></div>
+    </div>
     <div class="splash-kicker" id="sp-kicker"></div>
     <h1 class="splash-brand" id="sp-brand">一.chat</h1>
     <div class="splash-tag" id="sp-tag"></div>
@@ -433,7 +495,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →"}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"小一 · 你的 AI 向导"}
   },
   en: {
     htmlLang:"en",
@@ -555,7 +617,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →"}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Yi · Your AI Guide"}
   }
 };
 
@@ -723,11 +785,13 @@ function renderContent(t){
   function fillSplash(lang){
     const sp = D[lang] && D[lang].splash; if(!sp) return;
     const kb=document.getElementById('sp-kicker'), tg=document.getElementById('sp-tag'),
-          en=document.getElementById('sp-enter'), sk=document.getElementById('sp-skip');
+          en=document.getElementById('sp-enter'), sk=document.getElementById('sp-skip'),
+          nm=document.getElementById('sp-npc-name');
     if(kb) kb.textContent=sp.kicker;
     if(tg) tg.textContent=sp.tag;
     if(en) en.textContent=sp.enter;
     if(sk) sk.textContent=sp.skip;
+    if(nm) nm.textContent=sp.npc||'';
   }
 
   function render(){
