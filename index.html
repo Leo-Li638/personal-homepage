@@ -222,32 +222,21 @@
   .splash-enter:hover{background:rgba(109,179,220,.22);border-color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,127,181,.4);}
   .splash-skip{display:inline-block;margin-top:16px;font-size:13px;color:#9fb6cc;text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.2s both;}
   .splash-skip:hover{color:#fff;text-decoration:underline;}
-  /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」参考立绘精修：蓝渐变长发+女仆装+星纹鲸尾；蹦跳动画，可拖拽） */
-  .splash-npc{position:relative;width:168px;margin:0 auto 14px;animation:npc-hop 1.5s ease-in-out infinite;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;}
-  .splash-npc.dragging{cursor:grabbing;animation-play-state:paused;}
-  @keyframes npc-hop{
-    0%,8%,100%{transform:translateY(0) scale(1,1)}
-    16%{transform:translateY(1px) scale(1.05,.93)}
-    45%{transform:translateY(-16px) scale(.95,1.06)}
-    72%{transform:translateY(0) scale(1.07,.91)}
-    84%{transform:translateY(0) scale(1.02,.98)}
-  }
-  @keyframes sp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-  .splash-npc svg{display:block;width:100%;height:auto;overflow:visible;}
-  .splash-npc-name{margin-top:4px;font-size:13px;letter-spacing:.18em;color:#cfe6f7;opacity:0;animation:sp-fade 1s ease .4s both;}
-  .npc-eye{transform-box:fill-box;transform-origin:center;animation:npc-blink 4.2s infinite;}
-  @keyframes npc-blink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.12)}}
-  .npc-tail{transform-box:fill-box;transform-origin:top center;animation:npc-wag 1.8s ease-in-out infinite;}
-  @keyframes npc-wag{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
-  .npc-fin{transform-box:fill-box;transform-origin:bottom center;animation:npc-fin 3.2s ease-in-out infinite;}
-  @keyframes npc-fin{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
-  .npc-hair{transform-box:fill-box;transform-origin:top center;animation:npc-hair 5s ease-in-out infinite;}
-  @keyframes npc-hair{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
-  .npc-bubble{transform-box:fill-box;animation:npc-rise 2.4s ease-in infinite;}
-  .npc-bubble.b{animation-delay:.8s}.npc-bubble.c{animation-delay:1.6s}
-  @keyframes npc-rise{0%{opacity:0;transform:translateY(6px) scale(.6)}25%{opacity:.9}100%{opacity:0;transform:translateY(-22px) scale(1)}}
-  .npc-heart{transform-box:fill-box;transform-origin:center;animation:npc-heart 2s ease-in-out infinite;}
-  @keyframes npc-heart{0%{opacity:0;transform:translateY(6px) scale(.5)}30%{opacity:1;transform:translateY(0) scale(1.1)}60%{opacity:.9;transform:translateY(-6px) scale(1)}100%{opacity:0;transform:translateY(-16px) scale(.9)}}
+  /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」立绘版：待机漂浮+拍拍反应+抛掷物理，可拖拽） */
+  .splash-npc{position:relative;width:190px;margin:0 auto 10px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;}
+  .splash-npc.grab{cursor:grabbing;}
+  .splash-npc img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(10,25,50,.45));animation:npc-idle 3.6s ease-in-out infinite;will-change:transform;}
+  .splash-npc.grab img,.splash-npc.air img{animation:none;}
+  .splash-npc img.spin{animation:npc-spin .9s cubic-bezier(.3,.1,.3,1) 1;}
+  @keyframes npc-idle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(-1.6deg)}}
+  @keyframes npc-spin{from{transform:rotateY(0deg)}to{transform:rotateY(720deg)}}
+  .splash-npc-name{margin-top:2px;font-size:13px;letter-spacing:.18em;color:#cfe6f7;opacity:0;animation:sp-fade 1s ease .4s both;}
+  .npc-talk{position:fixed;left:0;top:0;max-width:236px;padding:9px 13px;background:#fff;color:#1f2937;border:1.5px solid #bfdbfe;border-radius:14px;border-bottom-left-radius:4px;font-size:13px;line-height:1.55;box-shadow:0 6px 18px rgba(20,40,80,.35);opacity:0;transform:translate(-50%,-100%) translateY(8px);transition:opacity .25s,transform .25s;pointer-events:none;z-index:10002;}
+  .npc-talk.show{opacity:1;transform:translate(-50%,-100%) translateY(0);}
+  .npc-talk::after{content:"";position:absolute;left:20px;bottom:-7px;width:12px;height:12px;background:#fff;border-right:1.5px solid #bfdbfe;border-bottom:1.5px solid #bfdbfe;transform:rotate(45deg);}
+  .npc-fly{position:fixed;left:0;top:0;z-index:10003;pointer-events:none;font-size:20px;animation:npc-fly 1.15s ease-out forwards;}
+  @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
+  @media(max-width:640px){.splash-npc{width:150px}.npc-talk{max-width:180px;font-size:12px}}
   @media(prefers-reduced-motion:reduce){#splash *{animation:none!important;}}
 </style>
 <script type="application/ld+json">
@@ -313,114 +302,8 @@
   <div class="splash-veil"></div>
   <div class="splash-inner">
     <div class="splash-npc" id="sp-npc">
-      <svg viewBox="0 0 160 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大肥鱼 · 鲸鱼娘（原创同人形象，可拖动）">
-        <defs>
-          <linearGradient id="hairGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#cfe6ff"/><stop offset=".5" stop-color="#6aa8e8"/><stop offset="1" stop-color="#2e5ea6"/>
-          </linearGradient>
-          <linearGradient id="dressGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#2a3f66"/><stop offset="1" stop-color="#16233c"/>
-          </linearGradient>
-          <linearGradient id="tailGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#7fc4f2"/><stop offset="1" stop-color="#2e5ea6"/>
-          </linearGradient>
-          <radialGradient id="skinGrad" cx="50%" cy="42%" r="62%">
-            <stop offset="0" stop-color="#ffe9d4"/><stop offset="1" stop-color="#ffd6b8"/>
-          </radialGradient>
-          <linearGradient id="gemGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#8fd8ff"/><stop offset="1" stop-color="#2e6cc0"/>
-          </linearGradient>
-        </defs>
-
-        <!-- 星纹鲸鱼尾巴（摆动） -->
-        <g class="npc-tail">
-          <g transform="rotate(24 92 118)">
-            <path d="M92 106 L76 156 Q87 145 92 149 Q97 145 108 156 Z" fill="url(#tailGrad)"/>
-            <path d="M92 114 L86 148 M92 114 L98 148" stroke="#cfe6ff" stroke-width="1.2" opacity=".5" fill="none"/>
-            <path d="M88 130 l1.2 2.4 2.6 .4 -1.9 1.9 .4 2.6 -2.3 -1.2 -2.3 1.2 .4 -2.6 -1.9 -1.9 2.6 -.4 z" fill="#fff" opacity=".85"/>
-            <path d="M96 142 l1 2 2.2 .4 -1.6 1.6 .4 2.2 -2 -1 -2 1 .4 -2.2 -1.6 -1.6 2.2 -.4 z" fill="#fff" opacity=".7"/>
-          </g>
-        </g>
-
-        <!-- 后发（蓝渐变长卷发） -->
-        <g class="npc-hair">
-          <path d="M52 38 C36 50 32 96 44 128 C48 142 56 150 60 150 L64 96 C58 70 56 52 60 38 Z" fill="url(#hairGrad)"/>
-          <path d="M108 38 C124 50 128 96 116 128 C112 142 104 150 100 150 L96 96 C102 70 104 52 100 38 Z" fill="url(#hairGrad)"/>
-          <path d="M53 40 C56 18 104 18 107 40 C110 56 100 64 80 66 C60 64 50 56 53 40 Z" fill="url(#hairGrad)"/>
-          <path d="M60 46 C64 62 63 84 58 106 M100 46 C96 62 97 84 102 106" stroke="#4a7fc0" stroke-width="1.6" fill="none" opacity=".55"/>
-          <!-- 呆毛 -->
-          <path d="M80 16 C80 7 88 6 88 12 C88 16 82 18 80 16 Z" fill="#cfe6ff"/>
-        </g>
-
-        <!-- 白丝袜腿 -->
-        <rect x="66" y="128" width="12" height="42" rx="6" fill="#f7faff"/>
-        <rect x="82" y="128" width="12" height="42" rx="6" fill="#f7faff"/>
-        <g fill="#2e5ea6">
-          <path d="M72 133 L66 129 L66 137 Z"/><path d="M72 133 L78 129 L78 137 Z"/><circle cx="72" cy="133" r="1.6"/>
-          <path d="M88 133 L82 129 L82 137 Z"/><path d="M88 133 L94 129 L94 137 Z"/><circle cx="88" cy="133" r="1.6"/>
-        </g>
-
-        <!-- 女仆裙 -->
-        <path d="M56 94 L104 94 L112 140 L48 140 Z" fill="url(#dressGrad)"/>
-        <path d="M48 140 Q50 146 54 141 Q60 148 66 141 Q72 148 78 141 Q84 148 90 141 Q96 148 102 141 Q108 148 112 141 L112 138 L48 138 Z" fill="#f4f8ff"/>
-        <g fill="#e8c56a">
-          <path d="M62 132 L57 129 L57 135 Z"/><path d="M62 132 L67 129 L67 135 Z"/><circle cx="62" cy="132" r="1.4"/>
-          <path d="M98 132 L93 129 L93 135 Z"/><path d="M98 132 L103 129 L103 135 Z"/><circle cx="98" cy="132" r="1.4"/>
-        </g>
-
-        <!-- 上身 + 泡泡袖 -->
-        <path d="M64 74 L96 74 L100 96 L60 96 Z" fill="url(#dressGrad)"/>
-        <ellipse cx="58" cy="86" rx="8" ry="9" fill="url(#dressGrad)"/>
-        <ellipse cx="102" cy="86" rx="8" ry="9" fill="url(#dressGrad)"/>
-
-        <!-- 白围裙 + 小鲸鱼 -->
-        <path d="M70 84 L90 84 L97 136 L63 136 Z" fill="#f7faff"/>
-        <ellipse cx="80" cy="120" rx="8" ry="5.5" fill="#3d7fb5"/>
-        <path d="M87 118 q5 -5 9 -1 q-4 3 -8 3 z" fill="#3d7fb5"/>
-        <circle cx="76.5" cy="119" r="1" fill="#fff"/>
-        <path d="M73 114 q1 -3 3 -3 M76 112 q1 -2 2.4 -2" stroke="#7fb8e6" stroke-width="1" fill="none" opacity=".8"/>
-        <circle cx="75" cy="96" r="1.8" fill="#e8c56a"/>
-        <circle cx="85" cy="96" r="1.8" fill="#e8c56a"/>
-
-        <!-- 领结 + 宝石 -->
-        <path d="M80 82 L70 77 L70 87 Z" fill="#2e5ea6"/>
-        <path d="M80 82 L90 77 L90 87 Z" fill="#2e5ea6"/>
-        <circle cx="80" cy="82" r="3.2" fill="url(#gemGrad)"/>
-
-        <!-- 头 -->
-        <circle cx="80" cy="50" r="25" fill="url(#skinGrad)"/>
-        <rect x="74" y="70" width="12" height="10" rx="4" fill="url(#skinGrad)"/>
-
-        <!-- 刘海 -->
-        <path d="M56 42 C60 30 100 30 104 42 C99 52 91 55 84 53 C80 58 72 58 68 53 C61 55 57 48 56 42 Z" fill="url(#hairGrad)"/>
-
-        <!-- 鲸鳍小发夹 -->
-        <g class="npc-fin"><path d="M57 40 C48 30 44 36 50 45 C53 49 59 46 60 43 Z" fill="url(#tailGrad)"/></g>
-        <g class="npc-fin"><path d="M103 40 C112 30 116 36 110 45 C107 49 101 46 100 43 Z" fill="url(#tailGrad)"/></g>
-
-        <!-- 女仆头饰 -->
-        <path d="M56 40 Q56 28 66 26 Q64 32 66 36 Q72 26 82 27 Q80 32 82 36 Q90 28 100 32 Q98 36 100 40 Q92 44 80 44 Q66 44 56 40 Z" fill="#f7faff" stroke="#dfe9f5" stroke-width="1"/>
-
-        <!-- 左眼 wink + 右眼（眨眼） -->
-        <path d="M64 52 Q70 46 76 52" stroke="#2b3a4a" stroke-width="2.4" fill="none" stroke-linecap="round"/>
-        <g class="npc-eye">
-          <ellipse cx="90" cy="50" rx="6.5" ry="8.5" fill="#fff"/>
-          <circle cx="90" cy="51" r="4.4" fill="#2e6cc0"/>
-          <circle cx="88" cy="48" r="1.6" fill="#fff"/>
-        </g>
-        <!-- 腮红 -->
-        <circle cx="62" cy="60" r="4.5" fill="#ff9fb0" opacity=".5"/>
-        <circle cx="98" cy="60" r="4.5" fill="#ff9fb0" opacity=".5"/>
-        <!-- 嘴（比心 o 嘴） -->
-        <ellipse cx="80" cy="63" rx="2.4" ry="3" fill="#b85c4a"/>
-        <!-- 比心 -->
-        <path class="npc-heart" d="M112 42 c-2.5 -1.8 -5 -3.4 -5 -5.6 0 -2 3 -2.6 5 -.6 2 -2 5 -1.4 5 .6 0 2.2 -2.5 3.8 -5 5.6 z" fill="#ff8fa8"/>
-
-        <!-- 气泡 -->
-        <circle class="npc-bubble" cx="118" cy="72" r="4" fill="#bfe0f5"/>
-        <circle class="npc-bubble b" cx="126" cy="60" r="3" fill="#bfe0f5"/>
-        <circle class="npc-bubble c" cx="110" cy="54" r="2.4" fill="#bfe0f5"/>
-      </svg>
+      <img id="sp-npc-img" src="assets/npc_maid.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
+      <div class="npc-talk" id="sp-npc-talk" aria-live="polite"></div>
       <div class="splash-npc-name" id="sp-npc-name"></div>
     </div>
     <div class="splash-kicker" id="sp-kicker"></div>
@@ -582,7 +465,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（拖我玩）"}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～要看看 Leo 的项目吗？"],pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～","这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨"}}
   },
   en: {
     htmlLang:"en",
@@ -710,7 +593,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (drag me)"}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!","GitHub: Leo-Li638 — find it in Contact!"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨"}}
   }
 };
 
@@ -938,40 +821,110 @@ function renderContent(t){
 
   // 前置页（splash）交互：进入 / 跳过 / 回车 均可关闭
   const splashEl=document.getElementById('splash');
-  function dismissSplash(){ if(splashEl) splashEl.classList.add('hide'); }
+  function dismissSplash(){
+    if(splashEl) splashEl.classList.add('hide');
+    dispatchEvent(new Event('npc:adopt')); // NPC 未被抓起过也收编为全站伴宠
+  }
   const spEnter=document.getElementById('sp-enter'), spSkip=document.getElementById('sp-skip');
   if(spEnter) spEnter.addEventListener('click', dismissSplash);
   if(spSkip) spSkip.addEventListener('click', function(e){ e.preventDefault(); dismissSplash(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Enter' && splashEl && !splashEl.classList.contains('hide')) dismissSplash(); });
 
-  // NPC 拖拽（大肥鱼可以拎起来到处跑）
-  const npcEl=document.querySelector('.splash-npc');
+  // NPC 立绘交互引擎：拍拍反应 / 拖拽 / 抛掷物理（大肥鱼 · 鲸鱼娘）
+  const npcEl=document.getElementById('sp-npc');
   if(npcEl){
-    let dragging=false, sx=0, sy=0, ox=0, oy=0;
-    npcEl.addEventListener('pointerdown', function(e){
-      dragging=true;
-      try{ npcEl.setPointerCapture(e.pointerId); }catch(err){}
-      const r=npcEl.getBoundingClientRect();
-      if(getComputedStyle(npcEl).position!=='fixed'){
-        npcEl.style.position='fixed';
-        npcEl.style.left=r.left+'px'; npcEl.style.top=r.top+'px';
-        npcEl.style.margin='0'; npcEl.style.width=r.width+'px'; npcEl.style.zIndex='10001';
-      }
-      sx=e.clientX; sy=e.clientY; ox=parseFloat(npcEl.style.left); oy=parseFloat(npcEl.style.top);
-      npcEl.classList.add('dragging');
+    const npcImg=document.getElementById('sp-npc-img'), talkEl=document.getElementById('sp-npc-talk');
+    let W=innerWidth,H=innerHeight,x=0,y=0,vx=0,vy=0,state='idle',engine=false;
+    let rot=0,rotTarget=0,landT=-1,patT=-1,lastT=performance.now();
+    let gox=0,goy=0,dnX=0,dnY=0,dnT=0,moved=0,vel={x:0,y:0},lpx=0,lpy=0,lpt=0;
+    let talkTimer=null,patCount=0; try{patCount=+localStorage.getItem('npc_pats')||0;}catch(e){}
+    const FLY=['💙','🐋','✨','🩵','💫'];
+    const pick=a=>a&&a.length?a[Math.floor(Math.random()*a.length)]:'';
+    function L(){ const d=D[getLang()]; return (d&&d.splash&&d.splash.npcTalk)||{}; }
+    function talk(msg,ms){ if(!msg)return; talkEl.textContent=msg; talkEl.classList.add('show');
+      clearTimeout(talkTimer); talkTimer=setTimeout(()=>talkEl.classList.remove('show'),ms||3200);
+      if(engine)placeTalk(); }
+    function placeTalk(){ const bw=talkEl.offsetWidth,cx=x+npcEl.offsetWidth/2,top=y-8;
+      const l=Math.max(bw/2+6,Math.min(innerWidth-bw/2-6,cx));
+      const tp=Math.max(talkEl.offsetHeight+8,top);
+      talkEl.style.left=l+'px'; talkEl.style.top=tp+'px'; }
+    function hearts(n){ const r=npcEl.getBoundingClientRect();
+      for(let i=0;i<n;i++){ const s=document.createElement('span'); s.className='npc-fly';
+        s.textContent=FLY[Math.floor(Math.random()*FLY.length)];
+        s.style.left=(r.left+r.width*(0.25+Math.random()*0.5))+'px';
+        s.style.top=(r.top+r.height*(0.10+Math.random()*0.30))+'px';
+        s.style.animationDelay=(i*90)+'ms';
+        document.body.appendChild(s);
+        s.addEventListener('animationend',function(){this.remove();}); } }
+    function pat(){ patCount++; try{localStorage.setItem('npc_pats',patCount);}catch(e){}
+      const t=L(); vy=-330; state='air'; npcEl.classList.add('air'); patT=performance.now();
+      if(patCount%10===0){talk(t.egg,4200);hearts(8);}else{talk(pick(t.pat),2600);hearts(4);} }
+    npcEl.addEventListener('pointerdown',function(e){
       e.preventDefault();
+      if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
+        const r=npcEl.getBoundingClientRect();
+        document.body.appendChild(npcEl);
+        npcEl.style.position='fixed'; npcEl.style.left='0'; npcEl.style.top='0';
+        npcEl.style.margin='0'; npcEl.style.width=r.width+'px'; npcEl.style.zIndex='10001';
+        x=r.left; y=r.top; engine=true;
+      }
+      try{npcEl.setPointerCapture(e.pointerId);}catch(err){}
+      state='grab'; npcEl.classList.add('grab'); npcEl.classList.remove('air');
+      gox=e.clientX-x; goy=e.clientY-y; dnX=e.clientX; dnY=e.clientY; dnT=performance.now(); moved=0;
+      vx=vy=0; vel.x=vel.y=0; lpx=e.clientX; lpy=e.clientY; lpt=dnT; });
+    npcEl.addEventListener('pointermove',function(e){ if(state!=='grab')return;
+      const now=performance.now(), dt=Math.max(8,now-lpt)/1000;
+      x=e.clientX-gox; y=e.clientY-goy;
+      x=Math.max(-60,Math.min(W-40,x)); y=Math.max(-80,Math.min(H-60,y));
+      moved+=Math.abs(e.clientX-dnX)+Math.abs(e.clientY-dnY); dnX=e.clientX; dnY=e.clientY;
+      vel.x=.7*vel.x+.3*(e.clientX-lpx)/dt; vel.y=.7*vel.y+.3*(e.clientY-lpy)/dt;
+      lpx=e.clientX; lpy=e.clientY; lpt=now; });
+    function release(){ if(state!=='grab')return; npcEl.classList.remove('grab');
+      const dur=performance.now()-dnT, t=L();
+      if(moved<12&&dur<400){ state='idle'; pat(); return; }
+      vx=Math.max(-1600,Math.min(1600,vel.x)); vy=Math.max(-1600,Math.min(1600,vel.y));
+      state='air'; npcEl.classList.add('air');
+      if(Math.abs(vx)>260||Math.abs(vy)>260){ if(Math.random()<.5)talk(t.drag,1600); } }
+    npcEl.addEventListener('pointerup',release);
+    npcEl.addEventListener('pointercancel',release);
+    npcEl.addEventListener('dblclick',function(){
+      npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
+      talk(L().spin,2200); hearts(5);
+      npcImg.addEventListener('animationend',function h(){npcImg.classList.remove('spin');npcImg.removeEventListener('animationend',h);}); });
+    addEventListener('resize',function(){ W=innerWidth; H=innerHeight; });
+    // 进主站时收编 NPC 为全站伴宠（放到右下角地面）
+    addEventListener('npc:adopt',function(){
+      if(npcEl.parentNode===document.body)return;
+      const r=npcEl.getBoundingClientRect(), w=Math.min(r.width,170);
+      document.body.appendChild(npcEl);
+      npcEl.style.position='fixed'; npcEl.style.left='0'; npcEl.style.top='0';
+      npcEl.style.margin='0'; npcEl.style.width=w+'px'; npcEl.style.zIndex='9988';
+      x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4; engine=true;
+      npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
     });
-    npcEl.addEventListener('pointermove', function(e){
-      if(!dragging) return;
-      const r=npcEl.getBoundingClientRect();
-      let nx=ox+e.clientX-sx, ny=oy+e.clientY-sy;
-      nx=Math.max(8,Math.min(window.innerWidth-r.width-8,nx));
-      ny=Math.max(8,Math.min(window.innerHeight-r.height-8,ny));
-      npcEl.style.left=nx+'px'; npcEl.style.top=ny+'px';
-    });
-    function endNpcDrag(){ dragging=false; npcEl.classList.remove('dragging'); }
-    npcEl.addEventListener('pointerup', endNpcDrag);
-    npcEl.addEventListener('pointercancel', endNpcDrag);
+    (function frame(t){
+      const dt=Math.min(.032,(t-lastT)/1000)||.016; lastT=t;
+      if(engine){
+        const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
+        if(state==='air'){ vy+=2500*dt; x+=vx*dt; y+=vy*dt;
+          if(x<4){x=4;vx=Math.abs(vx)*.5;}
+          if(x>W-w-4){x=W-w-4;vx=-Math.abs(vx)*.5;}
+          if(y<6){y=6;vy=Math.abs(vy)*.3;}
+          if(y>=groundY){ y=groundY;
+            if(Math.abs(vy)>340){ vy=-vy*.42; vx*=.72; landT=t; }
+            else{ vy=0; vx=0; state='idle'; npcEl.classList.remove('air'); landT=t;
+              if(patT<0&&Math.random()<.35)talk(L().land,1800); } } }
+        if(state==='idle'){ y+=(groundY-y)*.2; rotTarget*=.94; }
+        rot+=((state==='grab'?Math.max(-14,Math.min(14,vel.x*.012)):(state==='air'?Math.max(-16,Math.min(16,vx*.014)):rotTarget))-rot)*.15;
+        let sx=1,sy=1,p;
+        p=(t-landT)/320; if(p>=0&&p<1){ const k=1-p; sy=1-.18*k*k; sx=1+.14*k*k; }
+        p=(t-patT)/300; if(p>=0&&p<1){ const k=1-p; sy=1+.1*k; sx=1-.08*k; }
+        npcEl.style.transform='translate3d('+x+'px,'+y+'px,0) rotate('+rot.toFixed(2)+'deg) scale('+sx.toFixed(3)+','+sy.toFixed(3)+')';
+        if(talkEl.classList.contains('show'))placeTalk();
+      }
+      requestAnimationFrame(frame);
+    })(performance.now());
+    setTimeout(function(){ const t=L(); if(t.hi)talk(pick(t.hi),4600); },1200);
   }
 })();
 </script>
