@@ -25,11 +25,12 @@
   body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
     background:var(--bg);color:var(--ink);line-height:1.7;}
   .wrap{max-width:920px;margin:0 auto;padding:0 20px 60px;}
-  /* ===== 顶部导航 ===== */
-  nav.topnav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);margin:0 -20px;padding:0 20px;}
+  /* ===== 顶部导航（透明悬浮，滚动后变实底）===== */
+  nav.topnav{position:fixed;top:0;left:0;right:0;z-index:50;background:transparent;
+    transition:background .25s ease,box-shadow .25s ease;padding:0 24px;}
+  nav.topnav.solid{background:rgba(255,255,255,.94);backdrop-filter:blur(8px);box-shadow:0 2px 12px rgba(36,59,83,.08);}
   nav.topnav::after{content:"";display:block;height:2px;
-    background:linear-gradient(90deg,var(--sky),var(--sky2) 35%,var(--grass) 70%,var(--gold));opacity:.75;}
+    background:linear-gradient(90deg,var(--sky),var(--sky2) 35%,var(--grass) 70%,var(--gold));opacity:.55;}
   nav.topnav .in{max-width:880px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;align-items:center;}
   nav.topnav a{white-space:nowrap;text-decoration:none;color:var(--ink);font-size:13.5px;font-weight:500;
     padding:12px 12px;border-bottom:2px solid transparent;transition:color .15s;}
@@ -37,14 +38,15 @@
   nav.topnav a.active{color:var(--sky);border-bottom-color:var(--sky);}
   nav.topnav .brand{font-weight:600;color:var(--sky);margin-right:8px;display:flex;align-items:center;gap:6px;}
   .brand svg{width:17px;height:17px;flex:none;}
-  /* ===== Hero ===== */
-  header.hero{margin:18px 0 0;border-radius:22px;overflow:hidden;position:relative;
+  /* ===== Hero（全屏铺满整个视口）===== */
+  header.hero{margin:0;border-radius:0;overflow:hidden;position:relative;width:100%;
     background-image:url(assets/mondstadt-hero.jpg);background-size:cover;background-position:center 38%;
-    min-height:560px;display:flex;align-items:center;justify-content:center;padding:34px 26px;text-align:center;}
+    min-height:100vh;min-height:100svh;display:flex;align-items:center;justify-content:center;
+    padding:80px 26px 60px;text-align:center;}
   header.hero::before{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(255,255,255,.10) 0%,rgba(20,50,80,.36) 100%);}
   .hero-inner{position:relative;background:rgba(255,255,255,.82);backdrop-filter:blur(8px);
-    border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:36px 34px;max-width:720px;width:100%;
+    border:1px solid rgba(255,255,255,.65);border-radius:20px;padding:44px 40px;max-width:720px;width:100%;
     box-shadow:0 10px 40px rgba(20,50,80,.18);}
   header.hero h1{font-size:32px;letter-spacing:1px;color:var(--ink);}
   header.hero .slogan{margin-top:12px;font-size:17px;color:var(--sky);font-weight:500;min-height:1.7em;}
@@ -162,7 +164,7 @@
     .posts{grid-template-columns:1fr;}
     .feats{grid-template-columns:1fr;}
     .stats .grid{grid-template-columns:1fr 1fr;}
-    header.hero{min-height:480px;background-image:url(assets/mondstadt-hero-small.jpg);}
+    header.hero{min-height:88vh;min-height:88svh;background-image:url(assets/mondstadt-hero-small.jpg);}
     header.hero h1{font-size:24px;}
     .hero-inner{padding:26px 18px;}
   }
@@ -216,7 +218,6 @@
 </script>
 </head>
 <body>
-<div class="wrap">
 
   <nav class="topnav">
     <div class="in">
@@ -250,6 +251,8 @@
     </div>
     <a class="scroll-hint" href="#stats" aria-label="向下滚动">⌄</a>
   </header>
+
+<div class="wrap">
 
   <section class="stats reveal" id="stats">
     <div class="grid">
@@ -673,6 +676,13 @@
     if (window.scrollY > 600) bt.classList.add('show'); else bt.classList.remove('show');
   }, { passive: true });
   bt.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  /* 导航透明 -> 实底（滚过首屏大图前保持悬浮透明） */
+  var nav = document.querySelector('nav.topnav');
+  function navSolid() {
+    if (window.scrollY > window.innerHeight - 90) nav.classList.add('solid'); else nav.classList.remove('solid');
+  }
+  window.addEventListener('scroll', navSolid, { passive: true });
+  navSolid();
 })();
 </script>
 </body>
