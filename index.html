@@ -222,15 +222,19 @@
   .splash-enter:hover{background:rgba(109,179,220,.22);border-color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,127,181,.4);}
   .splash-skip{display:inline-block;margin-top:16px;font-size:13px;color:#9fb6cc;text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.2s both;}
   .splash-skip:hover{color:#fff;text-decoration:underline;}
-  /* 前置页 NPC（原创 AI 向导「小一」，合法原创，无 IP） */
-  .splash-npc{position:relative;width:152px;margin:0 auto 14px;animation:sp-float 4.5s ease-in-out infinite;}
+  /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」，蓝渐变长发 + 鲸鱼鳍垂耳 + 深蓝女仆装 + 鲸鱼尾，非官方） */
+  .splash-npc{position:relative;width:168px;margin:0 auto 14px;animation:sp-float 4.5s ease-in-out infinite;}
   @keyframes sp-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
   .splash-npc svg{display:block;width:100%;height:auto;overflow:visible;}
   .splash-npc-name{margin-top:4px;font-size:13px;letter-spacing:.18em;color:#cfe6f7;opacity:0;animation:sp-fade 1s ease .4s both;}
   .npc-eye{transform-box:fill-box;transform-origin:center;animation:npc-blink 4.2s infinite;}
   @keyframes npc-blink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.12)}}
-  .npc-tail{transform-box:fill-box;transform-origin:right center;animation:npc-wag 1.5s ease-in-out infinite;}
-  @keyframes npc-wag{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+  .npc-tail{transform-box:fill-box;transform-origin:top center;animation:npc-wag 1.8s ease-in-out infinite;}
+  @keyframes npc-wag{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  .npc-fin{transform-box:fill-box;transform-origin:bottom center;animation:npc-fin 3.2s ease-in-out infinite;}
+  @keyframes npc-fin{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+  .npc-hair{transform-box:fill-box;transform-origin:top center;animation:npc-hair 5s ease-in-out infinite;}
+  @keyframes npc-hair{0%,100%{transform:rotate(-1.6deg)}50%{transform:rotate(1.6deg)}}
   .npc-bubble{transform-box:fill-box;animation:npc-rise 2.4s ease-in infinite;}
   .npc-bubble.b{animation-delay:.8s}.npc-bubble.c{animation-delay:1.6s}
   @keyframes npc-rise{0%{opacity:0;transform:translateY(6px) scale(.6)}25%{opacity:.9}100%{opacity:0;transform:translateY(-22px) scale(1)}}
@@ -299,39 +303,80 @@
   <div class="splash-veil"></div>
   <div class="splash-inner">
     <div class="splash-npc" id="sp-npc">
-      <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大肥鱼 AI 向导（原创形象，非官方）">
+      <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大肥鱼 · 鲸鱼娘（原创同人形象）">
         <defs>
-          <linearGradient id="fishBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ffd98a"/><stop offset="1" stop-color="#ff8a3d"/>
+          <linearGradient id="hairGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8fd0f0"/><stop offset=".55" stop-color="#3d7fb5"/><stop offset="1" stop-color="#234c77"/>
           </linearGradient>
-          <linearGradient id="fishBelly" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#fff4dc"/><stop offset="1" stop-color="#ffe2b0"/>
+          <linearGradient id="dressGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#234c77"/><stop offset="1" stop-color="#142e4a"/>
           </linearGradient>
+          <linearGradient id="tailGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8fd0f0"/><stop offset="1" stop-color="#3d7fb5"/>
+          </linearGradient>
+          <radialGradient id="skinGrad" cx="50%" cy="42%" r="62%">
+            <stop offset="0" stop-color="#ffe9d4"/><stop offset="1" stop-color="#ffd6b8"/>
+          </radialGradient>
         </defs>
-        <!-- 尾鳍（摆动） -->
+
+        <!-- 鲸鱼尾巴（摆动） -->
         <g class="npc-tail">
-          <path d="M34 88 L6 62 L17 88 L6 114 Z" fill="#ff8a3d"/>
+          <path d="M80 104 L64 154 Q75 143 80 147 Q85 143 96 154 Z" fill="url(#tailGrad)"/>
+          <path d="M80 112 L74 146 M80 112 L86 146" stroke="#bfe0f5" stroke-width="1.4" opacity=".5" fill="none"/>
         </g>
-        <!-- 身体 -->
-        <ellipse cx="88" cy="88" rx="58" ry="46" fill="url(#fishBody)"/>
-        <!-- 肚皮 -->
-        <ellipse cx="94" cy="102" rx="44" ry="27" fill="url(#fishBelly)" opacity=".85"/>
-        <!-- 侧鳍 -->
-        <path d="M86 116 q-12 18 -28 15 q7 -16 20 -23 z" fill="#ff8a3d"/>
+
+        <!-- 后发（蓝色渐变长发） -->
+        <g class="npc-hair">
+          <path d="M52 42 C39 52 35 92 46 122 C50 136 57 142 59 142 L62 92 C58 70 56 54 60 42 Z" fill="url(#hairGrad)"/>
+          <path d="M108 42 C121 52 125 92 114 122 C110 136 103 142 101 142 L98 92 C102 70 104 54 100 42 Z" fill="url(#hairGrad)"/>
+          <path d="M53 42 C56 20 104 20 107 42 C110 58 100 66 80 68 C60 66 50 58 53 42 Z" fill="url(#hairGrad)"/>
+          <!-- 呆毛 -->
+          <path d="M80 18 C80 9 87 8 87 14 C87 18 82 19 80 18 Z" fill="#8fd0f0"/>
+        </g>
+
+        <!-- 女仆装身体 -->
+        <path d="M60 86 L100 86 L108 136 L52 136 Z" fill="url(#dressGrad)"/>
+        <path d="M70 100 L90 100 L95 136 L65 136 Z" fill="#eef6ff"/>
+        <path d="M62 84 Q80 79 98 84 L92 101 Q80 109 68 101 Z" fill="#eef6ff"/>
+        <!-- 领结 -->
+        <circle cx="80" cy="92" r="3.4" fill="#3d7fb5"/>
+        <path d="M80 92 L72 88 L72 96 Z" fill="#3d7fb5"/>
+        <path d="M80 92 L88 88 L88 96 Z" fill="#3d7fb5"/>
+
+        <!-- 头 -->
+        <circle cx="80" cy="54" r="26" fill="url(#skinGrad)"/>
+        <rect x="73" y="74" width="14" height="12" rx="5" fill="url(#skinGrad)"/>
+
+        <!-- 刘海 -->
+        <path d="M55 44 C59 30 101 30 105 44 C100 55 92 58 84 56 C80 62 72 62 68 56 C61 58 57 51 55 44 Z" fill="url(#hairGrad)"/>
+
+        <!-- 鲸鱼鳍状垂耳 -->
+        <g class="npc-fin">
+          <path d="M57 32 C46 19 42 26 49 38 C53 44 61 39 62 35 Z" fill="url(#tailGrad)"/>
+        </g>
+        <g class="npc-fin">
+          <path d="M103 32 C114 19 118 26 111 38 C107 44 99 39 98 35 Z" fill="url(#tailGrad)"/>
+        </g>
+
         <!-- 眼睛（眨眼） -->
         <g class="npc-eye">
-          <ellipse cx="116" cy="78" rx="11" ry="13" fill="#fff"/>
-          <circle cx="118" cy="80" r="6.5" fill="#2b3a4a"/>
-          <circle cx="120" cy="77" r="2" fill="#fff"/>
+          <ellipse cx="70" cy="54" rx="7" ry="9" fill="#fff"/>
+          <circle cx="71" cy="55" r="4.6" fill="#22303f"/>
+          <circle cx="69" cy="52" r="1.7" fill="#fff"/>
+          <ellipse cx="90" cy="54" rx="7" ry="9" fill="#fff"/>
+          <circle cx="89" cy="55" r="4.6" fill="#22303f"/>
+          <circle cx="88" cy="52" r="1.7" fill="#fff"/>
         </g>
         <!-- 腮红 -->
-        <circle cx="106" cy="98" r="6" fill="#ff6f61" opacity=".45"/>
-        <!-- 嘴 -->
-        <path d="M126 92 q8 5 14 0" stroke="#c1614f" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+        <circle cx="63" cy="63" r="5" fill="#ff8aa0" opacity=".4"/>
+        <circle cx="97" cy="63" r="5" fill="#ff8aa0" opacity=".4"/>
+        <!-- 嘴（傲娇小嘴） -->
+        <path d="M76 65 Q80 69 84 65" stroke="#c1614f" stroke-width="2" fill="none" stroke-linecap="round"/>
+
         <!-- 气泡 -->
-        <circle class="npc-bubble" cx="138" cy="68" r="4" fill="#bfe0f5"/>
-        <circle class="npc-bubble b" cx="146" cy="56" r="3" fill="#bfe0f5"/>
-        <circle class="npc-bubble c" cx="130" cy="50" r="2.4" fill="#bfe0f5"/>
+        <circle class="npc-bubble" cx="118" cy="70" r="4" fill="#bfe0f5"/>
+        <circle class="npc-bubble b" cx="126" cy="58" r="3" fill="#bfe0f5"/>
+        <circle class="npc-bubble c" cx="110" cy="52" r="2.4" fill="#bfe0f5"/>
       </svg>
       <div class="splash-npc-name" id="sp-npc-name"></div>
     </div>
@@ -494,7 +539,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 你的 AI 向导"}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘"}
   },
   en: {
     htmlLang:"en",
@@ -622,7 +667,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Your AI Guide"}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl"}
   }
 };
 
