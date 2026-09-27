@@ -303,20 +303,23 @@
   <div class="splash-veil"></div>
   <div class="splash-inner">
     <div class="splash-npc" id="sp-npc">
-      <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大肥鱼 · 鲸鱼娘（原创同人形象）">
+      <svg viewBox="0 0 160 170" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="大肥鱼 · 鲸鱼娘（原神丝柯克风原创同人形象）">
         <defs>
           <linearGradient id="hairGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#8fd0f0"/><stop offset=".55" stop-color="#3d7fb5"/><stop offset="1" stop-color="#234c77"/>
+            <stop offset="0" stop-color="#f6fbff"/><stop offset=".5" stop-color="#d6ecff"/><stop offset="1" stop-color="#79b6e6"/>
           </linearGradient>
-          <linearGradient id="dressGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#234c77"/><stop offset="1" stop-color="#142e4a"/>
+          <linearGradient id="coatGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#26406a"/><stop offset="1" stop-color="#0e1726"/>
           </linearGradient>
           <linearGradient id="tailGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#8fd0f0"/><stop offset="1" stop-color="#3d7fb5"/>
+            <stop offset="0" stop-color="#a6dcf5"/><stop offset="1" stop-color="#3d7fb5"/>
           </linearGradient>
           <radialGradient id="skinGrad" cx="50%" cy="42%" r="62%">
             <stop offset="0" stop-color="#ffe9d4"/><stop offset="1" stop-color="#ffd6b8"/>
           </radialGradient>
+          <linearGradient id="redGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#e0465e"/><stop offset="1" stop-color="#c8324a"/>
+          </linearGradient>
         </defs>
 
         <!-- 鲸鱼尾巴（摆动） -->
@@ -325,23 +328,28 @@
           <path d="M80 112 L74 146 M80 112 L86 146" stroke="#bfe0f5" stroke-width="1.4" opacity=".5" fill="none"/>
         </g>
 
-        <!-- 后发（蓝色渐变长发） -->
+        <!-- 后发（白发蓝渐变挑染） -->
         <g class="npc-hair">
           <path d="M52 42 C39 52 35 92 46 122 C50 136 57 142 59 142 L62 92 C58 70 56 54 60 42 Z" fill="url(#hairGrad)"/>
           <path d="M108 42 C121 52 125 92 114 122 C110 136 103 142 101 142 L98 92 C102 70 104 54 100 42 Z" fill="url(#hairGrad)"/>
           <path d="M53 42 C56 20 104 20 107 42 C110 58 100 66 80 68 C60 66 50 58 53 42 Z" fill="url(#hairGrad)"/>
           <!-- 呆毛 -->
-          <path d="M80 18 C80 9 87 8 87 14 C87 18 82 19 80 18 Z" fill="#8fd0f0"/>
+          <path d="M80 18 C80 9 88 8 88 14 C88 18 82 20 80 18 Z" fill="#d6ecff"/>
         </g>
 
-        <!-- 女仆装身体 -->
-        <path d="M60 86 L100 86 L108 136 L52 136 Z" fill="url(#dressGrad)"/>
-        <path d="M70 100 L90 100 L95 136 L65 136 Z" fill="#eef6ff"/>
-        <path d="M62 84 Q80 79 98 84 L92 101 Q80 109 68 101 Z" fill="#eef6ff"/>
-        <!-- 领结 -->
-        <circle cx="80" cy="92" r="3.4" fill="#3d7fb5"/>
-        <path d="M80 92 L72 88 L72 96 Z" fill="#3d7fb5"/>
-        <path d="M80 92 L88 88 L88 96 Z" fill="#3d7fb5"/>
+        <!-- 丝柯克风深色外套 + 红饰 -->
+        <path d="M60 86 L100 86 L106 136 L54 136 Z" fill="url(#coatGrad)"/>
+        <path d="M80 92 L70 112 L80 122 L90 112 Z" fill="none" stroke="url(#redGrad)" stroke-width="2.4"/>
+        <path d="M62 86 L80 96 L98 86" fill="none" stroke="#c8324a" stroke-width="2" opacity=".8"/>
+        <!-- 高领 -->
+        <path d="M66 86 L80 72 L94 86 L89 90 L80 80 L71 90 Z" fill="#16263f"/>
+        <!-- 肩饰 -->
+        <path d="M58 86 L50 92 L60 96 Z" fill="#16263f"/>
+        <path d="M102 86 L110 92 L100 96 Z" fill="#16263f"/>
+        <!-- 红领结 -->
+        <circle cx="80" cy="90" r="3" fill="#e0465e"/>
+        <path d="M80 90 L73 86 L73 94 Z" fill="#e0465e"/>
+        <path d="M80 90 L87 86 L87 94 Z" fill="#e0465e"/>
 
         <!-- 头 -->
         <circle cx="80" cy="54" r="26" fill="url(#skinGrad)"/>
@@ -364,13 +372,17 @@
           <circle cx="71" cy="55" r="4.6" fill="#22303f"/>
           <circle cx="69" cy="52" r="1.7" fill="#fff"/>
           <ellipse cx="90" cy="54" rx="7" ry="9" fill="#fff"/>
-          <circle cx="89" cy="55" r="4.6" fill="#22303f"/>
-          <circle cx="88" cy="52" r="1.7" fill="#fff"/>
+          <circle cx="89" cy="55" r="4.6" fill="#c8324a"/>
+          <circle cx="88" cy="52" r="1.7" fill="#ffd2da"/>
         </g>
+        <!-- 丝柯克虚空格纹（右眼） -->
+        <path d="M83 46 L97 49 L95 60 L81 57 Z" fill="url(#redGrad)" opacity=".85"/>
+        <path d="M84 47.5 L96 50.5" stroke="#fff" stroke-width="1" opacity=".5"/>
+
         <!-- 腮红 -->
-        <circle cx="63" cy="63" r="5" fill="#ff8aa0" opacity=".4"/>
-        <circle cx="97" cy="63" r="5" fill="#ff8aa0" opacity=".4"/>
-        <!-- 嘴（傲娇小嘴） -->
+        <circle cx="63" cy="63" r="5" fill="#ff8aa0" opacity=".35"/>
+        <circle cx="97" cy="63" r="5" fill="#ff8aa0" opacity=".35"/>
+        <!-- 嘴 -->
         <path d="M76 65 Q80 69 84 65" stroke="#c1614f" stroke-width="2" fill="none" stroke-linecap="round"/>
 
         <!-- 气泡 -->
