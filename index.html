@@ -928,5 +928,96 @@ function renderContent(t){
   }
 })();
 </script>
-</body>
+<script>
+(function(){
+  "use strict";
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const fine = matchMedia('(pointer: fine)').matches;
+
+  /* 云缝光晕 + 背景鼠标视差（细指针专属） */
+  if(fine){
+    const glow=document.createElement('div'); glow.id='fx-glow'; document.body.appendChild(glow);
+    let mx=innerWidth/2,my=innerHeight/2,gx=mx,gy=my,bx=0,by=0,tx=0,ty=0;
+    addEventListener('mousemove',function(e){ mx=e.clientX; my=e.clientY;
+      tx=(mx/innerWidth-.5)*22; ty=(my/innerHeight-.5)*14; glow.style.opacity=1; },{passive:true});
+    document.documentElement.addEventListener('mouseleave',function(){ glow.style.opacity=0; });
+    const bg=document.querySelector('.bg'), sbg=document.querySelector('.splash-bg');
+    (function loop(){ gx+=(mx-gx)*.12; gy+=(my-gy)*.12; bx+=(tx-bx)*.06; by+=(ty-by)*.06;
+      glow.style.transform='translate('+gx.toFixed(1)+'px,'+gy.toFixed(1)+'px)';
+      if(bg) bg.style.translate=bx.toFixed(1)+'px '+by.toFixed(1)+'px';
+      if(sbg) sbg.style.translate=(bx*1.5).toFixed(1)+'px '+(by*1.5).toFixed(1)+'px';
+      requestAnimationFrame(loop); })();
+  }
+
+  /* 蒙德之风：蒲公英种子飘动 */
+  const cv=document.createElement('canvas'); cv.id='fx-seeds'; document.body.appendChild(cv);
+  const ctx=cv.getContext('2d'); let seeds=[],sw=0,sh=0;
+  function rs(){ sw=cv.width=innerWidth; sh=cv.height=innerHeight; }
+  addEventListener('resize',rs); rs();
+  const N=Math.min(20,Math.max(10,Math.round(innerWidth/80)));
+  for(let i=0;i<N;i++) seeds.push({ x:Math.random()*innerWidth, y:Math.random()*innerHeight,
+    r:1+Math.random()*1.7, sp:.22+Math.random()*.5, ph:Math.random()*6.28,
+    swy:.35+Math.random()*.75, o:.22+Math.random()*.35 });
+  (function tick(){ ctx.clearRect(0,0,sw,sh);
+    const t=performance.now()/1000, gust=Math.sin(t*.21)*.55+Math.cos(t*.09)*.35;
+    for(const s of seeds){ s.x+=s.sp+gust*.5; s.y+=Math.sin(t*s.swy+s.ph)*.35;
+      if(s.x>sw+14){ s.x=-14; s.y=Math.random()*sh; }
+      ctx.globalAlpha=s.o; ctx.fillStyle='#f6f2de';
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.29); ctx.fill();
+      ctx.globalAlpha=s.o*.45; ctx.strokeStyle='#fffdf0'; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(s.x,s.y); ctx.lineTo(s.x-5-s.r*3.2,s.y+2.5); ctx.stroke(); }
+    ctx.globalAlpha=1; requestAnimationFrame(tick); })();
+
+  /* 点击风种迸发（所有设备） */
+  addEventListener('click',function(e){ if(e.button!==0)return;
+    for(let i=0;i<9;i++){ const p=document.createElement('span');
+      const a=Math.random()*6.28, d=34+Math.random()*46;
+      p.style.cssText='position:fixed;left:'+e.clientX+'px;top:'+e.clientY+
+        'px;width:5px;height:5px;border-radius:50%;pointer-events:none;z-index:9998;background:'+
+        (Math.random()<.5?'#f6f2de':'#cfe6f7')+';box-shadow:0 0 6px rgba(255,250,220,.85);';
+      document.body.appendChild(p);
+      p.animate([
+        {transform:'translate(-50%,-50%) scale(1)',opacity:1},
+        {transform:'translate('+(Math.cos(a)*d-3).toFixed(0)+'px,'+(Math.sin(a)*d+26).toFixed(0)+'px) scale(.15)',opacity:0}],
+        {duration:600+Math.random()*340,easing:'cubic-bezier(.2,.6,.3,1)'}).onfinish=function(){p.remove();};
+    } },{passive:true});
+
+  /* 卡片3D倾斜+聚光 / 磁性按钮 / 文字解码扰动（细指针专属，事件委托） */
+  if(fine){
+    let curTilt=null, curMag=null;
+    document.addEventListener('mousemove',function(e){
+      const card=e.target.closest ? e.target.closest('.proj,.post') : null;
+      if(curTilt&&curTilt!==card){ curTilt.style.transform=''; curTilt.classList.remove('fx-tilt','fx-spot'); curTilt=null; }
+      if(card){ const r=card.getBoundingClientRect();
+        const px=(e.clientX-r.left)/r.width, py=(e.clientY-r.top)/r.height;
+        card.classList.add('fx-tilt','fx-spot');
+        card.style.transform='translateY(-3px) perspective(720px) rotateX('+((.5-py)*6.5).toFixed(2)+'deg) rotateY('+((px-.5)*8.5).toFixed(2)+'deg)';
+        card.style.setProperty('--mx',(px*100).toFixed(1)+'%');
+        card.style.setProperty('--my',(py*100).toFixed(1)+'%');
+        curTilt=card; }
+      const mag=e.target.closest ? e.target.closest('#backtop,.langbtn,#sp-enter') : null;
+      if(curMag&&curMag!==mag){ curMag.style.transform=''; curMag=null; }
+      if(mag){ const r=mag.getBoundingClientRect();
+        const dx=e.clientX-(r.left+r.width/2), dy=e.clientY-(r.top+r.height/2);
+        if(Math.hypot(dx,dy)<75){ mag.style.transform='translate('+(dx*.32).toFixed(1)+'px,'+(dy*.32).toFixed(1)+'px)'; curMag=mag; }
+        else if(curMag===mag){ mag.style.transform=''; curMag=null; } }
+    },{passive:true});
+    const CH='0123456789ACEHKMOSTUVX一三不之風';
+    document.addEventListener('mouseover',function(e){
+      const h=e.target.closest ? e.target.closest('.sec-title') : null;
+      if(!h||h.dataset.scr)return;
+      const tn=[].slice.call(h.childNodes).filter(function(n){return n.nodeType===3&&n.textContent.trim();})[0];
+      if(!tn)return;
+      h.dataset.scr='1'; const orig=tn.textContent; let f=0;
+      const iv=setInterval(function(){
+        tn.textContent=orig.split('').map(function(c,i){
+          return /\\s/.test(c)?c:(i<f?c:CH[Math.floor(Math.random()*CH.length)]);
+        }).join('');
+        if(f++>orig.length+2){ clearInterval(iv); tn.textContent=orig; delete h.dataset.scr; }
+      },26);
+    },{passive:true});
+  }
+})();
+</script>
+</body></body>
 </html>
