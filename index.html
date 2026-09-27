@@ -193,6 +193,36 @@
     *{animation:none!important;transition:none!important;}
     html{scroll-behavior:auto;}
   }
+  /* ===== 前置页 splash（电影感封面，品牌名替换 DeepSeek，背景无虚化） ===== */
+  #splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+    overflow:hidden;background:#0c1622;transition:opacity .8s ease,visibility .8s ease;}
+  #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .splash-bg{position:absolute;inset:0;background:#0c1622 url(assets/mondstadt-hero.jpg) center/cover no-repeat;
+    filter:none;transform:scale(1.12);animation:sp-ken 24s ease-in-out infinite alternate;}
+  @keyframes sp-ken{0%{transform:scale(1.1) translate(0,0)}100%{transform:scale(1.2) translate(-1.5%,-1.5%)}}
+  @media(max-width:640px){.splash-bg{background-image:url(assets/mondstadt-hero-small.jpg);}}
+  .splash-veil{position:absolute;inset:0;
+    background:radial-gradient(120% 90% at 50% 42%,rgba(12,22,34,.32),rgba(8,16,26,.78) 68%,rgba(6,12,20,.92));}
+  .splash-inner{position:relative;text-align:center;color:#fff;padding:24px;max-width:700px;
+    animation:sp-rise 1.1s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes sp-rise{0%{opacity:0;transform:translateY(26px)}100%{opacity:1;transform:none}}
+  .splash-kicker{font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:#bcd6ee;opacity:.9;margin-bottom:20px;}
+  .splash-brand{font-size:clamp(58px,12vw,118px);font-weight:700;letter-spacing:.04em;line-height:1;position:relative;
+    background:linear-gradient(180deg,#ffffff,#bfe0f5);-webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 38px rgba(109,179,220,.45);}
+  .splash-brand::after{content:"";position:absolute;left:50%;top:50%;width:135%;height:135%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(109,179,220,.30),transparent 60%);z-index:-1;animation:sp-glow 4s ease-in-out infinite alternate;}
+  @keyframes sp-glow{0%{opacity:.45}100%{opacity:1}}
+  .splash-tag{margin-top:20px;font-size:clamp(14px,2.4vw,18px);color:#dceaf6;opacity:0;animation:sp-fade 1s ease .6s both;}
+  @keyframes sp-fade{to{opacity:.92}}
+  .splash-enter{margin-top:36px;display:inline-block;border:1.5px solid rgba(255,255,255,.6);
+    background:rgba(255,255,255,.08);color:#fff;font-size:16px;font-weight:600;letter-spacing:.12em;
+    padding:13px 44px;border-radius:999px;cursor:pointer;-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+    transition:all .25s;opacity:0;animation:sp-fade 1s ease 1s both;font-family:inherit;}
+  .splash-enter:hover{background:rgba(109,179,220,.22);border-color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,127,181,.4);}
+  .splash-skip{display:inline-block;margin-top:16px;font-size:13px;color:#9fb6cc;text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.2s both;}
+  .splash-skip:hover{color:#fff;text-decoration:underline;}
+  @media(prefers-reduced-motion:reduce){#splash *{animation:none!important;}}
 </style>
 <script type="application/ld+json">
 {
@@ -246,6 +276,17 @@
 </head>
 <body>
 <div class="bg"></div>
+<div id="splash">
+  <div class="splash-bg"></div>
+  <div class="splash-veil"></div>
+  <div class="splash-inner">
+    <div class="splash-kicker" id="sp-kicker"></div>
+    <h1 class="splash-brand" id="sp-brand">一.chat</h1>
+    <div class="splash-tag" id="sp-tag"></div>
+    <button type="button" class="splash-enter" id="sp-enter"></button>
+    <div><a class="splash-skip" id="sp-skip" href="#"></a></div>
+  </div>
+</div>
 <div id="progress"></div>
 <div class="layout">
   <aside class="sidebar" id="sidebar"></aside>
@@ -391,7 +432,8 @@ const D = {
     interact:{title:"喜欢这个站点？",desc:"如果本站对你有帮助，欢迎点个赞或留下建议——点赞与反馈数据实时公开，也是这个站点「可被 AI 引用」的最直接证据。",
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
-      bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"}
+      bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →"}
   },
   en: {
     htmlLang:"en",
@@ -512,7 +554,8 @@ const D = {
     interact:{title:"Like this site?",desc:"If it helps you, give a star or leave feedback — star & feedback data are public in real time, and are the most direct proof that this site 'can be cited by AI'.",
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
-      bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"}
+      bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →"}
   }
 };
 
@@ -677,11 +720,22 @@ function renderContent(t){
     }
   }
 
+  function fillSplash(lang){
+    const sp = D[lang] && D[lang].splash; if(!sp) return;
+    const kb=document.getElementById('sp-kicker'), tg=document.getElementById('sp-tag'),
+          en=document.getElementById('sp-enter'), sk=document.getElementById('sp-skip');
+    if(kb) kb.textContent=sp.kicker;
+    if(tg) tg.textContent=sp.tag;
+    if(en) en.textContent=sp.enter;
+    if(sk) sk.textContent=sp.skip;
+  }
+
   function render(){
     if(io) io.disconnect();
     const lang = getLang();
     const t = D[lang];
     applyMeta(t);
+    fillSplash(lang);
     sidebarEl.innerHTML = renderSidebar(t);
     contentEl.innerHTML = renderContent(t);
     // typed slogan
@@ -724,6 +778,14 @@ function renderContent(t){
   document.getElementById('backtop').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
   render();
+
+  // 前置页（splash）交互：进入 / 跳过 / 回车 均可关闭
+  const splashEl=document.getElementById('splash');
+  function dismissSplash(){ if(splashEl) splashEl.classList.add('hide'); }
+  const spEnter=document.getElementById('sp-enter'), spSkip=document.getElementById('sp-skip');
+  if(spEnter) spEnter.addEventListener('click', dismissSplash);
+  if(spSkip) spSkip.addEventListener('click', function(e){ e.preventDefault(); dismissSplash(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Enter' && splashEl && !splashEl.classList.contains('hide')) dismissSplash(); });
 })();
 </script>
 </body>
