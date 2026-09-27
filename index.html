@@ -235,6 +235,28 @@
   #sp-npc.m-angry #sp-npc-gl,#sp-npc.m-angry #sp-npc-img{filter:saturate(1.6) hue-rotate(-18deg) brightness(1.05);}
   #sp-npc.m-dizzy #sp-npc-gl,#sp-npc.m-dizzy #sp-npc-img{filter:blur(.4px) saturate(.85);}
   #sp-npc.m-shy #sp-npc-gl,#sp-npc.m-shy #sp-npc-img{filter:saturate(1.25) brightness(1.06);}
+  /* 舞王 Live 舞台 */
+  #npc-stage-show{position:fixed;inset:0;z-index:10060;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s;}
+  #npc-stage-show[hidden]{display:none;}
+  #npc-stage-show.on{opacity:1;}
+  .show-backdrop{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 62%,rgba(30,40,90,.5),rgba(4,6,16,.92) 72%);backdrop-filter:blur(3px);}
+  .show-frame{position:relative;width:min(92vw,540px);aspect-ratio:1/1;border-radius:20px;overflow:hidden;background:#05070f;
+    box-shadow:0 0 0 2px rgba(120,170,255,.35),0 0 36px 8px rgba(80,120,255,.35),0 24px 70px rgba(0,0,0,.55);
+    transform:scale(.92);transition:transform .35s cubic-bezier(.2,.9,.3,1.25);}
+  #npc-stage-show.on .show-frame{transform:scale(1);}
+  .show-spot{position:absolute;inset:-22%;pointer-events:none;animation:npcSpot 3.2s ease-in-out infinite alternate;background:
+     conic-gradient(from 200deg at 30% -10%,transparent 0deg,rgba(160,120,255,.30) 12deg,transparent 26deg),
+     conic-gradient(from 320deg at 70% -10%,transparent 0deg,rgba(120,255,220,.24) 12deg,transparent 26deg),
+     conic-gradient(from 262deg at 50% -10%,transparent 0deg,rgba(255,160,220,.22) 10deg,transparent 22deg);}
+  @keyframes npcSpot{from{transform:translateX(-3%) rotate(-2deg);}to{transform:translateX(3%) rotate(2deg);}}
+  #npc-dance-video{position:relative;width:100%;height:100%;object-fit:cover;display:block;background:transparent;}
+  .show-title{position:absolute;left:14px;top:12px;z-index:2;font-weight:700;font-size:15px;line-height:1.3;color:#dfe9ff;
+    text-shadow:0 0 14px rgba(110,160,255,.95);letter-spacing:.5px;pointer-events:none;}
+  .show-bar{position:absolute;right:10px;top:10px;z-index:3;display:flex;gap:8px;}
+  .show-bar button{width:34px;height:34px;border-radius:50%;border:1px solid rgba(160,190,255,.4);background:rgba(10,16,40,.55);
+    color:#dfe9ff;font-size:15px;cursor:pointer;backdrop-filter:blur(4px);}
+  .show-bar button:hover{background:rgba(40,60,120,.72);}
+  .show-hint{position:absolute;left:0;right:0;bottom:10px;z-index:2;text-align:center;color:rgba(210,225,255,.78);font-size:12px;pointer-events:none;}
   .npc-backlight{position:absolute;inset:0;transform:translateZ(-46px) scale(1.06);filter:blur(15px) saturate(1.75) brightness(1.3);opacity:.5;pointer-events:none;}
   .npc-backlight img{width:100%;height:auto;display:block;}
   #sp-npc-img{position:relative;z-index:2;}
@@ -358,6 +380,16 @@
   <main class="content" id="content"></main>
 </div>
 <button id="backtop" aria-label="回到顶部" title="回到顶部">⌃</button>
+<div id="npc-stage-show" hidden>
+  <div class="show-backdrop"></div>
+  <div class="show-frame">
+    <div class="show-spot" aria-hidden="true"></div>
+    <video id="npc-dance-video" src="assets/npc_dance_web.mp4" loop playsinline preload="none"></video>
+    <div class="show-title" id="npc-show-title">🐋 大肥鱼 · 舞王 Live</div>
+    <div class="show-bar"><button type="button" id="npc-show-snd" title="声音开关">🔇</button><button type="button" id="npc-show-close" title="关闭">✕</button></div>
+    <div class="show-hint" id="npc-show-hint">点击画面任意处关闭</div>
+  </div>
+</div>
 <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script src="https://giscus.app/client.js"
   data-repo="Leo-Li638/personal-homepage"
@@ -504,7 +536,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。"}}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（拍我·长按看演唱会）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。",showTitle:"🐋 大肥鱼 · 舞王 Live",showHint:"点击画面任意处关闭",showMuteHint:"点击 🔇 按钮开启舞台音效"}}
   },
   en: {
     htmlLang:"en",
@@ -632,7 +664,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…",shy:["H-head pats? So sudden…","My hair! …fine, it's cozy…","Keep that up and I'll start humming~"],tail:["T-tail! That's my engine!","Touch the tail and I'll spray!","The tail is SUPER ticklish!"],angry:["Rapid-patting! Whales hold grudges!","One more pat! Grr!"],dizzy:["Too much spinning… room's tilted…","Whale out of water… hold me…"],dance:["Behold! The Whale Dance!","Million-views celebration dance!","Whale disco, let's bounce!"],wave:["Hi~ you're here!","I see you~ over here!"],old100:"100 pats… my back aches. Midlife fish crisis, sigh…",old500:"500 pats… am I hunching? No — it's the tail.",old2000:"2000 pats… *cough* this fish is old. You bounce like forever-young though."}}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat · hold for concert)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…",shy:["H-head pats? So sudden…","My hair! …fine, it's cozy…","Keep that up and I'll start humming~"],tail:["T-tail! That's my engine!","Touch the tail and I'll spray!","The tail is SUPER ticklish!"],angry:["Rapid-patting! Whales hold grudges!","One more pat! Grr!"],dizzy:["Too much spinning… room's tilted…","Whale out of water… hold me…"],dance:["Behold! The Whale Dance!","Million-views celebration dance!","Whale disco, let's bounce!"],wave:["Hi~ you're here!","I see you~ over here!"],old100:"100 pats… my back aches. Midlife fish crisis, sigh…",old500:"500 pats… am I hunching? No — it's the tail.",old2000:"2000 pats… *cough* this fish is old. You bounce like forever-young though.",showTitle:"🐋 Big Fish · Dance Live",showHint:"Tap anywhere to close",showMuteHint:"Tap 🔇 for stage sound"}}
   }
 };
 
@@ -955,14 +987,45 @@ function renderContent(t){
       else if(a==='follow'){ walkTo(mouseX-60); if(Math.random()<.35)talk(pick(t.idle)||'',2400); }
       else if(a==='spin'){ npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
         sfx.spin(); if(gl3d)gl3d.spinNow(); }
-      else if(a==='dance'){ danceStart=performance.now(); danceEnd=danceStart+8000; lastBeat=-1;
-        npcEl.classList.add('party'); if(gl3d)gl3d.party(true);
-        talk(pick(t.dance)||'',3800); fx('note',6); }
+      else if(a==='dance'){ openDanceShow(false); }
       else if(a==='wave'){ waveT=performance.now(); talk(pick(t.wave)||'',2400); fx('heart',3); }
       else if(a==='nod'){ nodT=performance.now(); if(Math.random()<.6)talk(pick(t.idle)||'',2200); }
       else{ const m=pickInfo(); if(m)talk(m,4200); } }
     window.__npcAct=function(a){ if(a==='freeze'){nextActT=performance.now()+60000;return;}
       if(ACTS.indexOf(a)>=0)doAct(a); };
+    /* ---- 舞王 Live：AI 图生视频真骨骼舞蹈舞台（加载失败自动兜底程序舞蹈+灯光） ---- */
+    const showEl=document.getElementById('npc-stage-show'),
+          showV=document.getElementById('npc-dance-video'),
+          showSnd=document.getElementById('npc-show-snd'),
+          showClose=document.getElementById('npc-show-close'),
+          showHint=document.getElementById('npc-show-hint'),
+          showTitle=document.getElementById('npc-show-title');
+    let showTimer=null,showLoaded=false;
+    function openDanceShow(userGesture){ if(!showEl)return;
+      const t=L();
+      if(showTitle)showTitle.textContent=t.showTitle||'🐋 大肥鱼 · 舞王 Live';
+      showEl.hidden=false; requestAnimationFrame(function(){ showEl.classList.add('on'); });
+      npcEl.classList.add('party'); if(gl3d)gl3d.party(true);
+      danceStart=performance.now(); danceEnd=danceStart+8000; lastBeat=-1; // 视频失败时的兜底程序舞蹈
+      fx('heart',6); fx('star',4);
+      if(!showLoaded){ showV.preload='auto'; try{showV.load();}catch(e){} showLoaded=true; }
+      showV.muted=!userGesture;
+      const pr=showV.play(); if(pr&&pr.catch)pr.catch(function(){ showV.muted=true; const p2=showV.play(); if(p2&&p2.catch)p2.catch(function(){}); });
+      if(showHint)showHint.textContent=userGesture?(t.showHint||'点击画面任意处关闭'):(t.showMuteHint||'点击 🔇 按钮开启舞台音效');
+      if(showSnd)showSnd.textContent=showV.muted?'🔇':'🔊';
+      clearTimeout(showTimer); showTimer=setTimeout(closeDanceShow,15000); }
+    function closeDanceShow(){ if(!showEl||showEl.hidden)return;
+      showEl.classList.remove('on'); try{showV.pause();}catch(e){}
+      npcEl.classList.remove('party'); if(gl3d)gl3d.party(false); danceEnd=0;
+      clearTimeout(showTimer);
+      setTimeout(function(){ showEl.hidden=true; },360); }
+    if(showEl){ showEl.addEventListener('click',function(e){
+        if(e.target===showSnd){ e.stopPropagation();
+          showV.muted=!showV.muted; if(showSnd)showSnd.textContent=showV.muted?'🔇':'🔊';
+          if(!showV.muted){ const pr=showV.play(); if(pr&&pr.catch)pr.catch(function(){}); }
+          return; }
+        closeDanceShow(); });
+      showV.addEventListener('click',function(){ closeDanceShow(); }); }
     (function actLoop(){ setTimeout(function(){
       const now=performance.now(), t=L();
       const dbg=window.__actDbg=window.__actDbg||{ticks:0,acts:[],block:''}; dbg.ticks++;
@@ -1059,6 +1122,7 @@ function renderContent(t){
       else{talk(pick(t.pat),2600);hearts(4);} }
     npcEl.addEventListener('pointerdown',function(e){
       e.preventDefault(); poke();
+      (window.__pdLog=window.__pdLog||[]).push({t:Math.round(performance.now()),x:e.clientX,y:e.clientY});
       const rz=npcEl.getBoundingClientRect(), zyy=(e.clientY-rz.top)/Math.max(1,rz.height);
       zone=zyy<.38?'head':(zyy>.72?'tail':'body');
       if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
@@ -1082,6 +1146,8 @@ function renderContent(t){
       lpx=e.clientX; lpy=e.clientY; lpt=now; });
     function release(){ if(state!=='grab')return; npcEl.classList.remove('grab');
       const dur=performance.now()-dnT, t=L();
+      (window.__relLog=window.__relLog||[]).push({dur:Math.round(dur),moved:Math.round(moved),zn:zone});
+      if(moved<14&&dur>=550){ state='idle'; openDanceShow(true); return; }   // 长按=舞王 Live
       if(moved<12&&dur<400){ state='idle'; pat(zone); return; }
       vx=Math.max(-1600,Math.min(1600,vel.x)); vy=Math.max(-1600,Math.min(1600,vel.y));
       state='air'; npcEl.classList.add('air');
@@ -1090,10 +1156,8 @@ function renderContent(t){
     npcEl.addEventListener('pointerup',release);
     npcEl.addEventListener('pointercancel',release);
     npcEl.addEventListener('dblclick',function(){
-      npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
-      if(gl3d)gl3d.spinNow(); sfx.spin();
-      talk(L().spin,2200); hearts(5);
-      npcImg.addEventListener('animationend',function h(){npcImg.classList.remove('spin');npcImg.removeEventListener('animationend',h);}); });
+      openDanceShow(true); });
+    npcEl.addEventListener('contextmenu',function(e){ e.preventDefault(); });
     addEventListener('resize',function(){ W=innerWidth; H=innerHeight; });
     // 舞台待机转身：NPC 随鼠标位置 3D rotateY（仅未领养态；领养后由物理引擎接管）
     addEventListener('mousemove',function(e){ if(engine||!stageEl)return;
