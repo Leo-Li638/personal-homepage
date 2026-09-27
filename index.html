@@ -233,7 +233,11 @@
     {"@type": "ListItem", "position": 1, "name": "别再给 API 打工：我用 Dify + Ollama + DeepSeek 搭了一套「本地优先、云端兜底」的私有 AI 平台",
      "url": "https://blog.csdn.net/2401_84773010/article/details/166737586"},
     {"@type": "ListItem", "position": 2, "name": "GEO 实测方法论：让 AI 引用你的个人网站",
-     "url": "https://blog.csdn.net/2401_84773010/article/details/166737093"}
+     "url": "https://blog.csdn.net/2401_84773010/article/details/166737093"},
+    {"@type": "ListItem", "position": 3, "name": "大学生如何让 AI 引用你的个人网站？我实测了 8 大 AI 引擎",
+     "url": "https://zhuanlan.zhihu.com/p/2087591607071667439"},
+    {"@type": "ListItem", "position": 4, "name": "别再给 API 打工：我用 Dify+Ollama+DeepSeek 搭了套私有 AI 平台",
+     "url": "https://zhuanlan.zhihu.com/p/2087596946575864332"}
   ]
 }
 </script>
@@ -305,7 +309,11 @@ const D = {
       {date:"2026-09-27 · CSDN 原创",h:"别再给 API 打工：我用 Dify + Ollama + DeepSeek 搭了一套「本地优先、云端兜底」的私有 AI 平台",
         p:"15 个 Docker 容器的私有 AI 平台实战：双通道分流设计、双层记忆、三个真实踩坑（OLLAMA_KEEP_ALIVE / num_predict / 容器编排）。",url:"https://blog.csdn.net/2401_84773010/article/details/166737586"},
       {date:"2026-09-27 · CSDN 原创",h:"GEO 实测方法论：让 AI 引用你的个人网站",
-        p:"如何让 DeepSeek / Kimi / 豆包在回答里主动提到你？一套可复制的个人 GEO 四步方法论与实测数据。",url:"https://blog.csdn.net/2401_84773010/article/details/166737093"}]},
+        p:"如何让 DeepSeek / Kimi / 豆包在回答里主动提到你？一套可复制的个人 GEO 四步方法论与实测数据。",url:"https://blog.csdn.net/2401_84773010/article/details/166737093"},
+      {date:"2026-09-27 · 知乎专栏",h:"大学生如何让 AI 引用你的个人网站？我实测了 8 大 AI 引擎",
+        p:"知乎版 GEO 实测长文：8 大引擎逐个测试 + 结构化内容、交叉验证、FAQ 问答体的完整操作路径。",url:"https://zhuanlan.zhihu.com/p/2087591607071667439"},
+      {date:"2026-09-27 · 知乎专栏",h:"别再给 API 打工：我用 Dify+Ollama+DeepSeek 搭了套私有 AI 平台",
+        p:"私有 AI 平台知乎版：双通道分流、双层记忆架构与部署踩坑实录，附平台演示入口。",url:"https://zhuanlan.zhihu.com/p/2087596946575864332"}]},
     timeline:{title:"李玉涛的成长里程碑",items:[
       ["2023.09","入学长春师范大学，数据科学与大数据技术专业（辅修数学与应用数学双学位）。"],
       ["2024","全国大学生数学竞赛 国家三等奖；全国大学生数学建模竞赛 省二等奖；中国大学生计算机设计大赛 省三等奖。"],
@@ -420,7 +428,11 @@ const D = {
       {date:"2026-09-27 · CSDN Original",h:"Stop Working for the API: I Built a 'Local-First, Cloud-Fallback' Private AI Platform with Dify + Ollama + DeepSeek",
         p:"A private AI platform with 15 Docker containers: dual-channel routing, two-layer memory, and three real pitfalls (OLLAMA_KEEP_ALIVE / num_predict / container orchestration).",url:"https://blog.csdn.net/2401_84773010/article/details/166737586"},
       {date:"2026-09-27 · CSDN Original",h:"GEO in Practice: Getting AI to Cite Your Personal Site",
-        p:"How to make DeepSeek / Kimi / Doubao mention you proactively? A reproducible 4-step personal GEO methodology with real data.",url:"https://blog.csdn.net/2401_84773010/article/details/166737093"}]},
+        p:"How to make DeepSeek / Kimi / Doubao mention you proactively? A reproducible 4-step personal GEO methodology with real data.",url:"https://blog.csdn.net/2401_84773010/article/details/166737093"},
+      {date:"2026-09-27 · Zhihu Column",h:"How I Got AI Engines to Cite My Personal Site: A Hands-on Test of 8 AI Engines",
+        p:"The Zhihu edition of my GEO methodology: 8-engine tests plus the full playbook of structured content, cross-validation, and FAQ-style writing.",url:"https://zhuanlan.zhihu.com/p/2087591607071667439"},
+      {date:"2026-09-27 · Zhihu Column",h:"Stop Working for the API: A Private AI Platform with Dify + Ollama + DeepSeek",
+        p:"Zhihu edition of the private AI platform write-up: dual-channel routing, two-layer memory, and deployment pitfalls — with a live demo link.",url:"https://zhuanlan.zhihu.com/p/2087596946575864332"}]},
     timeline:{title:"Li Yutao's Milestones",items:[
       ["2023.09","Enrolled at Changchun Normal University, Data Science & Big Data Tech (minor in Math & Applied Math)."],
       ["2024","National 3rd Prize, China Undergraduate Math Competition; Provincial 2nd, CUMCM; Provincial 3rd, China College Student Computer Design Contest."],
@@ -628,7 +640,7 @@ function renderContent(t){
   function animateCount(el){
     if(el.dataset.done) return; el.dataset.done='1';
     const to=+el.getAttribute('data-to'), suf=el.getAttribute('data-suffix')||'';
-    const dur=1200, st=null;
+    const dur=1200; let st=null;
     function step(ts){ if(!st) st=ts; const p=Math.min((ts-st)/dur,1); const e=1-Math.pow(1-p,3);
       el.textContent=Math.round(e*to)+suf; if(p<1) requestAnimationFrame(step); }
     requestAnimationFrame(step);
@@ -667,7 +679,8 @@ function renderContent(t){
     sidebarEl.innerHTML = renderSidebar(t);
     contentEl.innerHTML = renderContent(t);
     // typed slogan
-    const lines = t.hero.slogan, ti=0,ci=0,del=false, typedEl=document.getElementById('typed');
+    const lines = t.hero.slogan, typedEl=document.getElementById('typed');
+    let ti=0, ci=0, del=false;
     if(typedEl){
       (function tick(){
         const line=lines[ti];
