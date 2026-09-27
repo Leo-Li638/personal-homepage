@@ -230,6 +230,11 @@
   #sp-npc.gl #sp-npc-img{opacity:0;}
   #sp-npc.gl .npc-backlight img{opacity:0;}
   #sp-npc.sleepy #sp-npc-gl,#sp-npc.sleepy #sp-npc-img{filter:brightness(.72) saturate(.75);}
+  #sp-npc.party .npc-backlight{animation:npcHue 2.8s linear infinite;}
+  @keyframes npcHue{to{filter:hue-rotate(360deg);}}
+  #sp-npc.m-angry #sp-npc-gl,#sp-npc.m-angry #sp-npc-img{filter:saturate(1.6) hue-rotate(-18deg) brightness(1.05);}
+  #sp-npc.m-dizzy #sp-npc-gl,#sp-npc.m-dizzy #sp-npc-img{filter:blur(.4px) saturate(.85);}
+  #sp-npc.m-shy #sp-npc-gl,#sp-npc.m-shy #sp-npc-img{filter:saturate(1.25) brightness(1.06);}
   .npc-backlight{position:absolute;inset:0;transform:translateZ(-46px) scale(1.06);filter:blur(15px) saturate(1.75) brightness(1.3);opacity:.5;pointer-events:none;}
   .npc-backlight img{width:100%;height:auto;display:block;}
   #sp-npc-img{position:relative;z-index:2;}
@@ -499,7 +504,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…"}}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。"}}
   },
   en: {
     htmlLang:"en",
@@ -627,7 +632,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…"}}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…",shy:["H-head pats? So sudden…","My hair! …fine, it's cozy…","Keep that up and I'll start humming~"],tail:["T-tail! That's my engine!","Touch the tail and I'll spray!","The tail is SUPER ticklish!"],angry:["Rapid-patting! Whales hold grudges!","One more pat! Grr!"],dizzy:["Too much spinning… room's tilted…","Whale out of water… hold me…"],dance:["Behold! The Whale Dance!","Million-views celebration dance!","Whale disco, let's bounce!"],wave:["Hi~ you're here!","I see you~ over here!"],old100:"100 pats… my back aches. Midlife fish crisis, sigh…",old500:"500 pats… am I hunching? No — it's the tail.",old2000:"2000 pats… *cough* this fish is old. You bounce like forever-young though."}}
   }
 };
 
@@ -933,9 +938,9 @@ function renderContent(t){
         if(Math.abs(d)<30){ vx=0; stopWalk(); return; }
         vy=-270; vx=Math.max(-360,Math.min(360,d*2.6)); state='air'; npcEl.classList.add('air');
       },460); }
-    const ACTS=['hop','wander','follow','spin','chat'];
+    const ACTS=['hop','wander','follow','spin','chat','dance','wave','nod'];
     function actScore(a){ const s=brain.d.arms['act:'+a]; return s?Math.max(.12,(s.w+1)/(s.n+2)):.55; }
-    function pickAct(){ const acts=engine?ACTS:['spin','chat'];
+    function pickAct(){ const acts=engine?ACTS:['spin','chat','nod'];
       if(Math.random()<.15) return acts[Math.floor(Math.random()*acts.length)];
       let tot=0; acts.forEach(function(a){tot+=actScore(a);});
       let r=Math.random()*tot;
@@ -949,8 +954,15 @@ function renderContent(t){
         if(Math.random()<.3)talk(pick(t.idle)||'',2400); }
       else if(a==='follow'){ walkTo(mouseX-60); if(Math.random()<.35)talk(pick(t.idle)||'',2400); }
       else if(a==='spin'){ npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
-        if(gl3d)gl3d.spinNow(); }
+        sfx.spin(); if(gl3d)gl3d.spinNow(); }
+      else if(a==='dance'){ danceStart=performance.now(); danceEnd=danceStart+8000; lastBeat=-1;
+        npcEl.classList.add('party'); if(gl3d)gl3d.party(true);
+        talk(pick(t.dance)||'',3800); fx('note',6); }
+      else if(a==='wave'){ waveT=performance.now(); talk(pick(t.wave)||'',2400); fx('heart',3); }
+      else if(a==='nod'){ nodT=performance.now(); if(Math.random()<.6)talk(pick(t.idle)||'',2200); }
       else{ const m=pickInfo(); if(m)talk(m,4200); } }
+    window.__npcAct=function(a){ if(a==='freeze'){nextActT=performance.now()+60000;return;}
+      if(ACTS.indexOf(a)>=0)doAct(a); };
     (function actLoop(){ setTimeout(function(){
       const now=performance.now(), t=L();
       const dbg=window.__actDbg=window.__actDbg||{ticks:0,acts:[],block:''}; dbg.ticks++;
@@ -958,9 +970,10 @@ function renderContent(t){
       if(sleepy&&!wasSleepy&&!sleepShown){ sleepShown=true; npcEl.classList.add('sleepy');
         if(document.visibilityState==='visible'&&!talkEl.classList.contains('show')) talk(t.sleep||'Zzz…',3200); }
       if(!sleepy&&sleepShown){ sleepShown=false; npcEl.classList.remove('sleepy'); }
-      if(engine&&!sleepy&&state==='idle'&&walkTarget==null&&document.visibilityState==='visible'
+      if(engine&&!sleepy&&state==='idle'&&walkTarget==null&&danceEnd<=0&&document.visibilityState==='visible'
          &&!talkEl.classList.contains('show')&&now>=nextActT){
         const a=pickAct(); dbg.acts.push(a); doAct(a); }
+      if(sleepy&&dbg.ticks%3===0)fx('zzz',1);
       else dbg.block=(engine?'':'noEngine|')+(sleepy?'sleepy|':'')+(state!=='idle'?'st:'+state:'')+(walkTarget!=null?'walking|':'')+(talkEl.classList.contains('show')?'talking|':'')+(now<nextActT?'wait':dbg.block||'');
       if(now>=nextActT) nextActT=now+(sleepy?30000:11000)*(0.7+Math.random()*.9);
       actLoop(); },1200); })();
@@ -974,6 +987,9 @@ function renderContent(t){
     let rot=0,rotTarget=0,stTurn=0,stCur=0,landT=-1,patT=-1,lastT=performance.now();
     let gox=0,goy=0,dnX=0,dnY=0,dnT=0,moved=0,vel={x:0,y:0},lpx=0,lpy=0,lpt=0;
     let talkTimer=null,patCount=0; try{patCount=+localStorage.getItem('npc_pats')||0;}catch(e){}
+    let danceStart=0,danceEnd=0,lastBeat=-1,waveT=0,nodT=0,mood='',moodT=0,zone='body',lastPatT=0,rapidN=0;
+    function setMood(m,ms){ mood=m; moodT=performance.now()+(ms||1400);
+      npcEl.classList.remove('m-angry','m-shy','m-dizzy'); if(m)npcEl.classList.add('m-'+m); }
     const FLY=['💙','🐋','✨','🩵','💫'];
     const pick=a=>a&&a.length?a[Math.floor(Math.random()*a.length)]:'';
     function L(){ const d=D[getLang()]; return (d&&d.splash&&d.splash.npcTalk)||{}; }
@@ -984,26 +1000,67 @@ function renderContent(t){
       const l=Math.max(bw/2+6,Math.min(innerWidth-bw/2-6,cx));
       const tp=Math.max(talkEl.offsetHeight+8,top);
       talkEl.style.left=l+'px'; talkEl.style.top=tp+'px'; }
-    function hearts(n){ const r=npcEl.getBoundingClientRect();
+    function fx(kind,n,yLo,yHi){ const r=npcEl.getBoundingClientRect();
+      const M={heart:['💙','🐋','✨','🩵','💫'],star:['✨','💫','⭐'],note:['🎵','🎶'],anger:['💢','💥'],sweat:['💦','💧'],zzz:['💤'],poof:['💨','☁️']};
+      const set=M[kind]||M.heart, lo=(yLo==null?.08:yLo), hi=(yHi==null?.35:yHi);
       for(let i=0;i<n;i++){ const s=document.createElement('span'); s.className='npc-fly';
-        s.textContent=FLY[Math.floor(Math.random()*FLY.length)];
-        s.style.left=(r.left+r.width*(0.25+Math.random()*0.5))+'px';
-        s.style.top=(r.top+r.height*(0.10+Math.random()*0.30))+'px';
-        s.style.animationDelay=(i*90)+'ms';
+        s.textContent=set[Math.floor(Math.random()*set.length)];
+        s.style.left=(r.left+r.width*(0.12+Math.random()*0.76))+'px';
+        s.style.top=(r.top+r.height*(lo+Math.random()*(hi-lo)))+'px';
+        s.style.animationDelay=(i*90)+'ms'; s.style.fontSize=(13+Math.random()*11)+'px';
         document.body.appendChild(s);
         s.addEventListener('animationend',function(){this.remove();}); } }
-    function pat(){ patCount++; try{localStorage.setItem('npc_pats',patCount);}catch(e){}
+    function hearts(n){ fx('heart',n); }
+    /* ---- WebAudio 合成音效（零音频文件，借鉴 charlotty 方案） ---- */
+    const sfx=(function(){ let ac=null;
+      function ctx(){ if(!ac){ try{ ac=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
+        if(ac&&ac.state==='suspended'){ try{ac.resume();}catch(e){} } return ac; }
+      function tone(f0,f1,dur,type,vol){ const c=ctx(); if(!c)return;
+        try{ const o=c.createOscillator(), g=c.createGain(); o.type=type||'sine';
+          o.frequency.setValueAtTime(f0,c.currentTime);
+          o.frequency.exponentialRampToValueAtTime(Math.max(30,f1),c.currentTime+dur);
+          g.gain.setValueAtTime(vol||.1,c.currentTime);
+          g.gain.exponentialRampToValueAtTime(.001,c.currentTime+dur);
+          o.connect(g); g.connect(c.destination); o.start(); o.stop(c.currentTime+dur+.02); }catch(e){} }
+      function noise(dur,vol){ const c=ctx(); if(!c)return;
+        try{ const n=(c.sampleRate*dur)|0, b=c.createBuffer(1,n,c.sampleRate), d=b.getChannelData(0);
+          for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);
+          const s=c.createBufferSource(); s.buffer=b;
+          const g=c.createGain(); g.gain.value=vol||.06; s.connect(g); g.connect(c.destination); s.start(); }catch(e){} }
+      return { pat:function(){ tone(480,760,.11,'sine',.09); },
+        land:function(){ tone(150,55,.13,'sine',.12); },
+        spin:function(){ noise(.24,.08); tone(600,220,.2,'sine',.05); },
+        boing:function(){ tone(280,880,.16,'triangle',.09); },
+        beat:function(){ tone(130,50,.09,'square',.14); noise(.03,.04); } };
+    })();
+    function pat(pzone){ patCount++; try{localStorage.setItem('npc_pats',patCount);}catch(e){}
       brain.d.pats++;
-      const now=performance.now();
+      const now=performance.now(), t=L(), zn=pzone||'body';
+      (window.__patLog=window.__patLog||[]).push({n:patCount,zn:zn,gap:Math.round(now-lastPatT),rapid:rapidN});
       if(lastArm&&armPending){ brain.bump(lastArm, now-lastArmT<7000?1:-0.25); armPending=false; } // 台词吸引力反馈
       brain.save();
-      const t=L(); vy=-330; state='air'; npcEl.classList.add('air'); patT=now;
+      if(now-lastPatT<200)rapidN++; else rapidN=0; lastPatT=now;
+      if(rapidN>=4){ rapidN=0; setMood('angry',1500); fx('anger',5); sfx.boing(); patT=now;
+        vy=-300; state='air'; npcEl.classList.add('air'); talk(pick(t.angry)||'',2600); return; }
+      patT=now; vy=-330; state='air'; npcEl.classList.add('air');
+      if(patCount===100||(patCount===500)||(patCount===2000)){ sfx.pat();
+        if(patCount===100){ talk(t.old100,5600); fx('zzz',2); }
+        else if(patCount===500){ talk(t.old500,5600); fx('poof',3,.7,.95); }
+        else{ talk(t.old2000,5600); fx('poof',4,.7,.95); }
+        return; }
+      if(zn==='head'){ sfx.pat(); setMood('shy',1500); fx('heart',6); talk(pick(t.shy)||pick(t.pat),2600); return; }
+      if(zn==='tail'){ sfx.boing(); fx('star',6);
+        npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
+        if(gl3d)gl3d.spinNow(); talk(pick(t.tail)||pick(t.pat),2600); return; }
+      sfx.pat();
       if(patCount%10===0){talk(t.egg,4200);hearts(8);}
       else if(patCount%15===0){talk(brainReport(),5400);hearts(6);}
       else if(patCount===5){talk(pickInfo(),4400);hearts(5);}
       else{talk(pick(t.pat),2600);hearts(4);} }
     npcEl.addEventListener('pointerdown',function(e){
       e.preventDefault(); poke();
+      const rz=npcEl.getBoundingClientRect(), zyy=(e.clientY-rz.top)/Math.max(1,rz.height);
+      zone=zyy<.38?'head':(zyy>.72?'tail':'body');
       if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
         const r=npcEl.getBoundingClientRect();
         document.body.appendChild(npcEl);
@@ -1011,6 +1068,7 @@ function renderContent(t){
         npcEl.style.margin='0'; npcEl.style.width=r.width+'px'; npcEl.style.zIndex='10001';
         x=r.left; y=r.top; engine=true;
       }
+      danceEnd=0; npcEl.classList.remove('party'); if(gl3d)gl3d.party(false);
       try{npcEl.setPointerCapture(e.pointerId);}catch(err){}
       state='grab'; npcEl.classList.add('grab'); npcEl.classList.remove('air');
       gox=e.clientX-x; goy=e.clientY-y; dnX=e.clientX; dnY=e.clientY; dnT=performance.now(); moved=0;
@@ -1024,15 +1082,16 @@ function renderContent(t){
       lpx=e.clientX; lpy=e.clientY; lpt=now; });
     function release(){ if(state!=='grab')return; npcEl.classList.remove('grab');
       const dur=performance.now()-dnT, t=L();
-      if(moved<12&&dur<400){ state='idle'; pat(); return; }
+      if(moved<12&&dur<400){ state='idle'; pat(zone); return; }
       vx=Math.max(-1600,Math.min(1600,vel.x)); vy=Math.max(-1600,Math.min(1600,vel.y));
       state='air'; npcEl.classList.add('air');
+      if(Math.abs(vx)>700||Math.abs(vy)>700)fx('sweat',3);
       if(Math.abs(vx)>260||Math.abs(vy)>260){ if(Math.random()<.5)talk(t.drag,1600); } }
     npcEl.addEventListener('pointerup',release);
     npcEl.addEventListener('pointercancel',release);
     npcEl.addEventListener('dblclick',function(){
       npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
-      if(gl3d)gl3d.spinNow();
+      if(gl3d)gl3d.spinNow(); sfx.spin();
       talk(L().spin,2200); hearts(5);
       npcImg.addEventListener('animationend',function h(){npcImg.classList.remove('spin');npcImg.removeEventListener('animationend',h);}); });
     addEventListener('resize',function(){ W=innerWidth; H=innerHeight; });
@@ -1053,11 +1112,12 @@ function renderContent(t){
     });
     /* ---- 真·三维形象：three.js + GLB 手办模型（渐进增强；WebGL 不可用/加载失败自动回落 2D 立绘） ---- */
     const gl3d=(function(){
-      if(!window.WebGLRenderingContext) return {ready:false,pose:function(){},spinNow:function(){},stats:function(){return null;}};
-      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return {ready:false,pose:function(){},spinNow:function(){},stats:function(){return null;}};
+      if(!window.WebGLRenderingContext) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
       const cvs=document.getElementById('sp-npc-gl');
-      if(!cvs) return {ready:false,pose:function(){},spinNow:function(){},stats:function(){return null;}};
-      let ready=false,renderer=null,scene,camera,model,group,yaw=0,pitch=0,spinA=0,lw=0,lh=0;
+      if(!cvs) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
+      let ready=false,renderer=null,scene,camera,model,group,yaw=0,pitch=0,spinA=0,lw=0,lh=0,
+          keyL=null,rimL=null,hemiL=null,partyOn=false;
       function loadScript(src){ return new Promise(function(res,rej){
         const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
       function fit(){
@@ -1074,9 +1134,9 @@ function renderContent(t){
         renderer.outputEncoding=THREE.sRGBEncoding;
         scene=new THREE.Scene();
         camera=new THREE.PerspectiveCamera(32,1,.1,50);
-        scene.add(new THREE.HemisphereLight(0xffffff,0x5566aa,1.05));
-        const key=new THREE.DirectionalLight(0xffffff,.85); key.position.set(2,3,4); scene.add(key);
-        const rim=new THREE.DirectionalLight(0x88aaff,.5); rim.position.set(-3,2,-3); scene.add(rim);
+        scene.add(hemiL=new THREE.HemisphereLight(0xffffff,0x5566aa,1.05));
+        keyL=new THREE.DirectionalLight(0xffffff,.85); keyL.position.set(2,3,4); scene.add(keyL);
+        rimL=new THREE.DirectionalLight(0x88aaff,.5); rimL.position.set(-3,2,-3); scene.add(rimL);
         group=new THREE.Group(); scene.add(group);
         new THREE.GLTFLoader().load('assets/npc_maid_3d.glb',function(g){
           model=g.scene; group.add(model);
@@ -1086,6 +1146,10 @@ function renderContent(t){
             const w=cvs.clientWidth,h=cvs.clientHeight;
             if(w!==lw||h!==lh){ lw=w; lh=h; renderer.setSize(w,h,false); fit(); }
             if(spinA>0){ spinA=Math.max(0,spinA-.05); yaw+=spinA*.55; }
+            if(partyOn){ const hue=(t*.00016)%1;
+              keyL.color.setHSL(hue,.72,.62); rimL.color.setHSL((hue+.45)%1,.85,.6);
+              hemiL.intensity=1.05+.32*Math.sin(t*.011); }
+            else{ keyL.color.setHex(0xffffff); rimL.color.setHex(0x88aaff); hemiL.intensity=1.05; }
             group.rotation.y=yaw;
             group.rotation.x=pitch*.6+Math.sin((t||0)*.0011)*.012;
             group.rotation.z=Math.sin((t||0)*.0009)*.03;
@@ -1100,6 +1164,7 @@ function renderContent(t){
         get ready(){ return ready; },
         pose:function(y,p){ yaw=y; pitch=p; },
         spinNow:function(){ if(ready) spinA=1; },
+        party:function(on){ partyOn=!!on; },
         stats:function(){ return ready?{tri:renderer.info.render.triangles,w:cvs.width,h:cvs.height}:null; }
       };
     })();
@@ -1113,8 +1178,10 @@ function renderContent(t){
           if(x>W-w-4){x=W-w-4;vx=-Math.abs(vx)*.5;}
           if(y<6){y=6;vy=Math.abs(vy)*.3;}
           if(y>=groundY){ y=groundY;
-            if(Math.abs(vy)>340){ vy=-vy*.42; vx*=.72; landT=t; }
+            const iv=vy;
+            if(Math.abs(vy)>340){ vy=-vy*.42; vx*=.72; landT=t; sfx.land(); fx('poof',2,.7,.95); }
             else{ vy=0; vx=0; state='idle'; npcEl.classList.remove('air'); landT=t;
+              if(Math.abs(iv)>820){ setMood('dizzy',1800); fx('star',5); talk(pick(L().dizzy)||'',2400); }
               if(walkTarget==null&&patT<0&&Math.random()<.35)talk(L().land,1800); } } }
         if(state==='idle'){ y+=(groundY-y)*.2; rotTarget*=.94; }
         rot+=((state==='grab'?Math.max(-14,Math.min(14,vel.x*.012)):(state==='air'?Math.max(-16,Math.min(16,vx*.014)):rotTarget))-rot)*.15;
@@ -1122,9 +1189,25 @@ function renderContent(t){
         p=(t-landT)/320; if(p>=0&&p<1){ const k=1-p; sy=1-.18*k*k; sx=1+.14*k*k; }
         p=(t-patT)/300; if(p>=0&&p<1){ const k=1-p; sy=1+.1*k; sx=1-.08*k; }
         const glOn=gl3d&&gl3d.ready;
-        npcEl.style.transform='translate3d('+x+'px,'+y+'px,0) rotate('+(glOn?0:rot).toFixed(2)+'deg) scale('+sx.toFixed(3)+','+sy.toFixed(3)+')';
+        /* 表演层：舞蹈节拍 / 挥手 / 点头 / 情绪姿态（视频级动作语言） */
+        let dYw=0,dZ=0,dP=0,dSx=1,dSy=1,dB2=0;
+        if(danceEnd>0){
+          if(t<danceEnd){ const p=t-danceStart, beat=Math.floor(p/500)%8, bp=(p%500)/500, env=Math.sin(Math.PI*bp);
+            if(beat!==lastBeat){ lastBeat=beat; if(beat%2===0)sfx.beat(); if(beat===0||beat===4)fx('note',2); }
+            dSy=1-.09*env; dSx=1+.05*env; dB2=8*env;
+            dYw=(beat===1?-22:beat===3?22:0)*env+(beat===5?Math.sin(bp*Math.PI*2)*26:0);
+            dZ=(beat===2?-12:beat===7?12:0)*env;
+          } else { danceEnd=0; npcEl.classList.remove('party'); if(gl3d)gl3d.party(false); } }
+        if(waveT>0&&t-waveT<2000){ const wp=(t-waveT)/1000; dYw+=Math.sin(wp*Math.PI*3)*13; dZ+=Math.sin(wp*Math.PI*3)*9; }
+        if(nodT>0&&t-nodT<1400){ const np=(t-nodT)/1400; dP=Math.sin(np*Math.PI*2)*9; }
+        if(mood&&t>moodT){ mood=''; }
+        let mSx=1,mSy=1,mZ=0;
+        if(mood==='shy'){ mZ=8; mSx=.982; }
+        else if(mood==='angry'){ mZ=Math.sin(t*.055)*2.5; }
+        else if(mood==='dizzy'){ dYw+=Math.sin(t*.008)*15; dZ+=Math.sin(t*.013)*5; }
+        npcEl.style.transform='translate3d('+x+'px,'+(y-(dB2||0))+'px,0) rotate('+((glOn?0:rot)+dYw+dZ+(mZ||0)).toFixed(2)+'deg) scale('+((sx*dSx*mSx)).toFixed(3)+','+((sy*dSy*mSy)).toFixed(3)+')';
         const airH=Math.max(0,groundY-y);
-        if(glOn){ gl3d.pose(rot*(Math.PI/180), state==='air'?Math.max(-.3,Math.min(.3,-vy*.00035)):0);
+        if(glOn){ gl3d.pose(((rot+dYw+dZ+(mZ||0))*(Math.PI/180)), (state==='air'?Math.max(-.3,Math.min(.3,-vy*.00035)):0)+dP*(Math.PI/180));
           if(mirrorEl) mirrorEl.style.opacity=0;
           if(backlightEl) backlightEl.style.opacity=0; }
         else if(mirrorEl) mirrorEl.style.opacity=Math.max(.08,.3-airH/2600).toFixed(2);
