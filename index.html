@@ -953,12 +953,15 @@ function renderContent(t){
       else{ const m=pickInfo(); if(m)talk(m,4200); } }
     (function actLoop(){ setTimeout(function(){
       const now=performance.now(), t=L();
+      const dbg=window.__actDbg=window.__actDbg||{ticks:0,acts:[],block:''}; dbg.ticks++;
       const wasSleepy=sleepy; sleepy=(now-lastUserT>90000);
       if(sleepy&&!wasSleepy&&!sleepShown){ sleepShown=true; npcEl.classList.add('sleepy');
         if(document.visibilityState==='visible'&&!talkEl.classList.contains('show')) talk(t.sleep||'Zzz…',3200); }
       if(!sleepy&&sleepShown){ sleepShown=false; npcEl.classList.remove('sleepy'); }
       if(engine&&!sleepy&&state==='idle'&&walkTarget==null&&document.visibilityState==='visible'
-         &&!talkEl.classList.contains('show')&&now>=nextActT){ doAct(pickAct()); }
+         &&!talkEl.classList.contains('show')&&now>=nextActT){
+        const a=pickAct(); dbg.acts.push(a); doAct(a); }
+      else dbg.block=(engine?'':'noEngine|')+(sleepy?'sleepy|':'')+(state!=='idle'?'st:'+state:'')+(walkTarget!=null?'walking|':'')+(talkEl.classList.contains('show')?'talking|':'')+(now<nextActT?'wait':dbg.block||'');
       if(now>=nextActT) nextActT=now+(sleepy?30000:11000)*(0.7+Math.random()*.9);
       actLoop(); },1200); })();
     document.addEventListener('click',function(e){       // 项目偏好追踪
