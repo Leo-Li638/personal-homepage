@@ -225,6 +225,11 @@
   /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」立绘版：待机漂浮+拍拍反应+抛掷物理，可拖拽） */
   .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;perspective:750px;}
   .npc-stage{position:relative;transform-style:preserve-3d;}
+  #sp-npc-gl{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .6s;pointer-events:none;z-index:3;}
+  #sp-npc-gl.on{opacity:1;}
+  #sp-npc.gl #sp-npc-img{opacity:0;}
+  #sp-npc.gl .npc-backlight img{opacity:0;}
+  #sp-npc.sleepy #sp-npc-gl,#sp-npc.sleepy #sp-npc-img{filter:brightness(.72) saturate(.75);}
   .npc-backlight{position:absolute;inset:0;transform:translateZ(-46px) scale(1.06);filter:blur(15px) saturate(1.75) brightness(1.3);opacity:.5;pointer-events:none;}
   .npc-backlight img{width:100%;height:auto;display:block;}
   #sp-npc-img{position:relative;z-index:2;}
@@ -326,6 +331,7 @@
       <div class="npc-stage" id="sp-npc-stage">
         <div class="npc-backlight" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
         <img id="sp-npc-img" src="assets/npc_maid.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
+        <canvas id="sp-npc-gl" aria-hidden="true"></canvas>
         <div class="npc-orb" aria-hidden="true"></div>
         <div class="npc-orb o2" aria-hidden="true"></div>
       </div>
@@ -493,7 +499,7 @@ const D = {
       star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨"}}
+    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（可拍可拖）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…"}}
   },
   en: {
     htmlLang:"en",
@@ -621,7 +627,7 @@ const D = {
       star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨"}}
+    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat & drag)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…"}}
   }
 };
 
@@ -862,7 +868,8 @@ function renderContent(t){
   const npcEl=document.getElementById('sp-npc');
   if(npcEl){
     const npcImg=document.getElementById('sp-npc-img'), talkEl=document.getElementById('sp-npc-talk'),
-          stageEl=document.getElementById('sp-npc-stage'), mirrorEl=document.getElementById('sp-npc-mirror');
+          stageEl=document.getElementById('sp-npc-stage'), mirrorEl=document.getElementById('sp-npc-mirror'),
+          backlightEl=document.querySelector('.npc-backlight');
 
     /* ---- 自主持续学习引擎：ε-greedy 多臂老虎机 + 访客记忆（localStorage 跨会话持久化） ---- */
     const brain=(function(){
@@ -910,6 +917,50 @@ function renderContent(t){
         const m=pickInfo(); if(m)talk(m,4200);
       }
       chatter(); },34000+Math.random()*22000); })();
+    /* ---- 自主行为引擎：桌宠/灵宝式自主动作，被拍后行为同样获得强化 ---- */
+    let lastUserT=performance.now(),nextActT=performance.now()+4000,sleepy=false,sleepShown=false,
+        walkTarget=null,walkTimer=null,mouseX=innerWidth/2;
+    addEventListener('mousemove',function(e){ mouseX=e.clientX; },{passive:true});
+    function poke(){ lastUserT=performance.now();
+      if(sleepy){ sleepy=false; sleepShown=false; npcEl.classList.remove('sleepy');
+        const t=L(); if(t.wake)talk(t.wake,2200); } }
+    function stopWalk(){ if(walkTimer){clearInterval(walkTimer);walkTimer=null;} walkTarget=null; }
+    function walkTo(tx){ walkTarget=Math.max(24,Math.min(W-96,tx)); if(walkTimer)clearInterval(walkTimer);
+      walkTimer=setInterval(function(){
+        if(state==='grab'||!engine){ stopWalk(); return; }
+        if(state!=='idle'||walkTarget==null)return;
+        const d=walkTarget-x;
+        if(Math.abs(d)<30){ vx=0; stopWalk(); return; }
+        vy=-270; vx=Math.max(-360,Math.min(360,d*2.6)); state='air'; npcEl.classList.add('air');
+      },460); }
+    const ACTS=['hop','wander','follow','spin','chat'];
+    function actScore(a){ const s=brain.d.arms['act:'+a]; return s?Math.max(.12,(s.w+1)/(s.n+2)):.55; }
+    function pickAct(){ const acts=engine?ACTS:['spin','chat'];
+      if(Math.random()<.15) return acts[Math.floor(Math.random()*acts.length)];
+      let tot=0; acts.forEach(function(a){tot+=actScore(a);});
+      let r=Math.random()*tot;
+      for(const a of acts){ r-=actScore(a); if(r<=0) return a; }
+      return acts[0]; }
+    function doAct(a){ const t=L();
+      lastArm='act:'+a; lastArmT=performance.now(); armPending=true;
+      if(a==='hop'){ vy=-320; state='air'; npcEl.classList.add('air');
+        if(Math.random()<.45)talk(pick(t.idle)||'',2400); }
+      else if(a==='wander'){ walkTo(x+(Math.random()<.5?-1:1)*(140+Math.random()*280));
+        if(Math.random()<.3)talk(pick(t.idle)||'',2400); }
+      else if(a==='follow'){ walkTo(mouseX-60); if(Math.random()<.35)talk(pick(t.idle)||'',2400); }
+      else if(a==='spin'){ npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
+        if(gl3d)gl3d.spinNow(); }
+      else{ const m=pickInfo(); if(m)talk(m,4200); } }
+    (function actLoop(){ setTimeout(function(){
+      const now=performance.now(), t=L();
+      const wasSleepy=sleepy; sleepy=(now-lastUserT>90000);
+      if(sleepy&&!wasSleepy&&!sleepShown){ sleepShown=true; npcEl.classList.add('sleepy');
+        if(document.visibilityState==='visible'&&!talkEl.classList.contains('show')) talk(t.sleep||'Zzz…',3200); }
+      if(!sleepy&&sleepShown){ sleepShown=false; npcEl.classList.remove('sleepy'); }
+      if(engine&&!sleepy&&state==='idle'&&walkTarget==null&&document.visibilityState==='visible'
+         &&!talkEl.classList.contains('show')&&now>=nextActT){ doAct(pickAct()); }
+      if(now>=nextActT) nextActT=now+(sleepy?30000:11000)*(0.7+Math.random()*.9);
+      actLoop(); },1200); })();
     document.addEventListener('click',function(e){       // 项目偏好追踪
       const c=e.target&&e.target.closest&&e.target.closest('.proj'); if(!c)return;
       const cov=c.querySelector('.proj-cover');
@@ -949,7 +1000,7 @@ function renderContent(t){
       else if(patCount===5){talk(pickInfo(),4400);hearts(5);}
       else{talk(pick(t.pat),2600);hearts(4);} }
     npcEl.addEventListener('pointerdown',function(e){
-      e.preventDefault();
+      e.preventDefault(); poke();
       if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
         const r=npcEl.getBoundingClientRect();
         document.body.appendChild(npcEl);
@@ -978,6 +1029,7 @@ function renderContent(t){
     npcEl.addEventListener('pointercancel',release);
     npcEl.addEventListener('dblclick',function(){
       npcImg.classList.remove('spin'); void npcImg.offsetWidth; npcImg.classList.add('spin');
+      if(gl3d)gl3d.spinNow();
       talk(L().spin,2200); hearts(5);
       npcImg.addEventListener('animationend',function h(){npcImg.classList.remove('spin');npcImg.removeEventListener('animationend',h);}); });
     addEventListener('resize',function(){ W=innerWidth; H=innerHeight; });
@@ -987,6 +1039,7 @@ function renderContent(t){
       stTurn=Math.max(-24,Math.min(24,(e.clientX-(r.left+r.width/2))/(r.width*2)*40)); },{passive:true});
     // 进主站时收编 NPC 为全站伴宠（放到右下角地面）
     addEventListener('npc:adopt',function(){
+      poke();
       if(npcEl.parentNode===document.body)return;
       const r=npcEl.getBoundingClientRect(), w=Math.min(r.width,170);
       document.body.appendChild(npcEl);
@@ -995,6 +1048,59 @@ function renderContent(t){
       x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4; engine=true;
       npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
     });
+    /* ---- 真·三维形象：three.js + GLB 手办模型（渐进增强；WebGL 不可用/加载失败自动回落 2D 立绘） ---- */
+    const gl3d=(function(){
+      if(!window.WebGLRenderingContext) return {ready:false,pose:function(){},spinNow:function(){},stats:function(){return null;}};
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return {ready:false,pose:function(){},spinNow:function(){},stats:function(){return null;}};
+      const cvs=document.getElementById('sp-npc-gl');
+      if(!cvs) return {ready:false,pose:function(){},spinNow:function(){},stats:function(){return null;}};
+      let ready=false,renderer=null,scene,camera,model,group,yaw=0,pitch=0,spinA=0,lw=0,lh=0;
+      function loadScript(src){ return new Promise(function(res,rej){
+        const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+      function fit(){
+        const box=new THREE.Box3().setFromObject(model);
+        const size=box.getSize(new THREE.Vector3()), c=box.getCenter(new THREE.Vector3());
+        const fov=32*Math.PI/180, dist=(size.y/2)/Math.tan(fov/2)*1.1;
+        camera.aspect=Math.max(.2,cvs.clientWidth/Math.max(1,cvs.clientHeight));
+        camera.updateProjectionMatrix();
+        camera.position.set(c.x,c.y,c.z+dist); camera.lookAt(c.x,c.y,c.z);
+      }
+      function init(){
+        try{ renderer=new THREE.WebGLRenderer({canvas:cvs,alpha:true,antialias:true}); }catch(e){ return; }
+        renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+        renderer.outputEncoding=THREE.sRGBEncoding;
+        scene=new THREE.Scene();
+        camera=new THREE.PerspectiveCamera(32,1,.1,50);
+        scene.add(new THREE.HemisphereLight(0xffffff,0x5566aa,1.05));
+        const key=new THREE.DirectionalLight(0xffffff,.85); key.position.set(2,3,4); scene.add(key);
+        const rim=new THREE.DirectionalLight(0x88aaff,.5); rim.position.set(-3,2,-3); scene.add(rim);
+        group=new THREE.Group(); scene.add(group);
+        new THREE.GLTFLoader().load('assets/npc_maid_3d.glb',function(g){
+          model=g.scene; group.add(model);
+          model.traverse(function(o){ if(o.isMesh) o.frustumCulled=false; });
+          ready=true; cvs.classList.add('on'); npcEl.classList.add('gl');
+          (function loop(t){ requestAnimationFrame(loop); if(!ready)return;
+            const w=cvs.clientWidth,h=cvs.clientHeight;
+            if(w!==lw||h!==lh){ lw=w; lh=h; renderer.setSize(w,h,false); fit(); }
+            if(spinA>0){ spinA=Math.max(0,spinA-.05); yaw+=spinA*.55; }
+            group.rotation.y=yaw;
+            group.rotation.x=pitch*.6+Math.sin((t||0)*.0011)*.012;
+            group.rotation.z=Math.sin((t||0)*.0009)*.03;
+            group.position.y=Math.sin((t||0)*.0021)*.006;
+            renderer.render(scene,camera); })(performance.now());
+        },undefined,function(){ /* GLB 加载失败：保持 2D 立绘 */ });
+      }
+      loadScript('assets/three.min.js')
+        .then(function(){ return loadScript('assets/GLTFLoader.js'); })
+        .then(init).catch(function(){ /* three 加载失败：保持 2D */ });
+      return {
+        get ready(){ return ready; },
+        pose:function(y,p){ yaw=y; pitch=p; },
+        spinNow:function(){ if(ready) spinA=1; },
+        stats:function(){ return ready?{tri:renderer.info.render.triangles,w:cvs.width,h:cvs.height}:null; }
+      };
+    })();
+    window.__npcGL=gl3d;
     (function frame(t){
       const dt=Math.min(.032,(t-lastT)/1000)||.016; lastT=t;
       const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
@@ -1006,21 +1112,26 @@ function renderContent(t){
           if(y>=groundY){ y=groundY;
             if(Math.abs(vy)>340){ vy=-vy*.42; vx*=.72; landT=t; }
             else{ vy=0; vx=0; state='idle'; npcEl.classList.remove('air'); landT=t;
-              if(patT<0&&Math.random()<.35)talk(L().land,1800); } } }
+              if(walkTarget==null&&patT<0&&Math.random()<.35)talk(L().land,1800); } } }
         if(state==='idle'){ y+=(groundY-y)*.2; rotTarget*=.94; }
         rot+=((state==='grab'?Math.max(-14,Math.min(14,vel.x*.012)):(state==='air'?Math.max(-16,Math.min(16,vx*.014)):rotTarget))-rot)*.15;
         let sx=1,sy=1,p;
         p=(t-landT)/320; if(p>=0&&p<1){ const k=1-p; sy=1-.18*k*k; sx=1+.14*k*k; }
         p=(t-patT)/300; if(p>=0&&p<1){ const k=1-p; sy=1+.1*k; sx=1-.08*k; }
-        npcEl.style.transform='translate3d('+x+'px,'+y+'px,0) rotate('+rot.toFixed(2)+'deg) scale('+sx.toFixed(3)+','+sy.toFixed(3)+')';
+        const glOn=gl3d&&gl3d.ready;
+        npcEl.style.transform='translate3d('+x+'px,'+y+'px,0) rotate('+(glOn?0:rot).toFixed(2)+'deg) scale('+sx.toFixed(3)+','+sy.toFixed(3)+')';
         const airH=Math.max(0,groundY-y);
-        if(mirrorEl) mirrorEl.style.opacity=Math.max(.08,.3-airH/2600).toFixed(2);
+        if(glOn){ gl3d.pose(rot*(Math.PI/180), state==='air'?Math.max(-.3,Math.min(.3,-vy*.00035)):0);
+          if(mirrorEl) mirrorEl.style.opacity=0;
+          if(backlightEl) backlightEl.style.opacity=0; }
+        else if(mirrorEl) mirrorEl.style.opacity=Math.max(.08,.3-airH/2600).toFixed(2);
         if(talkEl.classList.contains('show'))placeTalk();
       }
       if(stageEl){ let lean;
         if(state==='grab'||state==='air') lean=Math.max(-26,Math.min(26,(state==='grab'?vel.x:vx)*0.02));
         else if(engine) lean=0;
         else { stCur+=(stTurn-stCur)*.08; lean=stCur; }
+        if(gl3d&&gl3d.ready&&!engine) gl3d.pose(stCur*(Math.PI/180),0);
         stageEl.style.transform='rotateX('+(-3-Math.abs(lean)*0.1).toFixed(1)+'deg) rotateY('+lean.toFixed(1)+'deg)'; }
       requestAnimationFrame(frame);
     })(performance.now());
