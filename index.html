@@ -276,6 +276,21 @@
   .npc-podium i::after{content:"";position:absolute;inset:-7px;border-radius:50%;border:1.5px solid rgba(255,228,170,.30);
     filter:blur(.5px);animation:podium-spin 14s linear infinite;}
   @keyframes podium-spin{to{transform:rotate(360deg)}}
+  /* 漂移胎痕（bruno-simon 风） */
+  .npc-skid{position:fixed;width:30px;height:5px;border-radius:3px;background:rgba(40,55,75,.42);
+    filter:blur(1px);z-index:9998;pointer-events:none;animation:skid-fade 1.3s linear forwards;}
+  @keyframes skid-fade{to{opacity:0;transform:scaleY(.25)}}
+  /* splash 荣誉徽章跑马灯（stabondar 风） */
+  .splash-badges{margin-top:26px;overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+  .sb-track{display:flex;gap:14px;width:max-content;animation:sb-marquee 24s linear infinite;}
+  .splash-badges:hover .sb-track{animation-play-state:paused;}
+  @keyframes sb-marquee{to{transform:translateX(-50%)}}
+  .sb-item{display:flex;align-items:center;gap:8px;padding:7px 15px;border:1px solid rgba(160,200,240,.35);
+    border-radius:999px;background:rgba(18,38,66,.45);backdrop-filter:blur(4px);
+    color:#dceaf6;font-size:12.5px;white-space:nowrap;}
+  .sb-item b{color:#ffd98a;font-weight:600;}
   .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
     mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
@@ -375,6 +390,7 @@
     <div class="splash-tag" id="sp-tag"></div>
     <button type="button" class="splash-enter" id="sp-enter"></button>
     <div><a class="splash-skip" id="sp-skip" href="#"></a></div>
+    <div class="splash-badges" aria-hidden="true"><div class="sb-track" id="sb-track"></div></div>
   </div>
 </div>
 <div id="progress"></div>
@@ -865,6 +881,29 @@ function renderContent(t){
     if(en) en.textContent=sp.enter;
     if(sk) sk.textContent=sp.skip;
     if(nm) nm.textContent=sp.npc||'';
+    // 荣誉徽章跑马灯（stabondar 风）：奖项无缝滚动，hover 暂停
+    var trk=document.getElementById('sb-track');
+    if(trk){
+      var badges = (lang==='en'||getLang()==='en') ? [
+        ['🥇','National Math Competition','<b>National 3rd Prize</b>'],
+        ['🏆','MCM/ICM','<b>S Award</b>'],
+        ['🥈','Math Modeling Contest','<b>Provincial 2nd Prize</b>'],
+        ['🥉','China Computer Design Contest','<b>Provincial 3rd Prize</b>'],
+        ['🎓','AI Research @ MUST','<b>Outstanding Certificate</b>'],
+        ['⭐','Major GPA','<b>Top 10%</b>']
+      ] : [
+        ['🥇','全国大学生数学竞赛','<b>国家三等奖</b>'],
+        ['🏆','美国大学生数学建模','<b>S 奖</b>'],
+        ['🥈','全国数学建模竞赛','<b>省二等奖</b>'],
+        ['🥉','中国计算机设计大赛','<b>省三等奖</b>'],
+        ['🎓','澳科大 AI 研学','<b>优秀证书</b>'],
+        ['⭐','专业绩点','<b>前 10%</b>']
+      ];
+      var htmlB='';
+      for(var rep=0;rep<2;rep++) for(var bi=0;bi<badges.length;bi++)
+        htmlB+='<span class="sb-item">'+badges[bi][0]+' '+esc(badges[bi][1])+' '+badges[bi][2]+'</span>';
+      trk.innerHTML=htmlB;
+    }
   }
 
   function render(){
@@ -1144,7 +1183,8 @@ function renderContent(t){
         land:function(){ tone(150,55,.13,'sine',.12); },
         spin:function(){ noise(.24,.08); tone(600,220,.2,'sine',.05); },
         boing:function(){ tone(280,880,.16,'triangle',.09); },
-        beat:function(){ tone(130,50,.09,'square',.14); noise(.03,.04); } };
+        beat:function(){ tone(130,50,.09,'square',.14); noise(.03,.04); },
+        honk:function(){ tone(660,660,.09,'square',.11); setTimeout(function(){ tone(525,525,.15,'square',.11); },105); } };
     })();
     function pat(pzone){ patCount++; try{localStorage.setItem('npc_pats',patCount);}catch(e){}
       brain.d.pats++;
@@ -1283,6 +1323,23 @@ function renderContent(t){
       };
     })();
     window.__npcGL=gl3d;
+    /* 键盘驾驶（bruno-simon 小车风）：方向键/WASD + 漂移胎痕 + H 喇叭 */
+    var keys={}, skidT=0, driveTipped=false;
+    window.__driveDbg={keys:keys,st:function(){return state;}};
+    function dropSkid(px,py,ang){
+      var n=document.createElement('i'); n.className='npc-skid';
+      n.style.left=(px-15)+'px'; n.style.top=(py-3)+'px';
+      n.style.transform='rotate('+ang+'deg)';
+      document.body.appendChild(n);
+      setTimeout(function(){ if(n.parentNode)n.parentNode.removeChild(n); },1350); }
+    document.addEventListener('keydown',function(e){
+      if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
+      var k=e.key.toLowerCase();
+      if(k==='arrowup'||k==='arrowdown'||k==='arrowleft'||k==='arrowright'||k==='w'||k==='a'||k==='s'||k==='d'){
+        keys[k]=true; if(engine&&(k.indexOf('arrow')===0)) e.preventDefault(); }
+      if(k==='h'&&engine){ sfx.honk(); fx('note',3); }
+    });
+    document.addEventListener('keyup',function(e){ keys[e.key.toLowerCase()]=false; });
     (function frame(t){
       const dt=Math.min(.032,(t-lastT)/1000)||.016; lastT=t;
       const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
@@ -1297,7 +1354,24 @@ function renderContent(t){
             else{ vy=0; vx=0; state='idle'; npcEl.classList.remove('air'); landT=t;
               if(Math.abs(iv)>820){ setMood('dizzy',1800); fx('star',5); talk(pick(L().dizzy)||'',2400); }
               if(walkTarget==null&&patT<0&&Math.random()<.35)talk(L().land,1800); } } }
-        if(state==='idle'){ y+=(groundY-y)*.2; rotTarget*=.94; }
+        if(state==='idle'){
+          var driving=(keys.arrowleft||keys.arrowright||keys.arrowup||keys.arrowdown||keys.a||keys.d||keys.w||keys.s);
+          if(driving){
+            var ax=1250*dt;
+            if(keys.arrowleft||keys.a) vx=Math.max(-920,vx-ax);
+            if(keys.arrowright||keys.d) vx=Math.min(920,vx+ax);
+            if(keys.arrowup||keys.w) vy=Math.max(-920,vy-ax);
+            if(keys.arrowdown||keys.s) vy=Math.min(920,vy+ax);
+            x=Math.max(-60,Math.min(W-w+40,x+vx*dt));
+            y=Math.max(-80,Math.min(H-h+30,y+vy*dt));
+            rotTarget=Math.max(-15,Math.min(15,vx*.013));
+            if(!driveTipped){ driveTipped=true; talk((document.documentElement.lang==='en')?'ARROWS/WASD to drive, H to honk!':'方向键/WASD 驾驶，H 键喇叭！',3200); }
+            var spd=Math.abs(vx)+Math.abs(vy);
+            if(spd>560&&performance.now()-skidT>75){ skidT=performance.now();
+              var ang=Math.atan2(vy,vx)*180/Math.PI, ox=Math.cos((ang+90)*Math.PI/180)*7, oy=Math.sin((ang+90)*Math.PI/180)*7;
+              dropSkid(x+w/2+ox,y+h-6+oy,ang); dropSkid(x+w/2-ox,y+h-6-oy,ang); }
+          } else { y+=(groundY-y)*.2; rotTarget*=.94; }
+        }
         rot+=((state==='grab'?Math.max(-14,Math.min(14,vel.x*.012)):(state==='air'?Math.max(-16,Math.min(16,vx*.014)):rotTarget))-rot)*.15;
         let sx=1,sy=1,p;
         p=(t-landT)/320; if(p>=0&&p<1){ const k=1-p; sy=1-.18*k*k; sx=1+.14*k*k; }
