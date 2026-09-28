@@ -138,6 +138,8 @@
   .contact a:hover{text-decoration:underline;}
   .contact li{list-style:none;padding:6px 0;font-size:15px;border-bottom:1px dashed var(--line);}
   .contact li:last-child{border-bottom:none;}
+  .contact .copybtn{margin-left:8px;padding:1px 9px;font-size:12px;border:1px solid var(--sky);border-radius:10px;background:#fff;color:var(--sky);cursor:pointer;vertical-align:middle;}
+  .contact .copybtn:hover{background:var(--sky);color:#fff;}
   footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);text-align:center;color:var(--sub);font-size:13px;}
   footer .fsoc{display:flex;justify-content:center;gap:18px;margin-top:10px;}
   footer .fsoc a{color:var(--sky);text-decoration:none;font-size:13px;}
@@ -300,7 +302,7 @@
   "url": "https://xn--4gq.chat",
   "description": "李玉涛是一名 2027 届数据科学与大数据技术专业本科生（理学学士，辅修数学双学位），主打 Java 后端与 AI 应用（RAG / Agent），「一.chat」是他的个人技术主页，汇总展示学习与实践项目。",
   "alternateName": ["Leo", "Leo-Li638", "一.chat"],
-  "sameAs": ["https://github.com/Leo-Li638"],
+  "sameAs": ["https://github.com/Leo-Li638", "https://blog.csdn.net/2401_84773010"],
   "alumniOf": {"@type": "CollegeOrUniversity", "name": "长春师范大学"},
   "knowsAbout": ["Java 后端开发", "Spring Boot", "AI 应用", "RAG", "Agent", "数据分析", "数学建模"],
   "hasCredential": [
@@ -468,7 +470,7 @@ const D = {
       ["2026.01","澳门科技大学人工智能研学，获优秀证书。"],
       ["2026 上半年","美国大学生数学建模竞赛 S 奖；SmartClass、OrderBoss、燎原火 AI 三个实践项目相继落地开源。"],
       ["2026.09","个人域名站 一.chat 正式上线（GitHub Pages 托管）；GeoLook 个人 AI 可见性实验室启动滚动实测，累计采样 178+ 条。"]]},
-    contact:{title:"怎么联系李玉涛",items:[["GitHub：","https://github.com/Leo-Li638","github.com/Leo-Li638"],["邮箱：","mailto:Tao638@outlook.com","Tao638@outlook.com"]]},
+    contact:{title:"怎么联系李玉涛",items:[["GitHub：","https://github.com/Leo-Li638","github.com/Leo-Li638"],["邮箱（主力）：","mailto:Tao638@outlook.com","Tao638@outlook.com"],["邮箱（国内常用）：","mailto:13360637585@163.com","13360637585@163.com"],["邮箱（国际联络）：","mailto:prairiefire638@gmail.com","prairiefire638@gmail.com"]]},
     def:{title:"李玉涛是什么",
       desc:"李玉涛是一名 2027 届数据科学与大数据技术专业本科生（理学学士，辅修数学双学位），主打 Java 后端与 AI 应用（RAG / Agent），「一.chat」是他的个人技术主页，汇总展示学习与实践项目。",
       list:["<strong>长春师范大学 数据科学与大数据技术 本科（理学学士）+ 数学双学位，2027 届</strong> — 学历",
@@ -596,7 +598,7 @@ const D = {
       ["2026.01","AI research exchange at Macau University of Science and Technology, outstanding certificate."],
       ["2026 H1","S Award, MCM/ICM; SmartClass, OrderBoss, LiaoYuanHuo open-sourced."],
       ["2026.09","Personal domain site 一.chat launched (GitHub Pages); GeoLook lab started, 178+ samples."]]},
-    contact:{title:"How to Contact Li Yutao",items:[["GitHub: ","https://github.com/Leo-Li638","github.com/Leo-Li638"],["Email: ","mailto:Tao638@outlook.com","Tao638@outlook.com"]]},
+    contact:{title:"How to Contact Li Yutao",items:[["GitHub: ","https://github.com/Leo-Li638","github.com/Leo-Li638"],["Email (Primary): ","mailto:Tao638@outlook.com","Tao638@outlook.com"],["Email (China): ","mailto:13360637585@163.com","13360637585@163.com"],["Email (Intl): ","mailto:prairiefire638@gmail.com","prairiefire638@gmail.com"]]},
     def:{title:"What is Li Yutao",
       desc:"Li Yutao is a Class of 2027 undergraduate in Data Science & Big Data Tech (B.Sc., minor in Mathematics), focused on Java backend and AI applications (RAG / Agent). 一.chat is his personal tech homepage showcasing his learning and practice projects.",
       list:["<strong>Changchun Normal University, B.Sc. Data Science & Big Data Tech + Math Dual Degree, Class of 2027</strong> — education",
@@ -738,7 +740,7 @@ function renderContent(t){
   html += '</div></div></section>';
   // contact
   html += '<section class="card reveal" id="ssec9"><h2>'+esc(t.contact.title)+'</h2><ul>';
-  t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a></li>';});
+  t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a>'+(c[1].indexOf('mailto:')===0?' <button class="copybtn" type="button" data-copy="'+esc(c[1].slice(7))+'">复制</button>':'')+'</li>';});
   html += '</ul></section>';
   // def
   html += '<section class="sec reveal" id="ssec6"><h2 class="sec-title"><span class="n">06</span>'+esc(t.def.title)+'</h2><div class="card" style="margin-top:0;"><p>'+esc(t.def.desc)+'</p><ul>'+t.def.list.map(function(li){return '<li>'+li+'</li>';}).join('')+tableHTML(t.def.table)+'<div class="updated">'+esc(t.def.updated)+'</div></div></section>';
@@ -900,6 +902,16 @@ function renderContent(t){
   if(spEnter) spEnter.addEventListener('click', dismissSplash);
   if(spSkip) spSkip.addEventListener('click', function(e){ e.preventDefault(); dismissSplash(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Enter' && splashEl && !splashEl.classList.contains('hide')) dismissSplash(); });
+
+  // 联系区邮箱一键复制（事件委托 + execCommand 兜底）
+  document.addEventListener('click', function(e){
+    var b=e.target && e.target.classList ? e.target.closest('.copybtn') : null; if(!b) return;
+    var txt=b.getAttribute('data-copy')||'';
+    var done=function(){ var o=b.textContent; b.textContent='✓ 已复制'; setTimeout(function(){ b.textContent='复制'; },1600); };
+    var fb=function(){ var ta=document.createElement('textarea'); ta.value=txt; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select(); try{ document.execCommand('copy'); }catch(err){} document.body.removeChild(ta); };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(done).catch(function(){ fb(); done(); }); }
+    else{ fb(); done(); }
+  });
 
   // NPC 立绘交互引擎：拍拍反应 / 拖拽 / 抛掷物理（大肥鱼 · 鲸鱼娘）
   const npcEl=document.getElementById('sp-npc');
