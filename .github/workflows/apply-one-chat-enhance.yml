@@ -19,8 +19,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git apply --check one-chat-enhance.patch
-          git apply one-chat-enhance.patch
+          git apply --check --ignore-space-change --ignore-whitespace one-chat-enhance.patch
+          git apply --ignore-space-change --ignore-whitespace one-chat-enhance.patch
           rm one-chat-enhance.patch
           rm .github/workflows/apply-one-chat-enhance.yml
           git config user.name "github-actions[bot]"
