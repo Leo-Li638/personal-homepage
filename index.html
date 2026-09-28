@@ -280,17 +280,89 @@
   .npc-skid{position:fixed;width:30px;height:5px;border-radius:3px;background:rgba(40,55,75,.42);
     filter:blur(1px);z-index:9998;pointer-events:none;animation:skid-fade 1.3s linear forwards;}
   @keyframes skid-fade{to{opacity:0;transform:scaleY(.25)}}
+  .npc-speed{position:fixed;width:42px;height:2px;border-radius:2px;pointer-events:none;z-index:9997;
+    background:linear-gradient(90deg,transparent,rgba(188,226,255,.92));animation:npc-speed .48s ease-out forwards;}
+  @keyframes npc-speed{from{opacity:.8}to{opacity:0;transform:translate(-22px,0) scaleX(.25)}}
+  .npc-drive-visual{position:absolute;left:50%;bottom:-3px;width:190px;height:34px;pointer-events:none;
+    transform:translateX(-50%);opacity:0;transition:opacity .22s;z-index:1;}
+  .npc-drive-visual::before{content:"";position:absolute;left:50%;top:50%;width:100%;height:100%;
+    transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(126,198,255,.44),transparent 68%);
+    filter:blur(5px);}
+  .npc-drive-visual::after{content:"";position:absolute;left:50%;bottom:12px;width:130px;height:18px;
+    transform:translateX(-50%) perspective(80px) rotateX(62deg);transform-origin:center bottom;
+    background:linear-gradient(90deg,transparent,rgba(176,224,255,.42),transparent);filter:blur(4px);}
+  #sp-npc.driving .npc-drive-visual{opacity:.82;}
+  .npc-drive-hud{position:fixed;right:18px;bottom:22px;z-index:9998;min-width:112px;padding:9px 13px 8px;
+    border:1px solid rgba(170,211,242,.34);border-radius:10px;background:rgba(8,21,34,.72);
+    color:#dff1ff;box-shadow:0 12px 32px rgba(4,14,26,.28);backdrop-filter:blur(8px);
+    opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .24s,transform .24s;font-family:var(--mono);}
+  body.npc-driving .npc-drive-hud{opacity:1;transform:none;}
+  .npc-drive-hud b{display:inline-block;min-width:40px;font-size:21px;line-height:1;color:#fff;text-align:right;}
+  .npc-drive-hud span{margin-left:5px;font-size:9px;letter-spacing:.12em;color:#9fc9e6;}
+  .npc-drive-hud i{display:block;margin-top:4px;font-style:normal;font-size:9px;letter-spacing:.18em;
+    color:#8ee2c0;text-transform:uppercase;}
+  #npc-drive-pad{position:fixed;right:14px;bottom:74px;z-index:9999;display:none;grid-template-columns:repeat(3,42px);
+    grid-template-rows:repeat(2,42px);grid-template-areas:". up horn" "left down right";gap:6px;
+    opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .22s,transform .22s;}
+  body.npc-adopted #npc-drive-pad{display:grid;opacity:1;transform:none;pointer-events:auto;}
+  .npc-drive-pad-btn{width:42px;height:42px;border:1px solid rgba(174,215,245,.34);border-radius:10px;
+    background:rgba(8,22,38,.72);color:#e7f5ff;font:600 16px/1 var(--mono);cursor:pointer;
+    backdrop-filter:blur(7px);-webkit-tap-highlight-color:transparent;touch-action:none;}
+  .npc-drive-pad-btn:active,.npc-drive-pad-btn.on{background:rgba(87,160,220,.58);border-color:#dcefff;transform:scale(.94);}
+  .npc-drive-pad-btn[data-key="arrowup"]{grid-area:up}.npc-drive-pad-btn[data-key="arrowleft"]{grid-area:left}
+  .npc-drive-pad-btn[data-key="arrowdown"]{grid-area:down}.npc-drive-pad-btn[data-key="arrowright"]{grid-area:right}
+  .npc-drive-pad-btn[data-key="h"]{grid-area:horn;font-size:12px;letter-spacing:.08em;}
+  @media(pointer:fine){#npc-drive-pad{display:none!important}}
   /* splash 荣誉徽章跑马灯（stabondar 风） */
-  .splash-badges{margin-top:26px;overflow:hidden;
+  .splash-awards{width:min(100%,680px);margin-top:26px;cursor:pointer;outline:none;}
+  .sa-meta{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 14px 8px;
+    color:#acd2ec;font-size:10px;letter-spacing:.2em;text-transform:uppercase;}
+  .sa-action{color:#dcefff;border-bottom:1px solid rgba(220,239,255,.45);transition:color .2s,border-color .2s;}
+  .splash-awards:hover .sa-action,.splash-awards:focus-visible .sa-action{color:#fff;border-color:#fff;}
+  .splash-badges{overflow:hidden;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
     mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
   .sb-track{display:flex;gap:14px;width:max-content;animation:sb-marquee 24s linear infinite;}
-  .splash-badges:hover .sb-track{animation-play-state:paused;}
+  .splash-awards:hover .sb-track,.splash-awards:focus-within .sb-track{animation-play-state:paused;}
   @keyframes sb-marquee{to{transform:translateX(-50%)}}
   .sb-item{display:flex;align-items:center;gap:8px;padding:7px 15px;border:1px solid rgba(160,200,240,.35);
     border-radius:999px;background:rgba(18,38,66,.45);backdrop-filter:blur(4px);
     color:#dceaf6;font-size:12.5px;white-space:nowrap;}
   .sb-item b{color:#ffd98a;font-weight:600;}
+  /* 荣誉档案：stipend 式底部全屏档案馆 */
+  #splash-awards-panel{position:fixed;inset:0;z-index:10040;visibility:hidden;opacity:0;
+    background:rgba(5,14,24,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+    color:#eef8ff;transition:opacity .35s,visibility .35s;overflow:auto;}
+  #splash-awards-panel.on{visibility:visible;opacity:1;}
+  .sa-panel-inner{min-height:100%;padding:clamp(32px,7vw,92px);display:flex;flex-direction:column;
+    justify-content:flex-end;position:relative;}
+  .sa-panel-inner::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(135deg,rgba(82,141,190,.12),transparent 42%,rgba(217,165,58,.08));}
+  .sa-panel-close{position:absolute;right:clamp(20px,5vw,56px);top:clamp(20px,5vw,48px);width:44px;height:44px;
+    border-radius:50%;border:1px solid rgba(220,239,255,.35);background:rgba(8,22,38,.52);color:#fff;
+    font-size:22px;cursor:pointer;z-index:2;}
+  .sa-panel-close:hover{background:rgba(91,156,209,.45);transform:rotate(8deg);}
+  .sa-panel-eyebrow{position:relative;font-size:11px;letter-spacing:.28em;color:#8fc6ec;text-transform:uppercase;}
+  .sa-panel-title{position:relative;margin:10px 0 34px;font-size:clamp(40px,8vw,104px);line-height:.92;
+    font-weight:650;letter-spacing:-.02em;color:#fff;max-width:820px;}
+  .sa-panel-note{position:relative;max-width:620px;margin:-20px 0 34px;color:#aac7db;font-size:14px;line-height:1.7;}
+  .sa-panel-grid{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,4vw,58px);}
+  .sa-panel-col{border-top:1px solid rgba(203,231,250,.28);padding-top:15px;}
+  .sa-panel-col h3{margin:0 0 20px;color:#93c8eb;font-size:11px;letter-spacing:.22em;text-transform:uppercase;}
+  .sa-panel-item{display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:10px 0;
+    border-bottom:1px solid rgba(203,231,250,.12);font-size:clamp(13px,1.4vw,17px);}
+  .sa-panel-item b{font-weight:500;color:#f6fbff;text-align:right;}
+  .sa-panel-item span{color:#98b8cf;white-space:nowrap;}
+  .sa-panel-foot{position:relative;display:flex;justify-content:space-between;gap:18px;margin-top:38px;
+    color:#7fa8c4;font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
+  /* stabondar 式离场分栏 */
+  .splash-transition{position:absolute;inset:0;z-index:10030;display:grid;grid-template-columns:repeat(8,1fr);
+    pointer-events:none;}
+  .splash-transition i{transform:scaleX(0);transform-origin:left center;background:#d8efff;}
+  #splash.leaving .splash-transition i{animation:sp-curtain .72s cubic-bezier(.76,0,.24,1) forwards;
+    animation-delay:calc(var(--i) * 34ms);}
+  @keyframes sp-curtain{0%{transform:scaleX(0)}42%{transform:scaleX(1)}100%{transform:scaleX(0);transform-origin:right center}}
+  #splash.leaving .splash-inner{opacity:0;transform:scale(.965);transition:opacity .42s,transform .42s;}
   .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
     mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
@@ -302,12 +374,32 @@
   @keyframes npc-idle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(-1.6deg)}}
   @keyframes npc-spin{from{transform:rotateY(0deg)}to{transform:rotateY(720deg)}}
   .splash-npc-name{margin-top:2px;font-size:13px;letter-spacing:.18em;color:#cfe6f7;opacity:0;animation:sp-fade 1s ease .4s both;}
-  .npc-talk{position:fixed;left:0;top:0;max-width:236px;padding:9px 13px;background:#fff;color:#1f2937;border:1.5px solid #bfdbfe;border-radius:14px;border-bottom-left-radius:4px;font-size:13px;line-height:1.55;box-shadow:0 6px 18px rgba(20,40,80,.35);opacity:0;transform:translate(-50%,-100%) translateY(8px);transition:opacity .25s,transform .25s;pointer-events:none;z-index:10002;}
+  .npc-talk{position:fixed;left:0;top:0;width:max-content;max-width:236px;padding:9px 13px;background:#fff;color:#1f2937;border:1.5px solid #bfdbfe;border-radius:14px;border-bottom-left-radius:4px;font-size:13px;line-height:1.55;box-shadow:0 6px 18px rgba(20,40,80,.35);opacity:0;transform:translate(-50%,-100%) translateY(8px);transition:opacity .25s,transform .25s;pointer-events:none;z-index:10002;}
   .npc-talk.show{opacity:1;transform:translate(-50%,-100%) translateY(0);}
   .npc-talk::after{content:"";position:absolute;left:20px;bottom:-7px;width:12px;height:12px;background:#fff;border-right:1.5px solid #bfdbfe;border-bottom:1.5px solid #bfdbfe;transform:rotate(45deg);}
   .npc-fly{position:fixed;left:0;top:0;z-index:10003;pointer-events:none;font-size:20px;animation:npc-fly 1.15s ease-out forwards;}
   @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
-  @media(max-width:640px){.splash-npc{width:150px}.npc-talk{max-width:180px;font-size:12px}}
+  @media(max-width:640px){
+    .splash-inner{padding:8px 12px 12px;max-height:100svh;}
+    .splash-npc{width:124px;margin-bottom:0;}
+    .npc-mirror{height:42px;}
+    .splash-kicker{font-size:10px;margin-bottom:7px;}
+    .splash-brand{font-size:clamp(48px,17vw,64px);}
+    .splash-tag{margin-top:9px;font-size:12.5px;line-height:1.5;}
+    .splash-enter{margin-top:16px;padding:11px 34px;font-size:14px;}
+    .splash-skip{margin-top:7px;font-size:12px;}
+    .splash-awards{margin-top:13px;}
+    .sa-meta{margin-bottom:6px;font-size:9px;}
+    .sb-item{padding:6px 11px;font-size:11px;}
+    .npc-talk{max-width:190px;font-size:12px;}
+    .sa-panel-inner{padding:70px 20px 28px;justify-content:flex-start;}
+    .sa-panel-title{margin-bottom:26px;}
+    .sa-panel-note{margin:-12px 0 26px;font-size:13px;}
+    .sa-panel-grid{grid-template-columns:1fr;gap:18px;}
+    .sa-panel-col h3{margin-bottom:6px;}
+    .sa-panel-item{padding:8px 0;}
+    .npc-drive-hud{right:14px;bottom:190px;}
+  }
   @media(prefers-reduced-motion:reduce){#splash *{animation:none!important;}}
 </style>
 <script type="application/ld+json">
@@ -379,6 +471,7 @@
         <canvas id="sp-npc-gl" aria-hidden="true"></canvas>
         <div class="npc-orb" aria-hidden="true"></div>
         <div class="npc-orb o2" aria-hidden="true"></div>
+        <div class="npc-drive-visual" aria-hidden="true"></div>
       </div>
       <div class="npc-podium" aria-hidden="true"><i></i></div>
       <div class="npc-mirror" id="sp-npc-mirror" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
@@ -390,8 +483,33 @@
     <div class="splash-tag" id="sp-tag"></div>
     <button type="button" class="splash-enter" id="sp-enter"></button>
     <div><a class="splash-skip" id="sp-skip" href="#"></a></div>
-    <div class="splash-badges" aria-hidden="true"><div class="sb-track" id="sb-track"></div></div>
+    <div class="splash-awards" id="splash-awards" role="button" tabindex="0" aria-haspopup="dialog" aria-controls="splash-awards-panel">
+      <div class="sa-meta"><span id="sa-label">AWARDS / HONORS</span><span class="sa-action" id="sa-action">OPEN ARCHIVE ↗</span></div>
+      <div class="splash-badges" aria-hidden="true"><div class="sb-track" id="sb-track"></div></div>
+    </div>
   </div>
+  <div class="splash-transition" aria-hidden="true">
+    <i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i>
+    <i style="--i:4"></i><i style="--i:5"></i><i style="--i:6"></i><i style="--i:7"></i>
+  </div>
+</div>
+<div id="splash-awards-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sa-panel-title">
+  <button type="button" class="sa-panel-close" id="sa-panel-close" aria-label="关闭荣誉档案">×</button>
+  <div class="sa-panel-inner">
+    <div class="sa-panel-eyebrow" id="sa-panel-eyebrow">AWARD ARCHIVE / 2024—2026</div>
+    <div class="sa-panel-title" id="sa-panel-title">Proof of work.</div>
+    <div class="sa-panel-note" id="sa-panel-note"></div>
+    <div class="sa-panel-grid" id="sa-panel-grid"></div>
+    <div class="sa-panel-foot"><span id="sa-panel-foot-left">一.chat / Leo</span><span id="sa-panel-foot-right">SELECTED RECORDS</span></div>
+  </div>
+</div>
+<div class="npc-drive-hud" id="npc-drive-hud" aria-hidden="true"><b id="npc-drive-speed">000</b><span>KM/H</span><i id="npc-drive-mode">Drive</i></div>
+<div id="npc-drive-pad" aria-label="NPC 驾驶控制">
+  <button type="button" class="npc-drive-pad-btn" data-key="arrowup" aria-label="前进">▲</button>
+  <button type="button" class="npc-drive-pad-btn" data-key="arrowleft" aria-label="左转">◀</button>
+  <button type="button" class="npc-drive-pad-btn" data-key="arrowdown" aria-label="后退">▼</button>
+  <button type="button" class="npc-drive-pad-btn" data-key="arrowright" aria-label="右转">▶</button>
+  <button type="button" class="npc-drive-pad-btn" data-key="h" aria-label="喇叭">H</button>
 </div>
 <div id="progress"></div>
 <div class="layout">
@@ -883,8 +1001,9 @@ function renderContent(t){
     if(nm) nm.textContent=sp.npc||'';
     // 荣誉徽章跑马灯（stabondar 风）：奖项无缝滚动，hover 暂停
     var trk=document.getElementById('sb-track');
+    var isEn=(lang==='en'||getLang()==='en');
     if(trk){
-      var badges = (lang==='en'||getLang()==='en') ? [
+      var badges = isEn ? [
         ['🥇','National Math Competition','<b>National 3rd Prize</b>'],
         ['🏆','MCM/ICM','<b>S Award</b>'],
         ['🥈','Math Modeling Contest','<b>Provincial 2nd Prize</b>'],
@@ -903,7 +1022,50 @@ function renderContent(t){
       for(var rep=0;rep<2;rep++) for(var bi=0;bi<badges.length;bi++)
         htmlB+='<span class="sb-item">'+badges[bi][0]+' '+esc(badges[bi][1])+' '+badges[bi][2]+'</span>';
       trk.innerHTML=htmlB;
+      window.__splashAwards=badges;
     }
+    var saLabel=document.getElementById('sa-label'), saAction=document.getElementById('sa-action');
+    if(saLabel) saLabel.textContent=isEn?'AWARDS / HONORS':'荣誉 / 奖项';
+    if(saAction) saAction.textContent=isEn?'OPEN ARCHIVE ↗':'打开荣誉档案 ↗';
+    var archive=isEn?{
+      eyebrow:'AWARD ARCHIVE / 2024—2026',
+      title:'Proof of work.',
+      note:'A compact record of competitions, research exposure and the direction I keep compounding.',
+      groups:[
+        {title:'Awards',items:[['China Undergraduate Math Competition','<b>National 3rd</b>'],['MCM / ICM','<b>S Award</b>'],['CUMCM','<b>Provincial 2nd</b>'],['Computer Design Contest','<b>Provincial 3rd</b>']]},
+        {title:'Signals',items:[['Major GPA','<b>Top 10%</b>'],['AI Research @ MUST','<b>Outstanding</b>'],['Open-source projects','<b>3</b>'],['AI engine samples','<b>240+</b>']]},
+        {title:'Direction',items:[['Java backend','<b>Building</b>'],['AI applications','<b>RAG / Agent</b>'],['Data science','<b>Applied</b>'],['GEO lab','<b>Measuring</b>']]}
+      ],
+      foot:['一.chat / Leo','SELECTED RECORDS']
+    }:{
+      eyebrow:'荣誉档案 / 2024—2026',
+      title:'用结果说话。',
+      note:'把竞赛、研究经历与长期投入的技术方向，整理成一份可快速浏览的档案。',
+      groups:[
+        {title:'竞赛奖项',items:[['全国大学生数学竞赛','<b>国家三等奖</b>'],['美国大学生数学建模','<b>S 奖</b>'],['全国数学建模竞赛','<b>省二等奖</b>'],['中国计算机设计大赛','<b>省三等奖</b>']]},
+        {title:'能力信号',items:[['专业绩点','<b>前 10%</b>'],['澳科大 AI 研学','<b>优秀证书</b>'],['开源实践项目','<b>3 个</b>'],['AI 引擎有效样本','<b>240+</b>']]},
+        {title:'当前方向',items:[['Java 后端','<b>工程实践</b>'],['AI 应用','<b>RAG / Agent</b>'],['数据科学','<b>落地分析</b>'],['GEO 实验室','<b>持续测量</b>']]}
+      ],
+      foot:['一.chat / Leo','精选记录']
+    };
+    var aEyebrow=document.getElementById('sa-panel-eyebrow'),
+        aTitle=document.getElementById('sa-panel-title'),
+        aNote=document.getElementById('sa-panel-note'),
+        aGrid=document.getElementById('sa-panel-grid'),
+        aFootL=document.getElementById('sa-panel-foot-left'),
+        aFootR=document.getElementById('sa-panel-foot-right');
+    if(aEyebrow) aEyebrow.textContent=archive.eyebrow;
+    if(aTitle) aTitle.textContent=archive.title;
+    if(aNote) aNote.textContent=archive.note;
+    if(aGrid){
+      aGrid.innerHTML=archive.groups.map(function(group){
+        return '<div class="sa-panel-col"><h3>'+esc(group.title)+'</h3>'+group.items.map(function(item){
+          return '<div class="sa-panel-item"><span>'+esc(item[0])+'</span>'+item[1]+'</div>';
+        }).join('')+'</div>';
+      }).join('');
+    }
+    if(aFootL) aFootL.textContent=archive.foot[0];
+    if(aFootR) aFootR.textContent=archive.foot[1];
   }
 
   function render(){
@@ -957,14 +1119,44 @@ function renderContent(t){
 
   // 前置页（splash）交互：进入 / 跳过 / 回车 均可关闭
   const splashEl=document.getElementById('splash');
+  const awardsTrigger=document.getElementById('splash-awards');
+  const awardsPanel=document.getElementById('splash-awards-panel');
+  let splashLeaving=false;
+  function openAwardsPanel(){
+    if(!awardsPanel) return;
+    awardsPanel.classList.add('on');
+    awardsPanel.setAttribute('aria-hidden','false');
+    const closeButton=document.getElementById('sa-panel-close');
+    if(closeButton) closeButton.focus({preventScroll:true});
+  }
+  function closeAwardsPanel(){
+    if(!awardsPanel||!awardsPanel.classList.contains('on')) return;
+    awardsPanel.classList.remove('on');
+    awardsPanel.setAttribute('aria-hidden','true');
+    if(awardsTrigger) awardsTrigger.focus({preventScroll:true});
+  }
   function dismissSplash(){
-    if(splashEl) splashEl.classList.add('hide');
+    if(splashLeaving) return;
+    splashLeaving=true;
+    closeAwardsPanel();
     dispatchEvent(new Event('npc:adopt')); // NPC 未被抓起过也收编为全站伴宠
+    if(splashEl) splashEl.classList.add('leaving');
+    setTimeout(function(){ if(splashEl) splashEl.classList.add('hide'); },620);
   }
   const spEnter=document.getElementById('sp-enter'), spSkip=document.getElementById('sp-skip');
   if(spEnter) spEnter.addEventListener('click', dismissSplash);
   if(spSkip) spSkip.addEventListener('click', function(e){ e.preventDefault(); dismissSplash(); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Enter' && splashEl && !splashEl.classList.contains('hide')) dismissSplash(); });
+  if(awardsTrigger) awardsTrigger.addEventListener('click', openAwardsPanel);
+  if(awardsTrigger) awardsTrigger.addEventListener('keydown', function(e){
+    if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openAwardsPanel(); }
+  });
+  if(awardsPanel) awardsPanel.addEventListener('click', function(e){
+    if(e.target===awardsPanel||(e.target&&e.target.id==='sa-panel-close')) closeAwardsPanel();
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key==='Escape'&&awardsPanel&&awardsPanel.classList.contains('on')){ closeAwardsPanel(); return; }
+    if(e.key==='Enter'&&splashEl&&!splashEl.classList.contains('hide')&&!(awardsPanel&&awardsPanel.classList.contains('on'))) dismissSplash();
+  });
 
   // 联系区邮箱一键复制（事件委托 + execCommand 兜底）
   document.addEventListener('click', function(e){
@@ -1122,7 +1314,7 @@ function renderContent(t){
       if(sleepy&&!wasSleepy&&!sleepShown){ sleepShown=true; npcEl.classList.add('sleepy');
         if(document.visibilityState==='visible'&&!talkEl.classList.contains('show')) talk(t.sleep||'Zzz…',3200); }
       if(!sleepy&&sleepShown){ sleepShown=false; npcEl.classList.remove('sleepy'); }
-      if(engine&&!sleepy&&state==='idle'&&walkTarget==null&&danceEnd<=0&&document.visibilityState==='visible'
+      if(engine&&!driveHeld&&!sleepy&&state==='idle'&&walkTarget==null&&danceEnd<=0&&document.visibilityState==='visible'
          &&!talkEl.classList.contains('show')&&now>=nextActT){
         const a=pickAct(); dbg.acts.push(a); doAct(a); }
       if(sleepy&&dbg.ticks%3===0)fx('zzz',1);
@@ -1147,8 +1339,13 @@ function renderContent(t){
     function L(){ const d=D[getLang()]; return (d&&d.splash&&d.splash.npcTalk)||{}; }
     function talk(msg,ms){ if(!msg)return; talkEl.textContent=msg; talkEl.classList.add('show');
       clearTimeout(talkTimer); talkTimer=setTimeout(()=>talkEl.classList.remove('show'),ms||3200);
-      if(engine)placeTalk(); }
-    function placeTalk(){ const bw=talkEl.offsetWidth,cx=x+npcEl.offsetWidth/2,top=y-8;
+      requestAnimationFrame(placeTalk); }
+    function placeTalk(){ const r=npcEl.getBoundingClientRect();
+      if(!engine){ talkEl.style.position='absolute'; talkEl.style.left='50%'; talkEl.style.top='52px'; return; }
+      talkEl.style.position='fixed';
+      const
+          bw=talkEl.offsetWidth||Math.min(236,innerWidth-24),
+          cx=r.left+r.width/2,top=r.top-8;
       const l=Math.max(bw/2+6,Math.min(innerWidth-bw/2-6,cx));
       const tp=Math.max(talkEl.offsetHeight+8,top);
       talkEl.style.left=l+'px'; talkEl.style.top=tp+'px'; }
@@ -1256,6 +1453,7 @@ function renderContent(t){
     // 进主站时收编 NPC 为全站伴宠（放到右下角地面）
     addEventListener('npc:adopt',function(){
       poke();
+      document.body.classList.add('npc-adopted');
       if(npcEl.parentNode===document.body)return;
       const r=npcEl.getBoundingClientRect(), w=Math.min(r.width,170);
       document.body.appendChild(npcEl);
@@ -1324,26 +1522,65 @@ function renderContent(t){
     })();
     window.__npcGL=gl3d;
     /* 键盘驾驶（bruno-simon 小车风）：方向键/WASD + 漂移胎痕 + H 喇叭 */
-    var keys={}, skidT=0, driveTipped=false;
-    window.__driveDbg={keys:keys,st:function(){return state;}};
-    function dropSkid(px,py,ang){
+    var keys={}, skidT=0, driveTipped=false, driveHeading=Math.PI, driveHeld=false,
+        driftHeld=false, speedLineT=0, drivePad=document.getElementById('npc-drive-pad'),
+        driveHud=document.getElementById('npc-drive-hud'),
+        driveSpeedEl=document.getElementById('npc-drive-speed'),
+        driveModeEl=document.getElementById('npc-drive-mode');
+    window.__driveDbg={keys:keys,st:function(){return state;},heading:function(){return driveHeading;}};
+    function setDriveKey(k,on){
+      keys[k]=!!on;
+      if(drivePad){ var btn=drivePad.querySelector('[data-key="'+k+'"]'); if(btn) btn.classList.toggle('on',!!on); }
+    }
+    function honk(){ sfx.honk(); fx('note',3); }
+    function dropSkid(px,py,ang,strength){
       var n=document.createElement('i'); n.className='npc-skid';
       n.style.left=(px-15)+'px'; n.style.top=(py-3)+'px';
       n.style.transform='rotate('+ang+'deg)';
+      n.style.opacity=Math.min(.72,Math.max(.24,strength||.42));
       document.body.appendChild(n);
       setTimeout(function(){ if(n.parentNode)n.parentNode.removeChild(n); },1350); }
+    function spawnSpeedLine(px,py,ang,speed){
+      var n=document.createElement('span'); n.className='npc-speed';
+      n.style.left=(px-20)+'px'; n.style.top=py+'px'; n.style.animation='none';
+      n.style.opacity=Math.min(.72,.2+speed/1100);
+      n.style.transform='rotate('+ang+'deg)';
+      document.body.appendChild(n);
+      var move=n.animate([
+        {transform:'rotate('+ang+'deg) translateX(0)',opacity:n.style.opacity},
+        {transform:'rotate('+ang+'deg) translateX(-34px) scaleX(.16)',opacity:0}
+      ],{duration:360+Math.random()*240,easing:'cubic-bezier(.2,.6,.3,1)'});
+      move.onfinish=function(){ n.remove(); };
+    }
     document.addEventListener('keydown',function(e){
       if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
       var k=e.key.toLowerCase();
       if(k==='arrowup'||k==='arrowdown'||k==='arrowleft'||k==='arrowright'||k==='w'||k==='a'||k==='s'||k==='d'){
-        keys[k]=true; if(engine&&(k.indexOf('arrow')===0)) e.preventDefault(); }
-      if(k==='h'&&engine){ sfx.honk(); fx('note',3); }
+        setDriveKey(k,true); if(engine&&(k.indexOf('arrow')===0)) e.preventDefault(); }
+      if(k==='shift') setDriveKey('shift',true);
+      if(k==='h'&&engine&&!keys.h){ setDriveKey('h',true); honk(); }
     });
-    document.addEventListener('keyup',function(e){ keys[e.key.toLowerCase()]=false; });
+    document.addEventListener('keyup',function(e){
+      var k=e.key.toLowerCase(); setDriveKey(k,false); if(k==='h') setDriveKey('h',false);
+    });
+    addEventListener('blur',function(){ for(var k in keys) setDriveKey(k,false); });
+    if(drivePad){
+      Array.prototype.slice.call(drivePad.querySelectorAll('[data-key]')).forEach(function(btn){
+        var k=btn.getAttribute('data-key');
+        function press(e){ e.preventDefault(); if(k==='h'){ if(!keys.h)honk(); setDriveKey('h',true); return; }
+          try{btn.setPointerCapture(e.pointerId);}catch(err){} setDriveKey(k,true); }
+        function release(e){ if(e)e.preventDefault(); setDriveKey(k,false); }
+        btn.addEventListener('pointerdown',press);
+        btn.addEventListener('pointerup',release);
+        btn.addEventListener('pointercancel',release);
+        btn.addEventListener('lostpointercapture',release);
+      });
+    }
     (function frame(t){
       const dt=Math.min(.032,(t-lastT)/1000)||.016; lastT=t;
       const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
       if(engine){
+        driveHeld=false; driftHeld=false;
         if(state==='air'){ vy+=2500*dt; x+=vx*dt; y+=vy*dt;
           if(x<4){x=4;vx=Math.abs(vx)*.5;}
           if(x>W-w-4){x=W-w-4;vx=-Math.abs(vx)*.5;}
@@ -1355,24 +1592,56 @@ function renderContent(t){
               if(Math.abs(iv)>820){ setMood('dizzy',1800); fx('star',5); talk(pick(L().dizzy)||'',2400); }
               if(walkTarget==null&&patT<0&&Math.random()<.35)talk(L().land,1800); } } }
         if(state==='idle'){
-          var driving=(keys.arrowleft||keys.arrowright||keys.arrowup||keys.arrowdown||keys.a||keys.d||keys.w||keys.s);
-          if(driving){
-            var ax=1250*dt;
-            if(keys.arrowleft||keys.a) vx=Math.max(-920,vx-ax);
-            if(keys.arrowright||keys.d) vx=Math.min(920,vx+ax);
-            if(keys.arrowup||keys.w) vy=Math.max(-920,vy-ax);
-            if(keys.arrowdown||keys.s) vy=Math.min(920,vy+ax);
-            x=Math.max(-60,Math.min(W-w+40,x+vx*dt));
-            y=Math.max(-80,Math.min(H-h+30,y+vy*dt));
-            rotTarget=Math.max(-15,Math.min(15,vx*.013));
-            if(!driveTipped){ driveTipped=true; talk((document.documentElement.lang==='en')?'ARROWS/WASD to drive, H to honk!':'方向键/WASD 驾驶，H 键喇叭！',3200); }
-            var spd=Math.abs(vx)+Math.abs(vy);
-            if(spd>560&&performance.now()-skidT>75){ skidT=performance.now();
-              var ang=Math.atan2(vy,vx)*180/Math.PI, ox=Math.cos((ang+90)*Math.PI/180)*7, oy=Math.sin((ang+90)*Math.PI/180)*7;
-              dropSkid(x+w/2+ox,y+h-6+oy,ang); dropSkid(x+w/2-ox,y+h-6-oy,ang); }
-          } else { y+=(groundY-y)*.2; rotTarget*=.94; }
+          var throttle=(keys.arrowup||keys.w?1:0)-(keys.arrowdown||keys.s?1:0);
+          var steer=(keys.arrowright||keys.d?1:0)-(keys.arrowleft||keys.a?1:0);
+          var speed=Math.hypot(vx,vy), forward=vx*Math.cos(driveHeading)+vy*Math.sin(driveHeading);
+          if(throttle||steer||speed>24){
+            driveHeld=true; driftHeld=!!keys.shift||(speed>480&&Math.abs(steer)>.7);
+            if(walkTarget!=null)stopWalk();
+            if(throttle){
+              var accel=forward*throttle<0?1750:850;
+              vx+=Math.cos(driveHeading)*throttle*accel*dt;
+              vy+=Math.sin(driveHeading)*throttle*accel*dt;
+            }
+            if(speed>22&&steer){
+              var turnDir=forward<0?-1:1;
+              driveHeading+=steer*turnDir*1.75*Math.min(1,speed/380)*dt;
+            }
+            var targetSpeed=Math.hypot(vx,vy);
+            if(targetSpeed>1){
+              var targetVx=Math.cos(driveHeading)*targetSpeed, targetVy=Math.sin(driveHeading)*targetSpeed;
+              var grip=driftHeld?1.35:6.4, blend=1-Math.exp(-grip*dt);
+              vx+=(targetVx-vx)*blend; vy+=(targetVy-vy)*blend;
+            }
+            var drag=Math.exp(-(throttle?.46:1.65)*dt); vx*=drag; vy*=drag;
+            var capped=Math.hypot(vx,vy), cap=driftHeld?860:680;
+            if(capped>cap){ vx=vx/capped*cap; vy=vy/capped*cap; }
+            x+=vx*dt; y+=vy*dt;
+            if(x<4){x=4;vx=Math.abs(vx)*.38;} if(x>W-w-4){x=W-w-4;vx=-Math.abs(vx)*.38;}
+            if(y<6){y=6;vy=Math.abs(vy)*.38;} if(y>H-h-4){y=H-h-4;vy=-Math.abs(vy)*.38;}
+            rotTarget=Math.max(-22,Math.min(22,steer*22*Math.min(1,speed/360)));
+            if(!driveTipped){ driveTipped=true; talk((document.documentElement.lang==='en')?'ARROWS/WASD to steer · SHIFT to drift · H to honk':'方向键/WASD 转向 · Shift 漂移 · H 喇叭',3600); }
+            var nowT=performance.now(), markSpeed=Math.hypot(vx,vy), ang=Math.atan2(vy,vx)*180/Math.PI;
+            if(driftHeld&&markSpeed>260&&nowT-skidT>74){ skidT=nowT;
+              var px=Math.cos((ang+90)*Math.PI/180)*8, py=Math.sin((ang+90)*Math.PI/180)*8,
+                  rearX=x+w/2-Math.cos(driveHeading)*w*.18, rearY=y+h*.86-Math.sin(driveHeading)*h*.16;
+              dropSkid(rearX+px,rearY+py,ang,markSpeed/900); dropSkid(rearX-px,rearY-py,ang,markSpeed/900); }
+            if(markSpeed>430&&nowT-speedLineT>64){ speedLineT=nowT;
+              spawnSpeedLine(x+w/2-Math.cos(driveHeading)*w*.35,y+h*.7-Math.sin(driveHeading)*h*.22,ang,markSpeed); }
+          } else {
+            driveHeld=false; driftHeld=false;
+            var coast=Math.exp(-2.8*dt); vx*=coast; vy*=coast;
+            if(Math.hypot(vx,vy)>2){ x+=vx*dt; y+=vy*dt; }
+            else { vx=vy=0; y+=(groundY-y)*.035; }
+            rotTarget*=.92;
+          }
         }
         rot+=((state==='grab'?Math.max(-14,Math.min(14,vel.x*.012)):(state==='air'?Math.max(-16,Math.min(16,vx*.014)):rotTarget))-rot)*.15;
+        npcEl.classList.toggle('driving',driveHeld);
+        document.body.classList.toggle('npc-driving',driveHeld);
+        if(driveHud) driveHud.setAttribute('aria-hidden',driveHeld?'false':'true');
+        if(driveSpeedEl) driveSpeedEl.textContent=String(Math.min(199,Math.round(Math.hypot(vx,vy)*.22))).padStart(3,'0');
+        if(driveModeEl) driveModeEl.textContent=driftHeld?(document.documentElement.lang==='en'?'Drift':'漂移'):(state==='air'?'Air':(document.documentElement.lang==='en'?'Drive':'驾驶'));
         let sx=1,sy=1,p;
         p=(t-landT)/320; if(p>=0&&p<1){ const k=1-p; sy=1-.18*k*k; sx=1+.14*k*k; }
         p=(t-patT)/300; if(p>=0&&p<1){ const k=1-p; sy=1+.1*k; sx=1-.08*k; }
@@ -1506,5 +1775,5 @@ function renderContent(t){
   }
 })();
 </script>
-</body></body>
+</body>
 </html>
