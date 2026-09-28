@@ -224,6 +224,28 @@
   .splash-enter:hover{background:rgba(109,179,220,.22);border-color:#fff;transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,127,181,.4);}
   .splash-skip{display:inline-block;margin-top:16px;font-size:13px;color:#9fb6cc;text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.2s both;}
   .splash-skip:hover{color:#fff;text-decoration:underline;}
+  /* ===== 电影感开场（stabondar 式，时序由 npc-drive.js 加 .cine 激活）：黑场渐亮 → NPC 远景进场 → 粒子迸散 → 字标延迟 ===== */
+  #splash.cine::after{content:"";position:absolute;inset:0;background:#04070c;z-index:9;pointer-events:none;
+    opacity:0;animation:cine-light 1.6s ease .05s backwards;}
+  @keyframes cine-light{from{opacity:1}to{opacity:0}}
+  #splash.cine .splash-inner{animation-delay:.25s;}
+  #splash.cine .splash-kicker{opacity:0;animation:sp-fade .9s ease .95s backwards;}
+  #splash.cine .splash-brand{opacity:0;animation:cine-brand 1s cubic-bezier(.2,.8,.2,1) 1.2s backwards;}
+  @keyframes cine-brand{from{opacity:0;transform:translateY(16px) scale(.95);letter-spacing:.22em;}
+    to{opacity:1;transform:none;letter-spacing:.04em;}}
+  #splash.cine .splash-tag{animation-delay:1.55s;}
+  #splash.cine .splash-enter{animation-delay:1.8s;}
+  #splash.cine .splash-skip{animation-delay:2.05s;}
+  #splash.cine .splash-awards{opacity:0;animation:sp-fade 1s ease 2.1s backwards;}
+  #splash.cine .splash-npc-name{animation-delay:1.9s;}
+  #sp-npc.sp-arrive{animation:npc-arrive 1.15s cubic-bezier(.16,.8,.26,1) .3s backwards;}
+  @keyframes npc-arrive{from{opacity:0;transform:translateY(52px) scale(.28);filter:blur(6px);}
+    to{opacity:1;transform:none;filter:none;}}
+  @media(prefers-reduced-motion:reduce){
+    #splash.cine .splash-kicker,#splash.cine .splash-brand,#splash.cine .splash-tag,
+    #splash.cine .splash-enter,#splash.cine .splash-skip,#splash.cine .splash-awards,
+    #splash.cine .splash-npc-name,#sp-npc.sp-arrive{opacity:1!important;animation:none!important;}
+  }
   /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」立绘版：待机漂浮+拍拍反应+抛掷物理，可拖拽） */
   .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;perspective:750px;}
   .npc-stage{position:relative;transform-style:preserve-3d;}
@@ -1775,5 +1797,6 @@ function renderContent(t){
   }
 })();
 </script>
+<script src="npc-drive.js"></script>
 </body>
 </html>
