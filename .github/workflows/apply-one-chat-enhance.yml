@@ -1,0 +1,30 @@
+name: Apply one.chat enhancement
+
+on:
+  push:
+    paths:
+      - .github/workflows/apply-one-chat-enhance.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply staged patch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git apply --check one-chat-enhance.patch
+          git apply one-chat-enhance.patch
+          rm one-chat-enhance.patch
+          rm .github/workflows/apply-one-chat-enhance.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "feat: deepen splash awards and NPC drift driving"
+          git push
