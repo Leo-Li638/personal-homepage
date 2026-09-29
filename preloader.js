@@ -34,11 +34,12 @@
       window.__dismissSplash();
       return;
     }
-    var button=document.getElementById("sp-enter");
-    if(button){
-      try{button.dispatchEvent(new MouseEvent("click",{bubbles:true,cancelable:true,view:window}));}
-      catch(e){if(typeof button.click==="function")button.click();}
-    }
+    /* __dismissSplash 尚未就绪（脚本加载顺序）：直接施加退场状态，
+       不派发按钮 click —— 会被本文件捕获阶段 click 监听拦截并二次 begin() */
+    splash.classList.add("leaving");
+    setTimeout(function(){
+      if(splash) splash.classList.add("hide");
+    },460);
     if(attempt<30)setTimeout(function(){dismissGate(attempt+1);},140);
   }
 
@@ -75,13 +76,13 @@
           ".hero h1,.hero .slogan,.hero .quote,.hero .role,.hero .meta,.hero .scroll-hint"
         );
         if(window.gsap){
-          window.gsap.fromTo(targets,{opacity:0,y:20,filter:"blur(7px)"},
-            {opacity:1,y:0,filter:"blur(0px)",duration:.58,stagger:.065,ease:"power3.out",clearProps:"filter,transform"});
+          window.gsap.fromTo(targets,{opacity:0,y:16},
+            {opacity:1,y:0,duration:.62,stagger:.07,ease:"power3.out",clearProps:"transform"});
         }else{
           for(var i=0;i<targets.length;i++){
             targets[i].animate(
-              [{opacity:0,transform:"translateY(20px)",filter:"blur(7px)"},{opacity:1,transform:"none",filter:"blur(0px)"}],
-              {duration:560,delay:i*65,fill:"both",easing:"cubic-bezier(.2,.75,.25,1)"}
+              [{opacity:0,transform:"translateY(16px)"},{opacity:1,transform:"none"}],
+              {duration:620,delay:i*70,fill:"both",easing:"cubic-bezier(.16,1,.3,1)"}
             );
           }
         }
@@ -92,7 +93,10 @@
 
   function finish(){
     if(finished)return;
+    if(timing.finish)return; /* 防重入：ticker 条件与 1500ms 兜底不应双触发 */
     timing.finish=performance.now();
+    if(forceT)clearTimeout(forceT);
+    if(ticker)clearInterval(ticker);
     percent.textContent="100%";
     bar.style.transform="scaleX(1)";
     title.textContent="加载完成";
@@ -117,6 +121,7 @@
     setTimeout(revealHome,460);
   }
 
+  var forceT=null,ticker=null;
   function begin(){
     if(finished)return;
     root.classList.add("cp-active");
@@ -125,7 +130,7 @@
     timing.start=performance.now();
     requestAnimationFrame(function(t){timing.firstPaint=t;});
     var started=timing.start, shown=0;
-    var ticker=setInterval(function(){
+    ticker=setInterval(function(){
       var elapsed=performance.now()-started;
       var target=elapsed<1050?Math.min(96,12+elapsed/13):100;
       shown+=(target-shown)*.34;
@@ -133,18 +138,22 @@
       percent.textContent=String(value).padStart(3,"0")+"%";
       bar.style.transform="scaleX("+(value/100).toFixed(3)+")";
       setStage(value);
-      if(elapsed>=1250&&shown>99)finish();
+      if(elapsed>=1200&&shown>=95)finish();
     },42);
-    setTimeout(function(){
+    forceT=setTimeout(function(){
       clearInterval(ticker);
-      finish();
-    },1500);
+      finish(); /* finish 内部防重入，这里只做兜底 */
+    },1350);
   }
 
   if(entered){
     root.classList.remove("cp-active");
     layer.style.display="none";
     layer.setAttribute("aria-hidden","true");
+    /* 同会话二次访问：直接展示已渲染的主页，跳过退场动画（避免 transition
+       拖长导致 splash 长时间残留遮挡主页） */
+    var spG=document.getElementById("splash");
+    if(spG){ spG.style.transition="none"; spG.classList.add("leaving"); spG.classList.add("hide"); }
     if(document.readyState==="loading")addEventListener("DOMContentLoaded",function(){dismissGate();},{once:true});
     else dismissGate();
     return;
