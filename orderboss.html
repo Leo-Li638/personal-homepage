@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>OrderBoss 接单宝 | 一.chat</title>
+  <meta name="description" content="OrderBoss 接单宝项目详情：Java 21 + Spring Boot 3 的外卖聚合接单与经营管理系统。">
+  <link rel="canonical" href="https://xn--4gq.chat/orderboss.html">
+  <meta property="og:title" content="OrderBoss 接单宝 | 一.chat">
+  <meta property="og:description" content="多平台订单聚合、RBAC 权限、状态机、打印重试与 18 个测试用例。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://xn--4gq.chat/orderboss.html">
+  <meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+  <link rel="stylesheet" href="portfolio-pages.css">
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="page-nav"><a class="brand" href="./">一.chat</a><div class="page-nav-links"><a href="./">主页</a><a href="./#ssec2">GeoLook</a><a href="https://github.com/Leo-Li638/orderboss" target="_blank" rel="noopener">GitHub</a></div></nav>
+    <header class="hero-project">
+      <div class="eyebrow">Project 02 / Java backend</div>
+      <h1>OrderBoss 接单宝</h1>
+      <p>外卖商家多平台订单聚合与经营管理后台，使用统一 REST 契约、JWT 双 Token、JWT/RBAC 鉴权和可测试的业务状态机串联六大业务模块。</p>
+      <div class="hero-actions"><a class="button" href="https://github.com/Leo-Li638/orderboss" target="_blank" rel="noopener">查看源码</a><a class="button secondary" href="./#ssec3">返回项目列表</a></div>
+    </header>
+    <div class="content-grid">
+      <div class="main-column">
+        <section class="panel">
+          <h2>背景与目标</h2>
+          <p>聚合订单不仅要处理 CRUD，还要解决重复回调、权限边界、打印失败和状态不一致。这个项目把订单、调度、打印和报表拆成可独立测试的后端模块，并把异常统一映射到 HTTP 状态码。</p>
+          <div class="metrics"><div class="metric"><b>6 模块</b><span>接单、打印、调度、设置、评价、报表</span></div><div class="metric"><b>18 例</b><span>单元测试与接口冒烟测试</span></div><div class="metric"><b>4 角色</b><span>商家、店员、骑手、运营</span></div></div>
+        </section>
+        <section class="panel">
+          <h2>关键做法</h2>
+          <div class="flow">
+            <div class="flow-step"><i>01</i><div><b>双 Token 鉴权</b><p>Access Token 2 小时，Refresh Token 7 天旋转刷新，并与 RBAC 和方法级角色注解配合。</p></div></div>
+            <div class="flow-step"><i>02</i><div><b>订单状态机</b><p>订单从 new → printed → dispatched → done，限制非法跳转，重复提交返回 409。</p></div></div>
+            <div class="flow-step"><i>03</i><div><b>平台回调验签</b><p>美团、饿了么回调统一走 HMAC-SHA256 验签和报文归一化，模拟真实平台接入层。</p></div></div>
+            <div class="flow-step"><i>04</i><div><b>打印失败恢复</b><p>失败重试、超限告警和电子小票抽象，保证订单主流程不被外部打印服务拖死。</p></div></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>系统架构</h2>
+          <div class="architecture">HTTP Client → Auth / RBAC → Business Modules
+                                      ↓
+                     State Machine · Retry · HMAC
+                                      ↓
+             Caffeine Cache · Sliding Window Rate Limit
+                                      ↓
+                         MyBatis → H2 / MySQL 8</div>
+          <div class="stack"><span>Java 21</span><span>Spring Boot 3.3</span><span>MyBatis</span><span>JWT</span><span>BCrypt</span><span>Caffeine</span><span>Docker</span></div>
+        </section>
+        <section class="panel">
+          <h2>结果与验证</h2>
+          <ul><li><code>mvn test</code> 覆盖状态机、权限矩阵、密码哈希和端到端接口冒烟。</li><li>越权返回 403、未登录返回 401、重复提交返回 409、限流返回 429。</li><li>生产部署提供 Dockerfile 与 Docker Compose，可使用 MySQL 8 一键编排。</li><li>README 明确声明单进程缓存、模拟平台回调和通知落库等真实边界。</li></ul>
+        </section>
+      </div>
+      <aside class="side-column">
+        <section class="panel"><h2>项目信息</h2><ul class="aside-list"><li><span>角色</span><b>独立全栈</b></li><li><span>后端</span><b>Spring Boot</b></li><li><span>数据</span><b>H2 / MySQL</b></li><li><span>测试</span><b>18 例</b></li><li><span>授权</span><b>MIT</b></li></ul></section>
+        <section class="panel"><h2>项目文档</h2><p>仓库 README 包含接口表、状态机、运行方式、Docker 部署和已知边界。</p><a class="button secondary" href="https://github.com/Leo-Li638/orderboss" target="_blank" rel="noopener">打开 README</a></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>© 2026 李玉涛（Leo）</span><a href="./">返回一.chat</a></footer>
+  </main>
+</body>
+</html>

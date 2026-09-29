@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7faf5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#071018" media="(prefers-color-scheme: dark)">
 <title>李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集</title>
 <link rel="canonical" href="https://xn--4gq.chat">
 <meta name="description" content="李玉涛是一名 2027 届数据科学与大数据技术专业本科生（理学学士，辅修数学双学位），主打 Java 后端与 AI 应用（RAG / Agent），「一.chat」是他的个人技术主页，汇总展示学习与实践项目。">
@@ -24,7 +27,7 @@
 <style>
   :root{
     --bg:#f7faf5; --card:#ffffff; --ink:#243b53; --sub:#5b6b7b;
-    --line:#dfe9dd; --sky:#3d7fb5; --sky2:#6db3dc; --grass:#5e9c4f; --gold:#d9a53a; --tag:#eef6ee;
+    --line:#dfe9dd; --sky:#2f73a4; --sky2:#6db3dc; --grass:#477a40; --gold:#b97818; --tag:#eef6ee;
     --mono:"SF Mono","Roboto Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
   }
   *{box-sizing:border-box;margin:0;padding:0}
@@ -523,6 +526,32 @@
     #cinematic-preloader{display:none!important;}
     html.cp-active .bg,html.cp-active .layout,html.cp-active #splash{filter:none;transform:none;opacity:1;}
   }
+  .skip-link{position:fixed;left:12px;top:12px;z-index:10050;padding:9px 14px;border-radius:9px;
+    background:#fff;color:#163b58;text-decoration:none;transform:translateY(-160%);transition:transform .18s}
+  .skip-link:focus{transform:none}
+  a:focus-visible,button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{
+    outline:3px solid #62c8f0;outline-offset:3px}
+  @media(prefers-color-scheme:dark){
+    :root{--bg:#071018;--card:#0d1b26;--ink:#edf8fc;--sub:#a8becb;--line:#263d4b;
+      --sky:#79d8ff;--sky2:#8cddea;--grass:#82d792;--gold:#f1c56d;--tag:#122b31}
+    body{background:#071018;color:var(--ink)}
+    .bg{filter:blur(5px) saturate(.75) brightness(.48)}
+    .bg::after{background:linear-gradient(180deg,rgba(5,12,18,.45),rgba(7,16,24,.78))}
+    .sidebar,.sidebar[style]{background:rgba(7,16,24,.88)}
+    .content,.sidebar .name,.sbnav a.active,.hero h1,.sec-title,.card h2,.proj .kind,.project-title,.feat h3,.post h3{color:var(--ink)}
+    .sidebar .role,.sidebar .sbio,.hero .role,.hero .meta,.about p,.proj p,.post p,.card p,.contact li,.tl-item p{color:var(--sub)}
+    .card,.stats,.proj,.post,.ibtn,.geo-faq details,.contact .copybtn{background:rgba(13,27,38,.86);border-color:var(--line)}
+    .feat,.stat,.proj-cover,.tag,.sbnav a:hover{background:rgba(18,43,58,.72)}
+    .proj-cover,.card h2::before,.sec-title::after{border-color:var(--line)}
+    .sbsocial a,.langbtn{color:var(--ink)}
+    .langbtn{background:rgba(13,27,38,.86)}
+    .hero .quote,.scroll-hint,.post .pmore,.proj .pgo,.contact a,.footer .fsoc a{color:var(--sky)}
+    #backtop{background:rgba(13,27,38,.9);border-color:var(--line);color:var(--sky)}
+    .contact .copybtn:hover{background:var(--sky);color:#061018}
+    #alive-wrap,#busuanzi-wrap{color:var(--grass)!important}
+    footer .fsoc a{color:var(--sky)}
+    .skip-link{background:#e8f7ff;color:#071018}
+  }
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script defer src="preloader.js"></script>
@@ -583,6 +612,7 @@
 </script>
 </head>
 <body>
+<a class="skip-link" href="#content">跳到主要内容</a>
 <div id="cinematic-preloader" role="status" aria-live="polite" aria-label="页面加载中">
   <div class="cp-scan" aria-hidden="true"></div>
   <div class="cp-orb" aria-hidden="true">
@@ -672,7 +702,6 @@
     <div class="show-hint" id="npc-show-hint">点击画面任意处关闭</div>
   </div>
 </div>
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <script src="https://giscus.app/client.js"
   data-repo="Leo-Li638/personal-homepage"
   data-repo-id="R_kgDOUqV71g"
@@ -1093,10 +1122,11 @@ function renderContent(t){
   html += '<section class="card reveal"><h2>'+ (t.htmlLang==='en'?'Tech Stack & Skills':'李玉涛的技术栈与技能方向') +'</h2><div class="tags">'+t.skills.map(function(s){return '<span class="tag">'+esc(s)+'</span>';}).join('')+'</div></section>';
   // projects
   html += '<section class="sec reveal" id="ssec3"><h2 class="sec-title"><span class="n">03</span>'+esc(t.projects.title)+'</h2><div class="card" style="margin-top:0;"><div class="projects">';
+  const projectPages=['smartclass.html','orderboss.html','liaoyuanhuo.html'];
   t.projects.items.forEach(function(p,i){
-    const link = (i<3)?' href="https://github.com/Leo-Li638" target="_blank" rel="noopener"':'';
+    const link = (i<3)?' href="'+projectPages[i]+'"':'';
     html += '<a class="proj"'+link+'><div class="proj-cover '+p.cls+'"><span class="pico">'+p.ico+'</span>'+esc(p.name)+'</div>'
-      +'<div class="proj-body"><div class="kind">'+esc(p.kind)+'</div><p>'+esc(p.p)+'</p>'+(i<3?'<div class="pgo">查看代码 →</div>':'')+'</div></a>';
+      +'<div class="proj-body"><div class="kind">'+esc(p.kind)+'</div><p>'+esc(p.p)+'</p>'+(i<3?'<div class="pgo">查看项目详情 →</div>':'')+'</div></a>';
   });
   html += '</div></div></section>';
   // posts
@@ -1114,7 +1144,7 @@ function renderContent(t){
   t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a>'+(c[1].indexOf('mailto:')===0?' <button class="copybtn" type="button" data-copy="'+esc(c[1].slice(7))+'">复制</button>':'')+'</li>';});
   html += '</ul></section>';
   // def
-  html += '<section class="sec reveal" id="ssec6"><h2 class="sec-title"><span class="n">06</span>'+esc(t.def.title)+'</h2><div class="card" style="margin-top:0;"><p>'+esc(t.def.desc)+'</p><ul>'+t.def.list.map(function(li){return '<li>'+li+'</li>';}).join('')+tableHTML(t.def.table)+'<div class="updated">'+esc(t.def.updated)+'</div></div></section>';
+  html += '<section class="sec reveal" id="ssec6"><h2 class="sec-title"><span class="n">06</span>'+esc(t.def.title)+'</h2><div class="card" style="margin-top:0;"><p>'+esc(t.def.desc)+'</p><ul>'+t.def.list.map(function(li){return '<li>'+li+'</li>';}).join('')+'</ul>'+tableHTML(t.def.table)+'<div class="updated">'+esc(t.def.updated)+'</div></div></section>';
   // compare
   html += '<section class="card reveal"><h2>'+esc(t.compare.title)+'</h2>'+t.compare.tables.map(tableHTML).join('')+'</section>';
   // run
@@ -1304,10 +1334,7 @@ function renderContent(t){
     fetch('https://api.github.com/repos/Leo-Li638/personal-homepage').then(function(r){return r.json();}).then(function(d){
       if(d&&typeof d.stargazers_count==='number'){ const el=document.getElementById('star-count'); if(el) el.textContent=(lang==='en'?'Starred by ':'已有 ')+d.stargazers_count+(lang==='en'?' · click to join':' 人 Star · 点击加入'); }
     }).catch(function(){});
-    // busuanzi only online
-    if(location.hostname.indexOf('xn--4gq.chat')===-1 && location.hostname.indexOf('leo-li638.github.io')===-1){
-      const bw=document.getElementById('busuanzi-wrap'); if(bw) bw.style.display='none';
-    }
+    const bw=document.getElementById('busuanzi-wrap'); if(bw) bw.style.display='none';
     setupReveal(); setupSpy();
     const lb=document.getElementById('langBtn'); if(lb) lb.addEventListener('click', toggleLang);
   }

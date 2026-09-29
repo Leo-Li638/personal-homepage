@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SmartClass 智学在线 | 一.chat</title>
+  <meta name="description" content="SmartClass 智学在线项目详情：Spring Boot 3 + Vue 3 的 K12 教学平台，包含可解释推题、自动判分和学情分析。">
+  <link rel="canonical" href="https://xn--4gq.chat/smartclass.html">
+  <meta property="og:title" content="SmartClass 智学在线 | 一.chat">
+  <meta property="og:description" content="规则引擎驱动的 K12 学情分析与在线学习平台。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://xn--4gq.chat/smartclass.html">
+  <meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+  <link rel="stylesheet" href="portfolio-pages.css">
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="page-nav"><a class="brand" href="./">一.chat</a><div class="page-nav-links"><a href="./">主页</a><a href="./#ssec2">GeoLook</a><a href="https://github.com/Leo-Li638/smartclass" target="_blank" rel="noopener">GitHub</a></div></nav>
+    <header class="hero-project">
+      <div class="eyebrow">Project 01 / Education system</div>
+      <h1>SmartClass 智学在线</h1>
+      <p>面向 K12 场景的前后端分离教学平台，覆盖教学管理、在线作业、自动判分、错题本、薄弱知识点分析和个性化学习计划。</p>
+      <div class="hero-actions"><a class="button" href="https://github.com/Leo-Li638/smartclass" target="_blank" rel="noopener">查看源码</a><a class="button secondary" href="./#ssec3">返回项目列表</a></div>
+    </header>
+    <div class="content-grid">
+      <div class="main-column">
+        <section class="panel">
+          <h2>背景与目标</h2>
+          <p>传统作业系统只能记录题目和分数，难以解释“为什么推荐这些题”。SmartClass 的目标是把练习流水变成可解释的学情数据，让推荐结果能够回到知识点、正确率和时间衰减三个可验证因素。</p>
+          <div class="metrics"><div class="metric"><b>16 张表</b><span>用户、题库、作业、学习与系统数据模型</span></div><div class="metric"><b>4 类题型</b><span>单选、多选、判断、填空自动批改</span></div><div class="metric"><b>20+ 页面</b><span>管理员、教师、学生三级角色</span></div></div>
+        </section>
+        <section class="panel">
+          <h2>关键做法</h2>
+          <div class="flow">
+            <div class="flow-step"><i>01</i><div><b>拉普拉斯平滑</b><p>使用 <code>(correct + 1) / (total + 2)</code> 降低小样本波动，避免只做一题就得到极端掌握度。</p></div></div>
+            <div class="flow-step"><i>02</i><div><b>遗忘曲线时间衰减</b><p>长期未练习的知识点掌握度按指数衰减，让薄弱度会随时间变化，而不是永久停留在旧结果。</p></div></div>
+            <div class="flow-step"><i>03</i><div><b>薄弱度加权推荐</b><p>根据薄弱度和练习量不足因素选 Top-N 知识点，分配题量并输出人类可读的推荐理由。</p></div></div>
+            <div class="flow-step"><i>04</i><div><b>提交即判分与错题回流</b><p>客观题提交后自动批改，错误结果进入错题本并参与后续掌握度计算。</p></div></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>系统架构</h2>
+          <div class="architecture">Vue 3 SPA → Axios / REST → Spring Boot 3
+                                       ↓
+                 Auth / Admin / Teacher / Student
+                                       ↓
+                 规则引擎 · Grader · Practice Recorder
+                                       ↓
+                         MyBatis-Plus → MySQL 8</div>
+          <div class="stack"><span>Java 17</span><span>Spring Boot 3.2</span><span>MyBatis-Plus</span><span>Vue 3</span><span>Pinia</span><span>Element Plus</span><span>ECharts</span></div>
+        </section>
+        <section class="panel">
+          <h2>结果与验证</h2>
+          <ul><li>后端 6 个控制器、70+ REST 接口，统一响应结构与全局异常处理。</li><li>首次启动可自动灌入 6 学科、62 道题和两周练习流水。</li><li>推荐过程不依赖外部大模型，结果可回溯到掌握度公式和薄弱度排序。</li><li>仓库提供可重复执行的建表脚本、演示账号和完整 API 文档。</li></ul>
+        </section>
+      </div>
+      <aside class="side-column">
+        <section class="panel"><h2>项目信息</h2><ul class="aside-list"><li><span>角色</span><b>独立全栈</b></li><li><span>后端</span><b>Spring Boot</b></li><li><span>前端</span><b>Vue 3</b></li><li><span>数据</span><b>MySQL 8</b></li><li><span>授权</span><b>AGPL-3.0</b></li></ul></section>
+        <section class="panel"><h2>项目文档</h2><p>仓库 README 包含数据库设计、推题算法、运行方式和演示账号。</p><a class="button secondary" href="https://github.com/Leo-Li638/smartclass" target="_blank" rel="noopener">打开 README</a></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>© 2026 李玉涛（Leo）</span><a href="./">返回一.chat</a></footer>
+  </main>
+</body>
+</html>
