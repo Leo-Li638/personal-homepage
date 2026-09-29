@@ -81,6 +81,7 @@
         );
       }
     }
+    dispatchEvent(new CustomEvent("portfolio:enter"));
     dismissGate();
     dispatchEvent(new CustomEvent("cinematic:complete"));
   }
@@ -148,8 +149,8 @@
     root.classList.remove("cp-active");
     layer.style.display="none";
     layer.setAttribute("aria-hidden","true");
-    if(document.readyState==="loading")addEventListener("DOMContentLoaded",function(){dismissGate();},{once:true});
-    else dismissGate();
+    if(document.readyState==="loading")addEventListener("DOMContentLoaded",function(){dispatchEvent(new CustomEvent("portfolio:enter"));dismissGate();},{once:true});
+    else {dispatchEvent(new CustomEvent("portfolio:enter"));dismissGate();}
     return;
   }
 
@@ -161,6 +162,7 @@
     event.stopImmediatePropagation();
     if(skip){
       markEntered();
+      dispatchEvent(new CustomEvent("portfolio:enter"));
       dismissGate();
       dispatchEvent(new CustomEvent("cinematic:complete"));
       return;

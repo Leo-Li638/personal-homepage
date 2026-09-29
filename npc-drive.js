@@ -374,7 +374,8 @@ function shiftHeld(){ try{ return !!(window.__driveDbg&&window.__driveDbg.keys&&
 function loop(now){
   requestAnimationFrame(loop);
   if(document.hidden) return;
-  if(now-lastDriveSample<33) return;
+  if(!document.body.classList.contains('npc-adopted')) return;
+  if(now-lastDriveSample<100) return;
   lastDriveSample=now;
   var r=stage&&stage.getBoundingClientRect?stage.getBoundingClientRect():null;
   if(!r||!r.width) return;

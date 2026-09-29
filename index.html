@@ -1314,6 +1314,7 @@ function renderContent(t){
 
   function render(){
     if(io) io.disconnect();
+    rendered=true;
     const lang = getLang();
     const t = D[lang];
     applyMeta(t);
@@ -1331,10 +1332,6 @@ function renderContent(t){
         typedEl.textContent=line.slice(0,ci); setTimeout(tick, del?28:95);
       })();
     }
-    // star count
-    fetch('https://api.github.com/repos/Leo-Li638/personal-homepage').then(function(r){return r.json();}).then(function(d){
-      if(d&&typeof d.stargazers_count==='number'){ const el=document.getElementById('star-count'); if(el) el.textContent=(lang==='en'?'Starred by ':'已有 ')+d.stargazers_count+(lang==='en'?' · click to join':' 人 Star · 点击加入'); }
-    }).catch(function(){});
     const bw=document.getElementById('busuanzi-wrap'); if(bw) bw.style.display='none';
     setupReveal(); setupSpy();
     const lb=document.getElementById('langBtn'); if(lb) lb.addEventListener('click', toggleLang);
@@ -1356,7 +1353,14 @@ function renderContent(t){
   }, {passive:true});
   document.getElementById('backtop').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
-  render();
+  let rendered=false;
+  function renderGate(){
+    const lang=getLang(), t=D[lang];
+    applyMeta(t); fillSplash(lang);
+  }
+  if(sessionStorage.getItem('onechat_entered')==='1') render();
+  else renderGate();
+  addEventListener('portfolio:enter',function(){ if(!rendered)render(); },{once:true});
 
   // 前置页（splash）交互：进入 / 跳过 / 回车 均可关闭
   const splashEl=document.getElementById('splash');
