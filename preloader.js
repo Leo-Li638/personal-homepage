@@ -101,20 +101,20 @@
 
     var surfaces=[document.querySelector(".bg"),document.getElementById("splash")];
     if(window.gsap){
-      window.gsap.to(layer,{opacity:0,scale:1.12,duration:.55,ease:"power2.in"});
-      window.gsap.to(surfaces,{opacity:1,scale:1,filter:"blur(0px)",duration:.62,ease:"power3.out"});
+      window.gsap.to(layer,{opacity:0,scale:1.12,duration:.42,ease:"power2.in"});
+      window.gsap.to(surfaces,{opacity:1,scale:1,filter:"blur(0px)",duration:.46,ease:"power3.out"});
     }else if(layer.animate){
       layer.animate([{opacity:1,transform:"scale(1)"},{opacity:0,transform:"scale(1.12)"}],
-        {duration:560,fill:"forwards",easing:"cubic-bezier(.55,0,.2,1)"});
+        {duration:440,fill:"forwards",easing:"cubic-bezier(.55,0,.2,1)"});
       surfaces.forEach(function(el){
         if(!el)return;
         el.animate([{opacity:.35,filter:"blur(12px)",transform:"scale(1.025)"},{opacity:1,filter:"blur(0)",transform:"scale(1)"}],
-          {duration:620,fill:"forwards",easing:"cubic-bezier(.2,.75,.25,1)"});
+          {duration:460,fill:"forwards",easing:"cubic-bezier(.2,.75,.25,1)"});
       });
     }else{
       layer.style.opacity="0";
     }
-    setTimeout(revealHome,650);
+    setTimeout(revealHome,460);
   }
 
   function begin(){

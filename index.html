@@ -213,7 +213,7 @@
   /* ===== 前置页 splash（电影感封面，品牌名替换 DeepSeek，背景无虚化） ===== */
   #splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
     overflow:hidden;background:#0c1622;transform-origin:50% 46%;
-    transition:opacity .62s ease-out,visibility .62s ease-out,filter .62s ease-out,transform .62s ease-out;}
+    transition:opacity .48s ease-out,visibility .48s ease-out,filter .48s ease-out,transform .48s ease-out;}
   #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
   #splash.leaving{opacity:0;filter:blur(9px);transform:scale(1.012);}
   .splash-bg{position:absolute;inset:0;background:#0c1622 url(assets/mondstadt-hero.jpg) center/cover no-repeat;
@@ -413,7 +413,7 @@
   /* stabondar 式离场分栏 */
   .splash-transition{display:none;}
   #splash.leaving .splash-inner{opacity:0;filter:blur(6px);transform:scale(.985) translateY(8px);
-    transition:opacity .46s ease-out,transform .5s ease-out,filter .5s ease-out;}
+    transition:opacity .36s ease-out,transform .4s ease-out,filter .4s ease-out;}
   .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
     mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
@@ -1390,7 +1390,7 @@ function renderContent(t){
     closeAwardsPanel();
     dispatchEvent(new Event('npc:adopt')); // NPC 未被抓起过也收编为全站伴宠
     if(splashEl) splashEl.classList.add('leaving');
-    setTimeout(function(){ if(splashEl) splashEl.classList.add('hide'); },620);
+    setTimeout(function(){ if(splashEl) splashEl.classList.add('hide'); },460);
   }
   window.__dismissSplash=dismissSplash;
   const spEnter=document.getElementById('sp-enter'), spSkip=document.getElementById('sp-skip');
