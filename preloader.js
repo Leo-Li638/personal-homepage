@@ -60,7 +60,7 @@
     root.classList.add("cp-complete");
     layer.setAttribute("aria-hidden","true");
     layer.style.display="none";
-    [document.querySelector(".bg"),document.querySelector(".layout"),document.getElementById("splash")].forEach(function(el){
+    [document.querySelector(".bg"),document.getElementById("splash")].forEach(function(el){
       if(!el)return;
       el.style.opacity="1";
       el.style.filter="none";
@@ -95,7 +95,7 @@
     detail.textContent="ENTERING";
     markEntered();
 
-    var surfaces=[document.querySelector(".bg"),document.querySelector(".layout"),document.getElementById("splash")];
+    var surfaces=[document.querySelector(".bg"),document.getElementById("splash")];
     if(window.gsap){
       window.gsap.to(layer,{opacity:0,scale:1.12,duration:.55,ease:"power2.in"});
       window.gsap.to(surfaces,{opacity:1,scale:1,filter:"blur(0px)",duration:.62,ease:"power3.out"});
