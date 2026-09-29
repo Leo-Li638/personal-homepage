@@ -11,10 +11,16 @@
 <meta property="og:description" content="让李玉涛与一.chat 在 AI 时代被优先看见、推荐、选择。GeoLook 个人 AI 可见性实验室 + 3 个开源实践项目。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://xn--4gq.chat">
-<meta property="og:image" content="https://xn--4gq.chat/assets/mondstadt-hero.jpg">
+<meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集">
+<meta name="twitter:description" content="Java 后端 / AI 应用 / GEO 实测与开源实践项目。">
+<meta name="twitter:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233d7fb5'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M50 48 L50 14 A34 34 0 0 1 71.5 22.5 Z'/%3E%3Cpath d='M52 50 L86 50 A34 34 0 0 1 77.5 71.5 Z' opacity='.82'/%3E%3Cpath d='M50 52 L50 86 A34 34 0 0 1 28.5 77.5 Z'/%3E%3Cpath d='M48 50 L14 50 A34 34 0 0 1 22.5 28.5 Z' opacity='.82'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='9' fill='%23d9a53a'/%3E%3C/svg%3E">
-<link rel="preload" as="image" href="assets/mondstadt-hero.jpg" media="(min-width:641px)">
-<link rel="preload" as="image" href="assets/mondstadt-hero-small.jpg" media="(max-width:640px)">
+<link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero.avif" media="(min-width:641px)">
+<link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero-small.avif" media="(max-width:640px)">
 <style>
   :root{
     --bg:#f7faf5; --card:#ffffff; --ink:#243b53; --sub:#5b6b7b;
@@ -27,12 +33,14 @@
     background:var(--bg);color:var(--ink);line-height:1.7;}
   .bg{position:fixed;inset:0;z-index:-2;
     background:#d7e6ef url(assets/mondstadt-hero.jpg) center/cover no-repeat;
+    background-image:image-set(url(assets/mondstadt-hero.avif) type("image/avif"),url(assets/mondstadt-hero.webp) type("image/webp"),url(assets/mondstadt-hero.jpg) type("image/jpeg"));
+    background-position:center;background-size:cover;background-repeat:no-repeat;
     filter:blur(3px) saturate(1.12);transform:scale(1.1);
     animation:kenburns 40s ease-in-out infinite alternate;}
   @keyframes kenburns{0%{transform:scale(1.08) translate(0,0)}100%{transform:scale(1.16) translate(-1.5%,-1.5%)}}
   .bg::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(247,250,245,.42),rgba(228,240,235,.58));}
-  @media(max-width:640px){.bg{background-image:url(assets/mondstadt-hero-small.jpg);}}
+  @media(max-width:640px){.bg{background-image:image-set(url(assets/mondstadt-hero-small.avif) type("image/avif"),url(assets/mondstadt-hero-small.webp) type("image/webp"),url(assets/mondstadt-hero-small.jpg) type("image/jpeg"));}}
   .layout{display:flex;align-items:flex-start;min-height:100vh;}
   .sidebar{position:fixed;top:0;left:0;width:min(38vw,400px);height:100vh;z-index:40;
     display:flex;flex-direction:column;justify-content:center;padding:30px 44px;}
@@ -200,9 +208,11 @@
     overflow:hidden;background:#0c1622;transition:opacity .8s ease,visibility .8s ease;}
   #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
   .splash-bg{position:absolute;inset:0;background:#0c1622 url(assets/mondstadt-hero.jpg) center/cover no-repeat;
+    background-image:image-set(url(assets/mondstadt-hero.avif) type("image/avif"),url(assets/mondstadt-hero.webp) type("image/webp"),url(assets/mondstadt-hero.jpg) type("image/jpeg"));
+    background-position:center;background-size:cover;background-repeat:no-repeat;
     filter:none;transform:scale(1.12);animation:sp-ken 24s ease-in-out infinite alternate;}
   @keyframes sp-ken{0%{transform:scale(1.1) translate(0,0)}100%{transform:scale(1.2) translate(-1.5%,-1.5%)}}
-  @media(max-width:640px){.splash-bg{background-image:url(assets/mondstadt-hero-small.jpg);}}
+  @media(max-width:640px){.splash-bg{background-image:image-set(url(assets/mondstadt-hero-small.avif) type("image/avif"),url(assets/mondstadt-hero-small.webp) type("image/webp"),url(assets/mondstadt-hero-small.jpg) type("image/jpeg"));}}
   .splash-veil{position:absolute;inset:0;
     background:radial-gradient(120% 90% at 50% 42%,rgba(12,22,34,.32),rgba(8,16,26,.78) 68%,rgba(6,12,20,.92));}
   .splash-inner{position:relative;text-align:center;color:#fff;padding:24px;max-width:700px;
@@ -598,8 +608,8 @@
   <div class="splash-inner">
     <div class="splash-npc" id="sp-npc">
       <div class="npc-stage" id="sp-npc-stage">
-        <div class="npc-backlight" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
-        <img id="sp-npc-img" src="assets/npc_maid.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
+        <div class="npc-backlight" aria-hidden="true"><img src="assets/npc_maid-optimized.webp" alt="" width="360" height="611" decoding="async"></div>
+        <img id="sp-npc-img" src="assets/npc_maid-optimized.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" width="360" height="611" decoding="async" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
         <canvas id="sp-npc-gl" aria-hidden="true"></canvas>
         <div class="npc-orb" aria-hidden="true"></div>
         <div class="npc-orb o2" aria-hidden="true"></div>
@@ -609,7 +619,7 @@
         </div>
       </div>
       <div class="npc-podium" aria-hidden="true"><i></i></div>
-      <div class="npc-mirror" id="sp-npc-mirror" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
+      <div class="npc-mirror" id="sp-npc-mirror" aria-hidden="true"><img src="assets/npc_maid-optimized.webp" alt="" width="360" height="611" loading="lazy" decoding="async"></div>
       <div class="npc-talk" id="sp-npc-talk" aria-live="polite"></div>
       <div class="splash-npc-name" id="sp-npc-name"></div>
     </div>
