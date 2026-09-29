@@ -249,9 +249,9 @@
   @keyframes cine-light{from{opacity:1}to{opacity:0}}
   #splash.cine .splash-inner{animation-delay:.2s;}
   #splash.cine .splash-kicker{opacity:0;animation:cine-in .9s cubic-bezier(.16,1,.3,1) .5s backwards;}
-  #splash.cine .splash-brand{opacity:0;animation:cine-brand 1s cubic-bezier(.16,1,.3,1) .7s backwards;}
-  @keyframes cine-brand{from{opacity:0;transform:translateY(14px) scale(.96);filter:blur(5px);}
-    to{opacity:1;transform:none;filter:drop-shadow(0 0 26px rgba(138,212,255,.28));}}
+  #splash.cine .splash-brand{animation:cine-brand 1s cubic-bezier(.16,1,.3,1) .7s both;}
+  @keyframes cine-brand{from{transform:translateY(6px) scale(.985);filter:blur(1.5px);}
+    to{transform:none;filter:drop-shadow(0 0 26px rgba(138,212,255,.28));}}
   #splash.cine .splash-tag{animation-delay:.95s;}
   #splash.cine .splash-enter{animation-delay:1.15s;}
   #splash.cine .splash-skip{animation-delay:1.5s;}
