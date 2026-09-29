@@ -429,6 +429,7 @@
   .npc-fly{position:fixed;left:0;top:0;z-index:10003;pointer-events:none;font-size:20px;animation:npc-fly 1.15s ease-out forwards;}
   @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
   @media(max-width:640px){
+    .bg,.splash-bg{animation:none!important}
     .splash-inner{padding:8px 12px 12px;max-height:100svh;}
     .splash-npc{width:124px;margin-bottom:0;}
     .npc-mirror{height:42px;}
@@ -1569,7 +1570,8 @@ function renderContent(t){
       brain.d.clicks[key]=(brain.d.clicks[key]||0)+1; brain.save();
     },{passive:true});
     let W=innerWidth,H=innerHeight,x=0,y=0,vx=0,vy=0,state='idle',engine=false;
-    let rot=0,rotTarget=0,stTurn=0,stCur=0,landT=-1,patT=-1,lastT=performance.now();
+    let rot=0,rotTarget=0,stTurn=0,stCur=0,landT=-1,patT=-1,lastT=performance.now(),lastNpcFrame=0;
+    const lowPowerNpc=matchMedia('(max-width: 640px)').matches||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
     let gox=0,goy=0,dnX=0,dnY=0,dnT=0,moved=0,vel={x:0,y:0},lpx=0,lpy=0,lpt=0;
     let talkTimer=null,patCount=0; try{patCount=+localStorage.getItem('npc_pats')||0;}catch(e){}
     let danceStart=0,danceEnd=0,lastBeat=-1,waveT=0,nodT=0,mood='',moodT=0,zone='body',lastPatT=0,rapidN=0;
@@ -1762,6 +1764,9 @@ function renderContent(t){
       });
     }
     (function frame(t){
+      requestAnimationFrame(frame);
+      if(lowPowerNpc&&t-lastNpcFrame<32)return;
+      lastNpcFrame=t;
       const dt=Math.min(.032,(t-lastT)/1000)||.016; lastT=t;
       const w=npcEl.offsetWidth, h=npcEl.offsetHeight, groundY=H-h-4;
       if(engine){
@@ -1861,7 +1866,6 @@ function renderContent(t){
         else { stCur+=(stTurn-stCur)*.08; lean=stCur; }
         if(gl3d&&gl3d.ready&&!engine) gl3d.pose(stCur*(Math.PI/180),0);
         stageEl.style.transform='rotateX('+(-3-Math.abs(lean)*0.1).toFixed(1)+'deg) rotateY('+lean.toFixed(1)+'deg)'; }
-      requestAnimationFrame(frame);
     })(performance.now());
     setTimeout(function(){ const t=L();
       let line=(brain.d.visits>1&&t.hiBack)?t.hiBack.replace('{n}',brain.d.visits):pick(t.hi);
