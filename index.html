@@ -230,7 +230,7 @@
   @keyframes cine-light{from{opacity:1}to{opacity:0}}
   #splash.cine .splash-inner{animation-delay:.25s;}
   #splash.cine .splash-kicker{opacity:0;animation:sp-fade .9s ease .95s backwards;}
-  #splash.cine .splash-brand{opacity:0;animation:cine-brand 1s cubic-bezier(.2,.8,.2,1) 1.2s backwards;}
+  #splash.cine .splash-brand{opacity:0;animation:cine-brand 1s cubic-bezier(.2,.8,.2,1) 1.2s both;}
   @keyframes cine-brand{from{opacity:0;transform:translateY(16px) scale(.95);letter-spacing:.22em;}
     to{opacity:1;transform:none;letter-spacing:.04em;}}
   #splash.cine .splash-tag{animation-delay:1.55s;}
@@ -402,6 +402,17 @@
   .npc-fly{position:fixed;left:0;top:0;z-index:10003;pointer-events:none;font-size:20px;animation:npc-fly 1.15s ease-out forwards;}
   @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
   @media(max-width:640px){
+    .sidebar{height:56px;padding:6px 10px;gap:8px;}
+    .sidebar .name{font-size:15px;flex:0 0 auto;}
+    .sbnav{flex:1 1 auto;min-width:0;margin:0;gap:0;white-space:nowrap;}
+    .sbnav a{padding:8px 9px;font-size:12px;white-space:nowrap;flex:0 0 auto;}
+    .content{padding:76px 16px 56px;}
+    .hero h1{font-size:32px;letter-spacing:0;line-height:1.18;}
+    .hero .slogan{font-size:15px;min-height:3.4em;}
+    body.npc-adopted #sp-npc{width:104px;opacity:.78;}
+    body.npc-adopted #sp-npc .splash-npc-name{font-size:9px;letter-spacing:.1em;}
+    #npc-drive-pad{right:10px;bottom:56px;transform:scale(.84);transform-origin:right bottom;}
+    .npc-drive-hud{right:10px;bottom:162px;}
     .splash-inner{padding:8px 12px 12px;max-height:100svh;}
     .splash-npc{width:124px;margin-bottom:0;}
     .npc-mirror{height:42px;}
@@ -480,8 +491,10 @@
 }
 </script>
 </head>
-<body>
+<body data-barba="wrapper">
 <div class="bg"></div>
+<canvas id="npc-world" aria-hidden="true"></canvas>
+<div id="world-hud" aria-hidden="true"><b id="world-speed">000</b><span>KM/H</span><i id="world-gear">N</i></div>
 <div id="splash">
   <div class="splash-bg"></div>
   <div class="splash-veil"></div>
@@ -534,7 +547,7 @@
   <button type="button" class="npc-drive-pad-btn" data-key="h" aria-label="喇叭">H</button>
 </div>
 <div id="progress"></div>
-<div class="layout">
+<div class="layout" data-barba="container" data-barba-namespace="home">
   <aside class="sidebar" id="sidebar"></aside>
   <main class="content" id="content"></main>
 </div>
@@ -1177,10 +1190,6 @@ function renderContent(t){
         typedEl.textContent=line.slice(0,ci); setTimeout(tick, del?28:95);
       })();
     }
-    // star count
-    fetch('https://api.github.com/repos/Leo-Li638/personal-homepage').then(function(r){return r.json();}).then(function(d){
-      if(d&&typeof d.stargazers_count==='number'){ const el=document.getElementById('star-count'); if(el) el.textContent=(lang==='en'?'Starred by ':'已有 ')+d.stargazers_count+(lang==='en'?' · click to join':' 人 Star · 点击加入'); }
-    }).catch(function(){});
     // busuanzi only online
     if(location.hostname.indexOf('xn--4gq.chat')===-1 && location.hostname.indexOf('leo-li638.github.io')===-1){
       const bw=document.getElementById('busuanzi-wrap'); if(bw) bw.style.display='none';
@@ -1473,6 +1482,23 @@ function renderContent(t){
         beat:function(){ tone(130,50,.09,'square',.14); noise(.03,.04); },
         honk:function(){ tone(660,660,.09,'square',.11); setTimeout(function(){ tone(525,525,.15,'square',.11); },105); } };
     })();
+    function resetDrive(){
+      if(!engine)return;
+      const w=npcEl.offsetWidth||170;
+      x=innerWidth-w-22; y=innerHeight-(npcEl.offsetHeight||288)-4;
+      vx=vy=0; driveHeading=Math.PI; rot=rotTarget=0; state='idle';
+      npcEl.classList.remove('air','driving'); document.body.classList.remove('npc-driving');
+      setDriveKey('arrowup',false); setDriveKey('arrowdown',false); setDriveKey('arrowleft',false);
+      setDriveKey('arrowright',false); setDriveKey('w',false); setDriveKey('a',false);
+      setDriveKey('s',false); setDriveKey('d',false); setDriveKey('shift',false); setDriveKey('h',false);
+      talk(document.documentElement.lang==='en'?'Vehicle reset.':'车辆已重置。',1800);
+    }
+    function jumpDrive(){
+      if(!engine||state!=='idle')return;
+      state='air'; npcEl.classList.add('air');
+      vy=-620; if(Math.hypot(vx,vy)<120) vy=-700;
+      sfx.boing(); fx('poof',2,.7,.95);
+    }
     function pat(pzone){ patCount++; try{localStorage.setItem('npc_pats',patCount);}catch(e){}
       brain.d.pats++;
       const now=performance.now(), t=L(), zn=pzone||'body';
@@ -1585,6 +1611,8 @@ function renderContent(t){
           model.traverse(function(o){ if(o.isMesh) o.frustumCulled=false; });
           ready=true; cvs.classList.add('on'); npcEl.classList.add('gl');
           (function loop(t){ requestAnimationFrame(loop); if(!ready)return;
+            if(window.__npcWorld&&window.__npcWorld.lowPower){
+              cvs.classList.remove('on'); npcEl.classList.remove('gl'); return; }
             const w=cvs.clientWidth,h=cvs.clientHeight;
             if(w!==lw||h!==lh){ lw=w; lh=h; renderer.setSize(w,h,false); fit(); }
             if(spinA>0){ spinA=Math.max(0,spinA-.05); yaw+=spinA*.55; }
@@ -1617,7 +1645,11 @@ function renderContent(t){
         driveHud=document.getElementById('npc-drive-hud'),
         driveSpeedEl=document.getElementById('npc-drive-speed'),
         driveModeEl=document.getElementById('npc-drive-mode');
-    window.__driveDbg={keys:keys,st:function(){return state;},heading:function(){return driveHeading;}};
+    window.__driveDbg={
+      keys:keys,st:function(){return state;},heading:function(){return driveHeading;},
+      speed:function(){return Math.hypot(vx,vy);},pos:function(){return{x:x,y:y};},
+      reset:resetDrive,jump:jumpDrive
+    };
     function setDriveKey(k,on){
       keys[k]=!!on;
       if(drivePad){ var btn=drivePad.querySelector('[data-key="'+k+'"]'); if(btn) btn.classList.toggle('on',!!on); }
@@ -1645,8 +1677,10 @@ function renderContent(t){
     document.addEventListener('keydown',function(e){
       if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
       var k=e.key.toLowerCase();
+      if(k==='r'&&engine){ e.preventDefault(); resetDrive(); return; }
+      if(k===' '&&engine){ e.preventDefault(); jumpDrive(); return; }
       if(k==='arrowup'||k==='arrowdown'||k==='arrowleft'||k==='arrowright'||k==='w'||k==='a'||k==='s'||k==='d'){
-        setDriveKey(k,true); if(engine&&(k.indexOf('arrow')===0)) e.preventDefault(); }
+        setDriveKey(k,true); if(engine) e.preventDefault(); }
       if(k==='shift') setDriveKey('shift',true);
       if(k==='h'&&engine&&!keys.h){ setDriveKey('h',true); honk(); }
     });
@@ -1865,6 +1899,9 @@ function renderContent(t){
   }
 })();
 </script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/barba.umd.js"></script>
 <script src="npc-drive.js"></script>
+<script type="module" src="npc-world.js"></script>
 </body>
 </html>

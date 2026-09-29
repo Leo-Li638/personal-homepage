@@ -19,5 +19,32 @@
 - 内容：个人学习与实践作品集，面向招聘方与技术同行展示
 - LLM 友好摘要：[llms.txt](https://xn--4gq.chat/llms.txt)
 
+## 3D 驾驶
+
+进入前置页后，站点会保留同一个 Three.js canvas，并切换到 Rapier 驱动的持续 3D 世界。
+
+| 按键 | 行为 |
+|---|---|
+| `W` / `↑` | 加速 |
+| `S` / `↓` | 制动或倒车 |
+| `A` / `D` / `←` / `→` | 转向 |
+| `Shift` | 漂移 |
+| `Space` | 跳跃 |
+| `H` | 喇叭 |
+| `R` | 回到起点并清空速度 |
+
+低端设备或软件 WebGL 会自动关闭阴影、降低内部渲染分辨率并回退 2D NPC 立绘；Rapier 物理仍保持固定 `120 Hz` 步进。
+
+## 本地验证
+
+```bash
+npm install
+npm run vendor:sync
+npm run dev
+npm test
+```
+
+`npm test` 会启动本地服务器，并使用 Playwright 分别跑桌面和移动端完整流程。截图与 JSON 报告写入 `test-results/smoke/`。
+
 ---
 © 2026 李玉涛 · 本站与任何同名第三方产品无关

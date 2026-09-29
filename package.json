@@ -1,0 +1,20 @@
+{
+  "name": "personal-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Leo Li personal homepage",
+  "scripts": {
+    "dev": "node tests/serve.cjs",
+    "vendor:sync": "node scripts/sync-vendor.cjs",
+    "test": "node tests/smoke.cjs",
+    "test:smoke": "node tests/smoke.cjs"
+  },
+  "dependencies": {
+    "@barba/core": "2.10.3",
+    "@dimforge/rapier3d-compat": "0.21.0",
+    "gsap": "3.15.0"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
