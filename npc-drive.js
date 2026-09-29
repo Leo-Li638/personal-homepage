@@ -361,7 +361,7 @@ if(fine&&!reduce){
 
 /* ---------- 主循环：速度采样（rect 差分）→ 俯仰/侧倾/烟尘/风/残影/镜头震动 ---------- */
 var lastX=null,lastY=null,lastT=0,vx=0,vy=0,speed=0,lastSpeed=0,pitch=0,lean=0,
-    lastH=0,haveH=false,smokeT=0,windT=0,ghostT=0,shakeOn=false,
+    lastH=0,haveH=false,smokeT=0,windT=0,ghostT=0,shakeOn=false,lastDriveSample=0,
     shakeEls=(function(){
       var a=[],l=document.querySelector('.layout');
       if(l) a.push(l);
@@ -374,6 +374,8 @@ function shiftHeld(){ try{ return !!(window.__driveDbg&&window.__driveDbg.keys&&
 function loop(now){
   requestAnimationFrame(loop);
   if(document.hidden) return;
+  if(now-lastDriveSample<33) return;
+  lastDriveSample=now;
   var r=stage&&stage.getBoundingClientRect?stage.getBoundingClientRect():null;
   if(!r||!r.width) return;
   var cx=r.left+r.width/2, cy=r.top+r.height/2;

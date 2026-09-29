@@ -305,15 +305,29 @@
   .npc-speed{position:fixed;width:42px;height:2px;border-radius:2px;pointer-events:none;z-index:9997;
     background:linear-gradient(90deg,transparent,rgba(188,226,255,.92));animation:npc-speed .48s ease-out forwards;}
   @keyframes npc-speed{from{opacity:.8}to{opacity:0;transform:translate(-22px,0) scaleX(.25)}}
-  .npc-drive-visual{position:absolute;left:50%;bottom:-3px;width:190px;height:34px;pointer-events:none;
-    transform:translateX(-50%);opacity:0;transition:opacity .22s;z-index:1;}
-  .npc-drive-visual::before{content:"";position:absolute;left:50%;top:50%;width:100%;height:100%;
-    transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(126,198,255,.44),transparent 68%);
-    filter:blur(5px);}
-  .npc-drive-visual::after{content:"";position:absolute;left:50%;bottom:12px;width:130px;height:18px;
-    transform:translateX(-50%) perspective(80px) rotateX(62deg);transform-origin:center bottom;
-    background:linear-gradient(90deg,transparent,rgba(176,224,255,.42),transparent);filter:blur(4px);}
-  #sp-npc.driving .npc-drive-visual{opacity:.82;}
+  .npc-drive-visual{position:absolute;left:50%;bottom:-10px;width:132px;height:45px;pointer-events:none;
+    transform:translateX(-50%) translateY(12px) scale(.82);opacity:0;transition:opacity .2s,transform .26s;
+    z-index:8;filter:drop-shadow(0 10px 14px rgba(7,25,45,.42));}
+  .npc-drive-visual .npc-car-body{position:absolute;left:50%;top:12px;width:84px;height:25px;
+    transform:translateX(-50%);border:1px solid rgba(187,236,255,.72);border-radius:18px 25px 10px 10px;
+    background:linear-gradient(145deg,#102b45,#23769b 52%,#7ad9f1);}
+  .npc-drive-visual .npc-car-body::before{content:"";position:absolute;left:23px;top:-11px;width:40px;height:17px;
+    border:1px solid rgba(196,240,255,.62);border-bottom:0;border-radius:14px 14px 0 0;
+    background:linear-gradient(155deg,#82ddf5,#183652);}
+  .npc-drive-visual .npc-car-light{position:absolute;right:10px;top:20px;width:12px;height:5px;border-radius:5px;
+    background:#fff8bf;box-shadow:0 0 13px 5px rgba(255,242,154,.72);}
+  .npc-drive-visual .npc-car-wheel{position:absolute;bottom:3px;width:16px;height:16px;border-radius:50%;
+    border:4px solid #08131f;background:#7fd7ee;box-shadow:0 0 0 2px rgba(185,231,255,.32);}
+  .npc-drive-visual .npc-car-wheel.w1{left:16px;}
+  .npc-drive-visual .npc-car-wheel.w2{right:16px;}
+  .npc-drive-visual .npc-car-trail{position:absolute;left:50%;bottom:0;width:112px;height:15px;
+    transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse,rgba(123,218,245,.42),transparent 70%);
+    filter:blur(4px);}
+  #sp-npc.driving .npc-drive-visual{opacity:1;transform:translateX(-50%) translateY(0) scale(1);
+    animation:npc-car-bob .34s ease-in-out infinite alternate;}
+  #sp-npc.driving .npc-drive-visual .npc-car-wheel{animation:npc-wheel .34s linear infinite;}
+  @keyframes npc-car-bob{to{transform:translateX(-50%) translateY(-3px) scale(1)}}
+  @keyframes npc-wheel{to{transform:rotate(360deg)}}
   .npc-drive-hud{position:fixed;right:18px;bottom:22px;z-index:9998;min-width:112px;padding:9px 13px 8px;
     border:1px solid rgba(170,211,242,.34);border-radius:10px;background:rgba(8,21,34,.72);
     color:#dff1ff;box-shadow:0 12px 32px rgba(4,14,26,.28);backdrop-filter:blur(8px);
@@ -421,6 +435,8 @@
     .sa-panel-col h3{margin-bottom:6px;}
     .sa-panel-item{padding:8px 0;}
     .npc-drive-hud{right:14px;bottom:190px;}
+    .npc-drive-visual{width:108px;transform:translateX(-50%) translateY(10px) scale(.72);}
+    #sp-npc.driving .npc-drive-visual{transform:translateX(-50%) translateY(0) scale(.82);}
   }
   @media(prefers-reduced-motion:reduce){#splash *{animation:none!important;}}
 
@@ -557,15 +573,6 @@
 </script>
 </head>
 <body>
-<script>
-  (function(){
-    var reduced=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(!reduced)document.documentElement.classList.add('cp-active');
-    window.setTimeout(function(){
-      if(!window.__cinematicPreloaderReady)document.documentElement.classList.remove('cp-active');
-    },4000);
-  })();
-</script>
 <div id="cinematic-preloader" role="status" aria-live="polite" aria-label="页面加载中">
   <div class="cp-scan" aria-hidden="true"></div>
   <div class="cp-orb" aria-hidden="true">
@@ -596,7 +603,10 @@
         <canvas id="sp-npc-gl" aria-hidden="true"></canvas>
         <div class="npc-orb" aria-hidden="true"></div>
         <div class="npc-orb o2" aria-hidden="true"></div>
-        <div class="npc-drive-visual" aria-hidden="true"></div>
+        <div class="npc-drive-visual" aria-hidden="true">
+          <i class="npc-car-trail"></i><i class="npc-car-body"></i><i class="npc-car-light"></i>
+          <i class="npc-car-wheel w1"></i><i class="npc-car-wheel w2"></i>
+        </div>
       </div>
       <div class="npc-podium" aria-hidden="true"><i></i></div>
       <div class="npc-mirror" id="sp-npc-mirror" aria-hidden="true"><img src="assets/npc_maid.webp" alt=""></div>
@@ -1656,71 +1666,8 @@ function renderContent(t){
       x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4; engine=true;
       npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
     });
-    /* ---- 真·三维形象：three.js + GLB 手办模型（渐进增强；WebGL 不可用/加载失败自动回落 2D 立绘） ---- */
-    const gl3d=(function(){
-      if(!window.WebGLRenderingContext) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
-      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
-      const cvs=document.getElementById('sp-npc-gl');
-      if(!cvs) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
-      let ready=false,renderer=null,scene,camera,model,group,yaw=0,pitch=0,spinA=0,lw=0,lh=0,
-          keyL=null,rimL=null,hemiL=null,partyOn=false;
-      function loadScript(src){ return new Promise(function(res,rej){
-        const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
-      function fit(){
-        const box=new THREE.Box3().setFromObject(model);
-        const size=box.getSize(new THREE.Vector3()), c=box.getCenter(new THREE.Vector3());
-        const fov=32*Math.PI/180, dist=(size.y/2)/Math.tan(fov/2)*1.1;
-        camera.aspect=Math.max(.2,cvs.clientWidth/Math.max(1,cvs.clientHeight));
-        camera.updateProjectionMatrix();
-        camera.position.set(c.x,c.y,c.z+dist); camera.lookAt(c.x,c.y,c.z);
-      }
-      function init(){
-        try{ renderer=new THREE.WebGLRenderer({canvas:cvs,alpha:true,antialias:true}); }catch(e){ return; }
-        renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
-        renderer.outputEncoding=THREE.sRGBEncoding;
-        scene=new THREE.Scene();
-        camera=new THREE.PerspectiveCamera(32,1,.1,50);
-        scene.add(hemiL=new THREE.HemisphereLight(0xcfe8ff,0x86a86b,1.0));
-        keyL=new THREE.DirectionalLight(0xfff1d6,.85); keyL.position.set(2,3,4); scene.add(keyL);
-        rimL=new THREE.DirectionalLight(0xa8d8ff,.5); rimL.position.set(-3,2,-3); scene.add(rimL);
-        group=new THREE.Group(); scene.add(group);
-        new THREE.GLTFLoader().load('assets/npc_maid_3d.glb',function(g){
-          model=g.scene; group.add(model);
-          model.traverse(function(o){ if(o.isMesh) o.frustumCulled=false; });
-          ready=true; cvs.classList.add('on'); npcEl.classList.add('gl');
-          (function loop(t){ requestAnimationFrame(loop); if(!ready)return;
-            const w=cvs.clientWidth,h=cvs.clientHeight;
-            if(w!==lw||h!==lh){ lw=w; lh=h; renderer.setSize(w,h,false); fit(); }
-            if(spinA>0){ spinA=Math.max(0,spinA-.05); yaw+=spinA*.55; }
-            if(partyOn){ const hue=(t*.00016)%1;
-              keyL.color.setHSL(hue,.72,.62); rimL.color.setHSL((hue+.45)%1,.85,.6);
-              hemiL.intensity=1.05+.32*Math.sin(t*.011); }
-            else{ keyL.color.setHex(0xfff1d6); rimL.color.setHex(0xa8d8ff); hemiL.intensity=1.0; }
-            group.rotation.y=yaw;
-            group.rotation.x=pitch*.6+Math.sin((t||0)*.0011)*.012;
-            group.rotation.z=Math.sin((t||0)*.0009)*.03;
-            group.position.y=Math.sin((t||0)*.0021)*.006;
-            renderer.render(scene,camera); })(performance.now());
-        },undefined,function(){ /* GLB 加载失败：保持 2D 立绘 */ });
-      }
-      function startNpcGL(){
-        loadScript('assets/three.min.js')
-          .then(function(){ return loadScript('assets/GLTFLoader.js'); })
-          .then(init).catch(function(){ /* three 加载失败：保持 2D */ });
-      }
-      if(document.getElementById('cinematic-preloader')){
-        addEventListener('cinematic:complete',startNpcGL,{once:true});
-      } else {
-        startNpcGL();
-      }
-      return {
-        get ready(){ return ready; },
-        pose:function(y,p){ yaw=y; pitch=p; },
-        spinNow:function(){ if(ready) spinA=1; },
-        party:function(on){ partyOn=!!on; },
-        stats:function(){ return ready?{tri:renderer.info.render.triangles,w:cvs.width,h:cvs.height}:null; }
-      };
-    })();
+    /* 2D-first：不再让 Three.js/GLB 阻塞首屏，保留相同交互接口。 */
+    const gl3d={ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
     window.__npcGL=gl3d;
     /* 键盘驾驶（bruno-simon 小车风）：方向键/WASD + 漂移胎痕 + H 喇叭 */
     var keys={}, skidT=0, driveTipped=false, driveHeading=Math.PI, driveHeld=false,
