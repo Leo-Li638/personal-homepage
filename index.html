@@ -176,6 +176,8 @@
   .ibtn-main i{display:block;font-style:normal;font-size:12px;color:var(--sub);margin-top:2px;}
   body.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease;}
   body.js .reveal.on{opacity:1;transform:none;}
+  body.js .reveal{filter:blur(6px);transition:opacity .55s ease-out,transform .55s ease-out,filter .55s ease-out;}
+  body.js .reveal.on{filter:none;}
   #backtop{position:fixed;right:18px;bottom:22px;z-index:60;width:42px;height:42px;border-radius:50%;
     border:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
     box-shadow:0 4px 14px rgba(36,59,83,.15);cursor:pointer;font-size:18px;color:var(--sky);
@@ -210,8 +212,10 @@
   }
   /* ===== 前置页 splash（电影感封面，品牌名替换 DeepSeek，背景无虚化） ===== */
   #splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
-    overflow:hidden;background:#0c1622;transition:opacity .8s ease,visibility .8s ease;}
+    overflow:hidden;background:#0c1622;transform-origin:50% 46%;
+    transition:opacity .62s ease-out,visibility .62s ease-out,filter .62s ease-out,transform .62s ease-out;}
   #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  #splash.leaving{opacity:0;filter:blur(9px);transform:scale(1.012);}
   .splash-bg{position:absolute;inset:0;background:#0c1622 url(assets/mondstadt-hero.jpg) center/cover no-repeat;
     background-image:image-set(url(assets/mondstadt-hero.avif) type("image/avif"),url(assets/mondstadt-hero.webp) type("image/webp"),url(assets/mondstadt-hero.jpg) type("image/jpeg"));
     background-position:center;background-size:cover;background-repeat:no-repeat;
@@ -407,13 +411,9 @@
   .sa-panel-foot{position:relative;display:flex;justify-content:space-between;gap:18px;margin-top:38px;
     color:#7fa8c4;font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
   /* stabondar 式离场分栏 */
-  .splash-transition{position:absolute;inset:0;z-index:10030;display:grid;grid-template-columns:repeat(8,1fr);
-    pointer-events:none;}
-  .splash-transition i{transform:scaleX(0);transform-origin:left center;background:#d8efff;}
-  #splash.leaving .splash-transition i{animation:sp-curtain .72s cubic-bezier(.76,0,.24,1) forwards;
-    animation-delay:calc(var(--i) * 34ms);}
-  @keyframes sp-curtain{0%{transform:scaleX(0)}42%{transform:scaleX(1)}100%{transform:scaleX(0);transform-origin:right center}}
-  #splash.leaving .splash-inner{opacity:0;transform:scale(.965);transition:opacity .42s,transform .42s;}
+  .splash-transition{display:none;}
+  #splash.leaving .splash-inner{opacity:0;filter:blur(6px);transform:scale(.985) translateY(8px);
+    transition:opacity .46s ease-out,transform .5s ease-out,filter .5s ease-out;}
   .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
     mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
@@ -432,6 +432,7 @@
   @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
   @media(max-width:640px){
     .bg,.splash-bg{animation:none!important}
+    #splash.leaving{filter:blur(4px);}
     .splash-inner{padding:8px 12px 12px;max-height:100svh;}
     .splash-npc{width:124px;margin-bottom:0;}
     .npc-mirror{height:42px;}
@@ -527,7 +528,8 @@
   }
   @media(prefers-reduced-motion:reduce){
     #cinematic-preloader{display:none!important;}
-    html.cp-active .bg,html.cp-active .layout,html.cp-active #splash{filter:none;transform:none;opacity:1;}
+    html.cp-active .bg,html.cp-active #splash{filter:none;transform:none;opacity:1;}
+    body.js .reveal{filter:none;transform:none;opacity:1;}
   }
   .skip-link{position:fixed;left:12px;top:12px;z-index:10050;padding:9px 14px;border-radius:9px;
     background:#fff;color:#163b58;text-decoration:none;transform:translateY(-160%);transition:transform .18s}
