@@ -1426,6 +1426,7 @@ function renderContent(t){
     const bw=document.getElementById('busuanzi-wrap'); if(bw) bw.style.display='none';
     setupReveal(); setupSpy();
     const lb=document.getElementById('langBtn'); if(lb) lb.addEventListener('click', toggleLang);
+    if(window.__syncSbh) setTimeout(window.__syncSbh, 40);   // 顶栏高度跟随（移动端防遮挡）
   }
 
   function toggleLang(){
@@ -1446,18 +1447,27 @@ function renderContent(t){
 
   // 移动端顶栏高度动态测量 → CSS 变量 --sbh（导航可能换行，写死数值会挡住首行标题）
   (function(){
-    const sbEl=document.querySelector('.sidebar');
     function sync(){
-      if(!sbEl)return;
-      const h=sbEl.getBoundingClientRect().height;
+      const sbEl=document.querySelector('.sidebar');
+      if(!sbEl||!sbEl.isConnected)return;
+      // 顶栏内含导航，渲染完成前高度偏小 → 取 max(实测, 内容所需下限)
+      const navH=sbEl.querySelector('.sbnav')?sbEl.querySelector('.sbnav').scrollHeight:0;
+      const h=Math.max(sbEl.getBoundingClientRect().height, navH?navH+42:0);
       if(h>0) document.documentElement.style.setProperty('--sbh', Math.round(h)+'px');
     }
+    window.__syncSbh=sync;
     addEventListener('resize', function(){ clearTimeout(window.__sbhT); window.__sbhT=setTimeout(sync,120); }, {passive:true});
     addEventListener('orientationchange', function(){ setTimeout(sync,260); });
-    addEventListener('portfolio:enter', function(){ setTimeout(sync,60); });
+    addEventListener('portfolio:enter', function(){ setTimeout(sync,80); });
+    if(window.ResizeObserver){ // 顶栏尺寸变化（语言切换/字体加载/导航换行）自动跟随
+      const ro=new ResizeObserver(function(){ clearTimeout(window.__sbhT); window.__sbhT=setTimeout(sync,60); });
+      addEventListener('DOMContentLoaded',function(){
+        const sb=document.querySelector('.sidebar'); if(sb)ro.observe(sb);
+      });
+      setTimeout(function(){ const sb=document.querySelector('.sidebar'); if(sb)ro.observe(sb); sync(); },0);
+    }
     if(document.readyState!=='loading'){ sync(); addEventListener('load',sync); }
     else addEventListener('DOMContentLoaded',sync);
-    window.__syncSbh=sync;
   })();
 
   let rendered=false;
