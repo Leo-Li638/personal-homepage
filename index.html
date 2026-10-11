@@ -592,6 +592,10 @@
     border-left:1.5px solid rgba(255,255,255,.75);
     box-shadow:inset -14px 0 18px -12px rgba(120,170,210,.55);}
   body.npc-docked.npc-peek #sp-npc .npc-stage{animation:npc-peek-breathe 3.4s ease-in-out infinite;}
+  /* 探头态一律不显示台词气泡（CSS 兜底，防止任何路径漏出遮挡正文） */
+  body.npc-docked.npc-peek:not(.npc-peek-open) #sp-npc .npc-talk{display:none!important;}
+  body.npc-docked.npc-peek:not(.npc-peek-open) #sp-npc .npc-mirror,
+  body.npc-docked.npc-peek:not(.npc-peek-open) #sp-npc .npc-podium{display:none!important;}
   @keyframes npc-peek-breathe{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(-2deg)}}
   /* 探头全开（点一下短暂现身） */
   body.npc-docked.npc-peek.npc-peek-open #sp-npc{width:132px!important;height:auto;overflow:visible;cursor:pointer;
