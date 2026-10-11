@@ -580,9 +580,9 @@
   /* ===== 触屏「探头」吸附态：身体吸出屏幕外，只露一个小头，不遮正文 =====
      原理：npcEl 收成一个 58×84 的小窗口（overflow:hidden），内部立绘保持 132px 宽并居中，
      于是只有头部那一段落在窗口里；点一下可临时「探头」变回整只。 */
-  body.npc-docked.npc-peek #sp-npc{width:50px!important;height:60px;overflow:hidden;cursor:pointer;
+  body.npc-docked.npc-peek #sp-npc{width:52px!important;height:62px;overflow:hidden;cursor:pointer;
     border-radius:0 26px 26px 0;pointer-events:auto;}
-  body.npc-docked.npc-peek #sp-npc .npc-stage{width:132px;left:50%;margin-left:-41px;}
+  body.npc-docked.npc-peek #sp-npc .npc-stage{width:132px;left:50%;margin-left:-40px;}
   body.npc-docked.npc-peek #sp-npc .npc-backlight,
   body.npc-docked.npc-peek #sp-npc .npc-podium,
   body.npc-docked.npc-peek #sp-npc .npc-mirror,
@@ -590,7 +590,7 @@
   body.npc-docked.npc-peek #sp-npc .npc-orb{display:none!important;}
   body.npc-docked.npc-peek #sp-npc::before{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
     border-left:1.5px solid rgba(255,255,255,.75);
-    background:linear-gradient(90deg,rgba(190,225,250,.28),rgba(255,255,255,0) 55%);}
+    box-shadow:inset -14px 0 18px -12px rgba(120,170,210,.55);}
   body.npc-docked.npc-peek #sp-npc .npc-stage{animation:npc-peek-breathe 3.4s ease-in-out infinite;}
   @keyframes npc-peek-breathe{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(-2deg)}}
   /* 探头全开（点一下短暂现身） */
@@ -1701,18 +1701,19 @@ function renderContent(t){
     const FLY=['💙','🐋','✨','🩵','💫'];
     const pick=a=>a&&a.length?a[Math.floor(Math.random()*a.length)]:'';
     function L(){ const d=D[getLang()]; return (d&&d.splash&&d.splash.npcTalk)||{}; }
-    function talk(msg,ms){ if(!msg)return; talkEl.textContent=msg; talkEl.classList.add('show');
+    function talk(msg,ms){ if(!msg)return;
+      if(document.body.classList.contains('npc-peek')&&!document.body.classList.contains('npc-peek-open'))return; // 探头态不打断阅读
+      talkEl.textContent=msg; talkEl.classList.add('show');
       clearTimeout(talkTimer); talkTimer=setTimeout(()=>talkEl.classList.remove('show'),ms||3200);
       requestAnimationFrame(placeTalk); }
     function placeTalk(){ const r=npcEl.getBoundingClientRect();
-      if(document.body.classList.contains('npc-docked')){ // 探头态：气泡挂到小头左侧（fixed，避免被 overflow:hidden 裁掉）
+      if(document.body.classList.contains('npc-docked')){ // 探头态：只露小头，不弹气泡以免遮正文；点开探头后才显示
+        if(!document.body.classList.contains('npc-peek-open')){ talkEl.classList.remove('show'); return; }
         const bw=talkEl.offsetWidth||Math.min(180,innerWidth-24);
-        const open=document.body.classList.contains('npc-peek-open');
-        const cx=open? Math.max(bw/2+6,Math.min(innerWidth-bw/2-6,r.left+r.width*0.5))
-                     : r.left-6;
-        const topY=Math.max(talkEl.offsetHeight+8, r.top+(open?4:-6));
-        talkEl.style.position='fixed'; talkEl.style.left=cx+'px'; talkEl.style.top=topY+'px';
-        talkEl.style.transform=(open?'translate(-50%,-100%)':'translate(-100%,-100%)');
+        const cx=Math.max(bw/2+6,Math.min(innerWidth-bw/2-6,r.left+r.width*0.5));
+        talkEl.style.position='fixed'; talkEl.style.left=cx+'px';
+        talkEl.style.top=Math.max(talkEl.offsetHeight+8, r.top+4)+'px';
+        talkEl.style.transform='translate(-50%,-100%)';
         return; }
       if(!engine){ talkEl.style.position='absolute'; talkEl.style.left='50%'; talkEl.style.top='52px'; return; }
       talkEl.style.position='fixed';
@@ -1851,7 +1852,7 @@ function renderContent(t){
         engine=false;
         // 探头吸附：只露小头（CSS .npc-peek 负责裁剪），不压正文
         document.body.classList.add('npc-peek');
-        x=innerWidth-50-4; y=Math.max(70,Math.round((innerHeight-60)/2));
+        x=innerWidth-52-4; y=Math.max(70,Math.round((innerHeight-62)/2));
         npcEl.style.opacity='0';
         npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
         document.body.classList.add('npc-docked');
@@ -1861,7 +1862,7 @@ function renderContent(t){
         let peekTimer=0;
         function placePeek(open){
           document.body.classList.toggle('npc-peek-open',!!open);
-          const w2=open?(npcEl.offsetWidth||132):50, h2=open?(npcEl.offsetHeight||224):60;
+          const w2=open?(npcEl.offsetWidth||132):52, h2=open?(npcEl.offsetHeight||224):62;
           x=innerWidth-w2-(open?6:4); y=Math.max(70,Math.round((innerHeight-h2)/2));
           npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
           clearTimeout(peekTimer);
