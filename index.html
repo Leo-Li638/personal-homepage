@@ -203,10 +203,10 @@
     .sbsocial{display:none;}
     .sbtools{margin:0;position:fixed;top:12px;right:12px;z-index:55;}
     .langbtn{font-size:13px;padding:10px 18px;min-height:44px;min-width:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
-    .content{margin-left:0;padding:96px 18px 60px;max-width:none;}
+    .content{margin-left:0;padding:calc(var(--sbh,96px) + 20px) 18px 60px;max-width:none;}
     .feats,.projects,.posts,.interact-row,.stats .grid{grid-template-columns:1fr;}
     .stats .grid{grid-template-columns:1fr 1fr;}
-    html{scroll-padding-top:70px;}
+    html{scroll-padding-top:calc(var(--sbh,70px) + 14px);}
   }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
@@ -577,6 +577,26 @@
   body.npc-docked #sp-npc .npc-talk{max-width:180px;}
   body.npc-docked #sp-npc img{animation:none;filter:drop-shadow(0 8px 14px rgba(10,25,50,.35)) saturate(.96) brightness(1.02);}
   body.npc-docked .npc-drive-hud,body.npc-docked #npc-drive-pad{display:none!important;}
+  /* ===== 触屏「探头」吸附态：身体吸出屏幕外，只露一个小头，不遮正文 =====
+     原理：npcEl 收成一个 58×84 的小窗口（overflow:hidden），内部立绘保持 132px 宽并居中，
+     于是只有头部那一段落在窗口里；点一下可临时「探头」变回整只。 */
+  body.npc-docked.npc-peek #sp-npc{width:50px!important;height:60px;overflow:hidden;cursor:pointer;
+    border-radius:0 26px 26px 0;pointer-events:auto;}
+  body.npc-docked.npc-peek #sp-npc .npc-stage{width:132px;left:50%;margin-left:-41px;}
+  body.npc-docked.npc-peek #sp-npc .npc-backlight,
+  body.npc-docked.npc-peek #sp-npc .npc-podium,
+  body.npc-docked.npc-peek #sp-npc .npc-mirror,
+  body.npc-docked.npc-peek #sp-npc .splash-npc-name{display:none!important;}
+  body.npc-docked.npc-peek #sp-npc .npc-orb{display:none!important;}
+  body.npc-docked.npc-peek #sp-npc::before{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
+    border-left:1.5px solid rgba(255,255,255,.75);
+    background:linear-gradient(90deg,rgba(190,225,250,.28),rgba(255,255,255,0) 55%);}
+  body.npc-docked.npc-peek #sp-npc .npc-stage{animation:npc-peek-breathe 3.4s ease-in-out infinite;}
+  @keyframes npc-peek-breathe{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-4px) rotate(-2deg)}}
+  /* 探头全开（点一下短暂现身） */
+  body.npc-docked.npc-peek.npc-peek-open #sp-npc{width:132px!important;height:auto;overflow:visible;cursor:pointer;
+    border-radius:0;}
+  body.npc-docked.npc-peek.npc-peek-open #sp-npc::before{display:none;}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script defer src="preloader.js"></script>
@@ -1424,6 +1444,22 @@ function renderContent(t){
   }, {passive:true});
   document.getElementById('backtop').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
+  // 移动端顶栏高度动态测量 → CSS 变量 --sbh（导航可能换行，写死数值会挡住首行标题）
+  (function(){
+    const sbEl=document.querySelector('.sidebar');
+    function sync(){
+      if(!sbEl)return;
+      const h=sbEl.getBoundingClientRect().height;
+      if(h>0) document.documentElement.style.setProperty('--sbh', Math.round(h)+'px');
+    }
+    addEventListener('resize', function(){ clearTimeout(window.__sbhT); window.__sbhT=setTimeout(sync,120); }, {passive:true});
+    addEventListener('orientationchange', function(){ setTimeout(sync,260); });
+    addEventListener('portfolio:enter', function(){ setTimeout(sync,60); });
+    if(document.readyState!=='loading'){ sync(); addEventListener('load',sync); }
+    else addEventListener('DOMContentLoaded',sync);
+    window.__syncSbh=sync;
+  })();
+
   let rendered=false;
   function renderGate(){
     const lang=getLang(), t=D[lang];
@@ -1661,6 +1697,15 @@ function renderContent(t){
       clearTimeout(talkTimer); talkTimer=setTimeout(()=>talkEl.classList.remove('show'),ms||3200);
       requestAnimationFrame(placeTalk); }
     function placeTalk(){ const r=npcEl.getBoundingClientRect();
+      if(document.body.classList.contains('npc-docked')){ // 探头态：气泡挂到小头左侧（fixed，避免被 overflow:hidden 裁掉）
+        const bw=talkEl.offsetWidth||Math.min(180,innerWidth-24);
+        const open=document.body.classList.contains('npc-peek-open');
+        const cx=open? Math.max(bw/2+6,Math.min(innerWidth-bw/2-6,r.left+r.width*0.5))
+                     : r.left-6;
+        const topY=Math.max(talkEl.offsetHeight+8, r.top+(open?4:-6));
+        talkEl.style.position='fixed'; talkEl.style.left=cx+'px'; talkEl.style.top=topY+'px';
+        talkEl.style.transform=(open?'translate(-50%,-100%)':'translate(-100%,-100%)');
+        return; }
       if(!engine){ talkEl.style.position='absolute'; talkEl.style.left='50%'; talkEl.style.top='52px'; return; }
       talkEl.style.position='fixed';
       const
@@ -1757,7 +1802,13 @@ function renderContent(t){
     function release(){ 
       if(touchDevice){ const dur=performance.now()-tapT; tapT=-1;
         if(dur>=550){ state='idle'; openDanceShow(true); return; }   // 长按=舞王 Live
-        if(dur<400){ state='idle'; pat(zone); return; }             // 短按=拍拍
+        if(dur<400){ state='idle';
+          // 探头态：短按先"探头出来"，再按才拍拍
+          if(document.body.classList.contains('npc-peek')){
+            if(document.body.classList.contains('npc-peek-open')){ window.__npcPlacePeek&&window.__npcPlacePeek(false); }
+            else { window.__npcPlacePeek&&window.__npcPlacePeek(true); return; }
+          }
+          pat(zone); return; }             // 短按=拍拍
         state='idle'; return; }
       if(state!=='grab')return; npcEl.classList.remove('grab');
       const dur=performance.now()-dnT, t=L();
@@ -1790,12 +1841,29 @@ function renderContent(t){
       npcEl.style.margin='0'; npcEl.style.width=w+'px'; npcEl.style.zIndex='9988';
       if(touchDevice){
         engine=false;
-        x=innerWidth-w-6; y=Math.max(64,Math.round((innerHeight-npcEl.offsetHeight)/2));
+        // 探头吸附：只露小头（CSS .npc-peek 负责裁剪），不压正文
+        document.body.classList.add('npc-peek');
+        x=innerWidth-50-4; y=Math.max(70,Math.round((innerHeight-60)/2));
         npcEl.style.opacity='0';
         npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
         document.body.classList.add('npc-docked');
         requestAnimationFrame(function(){ requestAnimationFrame(function(){ npcEl.style.opacity='1'; }); });
         npcEl.classList.add('sp-arrive'); // 复用入场动画让吸附更自然
+        /* 点小头 → 整只探头出来（3.2s 或点别处自动缩回）；已在探头态则先缩回 */
+        let peekTimer=0;
+        function placePeek(open){
+          document.body.classList.toggle('npc-peek-open',!!open);
+          const w2=open?(npcEl.offsetWidth||132):50, h2=open?(npcEl.offsetHeight||224):60;
+          x=innerWidth-w2-(open?6:4); y=Math.max(70,Math.round((innerHeight-h2)/2));
+          npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+          clearTimeout(peekTimer);
+          if(open) peekTimer=setTimeout(function(){ placePeek(false); },3200);
+          placeTalk();
+        }
+        window.__npcPlacePeek=placePeek;
+        document.addEventListener('pointerdown',function(e){
+          if(document.body.classList.contains('npc-peek-open')&&!npcEl.contains(e.target)) placePeek(false);
+        },true);
       } else {
         engine=true;
         x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4;
