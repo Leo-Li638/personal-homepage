@@ -1852,6 +1852,7 @@ function renderContent(t){
         engine=false;
         // 探头吸附：只露小头（CSS .npc-peek 负责裁剪），不压正文
         document.body.classList.add('npc-peek');
+        talkEl.classList.remove('show'); clearTimeout(talkTimer);   // 清掉入场时残留的气泡，避免遮正文
         x=innerWidth-52-4; y=Math.max(70,Math.round((innerHeight-62)/2));
         npcEl.style.opacity='0';
         npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
