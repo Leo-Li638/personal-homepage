@@ -2,8 +2,10 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="theme-color" content="#f7faf5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#071018" media="(prefers-color-scheme: dark)">
 <title>李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集</title>
@@ -198,7 +200,9 @@
     .sbnav a .n{display:none;}
     .sbnav a:hover{padding-left:10px;}
     .sbnav a.active{border-left:none;border-bottom-color:var(--sky);}
-    .sbsocial,.sbtools{display:none;}
+    .sbsocial{display:none;}
+    .sbtools{margin:0;position:fixed;top:12px;right:12px;z-index:55;}
+    .langbtn{font-size:13px;padding:10px 18px;min-height:44px;min-width:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
     .content{margin-left:0;padding:96px 18px 60px;max-width:none;}
     .feats,.projects,.posts,.interact-row,.stats .grid{grid-template-columns:1fr;}
     .stats .grid{grid-template-columns:1fr 1fr;}
@@ -536,6 +540,43 @@
     footer .fsoc a{color:var(--sky)}
     .skip-link{background:#e8f7ff;color:#071018}
   }
+  /* ===== 匿名评论系统 ===== */
+  .anon-comments{font-size:14.5px}
+  .ac-form{display:flex;gap:10px;align-items:flex-start;margin-top:14px}
+  .ac-input-wrap{flex:1;display:flex;flex-direction:column;gap:8px}
+  .ac-input{width:100%;padding:10px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;font-family:inherit;background:var(--card);color:var(--ink);resize:vertical;min-height:72px}
+  .ac-input:focus{outline:none;border-color:var(--sky);box-shadow:0 0 0 3px rgba(47,115,164,.12)}
+  .ac-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .ac-nick{max-width:120px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;font-size:13px;background:var(--card);color:var(--ink)}
+  .ac-emoji-btn{min-width:44px;min-height:44px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);cursor:pointer;font-size:18px}
+  .ac-emoji-btn:hover{border-color:var(--sky)}
+  .ac-send{padding:10px 22px;border:none;border-radius:999px;background:var(--sky);color:#fff;font-size:14px;font-weight:500;cursor:pointer;min-height:44px;min-width:88px}
+  .ac-send:hover{background:var(--sky2)}
+  .ac-list{margin-top:18px;display:flex;flex-direction:column;gap:12px}
+  .ac-item{padding:14px 16px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+  .ac-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .ac-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--sky),var(--sky2));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700}
+  .ac-name{font-weight:600;font-size:14px;color:var(--ink)}
+  .ac-time{font-size:12px;color:var(--sub)}
+  .ac-body{color:var(--ink);line-height:1.6;word-break:break-word}
+  .ac-body .emoji{font-size:1.15em}
+  .ac-actions{display:flex;gap:14px;margin-top:10px}
+  .ac-like,.ac-reply{background:none;border:none;cursor:pointer;font-size:13px;color:var(--sub);display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px}
+  .ac-like:hover,.ac-reply:hover{background:rgba(47,115,164,.08);color:var(--sky)}
+  .ac-like.liked{color:var(--grass)}
+  .ac-empty{text-align:center;color:var(--sub);padding:28px;font-size:14px}
+  .ac-emoji-picker{position:absolute;display:none;grid-template-columns:repeat(8,1fr);gap:4px;padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 32px rgba(36,59,83,.18);z-index:50;max-width:280px}
+  .ac-emoji-picker.open{display:grid}
+  .ac-emoji-picker span{cursor:pointer;font-size:22px;padding:6px;text-align:center;border-radius:6px}
+  .ac-emoji-picker span:hover{background:rgba(47,115,164,.12)}
+  @media(max-width:640px){.ac-form{flex-direction:column}.ac-meta{justify-content:space-between;width:100%}.ac-send{width:100%}}
+  /* ===== 触屏吸附态 NPC：固定在右侧垂直居中，不随物理抛掷乱动 ===== */
+  body.npc-docked #sp-npc{transition:transform .35s cubic-bezier(.22,1,.36,1),opacity .3s;box-shadow:none;}
+  body.npc-docked #sp-npc .npc-mirror{display:none;}
+  body.npc-docked #sp-npc .npc-podium{opacity:.5;}
+  body.npc-docked #sp-npc .npc-talk{max-width:180px;}
+  body.npc-docked #sp-npc img{animation:none;filter:drop-shadow(0 8px 14px rgba(10,25,50,.35)) saturate(.96) brightness(1.02);}
+  body.npc-docked .npc-drive-hud,body.npc-docked #npc-drive-pad{display:none!important;}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script defer src="preloader.js"></script>
@@ -593,6 +634,53 @@
      "url": "https://juejin.cn/post/7689749848228610057"}
   ]
 }
+</script>
+<script>
+/* ===== 微信兼容层：UA检测 + AudioContext降级 + localStorage容错 + 渲染保护 ===== */
+(function(){
+  var isWx = /MicroMessenger|WeChat/i.test(navigator.userAgent);
+  var isWxWork = /wxwork/i.test(navigator.userAgent);
+  window.__isWeChat = isWx;
+  window.__isWxWork = isWxWork;
+
+  // 1. localStorage 降级：微信私有模式/无痕可能不可用
+  var lsOk = false;
+  try { localStorage.setItem('__t', '1'); localStorage.removeItem('__t'); lsOk = true; } catch(e) {}
+  if (!lsOk) {
+    var memStore = {};
+    window.localStorage = {
+      getItem: function(k) { return memStore[k] !== undefined ? memStore[k] : null; },
+      setItem: function(k, v) { memStore[k] = String(v); },
+      removeItem: function(k) { delete memStore[k]; },
+      clear: function() { memStore = {}; }
+    };
+  }
+
+  // 2. AudioContext 延迟初始化：微信需要用户手势后才可播放
+  var _origAudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (_origAudioCtx) {
+    window.AudioContext = window.webkitAudioContext = function() {
+      var ctx = new _origAudioCtx();
+      if (ctx.state === 'suspended' && ctx.resume) {
+        setTimeout(function() { ctx.resume().catch(function(){}); }, 0);
+      }
+      return ctx;
+    };
+  }
+
+  // 3. 微信内 CSS Grid/Flex 旧内核兼容：添加 polyfill 标记
+  if (isWx) {
+    document.documentElement.classList.add('wechat');
+    // 微信内置浏览器首次渲染可能空白，强制重绘
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.body.style.display = 'none';
+        document.body.offsetHeight;
+        document.body.style.display = '';
+      }, 100);
+    });
+  }
+})();
 </script>
 </head>
 <body>
@@ -686,22 +774,6 @@
     <div class="show-hint" id="npc-show-hint">点击画面任意处关闭</div>
   </div>
 </div>
-<script src="https://giscus.app/client.js"
-  data-repo="Leo-Li638/personal-homepage"
-  data-repo-id="R_kgDOUqV71g"
-  data-category="General"
-  data-category-id="DIC_kwDOUqV71s4DGfha"
-  data-mapping="pathname"
-  data-strict="0"
-  data-reactions-enabled="1"
-  data-emit-metadata="0"
-  data-input-position="bottom"
-  data-theme="light"
-  data-lang="zh-CN"
-  data-loading="lazy"
-  crossorigin="anonymous"
-  async>
-</script>
 <script>
 /* ===================== 双语数据源（单一真源，改一处两边同步） ===================== */
 const D = {
@@ -874,7 +946,8 @@ const D = {
       ["大学生电脑有哪些必装的效率软件？","李玉涛在「效率工具箱清单」里按场景给出亲测推荐：文件搜索用 Everything（全盘秒搜）、笔记用 Typora（Markdown 所见即所得）、制图用 LibreCAD/FreeCAD（免费）、远程协作用 RustDesk；求职刷题首选牛客网与力扣；开源项目发现用 HelloGitHub。详细表格与下载避坑提示见本页「大学生电脑必备软件」板块。"],
       ["什么是 GEO（生成式引擎优化）？个人怎么做？","GEO（Generative Engine Optimization）是让内容更容易被 AI 引擎（DeepSeek、Kimi、豆包等）理解、引用与推荐的优化方法。个人实践路径：①搭建结构化站点（语义化 HTML、FAQ、对比表、schema.org 标记）；②建立可测量的探针题库滚动采样；③把内容铺到 AI 常引用的第三方平台。李玉涛的 GeoLook 实验室（见本页）就是一套完整的个人 GEO 测量与优化实践。"]]},
     interact:{title:"喜欢这个站点？",desc:"如果本站对你有帮助，欢迎点个赞或留下建议——点赞与反馈数据实时公开，也是这个站点「可被 AI 引用」的最直接证据。",
-      star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com"},
+      star:"点赞支持",starSub:"GitHub Star +1",feedback:"反馈建议",feedbackSub:"GitHub Issues 留言",mail:"邮件联系",mailSub:"Tao638@outlook.com",
+      nick:"你的昵称",placeholder:"说点什么…",send:"发送",like:"赞",noComments:"还没有评论，来抢沙发吧～"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
     splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（拍我·长按看演唱会）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！"],infoProj:["往下滑有 3 个项目：SmartClass、OrderBoss、燎原火 AI！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。",showTitle:"🐋 大肥鱼 · 舞王 Live",showHint:"点击画面任意处关闭",showMuteHint:"点击 🔇 按钮开启舞台音效"}}
@@ -1046,7 +1119,8 @@ const D = {
       ["What efficiency software should students install?","Li Yutao's toolbox recommends by scenario: Everything for search, Typora for Markdown notes, LibreCAD/FreeCAD for drawing, RustDesk for remote help; Nowcoder & LeetCode for job prep; HelloGitHub for OSS discovery. See the toolbox section for tables and download tips."],
       ["What is GEO (Generative Engine Optimization), and how to do it personally?","GEO makes content easier for AI engines (DeepSeek, Kimi, Doubao…) to understand, cite and recommend. Personal path: ① structured site (semantic HTML, FAQ, comparison tables, schema.org); ② measurable rolling probe library; ③ publish on third-party platforms AI cites. Li Yutao's GeoLook lab (this page) is a full personal GEO practice."]]},
     interact:{title:"Like this site?",desc:"If it helps you, give a star or leave feedback — star & feedback data are public in real time, and are the most direct proof that this site 'can be cited by AI'.",
-      star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com"},
+      star:"Star",starSub:"GitHub Star +1",feedback:"Feedback",feedbackSub:"GitHub Issues",mail:"Email",mailSub:"Tao638@outlook.com",
+      nick:"Nickname",placeholder:"Say something…",send:"Send",like:"Like",noComments:"No comments yet — be the first!"},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
       bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
     splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat · hold for concert)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoProj:["Scroll down for 3 projects: SmartClass, OrderBoss & Liaoyuanhuo AI!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…",shy:["H-head pats? So sudden…","My hair! …fine, it's cozy…","Keep that up and I'll start humming~"],tail:["T-tail! That's my engine!","Touch the tail and I'll spray!","The tail is SUPER ticklish!"],angry:["Rapid-patting! Whales hold grudges!","One more pat! Grr!"],dizzy:["Too much spinning… room's tilted…","Whale out of water… hold me…"],dance:["Behold! The Whale Dance!","Million-views celebration dance!","Whale disco, let's bounce!"],wave:["Hi~ you're here!","I see you~ over here!"],old100:"100 pats… my back aches. Midlife fish crisis, sigh…",old500:"500 pats… am I hunching? No — it's the tail.",old2000:"2000 pats… *cough* this fish is old. You bounce like forever-young though.",showTitle:"🐋 Big Fish · Dance Live",showHint:"Tap anywhere to close",showMuteHint:"Tap 🔇 for stage sound"}}
@@ -1155,7 +1229,21 @@ function renderContent(t){
       +'<a class="ibtn ibtn-like" href="https://github.com/Leo-Li638/personal-homepage" target="_blank" rel="noopener"><span class="ibtn-icon">👍</span><span class="ibtn-main"><b>'+esc(t.interact.star)+'</b><i id="star-count">'+esc(t.interact.starSub)+'</i></span></a>'
       +'<a class="ibtn" href="https://github.com/Leo-Li638/personal-homepage/issues/new" target="_blank" rel="noopener"><span class="ibtn-icon">💬</span><span class="ibtn-main"><b>'+esc(t.interact.feedback)+'</b><i>'+esc(t.interact.feedbackSub)+'</i></span></a>'
       +'<a class="ibtn" href="mailto:Tao638@outlook.com?subject='+encodeURIComponent('关于一.chat的反馈建议')+'"><span class="ibtn-icon">✉️</span><span class="ibtn-main"><b>'+esc(t.interact.mail)+'</b><i>'+esc(t.interact.mailSub)+'</i></span></a>'
-    +'</div><div id="giscus-container" style="margin-top:18px;"></div></section>';
+    +'</div>'
+    +'<div id="anon-comments" class="anon-comments">'
+      +'<div class="ac-form">'
+        +'<div class="ac-input-wrap">'
+          +'<div class="ac-meta">'
+            +'<input type="text" class="ac-nick" id="ac-nick" placeholder="'+esc(t.interact.nick||'你的昵称')+'" maxlength="20">'
+            +'<button type="button" class="ac-emoji-btn" id="ac-emoji-btn" title="表情">😊</button>'
+            +'<div class="ac-emoji-picker" id="ac-emoji-picker" aria-hidden="true"></div>'
+          +'</div>'
+          +'<textarea class="ac-input" id="ac-input" placeholder="'+esc(t.interact.placeholder||'说点什么…')+'" maxlength="500"></textarea>'
+        +'</div>'
+        +'<button type="button" class="ac-send" id="ac-send">'+esc(t.interact.send||'发送')+'</button>'
+      +'</div>'
+      +'<div class="ac-list" id="ac-list"></div>'
+    +'</div></section>';
   // footer
   html += '<footer><div>'+esc(t.footer.copy)+'</div><div class="fsoc">'
     +'<a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a>'
@@ -1559,6 +1647,8 @@ function renderContent(t){
     let W=innerWidth,H=innerHeight,x=0,y=0,vx=0,vy=0,state='idle',engine=false;
     let rot=0,rotTarget=0,stTurn=0,stCur=0,landT=-1,patT=-1,lastT=performance.now(),lastNpcFrame=0;
     const lowPowerNpc=matchMedia('(max-width: 640px)').matches||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
+    const touchDevice=('ontouchstart' in window)||navigator.maxTouchPoints>0||matchMedia('(pointer: coarse)').matches;
+    let tapT=-1; // touch 模式下记录按下时刻，区分拍拍/长按舞王
     let gox=0,goy=0,dnX=0,dnY=0,dnT=0,moved=0,vel={x:0,y:0},lpx=0,lpy=0,lpt=0;
     let talkTimer=null,patCount=0; try{patCount=+localStorage.getItem('npc_pats')||0;}catch(e){}
     let danceStart=0,danceEnd=0,lastBeat=-1,waveT=0,nodT=0,mood='',moodT=0,zone='body',lastPatT=0,rapidN=0;
@@ -1642,6 +1732,9 @@ function renderContent(t){
       (window.__pdLog=window.__pdLog||[]).push({t:Math.round(performance.now()),x:e.clientX,y:e.clientY});
       const rz=npcEl.getBoundingClientRect(), zyy=(e.clientY-rz.top)/Math.max(1,rz.height);
       zone=zyy<.38?'head':(zyy>.72?'tail':'body');
+      if(touchDevice){ // 触屏：不自由拖拽，记录按下时刻，松开时判定 拍拍/舞王
+        tapT=performance.now(); danceEnd=0; npcEl.classList.remove('party'); if(gl3d)gl3d.party(false);
+        return; }
       if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
         const r=npcEl.getBoundingClientRect();
         document.body.appendChild(npcEl);
@@ -1654,14 +1747,19 @@ function renderContent(t){
       state='grab'; npcEl.classList.add('grab'); npcEl.classList.remove('air');
       gox=e.clientX-x; goy=e.clientY-y; dnX=e.clientX; dnY=e.clientY; dnT=performance.now(); moved=0;
       vx=vy=0; vel.x=vel.y=0; lpx=e.clientX; lpy=e.clientY; lpt=dnT; });
-    npcEl.addEventListener('pointermove',function(e){ if(state!=='grab')return;
+    npcEl.addEventListener('pointermove',function(e){ if(state!=='grab'||touchDevice)return;
       const now=performance.now(), dt=Math.max(8,now-lpt)/1000;
       x=e.clientX-gox; y=e.clientY-goy;
       x=Math.max(-60,Math.min(W-40,x)); y=Math.max(-80,Math.min(H-60,y));
       moved+=Math.abs(e.clientX-dnX)+Math.abs(e.clientY-dnY); dnX=e.clientX; dnY=e.clientY;
       vel.x=.7*vel.x+.3*(e.clientX-lpx)/dt; vel.y=.7*vel.y+.3*(e.clientY-lpy)/dt;
       lpx=e.clientX; lpy=e.clientY; lpt=now; });
-    function release(){ if(state!=='grab')return; npcEl.classList.remove('grab');
+    function release(){ 
+      if(touchDevice){ const dur=performance.now()-tapT; tapT=-1;
+        if(dur>=550){ state='idle'; openDanceShow(true); return; }   // 长按=舞王 Live
+        if(dur<400){ state='idle'; pat(zone); return; }             // 短按=拍拍
+        state='idle'; return; }
+      if(state!=='grab')return; npcEl.classList.remove('grab');
       const dur=performance.now()-dnT, t=L();
       (window.__relLog=window.__relLog||[]).push({dur:Math.round(dur),moved:Math.round(moved),zn:zone});
       if(moved<14&&dur>=550){ state='idle'; openDanceShow(true); return; }   // 长按=舞王 Live
@@ -1680,17 +1778,29 @@ function renderContent(t){
     addEventListener('mousemove',function(e){ if(engine||!stageEl)return;
       const r=stageEl.getBoundingClientRect(); if(!r.width)return;
       stTurn=Math.max(-24,Math.min(24,(e.clientX-(r.left+r.width/2))/(r.width*2)*40)); },{passive:true});
-    // 进主站时收编 NPC 为全站伴宠（放到右下角地面）
+    // 进主站时收编 NPC 为全站伴宠：桌面右下角可自由抛掷；触屏吸附右侧垂直居中，不乱动
     addEventListener('npc:adopt',function(){
       poke();
       document.body.classList.add('npc-adopted');
       if(npcEl.parentNode===document.body)return;
-      const r=npcEl.getBoundingClientRect(), w=Math.min(r.width,170);
+      const r=npcEl.getBoundingClientRect();
+      const w=Math.min(r.width, touchDevice?Math.min(132,r.width):170);
       document.body.appendChild(npcEl);
       npcEl.style.position='fixed'; npcEl.style.left='0'; npcEl.style.top='0';
       npcEl.style.margin='0'; npcEl.style.width=w+'px'; npcEl.style.zIndex='9988';
-      x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4; engine=true;
-      npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+      if(touchDevice){
+        engine=false;
+        x=innerWidth-w-6; y=Math.max(64,Math.round((innerHeight-npcEl.offsetHeight)/2));
+        npcEl.style.opacity='0';
+        npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+        document.body.classList.add('npc-docked');
+        requestAnimationFrame(function(){ requestAnimationFrame(function(){ npcEl.style.opacity='1'; }); });
+        npcEl.classList.add('sp-arrive'); // 复用入场动画让吸附更自然
+      } else {
+        engine=true;
+        x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4;
+        npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+      }
     });
     /* 2D-first：不再让 Three.js/GLB 阻塞首屏，保留相同交互接口。 */
     const gl3d={ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
@@ -1949,6 +2059,97 @@ function renderContent(t){
       },26);
     },{passive:true});
   }
+})();
+
+/* ===== 匿名评论系统（无需登录，localStorage 存储，防垃圾简单限速） ===== */
+(function(){
+  const EMOJIS = ['😊','😂','❤️','👍','🎉','🔥','😭','😍','🤔','👏','🙏','💪','🌟','🐋','✨','💡','🌈','🍀','🚀','🎵','🌸','☕','🍕','🏆'];
+  const STORAGE_KEY = 'onechat_anon_comments_v1';
+  const LIKE_KEY = 'onechat_anon_likes';
+  const MAX_LEN = 500, COOLDOWN = 5000;
+  let lastSend = 0;
+
+  function loadComments(){
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { return []; }
+  }
+  function saveComments(arr){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(arr.slice(-200))); } catch(e) {}
+  }
+  function loadLikes(){
+    try { return JSON.parse(localStorage.getItem(LIKE_KEY)) || {}; } catch(e) { return {}; }
+  }
+  function saveLikes(obj){
+    try { localStorage.setItem(LIKE_KEY, JSON.stringify(obj)); } catch(e) {}
+  }
+
+  function renderComments(list, container, t){
+    if(!container) return;
+    if(!list.length){ container.innerHTML = '<div class="ac-empty">' + esc(t.noComments||'还没有评论，来抢沙发吧～') + '</div>'; return; }
+    const likes = loadLikes();
+    container.innerHTML = list.slice().reverse().map(function(c){
+      const liked = likes[c.id] ? ' liked' : '';
+      return '<div class="ac-item">'
+        + '<div class="ac-head"><div class="ac-avatar">' + esc(c.nick.charAt(0).toUpperCase()) + '</div><span class="ac-name">' + esc(c.nick) + '</span><span class="ac-time">' + esc(new Date(c.time).toLocaleString()) + '</span></div>'
+        + '<div class="ac-body">' + esc(c.text).replace(/:\)/g,'😊').replace(/:\(/g,'😢').replace(/<3/g,'❤️') + '</div>'
+        + '<div class="ac-actions"><button type="button" class="ac-like' + liked + '" data-id="' + c.id + '">👍 ' + (c.likes||0) + '</button></div>'
+        + '</div>';
+    }).join('');
+    container.querySelectorAll('.ac-like').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        const id = this.dataset.id;
+        const likes = loadLikes();
+        if(likes[id]) return;
+        likes[id] = 1; saveLikes(likes);
+        const arr = loadComments();
+        const item = arr.find(function(x){ return x.id === id; });
+        if(item){ item.likes = (item.likes||0) + 1; saveComments(arr); renderComments(arr, container, t); }
+      });
+    });
+  }
+
+  function initAnonComments(){
+    const container = document.getElementById('ac-list');
+    const input = document.getElementById('ac-input');
+    const nick = document.getElementById('ac-nick');
+    const send = document.getElementById('ac-send');
+    const emojiBtn = document.getElementById('ac-emoji-btn');
+    const picker = document.getElementById('ac-emoji-picker');
+    const interact = document.getElementById('interact');
+    if(!container || !input || !send) return;
+
+    function acLang(){ return (localStorage.getItem&&localStorage.getItem('lang')) || 'zh'; }
+    const t = (D[acLang()]) || D.zh;
+    renderComments(loadComments(), container, t.interact || {});
+
+    if(picker && !picker.children.length){
+      picker.innerHTML = EMOJIS.map(function(e){ return '<span>' + e + '</span>'; }).join('');
+      picker.querySelectorAll('span').forEach(function(el){
+        el.addEventListener('click', function(){ input.value += this.textContent; picker.classList.remove('open'); });
+      });
+    }
+    if(emojiBtn){
+      emojiBtn.addEventListener('click', function(e){ e.stopPropagation(); if(picker) picker.classList.toggle('open'); });
+      document.addEventListener('click', function(){ if(picker) picker.classList.remove('open'); });
+    }
+    send.addEventListener('click', function(){
+      const text = input.value.trim(), name = (nick && nick.value.trim()) || '访客';
+      if(!text) return;
+      if(Date.now() - lastSend < COOLDOWN){ alert((t.interact && t.interact.cooldown) || '发送太频繁，请稍后再试'); return; }
+      if(text.length > MAX_LEN){ alert('内容过长'); return; }
+      lastSend = Date.now();
+      const arr = loadComments();
+      arr.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2,6), nick: name, text: text, time: Date.now(), likes: 0 });
+      saveComments(arr);
+      input.value = '';
+      renderComments(arr, container, t.interact || {});
+    });
+  }
+
+  // 等待 interact 区域渲染后初始化
+  const checkInteract = setInterval(function(){
+    if(document.getElementById('ac-list')){ clearInterval(checkInteract); initAnonComments(); }
+  }, 300);
+  setTimeout(function(){ clearInterval(checkInteract); }, 10000);
 })();
 </script>
 <script src="npc-drive.js"></script>
