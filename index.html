@@ -1449,10 +1449,8 @@ function renderContent(t){
   (function(){
     function sync(){
       const sbEl=document.querySelector('.sidebar');
-      if(!sbEl||!sbEl.isConnected)return;
-      // 顶栏内含导航，渲染完成前高度偏小 → 取 max(实测, 内容所需下限)
-      const navH=sbEl.querySelector('.sbnav')?sbEl.querySelector('.sbnav').scrollHeight:0;
-      const h=Math.max(sbEl.getBoundingClientRect().height, navH?navH+42:0);
+      if(!sbEl||!sbEl.isConnected||!sbEl.firstElementChild)return;  // 内容未渲染完不测（否则量到空壳高度）
+      const h=sbEl.getBoundingClientRect().height;
       if(h>0) document.documentElement.style.setProperty('--sbh', Math.round(h)+'px');
     }
     window.__syncSbh=sync;
