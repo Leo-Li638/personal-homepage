@@ -1515,6 +1515,10 @@ function renderContent(t){
     splashLeaving=true;
     closeAwardsPanel();
     dispatchEvent(new Event('npc:adopt')); // NPC 未被抓起过也收编为全站伴宠
+    // 标记已进入本会话并触发正文渲染（renderGate 依赖这两个信号）
+    try{ sessionStorage.setItem('onechat_entered','1'); }catch(e){}
+    if(!rendered) render();
+    dispatchEvent(new Event('portfolio:enter'));
     if(splashEl) splashEl.classList.add('leaving');
     setTimeout(function(){ if(splashEl) splashEl.classList.add('hide'); },460);
   }
