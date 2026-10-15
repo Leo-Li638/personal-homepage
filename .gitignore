@@ -1,0 +1,9 @@
+_shot*.js
+_shot*.png
+_npc_*.png
+_npc_*.py
+_npc_render_check.js
+_api_push.py
+md2post.py
+assets/_optimize_npc.py
+assets/npc_raw.jpg

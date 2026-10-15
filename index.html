@@ -136,6 +136,8 @@
   .post .pdate{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.5px;}
   .post h3{font-size:15px;color:var(--ink);margin:6px 0 8px;line-height:1.5;}
   .post p{font-size:13px;color:var(--sub);}
+  .post.local{border-color:#dbeafe;background:#f8fbff;}
+  .post.local h3::before{background:var(--brand2);}
   .post .pmore{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--sky);font-weight:500;}
   .tl{position:relative;margin-top:8px;padding-left:26px;}
   .tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;
@@ -837,6 +839,10 @@ const D = {
       {cls:"pc-liao",ico:"🔥",name:"燎原火 AI 学习平台",kind:"个人 AI 实践 · 本地 + 云端分层",p:"本地 + 云端大模型搭建的 AI 助手练习项目，探索 RAG 与 Agent 应用。"},
       {cls:"pc-more",ico:"🌱",name:"更多作品",kind:"持续更新",p:"后续练习项目会逐步补充到本页，作为个人技术成长的记录。"}]},
     posts:{title:"李玉涛的技术文章",items:[
+      {date:"2026-10-15 · 本站原创",h:"「Leo 理论」：提升个人统筹力",
+        p:"别在别人的赛道上争第二名，把你手里那几样「中等好」的东西，统筹成一样「别人组合不出来」的东西。含四块砖、常见问题，以及这套理论会在哪里失效。",url:"posts/leo-theory.html"},
+      {date:"2026-10-15 · 本站原创",h:"零基础学 AI：一篇看懂、马上能用（通用版）",
+        p:"从小学到职场谁都能读的一份 AI 入门笔记。核心四课 + 分学段任务 + 给家长老师的话，看完自己试一件小事就够。",url:"posts/ai-beginner.html"},
       {date:"2026-10-06 · 掘金专栏",h:"Agent 技能包霸榜 GitHub：「写给 AI 看的文档」成了新风口",
         p:"GitHub 热门榜前排被 Agent 技能包类项目刷屏：从 superpowers 到 deepseek-harness，竞争焦点正从模型能力转向流程知识沉淀，附普通开发者三个入场动作。",url:"https://juejin.cn/post/7693144953569476659"},
       {date:"2026-10-06 · CSDN 博客",h:"AI 让我写得更快，我却越来越看不懂自己的项目——三个反制习惯",
@@ -1012,6 +1018,10 @@ const D = {
       {cls:"pc-liao",ico:"🔥",name:"LiaoYuanHuo AI",kind:"Personal AI · local + cloud hybrid",p:"An AI-assistant practice project combining local + cloud LLMs, exploring RAG & Agent."},
       {cls:"pc-more",ico:"🌱",name:"More",kind:"Continuously updated",p:"More practice projects will be added over time as a record of my growth."}]},
     posts:{title:"Li Yutao's Writing",items:[
+      {date:"2026-10-15 · Original",h:"The Leo Theory: Raising Your Personal Coordination Power",
+        p:"Don't fight for second place on someone else's track; combine your several 'mediocre but solid' strengths into something nobody else can assemble. Four building blocks, an FAQ, and four honest limits.",url:"posts/leo-theory.html"},
+      {date:"2026-10-15 · Original",h:"Learning AI from Zero: One Article to Understand and Start Using It",
+        p:"An AI starter note readable by anyone from primary students to working adults: four core lessons, stage-by-stage tasks, and notes for parents and teachers.",url:"posts/ai-beginner.html"},
       {date:"2026-10-06 · Juejin Column",h:"Agent Skill Packs Dominate GitHub: Docs Written for AI Are the New Frontier",
         p:"GitHub trending is flooded by agent-skill projects from superpowers to deepseek-harness; competition shifts from model capability to process-knowledge engineering, with three entry moves for indie developers.",url:"https://juejin.cn/post/7693144953569476659"},
       {date:"2026-10-06 · CSDN Blog",h:"AI Writes Faster for Me, Yet I Understand My Own Project Less - Three Counter-Habits",
@@ -1214,7 +1224,8 @@ function renderContent(t){
   // posts
   html += '<section class="sec reveal" id="ssec4"><h2 class="sec-title"><span class="n">04</span>'+esc(t.posts.title)+'</h2><div class="card" style="margin-top:0;"><div class="posts">';
   t.posts.items.forEach(function(p){
-    html += '<a class="post" href="'+p.url+'" target="_blank" rel="noopener"><div class="pdate">'+esc(p.date)+'</div><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p><span class="pmore">阅读全文 →</span></a>';
+    var isLocal=/^posts\//.test(p.url);
+      html += '<a class="post'+(isLocal?' local':'')+'" href="'+p.url+'"'+(isLocal?'':' target="_blank" rel="noopener"')+'><div class="pdate">'+esc(p.date)+'</div><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p><span class="pmore">阅读全文 →</span></a>';
   });
   html += '</div></div></section>';
   // timeline
