@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从「能跑」到「可靠」：Agent 落地生产环境的三个卡点与工程解法 · 李玉涛的个人主页</title>
+<meta name="description" content="意图路由、幻觉防护、上下文管理——自建本地 LLM 平台（Dify + Ollama）时亲手解决的三个工程卡点，附可量化的可靠性 SLA。">
+<link rel="canonical" href="https://xn--4gq.chat/posts/agent-reliability.html">
+<meta property="og:title" content="从「能跑」到「可靠」：Agent 落地生产环境的三个卡点与工程解法">
+<meta property="og:description" content="意图路由、幻觉防护、上下文管理——自建本地 LLM 平台（Dify + Ollama）时亲手解决的三个工程卡点，附可量化的可靠性 SLA。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/agent-reliability.html">
+<meta property="og:author" content="李玉涛（Leo）">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BlogPosting",
+ "headline": "从「能跑」到「可靠」：Agent 落地生产环境的三个卡点与工程解法",
+ "description": "意图路由、幻觉防护、上下文管理——自建本地 LLM 平台（Dify + Ollama）时亲手解决的三个工程卡点，附可量化的可靠性 SLA。",
+ "author": {
+  "@type": "Person",
+  "name": "李玉涛（Leo）",
+  "url": "https://xn--4gq.chat"
+ },
+ "datePublished": "2026-10-16",
+ "dateModified": "2026-10-16",
+ "mainEntityOfPage": {
+  "@type": "WebPage",
+  "@id": "https://xn--4gq.chat/posts/agent-reliability.html"
+ },
+ "publisher": {
+  "@type": "Person",
+  "name": "李玉涛（Leo）",
+  "url": "https://xn--4gq.chat"
+ }
+}
+</script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>从「能跑」到「可靠」：Agent 落地生产环境的三个卡点与工程解法</h1>
+    <div class="sub">意图路由、幻觉防护、上下文管理——自建本地 LLM 平台（Dify + Ollama）时亲手解决的三个工程卡点，附可量化的可靠性 SLA。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-10-16</span>
+      <span>https://xn--4gq.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一先算一道数学题">一、先算一道数学题</a></li><li style="margin-left:0px"><a href="#s-二卡点一意图路由不准前端和后端互相甩锅">二、卡点一：意图路由不准，前端和后端互相甩锅</a></li><li style="margin-left:16px"><a href="#s-现象">现象</a></li><li style="margin-left:16px"><a href="#s-根因">根因</a></li><li style="margin-left:16px"><a href="#s-工程解法">工程解法</a></li><li style="margin-left:0px"><a href="#s-三卡点二模型幻觉业务不允许它自由发挥">三、卡点二：模型幻觉，业务不允许它自由发挥</a></li><li style="margin-left:16px"><a href="#s-现象">现象</a></li><li style="margin-left:16px"><a href="#s-工程解法">工程解法</a></li><li style="margin-left:16px"><a href="#s-一个容易忽略的细节">一个容易忽略的细节</a></li><li style="margin-left:0px"><a href="#s-四卡点三多轮对话上下文管理">四、卡点三：多轮对话上下文管理</a></li><li style="margin-left:16px"><a href="#s-现象">现象</a></li><li style="margin-left:16px"><a href="#s-根因">根因</a></li><li style="margin-left:16px"><a href="#s-工程解法">工程解法</a></li><li style="margin-left:0px"><a href="#s-五可靠性是算出来的不是测出来的">五、可靠性是算出来的，不是测出来的</a></li><li style="margin-left:0px"><a href="#s-六给准备做-agent-的同学的三条建议">六、给准备做 Agent 的同学的三条建议</a></li><li style="margin-left:0px"><a href="#s-七小结">七、小结</a></li></ol></details>
+  <article class="paper">
+<p># 从"能跑"到"可靠"：Agent 落地生产环境的三个卡点与工程解法</p>
+<blockquote><p>作者：李玉涛（Leo）· 长春师范大学 · 数据科学与大数据技术 + 数学双学位 · 2027 届 一.chat（https://xn--4gq.chat）· GitHub（https://github.com/Leo-Li638）</p></blockquote>
+<h2 id="s-一先算一道数学题">一、先算一道数学题</h2>
+<p>如果你在 2026 年做过 AI 应用开发，这组数字你应该不陌生：</p>
+<p>2026 年 1—7 月，新发 AI 岗位同比增长 789.47%，平均月薪 63160 元。Agent 开发人才需求同比上涨 244%，是增速最快的细分方向。</p>
+<p>热度之下有个很少被摆在台面上的计算：</p>
+<p><strong>单步成功率 80% 的 Agent，连跑 8 步，每步都对的概率是 0.8^8 ≈ 17%。</strong></p>
+<p>这不是危言耸听，而是指数衰减的必然结果。它解释了一个几乎所有 Agent 开发者都遇到过的现象：demo 惊艳、演示顺利、一上生产就崩。</p>
+<p>我自建了一个本地 LLM 平台（Dify + Ollama 双层架构），下面三个卡点就是我实际踩过、也实际解掉的。</p>
+<h2 id="s-二卡点一意图路由不准前端和后端互相甩锅">二、卡点一：意图路由不准，前端和后端互相甩锅</h2>
+<h3 id="s-现象">现象</h3>
+<p>用户问"怎么退订"，系统 routed 到知识库检索；用户问"为什么这么贵"，同样 routed 到知识库。看起来是检索问题，实际上是路由问题。</p>
+<h3 id="s-根因">根因</h3>
+<p>Dify 的 Chatflow 默认依赖 LLM 做意图分类，这在两个场景下会崩：</p>
+<ol><li><strong>短 query 语义边界模糊。</strong> "我要退钱"和"我想退款有什么区别"——对 LLM 来说几乎一样，但对业务来说完全不同。</li><li><strong>分类器本身成了单点。</strong> 分类用的那个小模型一旦被限流或者输出漂移，整条链路直接失效，且没有任何降级路径。</li></ol>
+<h3 id="s-工程解法">工程解法</h3>
+<p><strong>双层路由 + 显式兜底。</strong></p>
+<p>第一层用规则做高精度匹配（关键词、正则、用户选择的入口 Tab），命中就直接短路，不进 LLM。第二层才交给 LLM 做语义分类。</p>
+<p>这样做的收益：</p>
+<ul><li>命中率高的入口（占实际流量的大头）不消耗任何 LLM 调用</li><li>规则层是确定性的，可以单测；LLM 层是不可测的，只能统计</li><li>规则层天然可降级——LLM 挂了，规则层还能扛住基础流量</li></ul>
+<p><strong>关键一点：把置信度暴露出来。</strong> 我让路由层输出一个 confidence 字段，低于阈值就走兜底话术，而不是硬着头皮往下走。一个诚实的"我不确定"，比一次自信的错误便宜得多。</p>
+<h2 id="s-三卡点二模型幻觉业务不允许它自由发挥">三、卡点二：模型幻觉，业务不允许它自由发挥</h2>
+<h3 id="s-现象">现象</h3>
+<p>客服场景里，模型会自信地编造一个不存在的退款政策条款。语气自然、逻辑自洽、事实上错误。</p>
+<p>这是最危险的一类 bug——它不会报错，只会产生业务损失。</p>
+<h3 id="s-工程解法">工程解法</h3>
+<p><strong>三层防护，从便宜到昂贵依次兜底。</strong></p>
+<p><strong>第一层：约束生成。</strong> 用结构化输出（JSON Schema / Function Calling）把模型的自由文本锁进业务允许的枚举值里。选项之外的内容，物理上无法输出。</p>
+<p><strong>第二层：检索证据绑定。</strong> 要求回答必须引用检索到的原文片段，片段检索不到就走"我不确定"分支，不允许模型自由发挥。这一步用 grounding 把模型的输出锚在真实文档上。</p>
+<p><strong>第三层：事后校验。</strong> 对最终输出做规则校验——敏感词、数值范围、金额上限、时间合法性。这里可以上正则和轻量分类器，不需要 LLM。</p>
+<h3 id="s-一个容易忽略的细节">一个容易忽略的细节</h3>
+<p><strong>幻觉检测本身也会幻觉。</strong> 我一开始想用另一个 LLM 判断"这个回答是否编造了"，结果发现检测器比被检测器还会编。规则 + 结构化校验在这个环节比模型可靠得多。</p>
+<h2 id="s-四卡点三多轮对话上下文管理">四、卡点三：多轮对话上下文管理</h2>
+<h3 id="s-现象">现象</h3>
+<p>对话到第五轮，模型开始"忘记"第一轮说过的约束。用户说"我叫张三，订单号是 12345"，五轮后问"我的订单是什么号"，模型答不上来。</p>
+<h3 id="s-根因">根因</h3>
+<p>无脑把全部历史塞进 prompt，既超出上下文窗口，又让噪声淹没了关键信息。</p>
+<h3 id="s-工程解法">工程解法</h3>
+<p><strong>把对话拆成三类内容，分别处理。</strong></p>
+<table><thead><tr><th>内容类型</th><th>特征</th><th>处理方式</th></tr></thead><tbody>
+<tr><td>关键事实</td><td>订单号、账号、金额</td><td>结构化抽取，存到 KV 状态，永远带在上下文头部</td></tr>
+<tr><td>对话摘要</td><td>过程性内容</td><td>滚动摘要，超过阈值压缩</td></tr>
+<tr><td>闲聊</td><td>"你好""谢谢"</td><td>直接丢弃，不进上下文</td></tr>
+</tbody></table>
+<p>这样做的关键是：<strong>让状态显式化，而不是隐式地塞进 prompt。</strong></p>
+<p>一个具体实现：把抽取出的关键事实维护成一个独立的 system 状态块，每轮重新生成，而不是追加到历史里。追加会重复、冲突、越滚越长；重新生成始终是最新的一致快照。</p>
+<h2 id="s-五可靠性是算出来的不是测出来的">五、可靠性是算出来的，不是测出来的</h2>
+<p>回到开头那个 0.8^8。如果要让它变成一个可用的系统，单步成功率必须做到多少？</p>
+<p>倒推一下：8 步任务最终正确率要达到 90%，单步成功率需要</p>
+<p><strong>0.95^8 ≈ 0.663</strong>，也就是单步 95%。</p>
+<p>从 80% 提到 95%，这就是上面三层防护要解决的具体目标。它不是"提升一下体验"，而是一个有明确数值门槛的工程任务。</p>
+<p>所以我现在的做法是给每一步设 SLA：</p>
+<ul><li>路由准确率 ≥ 98%</li><li>结构化输出合规率 ≥ 99%</li><li>幻觉检出率 ≥ 95%</li><li>上下文事实保持率 ≥ 99%</li></ul>
+<p>每个指标埋点、每天看。达不到就定位到具体是哪一层的问题——是路由、生成还是上下文。</p>
+<p><strong>没有指标的"可靠性"是玄学。</strong></p>
+<h2 id="s-六给准备做-agent-的同学的三条建议">六、给准备做 Agent 的同学的三条建议</h2>
+<p><strong>第一条，不要从"让 Agent 做很多事"开始，从"让它把一件事做对"开始。</strong></p>
+<p>我的第一个版本什么都想做，结果什么都做不可靠。现在我只维护三条核心链路，每条都跑够 100 次测试再上线。</p>
+<p><strong>第二条，把兜底设计写进第一版，不要留到最后。</strong></p>
+<p>失败路径比成功路径更考验工程功底。一个明确说"我不确定，转人工"的系统，比一个硬撑着瞎答的系统有用得多，也安全得多。</p>
+<p><strong>第三条，可解释性是可选项，不是加分项。</strong></p>
+<p>在业务系统里，用户问"为什么这么回答"，你必须答得上来。这意味着每一步都要留痕：走了哪个路由、检索了哪些文档、命中了什么规则。出问题时，这些 trace 就是你唯一的排查线索。</p>
+<h2 id="s-七小结">七、小结</h2>
+<p>Agent 的 demo 门槛在 2026 年已经接近于零——模型自己就能帮你搭出来。</p>
+<p>但 0.8^8 这个数字不会因为模型变强而自动消失。链越长，指数衰减越狠。这才是真正需要工程能力的地方，也是普通开发者现在真正的机会窗口：</p>
+<p><strong>从"会搭"到"能交付"，中间隔着三个必须亲手踩过的坑。</strong></p>
+<p>如果你也在做 Agent落地，欢迎交流。我的完整项目踩坑记录在个人小站 一.chat 上。</p>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>
