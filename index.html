@@ -139,6 +139,12 @@
   .post.local{border-color:#dbeafe;background:#f8fbff;}
   .post.local h3::before{background:var(--brand2);}
   .post .pmore{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--sky);font-weight:500;}
+  /* 置顶文章：金色描边 + 常驻徽标，永久排在该栏第一位 */
+  .post.pinned{border-color:var(--gold);background:linear-gradient(135deg,#fffdf5 0%,#fdfaf0 100%);
+    box-shadow:0 2px 10px rgba(191,146,42,.10);position:relative;padding-top:30px;}
+  .post.pinned::after{content:"置顶";position:absolute;top:0;left:0;background:var(--gold);color:#fff;
+    font-size:11px;letter-spacing:1px;padding:3px 10px;border-radius:11px 0 11px 0;font-weight:600;}
+  .post.pinned .pdate::after{content:" · 常驻";color:var(--gold);opacity:.85;}
   .tl{position:relative;margin-top:8px;padding-left:26px;}
   .tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;
     background:linear-gradient(180deg,var(--sky2),var(--grass),var(--gold));border-radius:2px;opacity:.5;}
@@ -853,7 +859,7 @@ const D = {
         p:"掘金版：单步成功率 80% 的 Agent 连跑 8 步只剩 17%，指数衰减才是 demo 惊艳、上线就崩的根因。",url:"https://juejin.cn/post/7696818250545954843"},
       {date:"2026-10-16 · CSDN 博客",h:"0.8 的 8 次方等于 17%：2026 秋招 AI 岗的真实门槛",
         p:"CSDN 版：从 Agent 可靠性工程到数学护城河，再到圈层选择的三层递进。",url:"https://blog.csdn.net/2401_84773010/article/details/168111306"},
-      {date:"2026-10-15 · 本站原创",h:"「Leo 理论」：提升个人统筹力",
+      {date:"2026-10-15 · 本站原创",h:"「Leo 理论」：提升个人统筹力",pin:true,
         p:"别在别人的赛道上争第二名，把你手里那几样「中等好」的东西，统筹成一样「别人组合不出来」的东西。含四块砖、常见问题，以及这套理论会在哪里失效。",url:"posts/leo-theory.html"},
       {date:"2026-10-15 · 本站原创",h:"零基础学 AI：一篇看懂、马上能用（通用版）",
         p:"从小学到职场谁都能读的一份 AI 入门笔记。核心四课 + 分学段任务 + 给家长老师的话，看完自己试一件小事就够。",url:"posts/ai-beginner.html"},
@@ -1038,7 +1044,7 @@ const D = {
         p:"Everyone is rushing into AI, yet game numeric design is tailor-made for a math + data background. Public 2027-campus recruitment data on the two tracks' real competitor profiles.",url:"posts/ai-vs-game-numeric.html"},
       {date:"2026-10-16 · Original",h:"From 'It Runs' to 'It's Reliable': Three Engineering Blocks in Production Agents",
         p:"Two-layer intent routing, three-layer hallucination defense, classified context management — plus quantifiable reliability SLAs from building a self-hosted LLM platform.",url:"posts/agent-reliability.html"},
-      {date:"2026-10-15 · Original",h:"The Leo Theory: Raising Your Personal Coordination Power",
+      {date:"2026-10-15 · Original",h:"The Leo Theory: Raising Your Personal Coordination Power",pin:true,
         p:"Don't fight for second place on someone else's track; combine your several 'mediocre but solid' strengths into something nobody else can assemble. Four building blocks, an FAQ, and four honest limits.",url:"posts/leo-theory.html"},
       {date:"2026-10-15 · Original",h:"Learning AI from Zero: One Article to Understand and Start Using It",
         p:"An AI starter note readable by anyone from primary students to working adults: four core lessons, stage-by-stage tasks, and notes for parents and teachers.",url:"posts/ai-beginner.html"},
@@ -1243,9 +1249,9 @@ function renderContent(t){
   html += '</div></div></section>';
   // posts
   html += '<section class="sec reveal" id="ssec4"><h2 class="sec-title"><span class="n">04</span>'+esc(t.posts.title)+'</h2><div class="card" style="margin-top:0;"><div class="posts">';
-  t.posts.items.forEach(function(p){
+  t.posts.items.slice().sort(function(a,b){return (b.pin?1:0)-(a.pin?1:0);}).forEach(function(p){
     var isLocal=/^posts\//.test(p.url);
-      html += '<a class="post'+(isLocal?' local':'')+'" href="'+p.url+'"'+(isLocal?'':' target="_blank" rel="noopener"')+'><div class="pdate">'+esc(p.date)+'</div><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p><span class="pmore">阅读全文 →</span></a>';
+      html += '<a class="post'+(isLocal?' local':'')+(p.pin?' pinned':'')+'" href="'+p.url+'"'+(isLocal?'':' target="_blank" rel="noopener"')+'><div class="pdate">'+esc(p.date)+'</div><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p><span class="pmore">阅读全文 →</span></a>';
   });
   html += '</div></div></section>';
   // timeline
