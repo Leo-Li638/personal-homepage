@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务 · 李玉涛的个人主页</title>
+<meta name="description" content="GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。">
+<link rel="canonical" href="https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html">
+<meta property="og:title" content="AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务">
+<meta property="og:description" content="GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html">
+<meta property="og:author" content="李玉涛（Leo）">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BlogPosting",
+ "headline": "AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务",
+ "description": "GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。",
+ "author": {
+  "@type": "Person",
+  "name": "李玉涛（Leo）",
+  "url": "https://xn--4gq.chat"
+ },
+ "datePublished": "2026-10-30",
+ "dateModified": "2026-10-30",
+ "mainEntityOfPage": {
+  "@type": "WebPage",
+  "@id": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html"
+ },
+ "publisher": {
+  "@type": "Person",
+  "name": "李玉涛（Leo）",
+  "url": "https://xn--4gq.chat"
+ }
+}
+</script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务</h1>
+    <div class="sub">GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-10-30</span>
+      <span>https://xn--4gq.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一句话版">一句话版</a></li><li style="margin-left:0px"><a href="#s-一两份报告两个数字">一、两份报告，两个数字</a></li><li style="margin-left:16px"><a href="#s-报告-agithub-octoverse-202610-月-28-日发布">报告 A：GitHub Octoverse 2026（10 月 28 日发布）</a></li><li style="margin-left:16px"><a href="#s-报告-bdayjob-tax10-月-27-日发布surge-ai">报告 B：DAYJOB: Tax（10 月 27 日发布，Surge AI）</a></li><li style="margin-left:16px"><a href="#s-把两个数字放一起">把两个数字放一起</a></li><li style="margin-left:0px"><a href="#s-二差距到底在哪issue-spotting">二、差距到底在哪：Issue Spotting</a></li><li style="margin-left:16px"><a href="#s-案例一算对了但漏了一个悬崖">案例一：算对了，但漏了一个悬崖</a></li><li style="margin-left:16px"><a href="#s-案例二默认了不该默认的前提">案例二：默认了不该默认的前提</a></li><li style="margin-left:16px"><a href="#s-提炼两种能力两种考法">提炼：两种能力，两种考法</a></li><li style="margin-left:0px"><a href="#s-三这对你的择业意味着什么这是本文最实用的部分">三、这对你的择业意味着什么（这是本文最实用的部分）</a></li><li style="margin-left:16px"><a href="#s-31-写代码这个能力贬值了而且贬得很快">3.1 「写代码」这个能力，贬值了——而且贬得很快</a></li><li style="margin-left:16px"><a href="#s-32-但有个例外而且它对你极其有利java-只有-212">3.2 但有个例外，而且它对你极其有利：Java 只有 21.2%</a></li><li style="margin-left:16px"><a href="#s-33-你的数学和数据背景在这件事上是主场不是辅科">3.3 你的数学和数据背景，在这件事上是主场不是辅科</a></li><li style="margin-left:16px"><a href="#s-34-三个可迁移的问题清单">3.4 三个可迁移的「问题清单」</a></li><li style="margin-left:0px"><a href="#s-四三个可以这周就做的动作">四、三个可以这周就做的动作</a></li><li style="margin-left:16px"><a href="#s-动作-1给你正在做的每个项目写一份issue-清单">动作 1：给你正在做的每个项目，写一份「Issue 清单」</a></li><li style="margin-left:16px"><a href="#s-动作-2给-ai-的产出加一道issue-spotting-层">动作 2：给 AI 的产出加一道「Issue Spotting 层」</a></li><li style="margin-left:16px"><a href="#s-动作-3把模型选择当成设置项而不是信仰">动作 3：把「模型选择」当成设置项，而不是信仰</a></li><li style="margin-left:0px"><a href="#s-五三个反直觉的推论">五、三个反直觉的推论</a></li><li style="margin-left:16px"><a href="#s-推论-1合并速度不是能力指标">推论 1：合并速度不是能力指标</a></li><li style="margin-left:16px"><a href="#s-推论-2密钥泄露率翻倍说明责任问题没解决">推论 2：密钥泄露率翻倍，说明责任问题没解决</a></li><li style="margin-left:16px"><a href="#s-推论-3真正稀缺的可能不是判断是知道该判断什么">推论 3：真正稀缺的可能不是「判断」，是「知道该判断什么」</a></li><li style="margin-left:0px"><a href="#s-六这套判断会在哪里失效">六、这套判断会在哪里失效</a></li><li style="margin-left:0px"><a href="#s-七常见问题">七、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-参考与致谢">参考与致谢</a></li></ol></details>
+  <article class="paper">
+<p>--- title: AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务 subtitle: GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距，就是你未来的职业价值所在。 author: 李玉涛（Leo） site: 一.chat · https://xn--4gq.chat date: 2026-10-30 tags: [AI编程, 职业判断力, issue spotting, Agent评测, 2027届秋招, Java后端] ---</p>
+<p># AI 包办了 40% 的代码起草，最强 Agent 却只做得对 10.8% 的真实任务</p>
+<blockquote><p><strong>先说清楚这是什么</strong> 2026 年 10 月 28 日，GitHub 发布 Octoverse 2026 年度报告。 2026 年 10 月 27 日，Surge AI 发布 DAYJOB: Tax 评测基准。 这两份东西隔了一天发布，但放在一起看，是今年最锋利的一组对照。 我是长春师范大学一名 2027 届在校本科生，数据科学与大数据技术专业，辅修数学，Java 后端在读，同时自己搭了一个本地 AI 平台（Dify + Ollama + DeepSeek）。所以下面写的，是一个<strong>正在用 AI 写代码、同时在学怎么不被 AI 取代</strong>的人，把这两份报告读完之后逼自己回答的问题。 文中所有数据均标注来源与发布时间，版权归原作者所有。</p></blockquote>
+<p>---</p>
+<h2 id="s-一句话版">一句话版</h2>
+<blockquote><p><strong>AI 已经会写代码了，但它还不会「发现该写什么」。</strong> GitHub：2026 年 9 月，<strong>超过 40% 的 PR 以 AI 智能体起草的初稿开头</strong>（3 月只有 17%）。 Surge AI：<strong>最强的 Agent 在 50 个真实税务任务上只通过 10.8%</strong>（pass@1，95% 评分阈值）。 这 40% 和 10.8% 之间那道缝，就是 2027 届最该练的东西——<strong>Issue Spotting：先发现该问什么问题，再回答它</strong>。 我把它翻译成一句求职能直接用的话：<strong>当写代码变成免费，你的价值从「能把需求变成代码」迁移到「能判断需求对不对、结果够不够格」。</strong></p></blockquote>
+<p>---</p>
+<h2 id="s-一两份报告两个数字">一、两份报告，两个数字</h2>
+<h3 id="s-报告-agithub-octoverse-202610-月-28-日发布">报告 A：GitHub Octoverse 2026（10 月 28 日发布）</h3>
+<p>统计窗口是 2025 年 10 月 1 日到 2026 年 9 月 30 日。几个关键数字：</p>
+<table><thead><tr><th>指标</th><th>数值</th></tr></thead><tbody>
+<tr><td>9 月以 AI 智能体初稿开头的 PR 占比</td><td><strong>超过 40%</strong>（3 月为 17%）</td></tr>
+<tr><td>9 月 agent 发起的 PR 数量</td><td><strong>1.1 亿个</strong>，约为 3 月的 6 倍</td></tr>
+<tr><td>agent PR 中改动多个文件的比例</td><td><strong>87%</strong>（非 agent PR 为 79%）</td></tr>
+<tr><td>agent PR 两周内合并率</td><td>9 月 <strong>90%</strong>（2 月为 83%；非 agent 组约 86%）</td></tr>
+<tr><td>全平台年度提交量</td><td>179 亿次 push、343 亿次 commit、13 亿个合并 PR</td></tr>
+</tbody></table>
+<p>GitHub 对「agent 发起的 PR」的定义是：<strong>首个草稿来自一个可检测到的编码智能体的 PR</strong>——哪怕人后来改写了其中一部分，也仍然计入。</p>
+<p>平台整体也涨得离谱：合并 PR 从 2024 年的 4.02 亿、2025 年的 5.38 亿，涨到 <strong>13 亿</strong>。开发者总数 2.25 亿。Copilot 月活里使用智能体功能的比例从一年前的 35% 升到 <strong>55%</strong>，云端 agent 使用量同比 <strong>+230%</strong>。</p>
+<p><strong>这组数字看起来像个大胜利。但有三个限定条件必须一起读：</strong></p>
+<ol><li><strong>GitHub 自己也说这是「下限」</strong> —— 只能统计它检测到的智能体活动，检测不到的不算，人在人类 PR 里顺手用 AI 也不一定算。</li><li><strong>合并率不是质量指标。</strong> 报告没有给出 agent PR 和非 agent PR 的缺陷率、安全结果或长期维护成本对比。<strong>「90% 两周内合并」只说明它合得快，不说明它合得对。</strong></li><li><strong>这些是观测数据，不是受控实验</strong> —— 没有控制任务难度、团队习惯和代码正确性。</li></ol>
+<p>不过有一条<strong>语言维度的数据，求职党必须盯住</strong>：</p>
+<table><thead><tr><th>语言</th><th>合并 PR 中检测到的 AI 参与率</th></tr></thead><tbody>
+<tr><td>TypeScript</td><td><strong>44.1%</strong></td></tr>
+<tr><td>Python</td><td>41.1%</td></tr>
+<tr><td>Rust</td><td>40.4%</td></tr>
+<tr><td><strong>Java</strong></td><td><strong>21.2%</strong></td></tr>
+</tbody></table>
+<p><strong>Java 只有 21.2%，不到 TypeScript 的一半。</strong></p>
+<p>另外几个值得记的：付费 Copilot 用户在 9 月用了 <strong>47 个不同的模型</strong>，没有一个占比超过 25%；<strong>61% 明确自己选模型的用户用了不止一个模型</strong>。</p>
+<h3 id="s-报告-bdayjob-tax10-月-27-日发布surge-ai">报告 B：DAYJOB: Tax（10 月 27 日发布，Surge AI）</h3>
+<p>这个基准的设计很不一样。它不是给你一道题让你答，而是给你<strong>一个客户的文件夹</strong>，让你去做一个税务从业者该做的完整工作。</p>
+<ul><li><strong>50 个真实税务工作环境</strong>，覆盖个人、小企业、合伙、财产投资、遗产赠与、跨境、税务争议等 <strong>8 个执业领域</strong></li><li><strong>1,789 个工作区文件</strong>，中位数每任务 30 个、最多 123 个：1,487 个 PDF、117 个 Excel、38 个 Word，还有邮件、图片、CSV、JSON</li><li>题目由<strong>有 PwC / 德勤 / 普华永道 / Baker Tilly 背景的税务专家</strong>出题并评审</li><li>计分方式：<strong>pass@1，且必须满足该任务至少 95% 的评分标准</strong>（涵盖计算、支撑证据、关键问题识别、交付物完成度）</li></ul>
+<p>成绩：</p>
+<table><thead><tr><th>模型</th><th>通过率</th></tr></thead><tbody>
+<tr><td>Claude Sonnet 5.5</td><td><strong>10.8%</strong></td></tr>
+<tr><td>Claude Fable 5.1</td><td>9.6%</td></tr>
+<tr><td>Claude Opus 5.5</td><td>9.2%</td></tr>
+</tbody></table>
+<p><strong>十次里有九次过不了专业复核。</strong> Surge AI 自己的结论是：<strong>智能体「还没通过审计」。</strong></p>
+<h3 id="s-把两个数字放一起">把两个数字放一起</h3>
+<p>``<code> GitHub：40% 的 PR 由 AI 起草 ↓ 生成的边际成本 → 0 ↓ DAYJOB：真实专业任务通过率 10.8% </code>``</p>
+<p><strong>生成侧已经普及，完成侧几乎没动。</strong></p>
+<p>这个剪刀差就是 2026 年 10 月最重要的信号。而且它比「AI 会不会取代程序员」这个问题<strong>有用得多</strong> —— 因为它直接告诉你该往哪个方向长。</p>
+<p>---</p>
+<h2 id="s-二差距到底在哪issue-spotting">二、差距到底在哪：Issue Spotting</h2>
+<p>DAYJOB 报告里最值得抄的不是分数，是<strong>失败模式</strong>。它精准地命名了一件事：<strong>Issue Spotting（发现问题）</strong>。</p>
+<h3 id="s-案例一算对了但漏了一个悬崖">案例一：算对了，但漏了一个悬崖</h3>
+<p>任务：Anna 要卖公寓。她 2024 年 8 月已经搬出，想知道 2026 年 10 月还是 2027 年 1 月过户更划算。</p>
+<p>Agent 的表现（不错）：正确判断两个过户日期都满足「过去五年住满两年」的居住要求，<strong>最高可豁免 25 万美元的资本利得</strong>。计算完全正确。</p>
+<p>Agent 漏掉的（致命）：因为 Anna 2024 年 8 月搬出，<strong>她大约在 2027 年 8 月底就不再满足居住要求</strong>。如果过户拖到 2027 年 8 月之后，她可能丧失豁免资格。</p>
+<blockquote><p>跨 5 次运行：<strong>Opus 5 次全部识别出这个截止日期；Astra 5 次全部没识别出来。</strong></p></blockquote>
+<p><strong>注意这个错误有多阴险</strong>：它不是一个计算错误，它是一个<strong>「问题本身没被提出来」</strong>的错误。如果 Anna 没主动问这件事，agent 的回答在<strong>它自己的评价体系里是完全正确的</strong>。</p>
+<h3 id="s-案例二默认了不该默认的前提">案例二：默认了不该默认的前提</h3>
+<p>任务：给一对正在分开的夫妇提供退休账户处理建议。</p>
+<p>多个模型<strong>一致假设这对夫妇未婚</strong>，尽管案卷里有记录显示可能存在来自另一州的有效婚姻。</p>
+<blockquote><p>Opus 5.5 在 5 次运行中全部去核查了婚姻状态；另一个模型 5 次里查了 4 次。</p></blockquote>
+<p><strong>「去查一下」这个动作本身，就是被测的能力。</strong></p>
+<h3 id="s-提炼两种能力两种考法">提炼：两种能力，两种考法</h3>
+<table><thead><tr><th></th><th>通用 benchmark 测的</th><th>DAYJOB 测的</th></tr></thead><tbody>
+<tr><td>题目</td><td><strong>已经给你了</strong></td><td>你得自己找到</td></tr>
+<tr><td>能力</td><td>求解能力</td><td><strong>发现问题的能力</strong></td></tr>
+<tr><td>失败长相</td><td>算错</td><td><strong>压根没意识到有这个问题</strong></td></tr>
+<tr><td>类比</td><td>考试题</td><td><strong>真实工作</strong></td></tr>
+</tbody></table>
+<p>而 Surge AI 引用的另一组数据说：<strong>90% 的美国工时没有 AI benchmark 覆盖。</strong></p>
+<p><strong>这解释了一个长期存在的悖论</strong>：为什么模型在各类榜单上分数越来越好，但一进真实场景就频频翻车？</p>
+<p><strong>因为榜单考的是「回答得好不好」，而真实工作考的是「问得对不对」。</strong> 你的产品经理、你的老板、你的客户不会给你一道题。他们会给你一堆半成品、几份互相矛盾的材料、和一个没人明说的目标。</p>
+<p><strong>AI 在前者已经接近饱和，在后者还不及格。</strong></p>
+<p>---</p>
+<h2 id="s-三这对你的择业意味着什么这是本文最实用的部分">三、这对你的择业意味着什么（这是本文最实用的部分）</h2>
+<h3 id="s-31-写代码这个能力贬值了而且贬得很快">3.1 「写代码」这个能力，贬值了——而且贬得很快</h3>
+<p>GitHub 那个 40% 意味着：<strong>到 2026 年 9 月，你写代码这项技能在公共代码库里的边际价值，已经被 Agent 吃掉了四成。</strong></p>
+<p>这对你意味着两件相反的事：</p>
+<p><strong>坏消息</strong>：简历上写「熟悉 Java / Python」，竞争力在贬值。面试官看到「会用 AI 写代码」，反应已经从 2024 年的「加分」变成 2026 年的「这谁不会」。</p>
+<p><strong>好消息</strong>：<strong>代码本身从来就不是最值钱的部分。</strong> 你真正做过的项目里——设计了什么模型、为什么这么选、踩了什么坑、怎么验证的——这部分一分钟都没被 Agent 替代。</p>
+<h3 id="s-32-但有个例外而且它对你极其有利java-只有-212">3.2 但有个例外，而且它对你极其有利：Java 只有 21.2%</h3>
+<p>这是我读完 Octoverse 后最想告诉你的一条。</p>
+<p>TypeScript 44.1%、Python 41.1%、Rust 40.4%，<strong>Java 21.2%</strong>。</p>
+<p><strong>Java 的 AI 渗透率不到 TypeScript 的一半。这不是「Java 更难」，而是两个更现实的原因：</strong></p>
+<ol><li><strong>存量系统太老。</strong> 企业 Java 库里大量是运行了十年以上的单体系统，Agent 的上下文窗口和训练语料对这类代码的覆盖极低。</li><li><strong>Agent 的产出在 Java 生态里更难自动落地。</strong> Java 的构建、依赖、部署链路比前端更依赖人工判断。</li></ol>
+<p><strong>对你的直接推论：</strong></p>
+<ul><li><strong>「Java 后端 + AI 辅助」这个组合，在 2027 届的相对稀缺性是高于「Python/前端 + AI 辅助」的。</strong></li><li>但更重要的推论是：<strong>Java 21.2% 的低渗透，恰恰说明 Java 领域「AI 辅助红利」还没被吃干净。</strong> 前端同学已经接受了「AI 写 44%」这个新常态并且在往「怎么用 AI」的方向卷；Java 领域的大部分人还没开始卷这件事。</li></ul>
+<p><strong>换句话说：你在 Java 后端 + AI 应用这个交叉点上，还有一段没人抢的路。</strong></p>
+<p>顺带说，你学 Java 也不只是为了就业。<strong>Java 后端那种「显式、强类型、可测、可部署」的工程约束，恰恰是训练 Issue Spotting 的好场景</strong> —— 因为它逼着你面对真实的类型系统、真实的异常边界、真实的联调问题。Python 里 <code>try/except Exception: pass</code> 能糊过去的事，Java 编译不过。<strong>编译器是一层免费的 Issue Spotting 训练器。</strong></p>
+<h3 id="s-33-你的数学和数据背景在这件事上是主场不是辅科">3.3 你的数学和数据背景，在这件事上是主场不是辅科</h3>
+<p>这里我要说得直接一点，因为很多人会误判。</p>
+<p><strong>Issue Spotting 的本质，就是「在不完备的信息里识别出那个没被提出来的问题」。</strong> 这件事需要的不是写代码能力，是：</p>
+<ul><li><strong>知道一个系统的正常形态长什么样</strong>（才能看出哪里不对）→ 这是建模能力</li><li><strong>量化「多大概率会出事」</strong>（才能判断这个异常值该不该管）→ 这是概率统计</li><li><strong>从异常数据里反推可能的原因</strong>（而不是记录现象）→ 这是数据分析</li><li><strong>在多个解释里挑一个可验证的</strong> → 这是假设检验</li></ul>
+<p><strong>这四样，正好是数据科学 + 数学双学位的完整训练内容。</strong></p>
+<p>而且 DAYJOB 那个「算对了但漏了截止日期」的案例，正是<strong>纯数学专业最容易犯、纯计算机专业不容易犯</strong>的错误类型：<strong>数学训练会让人把「给定的问题」解得非常漂亮，而训练「发现没被给定的问题」需要的是领域建模直觉。</strong></p>
+<p>这里我要给一句反直觉的判断，但我不确定它完全成立：<strong>很多人以为学 AI 编程是往「会写代码」的方向挤，其实往反方向挤才对——往「懂一个领域到底在干什么、哪里最容易出错」的方向挤。</strong></p>
+<p>前者是红海且在贬值，后者是蓝海且在升值。</p>
+<h3 id="s-34-三个可迁移的问题清单">3.4 三个可迁移的「问题清单」</h3>
+<p>我把 Issue Spotting 翻译成你能立刻用的形式：<strong>每个领域都有一张「该主动检查什么」的清单。</strong></p>
+<p>举三个例子，都是你在做的项目里真实存在的：</p>
+<p><strong>做学情推题（SmartClass）时，Issue 清单是：</strong></p>
+<ul><li>掌握度估计的<strong>样本量</strong>够不够？某个知识点只做过 2 道题，我的拉普拉斯平滑参数选多少？</li><li><strong>遗忘曲线的衰减</strong>对不同学生该用同一条曲线吗？（有人考前突击，有人长期稳定）</li><li><strong>题目难度和掌握度</strong>是不是混淆了？（答错是「不会」还是「这题太难」）</li><li>推给学生的题<strong>会不会超纲</strong>？超纲题测出来的掌握度是假的</li></ul>
+<p><strong>做 AI 平台（燎原火）时，Issue 清单是：</strong></p>
+<ul><li>意图路由<strong>置信度落在灰区</strong>时，系统在干什么？（这正是我上次那篇文章写的降级链路）</li><li><strong>幻觉防护的规则</strong>本身有没有覆盖不到的输出形态？</li><li><strong>多轮上下文</strong>里，第 7 轮的否定句还在不在？（这个 bug 我真踩过）</li><li>用户<strong>没说出来但想要</strong>的东西，我的系统能 infer 吗？</li></ul>
+<p><strong>做订单系统（OrderBoss）时，Issue 清单是：</strong></p>
+<ul><li><strong>重复提交</strong>（用户网络卡了点了两次）——幂等做了吗？</li><li><strong>并发下单</strong>同一商品库存不够——锁加对了吗？</li><li>金额计算的<strong>精度</strong>和<strong>舍入规则</strong>在前后端一致吗？</li><li><strong>退款流程</strong>和<strong>订单状态机</strong>会不会进入非法状态？</li></ul>
+<p><strong>这三个清单的共同点：它们都不是「写代码」任务，是「想清楚」任务。</strong> 而想清楚，正是 AI 现在最不擅长的（10.8% 那部分）。</p>
+<p><strong>你只要能把自己领域里的这张清单建起来，你就在做 Agent 现在做不了的事。</strong></p>
+<p>---</p>
+<h2 id="s-四三个可以这周就做的动作">四、三个可以这周就做的动作</h2>
+<h3 id="s-动作-1给你正在做的每个项目写一份issue-清单">动作 1：给你正在做的每个项目，写一份「Issue 清单」</h3>
+<p>不是 README，不是技术栈列表，是<strong>一份「这个地方最容易出问题」的清单</strong>，10 条以内。</p>
+<p>写的时候你会有两个发现：</p>
+<ol><li>你会发现<strong>你之前没想清楚的地方比你想的多</strong> —— 这份清单本身就是学习产出；</li><li>你会发现<strong>很多条是 AI 提不出来的</strong>，因为它不知道你的业务约束 —— 这就是你的护城河的具体形状。</li></ol>
+<p><strong>面试时这份清单比任何技术栈描述都有用。</strong> 「我做的学情推题模块，最容易出错的是掌握度估计在低样本下的失真，我用拉普拉斯平滑 + 最小样本门槛处理，误差控制在 X」——<strong>这句话里有判断、有取舍、有验证，比「熟悉机器学习算法」强十倍。</strong></p>
+<h3 id="s-动作-2给-ai-的产出加一道issue-spotting-层">动作 2：给 AI 的产出加一道「Issue Spotting 层」</h3>
+<p>这一步是把概念变成工程。</p>
+<p><strong>你现在的用法多半是：</strong> 描述需求 → AI 生成 → 我看看能不能跑 → 差不多就收工。</p>
+<p><strong>升级后的用法：</strong> 描述需求 → AI 生成 → <strong>我先列出「这份产出应该在哪几个地方出问题」，再去 review</strong>。</p>
+<p>具体做法，就是我上次那篇讲的<strong>意图路由灰区反问</strong>的同构物：<strong>在 AI 交付之前，先让它（或你自己）回答「这个结果最可能在哪出错」。</strong></p>
+<p>我自己的实践是：让 AI 在交付代码时，<strong>必须同时给出「这个实现最可能在哪 3 个地方出错 + 我为什么认为它是对的」</strong>。这一步成本很低，但它把 review 从「通读代码」变成了「定向排查」。</p>
+<p><strong>而且这一步是可以量化的</strong>：review 一次发现的问题数、修复一轮后的残留问题数。你自己也能积累出「哪类 AI 产出最容易在哪错」的直觉 —— <strong>这个直觉，就是 Issue Spotting。</strong></p>
+<h3 id="s-动作-3把模型选择当成设置项而不是信仰">动作 3：把「模型选择」当成设置项，而不是信仰</h3>
+<p>Octoverse 里那个数据值得反复看：<strong>付费用户一个月用了 47 个不同的模型，没有一个超过 25%；61% 主动选模型的用户用了不止一个。</strong></p>
+<p>而同期 DAYJOB 里，<strong>Claude Sonnet 5.5（10.8%）竟然超过了 Opus 5.5（9.2%）</strong> —— 更贵的、更强的旗舰模型，在真实任务上反而输给更小的那档。</p>
+<p><strong>这两个事实合起来说的是同一件事：没有哪个模型是「最强的」，只有「对这个任务最合适的」。</strong></p>
+<p>所以：</p>
+<ul><li><strong>不要在简历或面试里押注某一个模型。</strong> 说「我熟悉 XXX 模型」很快会过期（上周刚出的 Mistral Large 4、DeepSeek V4.1、Kimi K3.1 就是例子）。</li><li><strong>要说「我有一套按任务选型、按成本和质量验证的方法」。</strong> 比如我自己的燎原火为什么本地 Ollama 跑日常、云端 DeepSeek 兜底 —— <strong>这是选型逻辑，不是信仰。</strong></li><li><strong>面试时的加分句式</strong>：「我不预设模型，按任务类型做 A/B，评估指标是路由准确率和单次成本，不是跑分。」</li></ul>
+<p>顺便说，如果你的项目里能用上刚开源的这批模型（Mistral Large 4 是 1 万亿参数原生多模态 MoE、52B 激活参数；DeepSeek V4.1-Flash 是开源权重里 Terminal-Bench 4.0 冲到 42.3；Kimi K3.1 Pro 是 2.8T 总参 / 104B 激活、1M 上下文，11 月 4 日前放出完整权重），<strong>那「开源权重可自托管」这件事本身就是一个值得写进项目文档的决策依据</strong> —— 成本、隐私、延迟三个理由任选一个都行。</p>
+<p>---</p>
+<h2 id="s-五三个反直觉的推论">五、三个反直觉的推论</h2>
+<h3 id="s-推论-1合并速度不是能力指标">推论 1：合并速度不是能力指标</h3>
+<p>Octoverse 最容易被误读的就是那个「90% 两周内合并」。</p>
+<p><strong>合并率高，说明的是「它提交得快、人类愿意点合并」，不是「它写得对」。</strong> 报告自己都没敢给出缺陷率对比。</p>
+<p><strong>对你的启示：在 AI 时代，不要用「产出量」证明自己。</strong> 「我本季度提了 30 个 PR」正在贬值，因为 Agent 能把这个数字放大几十倍。要换指标：<strong>返工率、线上事故数、接手成本</strong> —— 这三个数字 AI 提不高。</p>
+<h3 id="s-推论-2密钥泄露率翻倍说明责任问题没解决">推论 2：密钥泄露率翻倍，说明责任问题没解决</h3>
+<p>Octoverse 报告里有一个数字被很多人略过（<strong>注：这是第三方对报告的分析汇总，不是 GitHub 官方口径</strong>）：<strong>Claude Code 辅助的公开提交中，密钥泄露比例约 3.2%，大约是 1.5% 基线的两倍。</strong></p>
+<p><strong>如果你在做 AI 编程工具，这就是一条真实的产品红线。</strong> AI 生成的代码更容易把硬编码凭据带进提交，因为 AI 是从全网语料里学「怎么写配置文件」的，而全网语料里到处都是硬编码 key 的例子。</p>
+<p><strong>这一条对你个人也重要</strong>：如果你用 Codex / Claude Code 提交开源项目，<strong>加 pre-commit secret scanning 不是可选项</strong>。我自己给燎原火加的就是这条。</p>
+<h3 id="s-推论-3真正稀缺的可能不是判断是知道该判断什么">推论 3：真正稀缺的可能不是「判断」，是「知道该判断什么」</h3>
+<p>DAYJOB 那个 10.8% 里，Opus 5 次全对、Astra 5 次全错 —— <strong>同一个模型家族，同一个任务，差别只在「有没有想到那个截止日期」</strong>。</p>
+<p><strong>这说明 Issue Spotting 是可以被「教」的</strong>：给了正确的检查清单，模型表现大幅提升；没给，它就想不到。</p>
+<p><strong>所以最高杠杆的技能可能不是「更强的判断力」，而是「建立判断清单」的能力</strong> —— 也就是把你的领域知识结构化。</p>
+<p><strong>这是一件 2027 届学生现在就能开始、而 AI 短期内抢不走的事。</strong> 因为它需要的是「在一堆具体约束里反复踩过坑」，而 AI 没有你的坑。</p>
+<p>---</p>
+<h2 id="s-六这套判断会在哪里失效">六、这套判断会在哪里失效</h2>
+<p>我必须说清楚这套逻辑的边界，否则它就只是新的焦虑制造机。</p>
+<p><strong>第一，10.8% 是一个特定任务集的极端值，不能外推成「AI 只能做 10% 的活」。</strong> DAYJOB 测的是<strong>税务</strong>——一个高监管、高责任、极端重视「主动发现未披露问题」的领域。同一个模型在写 CRUD、生成文档、做数据分析时的表现完全不同。<strong>看到 10.8% 就以为「AI 不行」，和看到 40% 就以为「AI 全行」一样不专业。</strong></p>
+<p><strong>第二，「代码贬值」的结论只在「有明确正确答案的编码任务」上成立。</strong> 探索性研究、架构决策、跨系统权衡、把模糊需求翻译成系统设计——这些 AI 现在做不好，而且短期内也不会变好。<strong>说「写代码不值钱了」，等于说「执行不值钱了，判断才值钱」，这是过度简化。</strong> 执行依然是收入的基础，只是它的<strong>定价权</strong>在往下走。</p>
+<p><strong>第三，Java 21.2% 的低渗透不代表 Java 更安全。</strong> 它可能只是说明 <strong>Agent 的语料里 Java 老系统太少</strong>，也就是<strong>Agent 做 Java 存量系统的能力更差</strong> —— 这确实对从业者是好事，但也可能只是暂时的。随着语料补充和工具链成熟，这个数字是会涨的。<strong>别把一个季度的高点当成护城河。</strong></p>
+<p><strong>第四，「Issue Spotting 能力变成护城河」这个判断可能只对某些职业成立。</strong> 如果你的工作就是执行有标准答案的任务（标准化测试、模板化运维、初级文案），那 10.8% 那种专业判断的稀缺性对你没用——<strong>你的岗位整体在被压缩，不是因为你不够会判断。</strong> 选对行业比练对能力更重要。</p>
+<p><strong>第五，如果 AI 的「主动发现问题」能力在一年内突破，逻辑会反转。</strong> DAYJOB 的作者自己说了，这种基准「难以大规模构建」，因为它要求评估者独立知道「这个场景里有哪些问题存在」——<strong>这既是它珍贵的原因，也是它稀缺的原因</strong>。一旦有人把这类基准规模化，或者模型学会了「先自己列检查清单再干活」，10.8% 这个数会涨。<strong>我在自己的项目里已经用「灰区反问」手工做了这件事 —— 如果模型能原生做，那这个技能确实就贬值了。</strong> 所以我把它写进失效边界，而不是结论。</p>
+<p><strong>第六，我引用的所有数字都是别人的样本。</strong> 40%、87%、90%、21.2%、10.8%、3.2% —— 来自 GitHub 官方报告、Surge AI 官方博客和第三方分析，<strong>量级可以参考，不能当你的期望值。</strong> 你自己项目上的返工率、review 发现率，才是你该盯的数。</p>
+<p>---</p>
+<h2 id="s-七常见问题">七、常见问题</h2>
+<p><strong>Q：所以到底还要不要学编程？</strong> 要，而且要学得比现在扎实。理由：<strong>编程是你获得 Issue Spotting 直觉的唯一途径。</strong> 你不写过 Spring Boot，就不会知道「这个接口在并发下会炸」；你不踩过序列化、事务、缓存穿透的坑，就不会知道该 review 什么。<strong>AI 能帮你写代码，但它不能替你积累踩坑的样本量。</strong> 而且面试里的技术追问，考的往往正是这些。</p>
+<p><strong>Q：那我该学 Python 还是继续 Java？</strong> <strong>继续 Java，而且加一门「AI 应用」技能栈。</strong> 理由是上一节说的：Java 渗透率 21.2%（不到 TS 的一半）、存量系统多而 Agent 覆盖差、而且 Java 的强类型约束本身就是好的 Issue Spotting 训练场。再叠上你自己的数据科学底子（Python + 建模），你的定位就很清楚了：<strong>「懂数据建模的 Java 后端 + 会做 Agent 应用」</strong> —— 这个组合在 2027 届不拥挤。</p>
+<p><strong>Q：怎么在简历上体现「Issue Spotting 能力」？</strong> <strong>别写形容词，写「清单 + 取舍 + 验证」。</strong> 反例：「具备良好的代码审查能力」。正例：「针对 XX 模块梳理 12 项边界条件清单，实现幂等/并发/精度三类校验，测试用例覆盖 XX 场景，线上 XX 起未复现」。<strong>前者谁都能写，后者证明你真的做过。</strong> 我之前给你的简历规则里「不夸大」那条在这里依然成立——<strong>清单上每一条都必须是你真踩过或真想过 的</strong>。</p>
+<p><strong>Q：面试被问「你怎么用 AI」，怎么答才有分量？</strong> 三段：<strong>① 我用它做什么</strong>（具体到任务类型）；<strong>② 我怎么验证它的产出</strong>（这是核心，讲你的检查清单、灰区反问、确定性校验）；<strong>③ 我在什么情况下不用它</strong>（这一条最能加分，因为它证明你不是在无脑崇拜）。</p>
+<p>第三点尤其重要。<strong>面试官见过太多「AI 帮我做完了」的答案，但很少见到「这类事我不用 AI，因为错了成本太高且我验证不了」的答案。</strong> 后者才是成熟使用者的信号。</p>
+<p><strong>Q：我现在还早吗？</strong> GitHub 那 40% 是<strong>全体开发者的 PR</strong>，而 Octoverse 里也提到 TypeScript/Python/Rust 都已经 40% 以上。<strong>你要是等到「所有人都准备好了」再练 Issue Spotting，那就晚了。</strong> 但也别焦虑 —— 21.2% 那行数字说明，Java 这块还有窗口，而且窗口不长。</p>
+<p>---</p>
+<h2 id="s-关于作者">关于作者</h2>
+<p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届），辅修数学。GPA 专业前 10%。</p>
+<ul><li>做过一个本地优先的 AI 平台（Dify + Ollama + DeepSeek 双层架构，意图路由 + 幻觉三层防护 + 上下文分类管理）</li><li>做过 Java 后端项目（Spring Boot 3 + MySQL，订单聚合系统）</li><li>做过 K12 教育科技系统的学情推题模块（用规则引擎而非大模型，做可解释的掌握度估计）</li><li>拿过全国大学生数学竞赛国家三等奖、美国大学生数学建模竞赛 S 奖、全国大学生数学建模竞赛省二等奖</li><li>折腾过个人网站的 GEO（让 AI 引擎正确引用你），站点在 <a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat</a></li></ul>
+<p><strong>这篇写于 2026 年 10 月 30 日，正是 2027 届秋招的尾段。</strong> 如果你在同一条路上——欢迎来对拍。</p>
+<p>---</p>
+<h2 id="s-参考与致谢">参考与致谢</h2>
+<ul><li><strong>GitHub Octoverse 2026</strong>（2026-10-28 发布，统计窗口 2025-10-01 至 2026-09-30）：9 月 agent 起草 PR 占比 &gt;40%（3 月 17%）、1.1 亿个 agent PR、87% 改多文件、两周合并率 90%、语言维度 AI 参与率（TS 44.1% / Python 41.1% / Rust 40.4% / Java 21.2%）、47 个模型无一超过 25%、61% 主动选模型者使用多个模型</li><li><strong>Surge AI《DAYJOB: Tax》</strong>（2026-10-27）：50 个税务工作环境、1,789 个文件、8 个执业领域、pass@1 @ 95% 评分阈值；Claude Sonnet 5.5 10.8% / Claude Fable 5.1 9.6% / Opus 5.5 9.2%；「Astra 5 次全漏 2027 年 8 月截止日期、Opus 5 次全抓到」；「还没通过审计」</li><li>第三方对 Octoverse 的安全分析汇总：Claude Code 辅助的公开提交密钥泄露率约 3.2%，约为 1.5% 基线的两倍（<strong>非 GitHub 官方口径</strong>）</li><li>90% 的美国工时缺乏 AI benchmark 覆盖（Surge AI 引述）</li><li>OpenAI 开源 Codex（Rust 重写终端 Agent，GitHub 104K+ Star，启动速度提升约 25 倍）；Mistral Large 4 开源权重（1T 总参 / 52B 激活，原生多模态 MoE）；DeepSeek V4.1-Flash-1017（Terminal-Bench 4.0 31.2 → 42.3，DeepSWE 77.0）；Kimi K3.1 Pro（2.8T 总参 / 104B 激活 / 1M 上下文，承诺 11 月 4 日前放出完整权重）；GitHub Copilot code review Max 公测（多模型独立评审 + 聚合）</li><li>2026 年秋招渠道转化率数据（齐鲁人才研究院，6 万+ 2026 届样本）见本人前文《敢打扰、懂不打扰、受打扰》</li></ul>
+<blockquote><p>本文涉及的网络热词与媒体报道，均标注来源，版权归原作者所有。 GitHub 报告中的合并率、push 量为<strong>平台观测数据</strong>，不代表代码质量或因果关系；密钥泄露率数据来自<strong>第三方分析汇总</strong>而非 GitHub 官方口径。引用时已按此说明。</p></blockquote>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>
