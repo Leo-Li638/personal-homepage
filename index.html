@@ -62,7 +62,7 @@
   .sbnav a:hover{color:var(--sky);padding-left:22px;}
   .sbnav a.active{color:var(--ink);border-left-color:var(--sky);}
   .sbsocial{margin-top:30px;display:flex;gap:18px;}
-  .sbsocial a{color:var(--ink);font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;opacity:.85;transition:.18s;}
+  .sbsocial a{color:var(--ink);font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:6px;opacity:.85;transition:.18s;min-height:32px;}
   .sbsocial a:hover{color:var(--sky);opacity:1;}
   .sbtools{margin-top:22px;display:flex;gap:8px;}
   .langbtn{border:1px solid var(--line);background:rgba(255,255,255,.7);border-radius:999px;
@@ -130,6 +130,19 @@
   .proj p{font-size:13.5px;color:#4b5563;}
   .proj .pgo{margin-top:10px;font-size:12.5px;color:var(--sky);font-weight:500;}
   .posts{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  /* 文章区工具条：平台筛选 + 计数 */
+  .posts-bar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 16px;}
+  .posts-bar .pfilter{display:inline-flex;align-items:center;min-height:34px;padding:6px 14px;
+    border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.72);
+    color:var(--sub);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;
+    transition:.18s;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .posts-bar .pfilter:hover{border-color:var(--sky);color:var(--sky);}
+  .posts-bar .pfilter.on{background:var(--sky);border-color:var(--sky);color:#fff;}
+  .posts-bar .pcount{margin-left:auto;font-size:12px;color:var(--sub);opacity:.8;font-variant-numeric:tabular-nums;}
+  .posts-more{display:block;width:100%;margin:6px 0 0;padding:13px 20px;border:1px dashed var(--line);
+    border-radius:12px;background:rgba(255,255,255,.6);color:var(--sky);font-size:13.5px;font-weight:600;
+    cursor:pointer;font-family:inherit;transition:.18s;min-height:46px;touch-action:manipulation;}
+  .posts-more:hover{border-color:var(--sky);background:rgba(61,127,181,.06);}
   .post{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:rgba(251,253,249,.78);
     text-decoration:none;display:block;transition:transform .18s,box-shadow .18s;}
   .post:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(61,127,181,.14);border-color:var(--sky2);}
@@ -139,6 +152,25 @@
   .post.local{border-color:#dbeafe;background:#f8fbff;}
   .post.local h3::before{background:var(--brand2);}
   .post .pmore{display:inline-block;margin-top:10px;font-size:12.5px;color:var(--sky);font-weight:500;}
+  /* 平台徽标：一眼看出这篇文章发在哪 */
+  .post .ptag{display:inline-block;margin-top:10px;padding:2px 9px;border-radius:999px;
+    font-size:11px;font-weight:600;letter-spacing:.3px;border:1px solid;opacity:.9;}
+  .post .ptag[data-k="local"]{color:#1d4ed8;border-color:#bfdbfe;background:#eff6ff;}
+  .post .ptag[data-k="zhihu"]{color:#0f766e;border-color:#99f6e4;background:#f0fdfa;}
+  .post .ptag[data-k="juejin"]{color:#7c3aed;border-color:#ddd6fe;background:#f5f3ff;}
+  .post .ptag[data-k="csdn"]{color:#c2410c;border-color:#fed7aa;background:#fff7ed;}
+  .post .ptag[data-k="aliyun"]{color:#b91c1c;border-color:#fecaca;background:#fef2f2;}
+  .post .ptag[data-k="tieba"]{color:#1d4ed8;border-color:#bfdbfe;background:#eff6ff;}
+  .post .ptag[data-k="trae"]{color:#0e7490;border-color:#a5f3fc;background:#ecfeff;}
+  .post .ptag[data-k="other"]{color:var(--sub);border-color:var(--line);background:#f8fafc;}
+  /* 回到顶部 */
+  .totop{position:fixed;right:16px;bottom:20px;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--line);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    color:var(--sky);font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 4px 16px rgba(20,40,60,.14);opacity:0;pointer-events:none;transition:opacity .24s,transform .24s;
+    z-index:60;touch-action:manipulation;-webkit-tap-highlight-color:transparent;font-family:inherit;}
+  .totop.on{opacity:1;pointer-events:auto;}
+  .totop:hover{transform:translateY(-2px);border-color:var(--sky);}
   /* 置顶文章：金色描边 + 常驻徽标，永久排在该栏第一位 */
   .post.pinned{border-color:var(--gold);background:linear-gradient(135deg,#fffdf5 0%,#fdfaf0 100%);
     box-shadow:0 2px 10px rgba(191,146,42,.10);position:relative;padding-top:30px;}
@@ -157,15 +189,17 @@
   .tl-item:nth-child(5)::before{border-color:var(--grass);}
   .tl-item .t{font-size:13px;font-weight:600;color:var(--sky);}
   .tl-item p{font-size:13.5px;color:var(--sub);margin-top:2px;}
-  .contact a{color:var(--sky);text-decoration:none;font-weight:500;}
+  .contact a{color:var(--sky);text-decoration:none;font-weight:500;word-break:break-all;}
   .contact a:hover{text-decoration:underline;}
-  .contact li{list-style:none;padding:6px 0;font-size:15px;border-bottom:1px dashed var(--line);}
+  .contact ul{padding:0;margin:0;list-style:none;}
+  .contact li{list-style:none;padding:6px 0;font-size:15px;border-bottom:1px dashed var(--line);
+    display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
   .contact li:last-child{border-bottom:none;}
-  .contact .copybtn{margin-left:8px;padding:1px 9px;font-size:12px;border:1px solid var(--sky);border-radius:10px;background:#fff;color:var(--sky);cursor:pointer;vertical-align:middle;}
+  .contact li>span:first-child{color:var(--sub);}
+  .contact .copybtn{margin-left:8px;padding:4px 12px;font-size:12.5px;border:1px solid var(--sky);border-radius:10px;background:#fff;color:var(--sky);cursor:pointer;vertical-align:middle;min-height:32px;min-width:44px;}
   .contact .copybtn:hover{background:var(--sky);color:#fff;}
   footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);text-align:center;color:var(--sub);font-size:13px;}
-  footer .fsoc{display:flex;justify-content:center;gap:18px;margin-top:10px;}
-  footer .fsoc a{color:var(--sky);text-decoration:none;font-size:13px;}
+  footer .fsoc{display:flex;justify-content:center;gap:18px;margin-top:10px;}  footer .fsoc a{color:var(--sky);text-decoration:none;font-size:13px;}
   footer .fsoc a:hover{text-decoration:underline;}
   .geo-table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px;}
   .geo-table th,.geo-table td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top;}
@@ -198,33 +232,90 @@
   @media(max-width:900px){
     .layout{display:block;}
     .sidebar{position:fixed;top:0;left:0;right:0;width:100%;height:auto;flex-direction:row;align-items:center;
-      justify-content:space-between;padding:10px 16px;background:rgba(247,250,245,.9);backdrop-filter:blur(8px);
+      justify-content:space-between;padding:9px 14px;background:rgba(247,250,245,.92);backdrop-filter:blur(10px);
       border-bottom:1px solid var(--line);z-index:50;overflow:visible;}
-    .sidebar .name{font-size:18px;}
+    .sidebar .name{font-size:16px;white-space:nowrap;line-height:1.2;}
     .sidebar .role,.sidebar .sbio{display:none;}
-    .sbnav{flex-direction:row;margin:0;overflow-x:auto;gap:2px;-ms-overflow-style:none;scrollbar-width:none;}
-    .sbnav::-webkit-scrollbar{display:none;}
-    .sbnav a{padding:8px 10px;border-left:none;border-bottom:2px solid transparent;}
-    .sbnav a .n{display:none;}
-    .sbnav a:hover{padding-left:10px;}
-    .sbnav a.active{border-left:none;border-bottom-color:var(--sky);}
+    /* 移动端：导航收进抽屉，横向排 10 项必然挤压成竖排 —— 改为汉堡菜单
+       ⚠️ 抽屉必须挂到 body 下：.sidebar 有 backdrop-filter，会创建包含块，
+          使子元素的 position:fixed 相对 .sidebar 定位（高度塌成 auto）。 */
+    .sbnav{position:fixed;top:0;right:0;bottom:0;left:auto;width:min(78vw,320px);height:100dvh;
+      margin:0;z-index:120;
+      background:rgba(250,252,248,.98);backdrop-filter:blur(16px);border-left:1px solid var(--line);
+      flex-direction:column;align-items:stretch;gap:2px;padding:76px 12px 24px;
+      overflow-y:auto;overscroll-behavior:contain;
+      transform:translateX(102%);transition:transform .26s cubic-bezier(.4,0,.2,1);
+      box-shadow:-12px 0 40px rgba(20,40,60,.16);visibility:hidden;}
+    .sbnav.open{transform:translateX(0);visibility:visible;}
+    .sbnav a{padding:13px 14px;border-left:none;border-bottom:none;border-radius:10px;
+      font-size:15px;min-height:46px;white-space:nowrap;}
+    .sbnav a .n{display:inline-block;width:auto;margin-right:10px;font-size:11px;}
+    .sbnav a:hover{padding-left:14px;background:rgba(61,127,181,.07);}
+    .sbnav a.active{background:rgba(61,127,181,.12);border-left:3px solid var(--sky);padding-left:14px;}
+    /* 抽屉遮罩 */
+    .navmask{position:fixed;inset:0;background:rgba(12,26,38,.42);z-index:110;opacity:0;
+      pointer-events:none;transition:opacity .26s;backdrop-filter:blur(2px);}
+    .navmask.on{opacity:1;pointer-events:auto;}
+    /* 汉堡按钮 */
+    .navtoggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      min-width:46px;min-height:44px;padding:0 12px;border:1px solid var(--line);border-radius:10px;
+      background:rgba(255,255,255,.82);color:var(--ink);cursor:pointer;font-family:inherit;
+      font-size:13px;font-weight:600;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+    .navtoggle .bars{position:relative;width:16px;height:2px;background:var(--ink);border-radius:2px;
+      transition:background .2s;}
+    .navtoggle .bars::before,.navtoggle .bars::after{content:"";position:absolute;left:0;width:16px;height:2px;
+      background:var(--ink);border-radius:2px;transition:transform .24s,top .24s;}
+    .navtoggle .bars::before{top:-5px;}
+    .navtoggle .bars::after{top:5px;}
+    body.navopen .navtoggle .bars{background:transparent;}
+    body.navopen .navtoggle .bars::before{top:0;transform:rotate(45deg);}
+    body.navopen .navtoggle .bars::after{top:0;transform:rotate(-45deg);}
     .sbsocial{display:none;}
-    .sbtools{margin:0;position:fixed;top:12px;right:12px;z-index:55;}
-    .langbtn{font-size:13px;padding:10px 18px;min-height:44px;min-width:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
-    .content{margin-left:0;padding:calc(var(--sbh,96px) + 20px) 18px 60px;max-width:none;}
+    .sbtools{margin:0;position:static;display:flex;align-items:center;gap:8px;}
+    .langbtn{font-size:12.5px;padding:9px 14px;min-height:44px;min-width:44px;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+    .content{margin-left:0;padding:calc(var(--sbh,96px) + 20px) 16px 60px;max-width:none;}
     .feats,.projects,.posts,.interact-row,.stats .grid{grid-template-columns:1fr;}
     .stats .grid{grid-template-columns:1fr 1fr;}
     html{scroll-padding-top:calc(var(--sbh,70px) + 14px);}
+    /* 移动端文章卡：单列大卡，标题与摘要可读性优先 */
+    .post{padding:15px 16px;border-radius:14px;}
+    .post h3{font-size:16px;line-height:1.45;}
+    .post p{font-size:13.5px;line-height:1.6;}
+    .post .pdate{font-size:11.5px;}
+    .post .pmore{font-size:13px;}
+  }
+  @media(max-width:420px){
+    .content{padding-left:13px;padding-right:13px;}
+    .langbtn{padding:9px 11px;font-size:12px;}
+    .sidebar .name{font-size:15px;}
+  }
+  /* ===== 移动端可访问性兜底：字号下限 / 触控目标 / 溢出防护 ===== */
+  @media(max-width:900px){
+    /* 极小字统一提到 12px 底线（原来荣誉徽章是 9-11px，390px 屏几乎不可读） */
+    .sa-meta,.sa-panel-eyebrow,.sa-panel-col h3,.sa-panel-foot span{font-size:12px;}
+    .sb-item{font-size:12px;}
+    .post .ptag{font-size:11.5px;}
+    /* 触控目标：所有可点元素最小 44×44（微信/支付宝小程序同款标准） */
+    .contact a,.contact .copybtn,.sa-action,.splash-skip,.scroll-hint{
+      min-height:44px;display:inline-flex;align-items:center;}
+    .contact .copybtn{padding:9px 14px;min-height:44px;min-width:52px;}
+    .contact li{padding:10px 0;}
+    .contact a{line-height:1.5;}
+    /* 横向溢出防护：跑马灯与背景层不得撑出视口 */
+    .sb-track{will-change:transform;}
+    .splash-awards{overflow:hidden;max-width:100%;}
+    .splash-inner{max-width:100vw;}
   }
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important;}
     html{scroll-behavior:auto;}
+    .sbnav{transition:none;}
   }
 /* ===== 前置页 splash（苹果发布会风：近黑留白、字重对比、克制动效） ===== */
   #splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
     overflow:hidden;background:#04060b;transform-origin:50% 46%;
     transition:opacity .5s ease-out,visibility .5s ease-out,filter .5s ease-out,transform .5s ease-out;}
-  #splash.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  #splash.hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
   #splash.leaving{opacity:0;filter:blur(6px);transform:scale(1.008);}
   .splash-bg{position:absolute;inset:0;background:#04060b url(assets/mondstadt-hero.jpg) center/cover no-repeat;
     background-image:image-set(url(assets/mondstadt-hero.avif) type("image/avif"),url(assets/mondstadt-hero.webp) type("image/webp"),url(assets/mondstadt-hero.jpg) type("image/jpeg"));
@@ -253,6 +344,7 @@
   .splash-enter:active{transform:scale(.97);}
   .splash-enter:focus-visible{outline:3px solid rgba(255,255,255,.65);outline-offset:4px;}
   .splash-skip{display:inline-block;margin-top:16px;font-size:12.5px;font-weight:300;color:rgba(255,255,255,.34);
+    padding:8px 6px;min-height:32px;line-height:1.6;
     text-decoration:none;opacity:0;animation:sp-fade 1s ease 1.5s both;}
   .splash-skip:hover{color:rgba(255,255,255,.7);}
   /* ===== 开场序列（苹果式渐入：fade + 轻上浮 + 去模糊，节奏紧凑） ===== */
@@ -279,6 +371,10 @@
   #splash.cine .splash-bg{background:#04060b;background-image:none;filter:none;animation:none;}
   #splash.cine .splash-veil{opacity:0;}
   #splash.cine .splash-inner{max-width:720px;}
+  /* 移动端：cine 模式下强制不超视口（否则 720px 宽会把 splash-inner 撑出屏幕） */
+  @media(max-width:900px){
+    #splash .splash-inner,#splash.cine .splash-inner{max-width:100vw;width:100vw;}
+  }
   /* NPC 舞台装饰降噪：黑场只留角色轮廓，去掉舞台感光效 */
   #splash.cine .npc-backlight,#splash.cine .npc-mirror,
   #splash.cine .npc-orb,#splash.cine .npc-podium{opacity:.22;}
@@ -395,7 +491,7 @@
   /* splash 荣誉徽章跑马灯（stabondar 风） */
   .splash-awards{width:min(100%,680px);margin-top:26px;cursor:pointer;outline:none;}
   .sa-meta{display:flex;align-items:center;justify-content:space-between;gap:18px;margin:0 14px 8px;
-    color:rgba(255,255,255,.42);font-size:10px;letter-spacing:.2em;text-transform:uppercase;}
+    color:rgba(255,255,255,.5);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;}
   .sa-action{color:#dcefff;border-bottom:1px solid rgba(220,239,255,.45);transition:color .2s,border-color .2s;}
   .splash-awards:hover .sa-action,.splash-awards:focus-visible .sa-action{color:#fff;border-color:#fff;}
   .splash-badges{overflow:hidden;
@@ -466,8 +562,13 @@
     .splash-enter{margin-top:16px;padding:11px 34px;font-size:14px;}
     .splash-skip{margin-top:7px;font-size:12px;}
     .splash-awards{margin-top:13px;}
-    .sa-meta{margin-bottom:6px;font-size:9px;}
-    .sb-item{padding:6px 11px;font-size:11px;}
+    .sa-meta{margin-bottom:6px;font-size:12px;}
+    .sb-item{padding:6px 11px;font-size:12px;}
+    /* 荣誉档案：正文可读性（这些规则在 900px 块里定义，此处需同等特异性兜住 640px 覆盖） */
+    .sa-panel-eyebrow{font-size:12px;}
+    .sa-panel-col h3{font-size:12px;}
+    .sa-panel-foot span{font-size:12px;}
+    .sa-panel-item{font-size:13px;}
     .npc-talk{max-width:190px;font-size:12px;}
     .sa-panel-inner{padding:70px 20px 28px;justify-content:flex-start;}
     .sa-panel-title{margin-bottom:26px;}
@@ -742,8 +843,8 @@
   <div class="splash-inner">
     <div class="splash-npc" id="sp-npc">
       <div class="npc-stage" id="sp-npc-stage">
-        <div class="npc-backlight" aria-hidden="true"><img src="assets/npc_maid-optimized.webp" alt="" width="360" height="611" decoding="async"></div>
-        <img id="sp-npc-img" src="assets/npc_maid-optimized.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" width="360" height="611" decoding="async" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
+        <div class="npc-backlight" aria-hidden="true"><img src="assets/npc_maid-optimized.webp" alt="" width="360" height="611" loading="lazy" decoding="async"></div>
+        <img id="sp-npc-img" src="assets/npc_maid-optimized.webp" alt="大肥鱼 · 鲸鱼娘（原创同人形象，可拍可拖动）" width="360" height="611" loading="lazy" decoding="async" draggable="false" onerror="this.onerror=null;this.src='assets/npc_maid.png';">
         <canvas id="sp-npc-gl" aria-hidden="true"></canvas>
         <div class="npc-orb" aria-hidden="true"></div>
         <div class="npc-orb o2" aria-hidden="true"></div>
@@ -1104,7 +1205,15 @@ const D = {
         p:"M3.1 Flash cuts agent task costs by ~70% and triples speed, weakening the case for local-first. Rethinking the layered architecture: high-frequency to cloud, privacy stays local.",url:"https://juejin.cn/post/7699333990600343593"},
       {date:"2026-10-22 · CSDN Blog",h:"Agent Costs Dropped 70% Overnight: Rethinking My Self-Hosted AI Platform After MiniMax M3.1 Flash",
         p:"CSDN edition: what model price cuts really mean for a local-first, cloud-fallback architecture, told through my own platform's cost math.",url:"https://blog.csdn.net/2401_84773010/article/details/168774554"},
-      {date:"2026-10-16 · Original",h:"0.8^8 = 17%: The Real Bar for AI Jobs in the 2026 Campus Recruit",
+                              {date:"2026-10-16 · Juejin Column",h:"0.8^8 = 17%: The Real Bar for AI Jobs in the 2026 Campus Recruit",
+        p:"Juejin edition: the exponential decay behind impressive demos and production collapses, explained as a math problem.",url:"https://juejin.cn/post/7696818250545954843"},
+{date:"2026-10-16 · CSDN Blog",h:"0.8^8 = 17%: The Real Bar for AI Jobs in the 2026 Campus Recruit",
+        p:"CSDN edition: three escalating layers — Agent reliability engineering, a math moat, and choosing the right circles.",url:"https://blog.csdn.net/2401_84773010/article/details/168111306"},
+{date:"2026-10-16 · Juejin Column",h:"AI Jobs Up 789% — but Game Numeric Design May Fit Me Better",
+        p:"Juejin edition: the AI-job surge dismantled in three tiers, then contrasted against the overlooked game-numeric track.",url:"https://juejin.cn/post/7696894428133294089"},
+{date:"2026-10-16 · Zhihu Column",h:"0.8^8 = 17%: The Real Bar for AI Jobs in the 2026 Campus Recruit",
+        p:"Zhihu edition: the real threshold behind the 789% AI-job surge, with executable paths through reliability engineering and math differentiation.",url:"https://zhuanlan.zhihu.com/p/2094356307163748275"},
+{date:"2026-10-16 · Original",h:"0.8^8 = 17%: The Real Bar for AI Jobs in the 2026 Campus Recruit",
         p:"An 80%-per-step Agent running 8 steps lands at just 17% reliability. Three executable angles for ordinary candidates: reliability engineering, math differentiation, and targeting the right circles.",url:"posts/ai-job-2026.html"},
       {date:"2026-10-16 · Original",h:"AI Jobs Up 789% — but Game Numeric Design May Fit Me Better",
         p:"Everyone is rushing into AI, yet game numeric design is tailor-made for a math + data background. Public 2027-campus recruitment data on the two tracks' real competitor profiles.",url:"posts/ai-vs-game-numeric.html"},
@@ -1154,7 +1263,9 @@ const D = {
         p:"CSDN edition: six-dimension audit, probe question bank, CDP sampling discipline and two real pitfalls.",url:"https://blog.csdn.net/2401_84773010/article/details/166840539"},
       {date:"2026-09-29 · CSDN Original",h:"SmartClass Retro: An Explainable Recommender Built Without AI",
         p:"CSDN edition: Laplace smoothing + Ebbinghaus decay rule engine and 16-table trade-offs.",url:"https://blog.csdn.net/2401_84773010/article/details/166840650"},
-      {date:"2026-09-28 · Aliyun Developer",h:"Stop Working for the API: A Private AI Platform with Dify + Ollama + DeepSeek",
+            {date:"2026-09-28 · Juejin Column",h:"I Built an 'AI Visibility Monitor' for My Personal Site: 82 Probe Prompts, Fully Automated",
+        p:"Juejin edition: a six-dimension audit model plus CDP sampling discipline, engineering the question of whether AI ever mentions me.",url:"https://juejin.cn/post/7690159620451123209"},
+{date:"2026-09-28 · Aliyun Developer",h:"Stop Working for the API: A Private AI Platform with Dify + Ollama + DeepSeek",
         p:"Aliyun edition: 15-container architecture, dual-channel routing and deployment pitfalls.",url:"https://developer.aliyun.com/article/1766786"},
       {date:"2026-09-28 · Aliyun Developer",h:"I Built an 'AI Visibility Monitor' for My Personal Site",
         p:"Aliyun edition: six-dimension audit model and automated sampling pipeline.",url:"https://developer.aliyun.com/article/1766793"},
@@ -1270,11 +1381,11 @@ function tableHTML(rows){
 }
 function renderSidebar(t){
   const nav = t.nav.map(function(label,i){return '<li><a href="#s'+(i===0?'intro':'sec'+i)+'"><span class="n">'+String(i).padStart(2,'0')+'</span>'+esc(label)+'</a></li>';}).join('');
-  return ''
+    return ''
     +'<div class="name">'+esc(t.sidebar.name)+'</div>'
     +'<div class="role">'+esc(t.sidebar.role)+'</div>'
     +'<div class="sbio">'+esc(t.sidebar.bio)+'</div>'
-    +'<ul class="sbnav">'+nav+'</ul>'
+    +'<ul class="sbnav" id="sbnavList">'+nav+'</ul>'
     +'<div class="sbtools"><button class="langbtn" id="langBtn">中文 / EN</button></div>'
     +'<div class="sbsocial">'
       +'<a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a>'
@@ -1320,18 +1431,17 @@ function renderContent(t){
   });
   html += '</div></div></section>';
   // posts
-  html += '<section class="sec reveal" id="ssec4"><h2 class="sec-title"><span class="n">04</span>'+esc(t.posts.title)+'</h2><div class="card" style="margin-top:0;"><div class="posts">';
-  t.posts.items.slice().sort(function(a,b){return (b.pin?1:0)-(a.pin?1:0);}).forEach(function(p){
-    var isLocal=/^posts\//.test(p.url);
-      html += '<a class="post'+(isLocal?' local':'')+(p.pin?' pinned':'')+'" href="'+p.url+'"'+(isLocal?'':' target="_blank" rel="noopener"')+'><div class="pdate">'+esc(p.date)+'</div><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p><span class="pmore">阅读全文 →</span></a>';
-  });
-  html += '</div></div></section>';
+  html += '<section class="sec reveal" id="ssec4"><h2 class="sec-title"><span class="n">04</span>'+esc(t.posts.title)+'</h2><div class="card" style="margin-top:0;">';
+  html += '<div class="posts-bar" id="postsBar"></div>';
+  html += '<div class="posts" id="postsGrid"></div>';
+  html += '<button class="posts-more" id="postsMore" type="button">加载更多文章</button>';
+  html += '</div></section>';
   // timeline
   html += '<section class="sec reveal" id="ssec5"><h2 class="sec-title"><span class="n">05</span>'+esc(t.timeline.title)+'</h2><div class="card" style="margin-top:0;"><div class="tl">';
   t.timeline.items.forEach(function(it){html += '<div class="tl-item"><div class="t">'+esc(it[0])+'</div><p>'+esc(it[1])+'</p></div>';});
   html += '</div></div></section>';
   // contact
-  html += '<section class="card reveal" id="ssec9"><h2>'+esc(t.contact.title)+'</h2><ul>';
+  html += '<section class="card contact reveal" id="ssec9"><h2>'+esc(t.contact.title)+'</h2><ul>';
   t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a>'+(c[1].indexOf('mailto:')===0?' <button class="copybtn" type="button" data-copy="'+esc(c[1].slice(7))+'">复制</button>':'')+'</li>';});
   html += '</ul></section>';
   // def
@@ -1427,7 +1537,8 @@ function renderContent(t){
   }
 
   function setupSpy(){
-    const links = Array.prototype.slice.call(sidebarEl.querySelectorAll('.sbnav a[href^="#"]'));
+    // 抽屉模式下 .sbnav 被移到 body 下，故用全局查询而非 sidebarEl.querySelectorAll
+    const links = Array.prototype.slice.call(document.querySelectorAll('.sbnav a[href^="#"]'));
     const map={}; links.forEach(function(a){ const s=document.querySelector(a.getAttribute('href')); if(s) map[a.getAttribute('href').slice(1)]=a; });
     if('IntersectionObserver' in window){
       const spy=new IntersectionObserver(function(es){
@@ -1537,9 +1648,167 @@ function renderContent(t){
       })();
     }
     const bw=document.getElementById('busuanzi-wrap'); if(bw) bw.style.display='none';
-    setupReveal(); setupSpy();
+    setupReveal();
+    setupNavDrawer();   // 必须先跑：抽屉会把 .sbnav 移到 body 下，setupSpy 才能全局查到
+    setupSpy();
+    setupPosts(t); setupToTop();
     const lb=document.getElementById('langBtn'); if(lb) lb.addEventListener('click', toggleLang);
     if(window.__syncSbh) setTimeout(window.__syncSbh, 40);   // 顶栏高度跟随（移动端防遮挡）
+  }
+
+  /* ===================== 文章区：平台筛选 + 分批渲染 ===================== */
+  var POST_PAGE = 12;                    // 每批渲染数量
+  var POST_PLATFORMS = {
+    local:{label:'本站', re:/^posts\//},
+    zhihu:{label:'知乎', re:/zhuanlan\.zhihu\.com/},
+    juejin:{label:'掘金', re:/juejin\.cn/},
+    csdn:{label:'CSDN', re:/blog\.csdn\.net/},
+    aliyun:{label:'阿里云', re:/developer\.aliyun\.com/},
+    tieba:{label:'贴吧', re:/tieba\.baidu\.com/},
+    trae:{label:'Trae', re:/forum\.trae\.cn/},
+  };
+  function detectPlatform(url){
+    if(/^posts\//.test(url)) return 'local';
+    for(var k in POST_PLATFORMS){ if(POST_PLATFORMS[k].re.test(url)) return k; }
+    return 'other';
+  }
+  function setupPosts(t){
+    var grid=document.getElementById('postsGrid');
+    var bar=document.getElementById('postsBar');
+    var moreBtn=document.getElementById('postsMore');
+    if(!grid||!bar||!moreBtn) return;
+
+    // 置顶优先，其余按日期倒序
+    var all=t.posts.items.slice().sort(function(a,b){
+      var pin=(b.pin?1:0)-(a.pin?1:0);
+      if(pin) return pin;
+      return String(b.date).localeCompare(String(a.date));
+    });
+    all.forEach(function(p){ p._k=detectPlatform(p.url); });
+
+    // 实际出现过的平台，按数量降序
+    var counts={};
+    all.forEach(function(p){ counts[p._k]=(counts[p._k]||0)+1; });
+    var keys=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];});
+
+    var state={filter:'all', shown:POST_PAGE};
+
+    function visible(){
+      return all.filter(function(p){ return state.filter==='all' || p._k===state.filter; });
+    }
+    function cardHTML(p){
+      var isLocal=p._k==='local';
+      var pl=POST_PLATFORMS[p._k];
+      var tag=(pl&&pl.label)?'<span class="ptag" data-k="'+p._k+'">'+esc(pl.label)+'</span>'
+                           :'<span class="ptag" data-k="other">其它</span>';
+      return '<a class="post'+(isLocal?' local':'')+(p.pin?' pinned':'')+'" href="'+p.url+'"'
+        +(isLocal?'':' target="_blank" rel="noopener"')
+        +'><div class="pdate">'+esc(p.date)+'</div><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p>'
+        +'<span class="pmore">阅读全文 →</span>'+tag+'</a>';
+    }
+    function paint(){
+      var list=visible();
+      var slice=list.slice(0,state.shown);
+      grid.innerHTML=slice.map(cardHTML).join('');
+      moreBtn.style.display = list.length>state.shown ? '' : 'none';
+      moreBtn.textContent = '加载更多文章（还有 ' + Math.max(0,list.length-state.shown) + ' 篇）';
+      var c=document.getElementById('pcount');
+      if(c) c.textContent='共 '+list.length+' 篇'+(state.filter==='all'?'':' · 已筛选');
+      // 新卡片入场动画
+      grid.querySelectorAll('.post').forEach(function(el,i){
+        el.style.opacity='0'; el.style.transform='translateY(8px)';
+        setTimeout(function(){ el.style.transition='opacity .3s,transform .3s'; el.style.opacity=''; el.style.transform=''; }, Math.min(i*28,220));
+      });
+    }
+    // 筛选条
+    var barHTML='<button class="pfilter on" data-f="all" type="button">全部</button>';
+    keys.forEach(function(k){
+      var lb2=POST_PLATFORMS[k]?POST_PLATFORMS[k].label:k;
+      barHTML+='<button class="pfilter" data-f="'+k+'" type="button">'+esc(lb2)+' <span style="opacity:.6">'+counts[k]+'</span></button>';
+    });
+    barHTML+='<span class="pcount" id="pcount"></span>';
+    bar.innerHTML=barHTML;
+    bar.addEventListener('click',function(e){
+      var b2=e.target.closest('.pfilter'); if(!b2) return;
+      state.filter=b2.getAttribute('data-f'); state.shown=POST_PAGE;
+      bar.querySelectorAll('.pfilter').forEach(function(x){x.classList.toggle('on',x===b2);});
+      paint();
+    });
+    moreBtn.addEventListener('click',function(){ state.shown+=POST_PAGE; paint(); });
+    paint();
+  }
+
+  /* ===================== 移动端抽屉导航 ===================== */
+  function setupNavDrawer(){
+    var sb=sidebarEl;
+    if(!sb) return;
+    var tools=sb.querySelector('.sbtools');
+    if(!tools) return;
+    if(!sb.querySelector('.navtoggle')){
+      var tg=document.createElement('button');
+      tg.className='navtoggle'; tg.type='button';
+      tg.setAttribute('aria-label','open navigation');
+      tg.innerHTML='<span class="bars"></span><span class="nt-label">菜单</span>';
+      tools.parentNode.insertBefore(tg,tools);
+      // 遮罩
+      if(!document.getElementById('navmask')){
+        var mk=document.createElement('div'); mk.className='navmask'; mk.id='navmask';
+        document.body.appendChild(mk);
+      }
+      tg.addEventListener('click',function(){ toggleNav(); });
+      document.getElementById('navmask').addEventListener('click',function(){ toggleNav(false); });
+      document.addEventListener('keydown',function(e){ if(e.key==='Escape') toggleNav(false); });
+    }
+    // 抽屉必须挂到 body：.sidebar 的 backdrop-filter 会创建包含块，
+    // 使 position:fixed 的抽屉相对 .sidebar 定位 → 高度塌成 auto
+    // 注意：render() 会重建 sidebar，所以每次都重新查询，不能缓存引用
+    function getNav(){ return document.getElementById('sbnavList'); }
+    var nav=getNav();
+    if(nav && nav.parentNode!==document.body) document.body.appendChild(nav);
+    // 抽屉内点导航项 → 关闭
+    if(nav && !nav.__bound){
+      nav.__bound=true;
+      nav.addEventListener('click',function(e){ if(e.target.closest('a')) toggleNav(false); });
+    }
+    // 桌面端隐藏汉堡，并把导航放回 .sidebar（窄屏时它被移到 body 以规避包含块问题）
+    function sync(){
+      var m=window.matchMedia('(max-width:900px)').matches;
+      sb.querySelectorAll('.navtoggle').forEach(function(b){ b.style.display=m?'':'none'; });
+      var nv=getNav();
+      if(!m){
+        toggleNav(false);
+        if(nv && nv.parentNode!==sb) sb.insertBefore(nv, sb.querySelector('.sbtools'));
+      }else{
+        if(nv && nv.parentNode!==document.body) document.body.appendChild(nv);
+      }
+    }
+    sync();
+    if(window.__navSync) window.removeEventListener('resize',window.__navSync);
+    window.__navSync=function(){ clearTimeout(window.__navT); window.__navT=setTimeout(sync,120); };
+    window.addEventListener('resize',window.__navSync,{passive:true});
+  }
+  function toggleNav(force){
+    var open = typeof force==='boolean'?force:!document.body.classList.contains('navopen');
+    document.body.classList.toggle('navopen',open);
+    var nav=document.getElementById('sbnavList');
+    var mk=document.getElementById('navmask');
+    if(nav) nav.classList.toggle('open',open);
+    if(mk) mk.classList.toggle('on',open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if(window.__syncSbh) setTimeout(window.__syncSbh,60);
+  }
+
+  /* ===================== 回到顶部 ===================== */
+  function setupToTop(){
+    if(document.getElementById('totop')) return;
+    var b=document.createElement('button');
+    b.className='totop'; b.id='totop'; b.type='button'; b.setAttribute('aria-label','back to top');
+    b.innerHTML='↑';
+    document.body.appendChild(b);
+    b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+    var onScroll=function(){ b.classList.toggle('on', scrollY>600); };
+    window.addEventListener('scroll',onScroll,{passive:true});
+    onScroll();
   }
 
   function toggleLang(){
@@ -1808,7 +2077,11 @@ function renderContent(t){
     let W=innerWidth,H=innerHeight,x=0,y=0,vx=0,vy=0,state='idle',engine=false;
     let rot=0,rotTarget=0,stTurn=0,stCur=0,landT=-1,patT=-1,lastT=performance.now(),lastNpcFrame=0;
     const lowPowerNpc=matchMedia('(max-width: 640px)').matches||(navigator.hardwareConcurrency&&navigator.hardwareConcurrency<=4);
+    // 移动端判定：触摸能力 OR 窄视口 —— 桌面浏览器缩窄窗口时也必须走探头态，
+    // 否则 NPC 会以桌面自由抛掷模式（124×337px）压住文章正文。
     const touchDevice=('ontouchstart' in window)||navigator.maxTouchPoints>0||matchMedia('(pointer: coarse)').matches;
+    const narrowView=matchMedia('(max-width: 900px)');
+    const compactMode=touchDevice||narrowView.matches;
     let tapT=-1; // touch 模式下记录按下时刻，区分拍拍/长按舞王
     let gox=0,goy=0,dnX=0,dnY=0,dnT=0,moved=0,vel={x:0,y:0},lpx=0,lpy=0,lpt=0;
     let talkTimer=null,patCount=0; try{patCount=+localStorage.getItem('npc_pats')||0;}catch(e){}
@@ -1903,7 +2176,7 @@ function renderContent(t){
       (window.__pdLog=window.__pdLog||[]).push({t:Math.round(performance.now()),x:e.clientX,y:e.clientY});
       const rz=npcEl.getBoundingClientRect(), zyy=(e.clientY-rz.top)/Math.max(1,rz.height);
       zone=zyy<.38?'head':(zyy>.72?'tail':'body');
-      if(touchDevice){ // 触屏：不自由拖拽，记录按下时刻，松开时判定 拍拍/舞王
+      if(compactMode){ // 触屏/窄屏：不自由拖拽，记录按下时刻，松开时判定 拍拍/舞王
         tapT=performance.now(); danceEnd=0; npcEl.classList.remove('party'); if(gl3d)gl3d.party(false);
         return; }
       if(npcEl.parentNode!==document.body){ // 脱离 .splash-inner 的 transform 包含块，fixed 才等于视口坐标
@@ -1918,7 +2191,7 @@ function renderContent(t){
       state='grab'; npcEl.classList.add('grab'); npcEl.classList.remove('air');
       gox=e.clientX-x; goy=e.clientY-y; dnX=e.clientX; dnY=e.clientY; dnT=performance.now(); moved=0;
       vx=vy=0; vel.x=vel.y=0; lpx=e.clientX; lpy=e.clientY; lpt=dnT; });
-    npcEl.addEventListener('pointermove',function(e){ if(state!=='grab'||touchDevice)return;
+    npcEl.addEventListener('pointermove',function(e){ if(state!=='grab'||compactMode)return;
       const now=performance.now(), dt=Math.max(8,now-lpt)/1000;
       x=e.clientX-gox; y=e.clientY-goy;
       x=Math.max(-60,Math.min(W-40,x)); y=Math.max(-80,Math.min(H-60,y));
@@ -1926,7 +2199,7 @@ function renderContent(t){
       vel.x=.7*vel.x+.3*(e.clientX-lpx)/dt; vel.y=.7*vel.y+.3*(e.clientY-lpy)/dt;
       lpx=e.clientX; lpy=e.clientY; lpt=now; });
     function release(){ 
-      if(touchDevice){ const dur=performance.now()-tapT; tapT=-1;
+      if(compactMode){ const dur=performance.now()-tapT; tapT=-1;
         if(dur>=550){ state='idle'; openDanceShow(true); return; }   // 长按=舞王 Live
         if(dur<400){ state='idle';
           // 探头态：短按先"探头出来"，再按才拍拍
@@ -1961,11 +2234,11 @@ function renderContent(t){
       document.body.classList.add('npc-adopted');
       if(npcEl.parentNode===document.body)return;
       const r=npcEl.getBoundingClientRect();
-      const w=Math.min(r.width, touchDevice?Math.min(132,r.width):170);
+      const w=Math.min(r.width, compactMode?Math.min(132,r.width):170);
       document.body.appendChild(npcEl);
       npcEl.style.position='fixed'; npcEl.style.left='0'; npcEl.style.top='0';
       npcEl.style.margin='0'; npcEl.style.width=w+'px'; npcEl.style.zIndex='9988';
-      if(touchDevice){
+      if(compactMode){
         engine=false;
         // 探头吸附：只露小头（CSS .npc-peek 负责裁剪），不压正文
         document.body.classList.add('npc-peek');
@@ -1976,6 +2249,19 @@ function renderContent(t){
         document.body.classList.add('npc-docked');
         requestAnimationFrame(function(){ requestAnimationFrame(function(){ npcEl.style.opacity='1'; }); });
         npcEl.classList.add('sp-arrive'); // 复用入场动画让吸附更自然
+        // 入场动画的 to{transform:none} 会把定位 transform 覆盖掉，动画结束后必须移除 class
+        npcEl.addEventListener('animationend',function h(e){
+          if(e.animationName!=='npc-arrive') return;
+          npcEl.classList.remove('sp-arrive');
+          npcEl.removeEventListener('animationend',h);
+          npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+        });
+        setTimeout(function(){   // 兜底：动画被 prefers-reduced-motion 关掉时也要归位
+          if(npcEl.classList.contains('sp-arrive')){
+            npcEl.classList.remove('sp-arrive');
+            npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+          }
+        },1600);
         /* 点小头 → 整只探头出来（3.2s 或点别处自动缩回）；已在探头态则先缩回 */
         let peekTimer=0;
         function placePeek(open){
@@ -1996,6 +2282,24 @@ function renderContent(t){
         x=innerWidth-w-22; y=innerHeight-npcEl.offsetHeight-4;
         npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
       }
+      /* 视口跨过 900px 时切换形态：窄屏用探头（不遮正文），宽屏用自由抛掷 */
+      narrowView.addEventListener('change',function(e){
+        const nowCompact=e.matches;
+        document.body.classList.toggle('npc-docked',nowCompact);
+        document.body.classList.toggle('npc-peek',nowCompact);
+        document.body.classList.remove('npc-peek-open');
+        engine=!nowCompact;
+        if(nowCompact){
+          npcEl.style.width=Math.min(npcEl.offsetWidth||132,132)+'px';
+          x=innerWidth-52-4; y=Math.max(70,Math.round((innerHeight-62)/2));
+          npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+          talkEl.classList.remove('show');
+        }else{
+          npcEl.style.width=Math.min(npcEl.offsetWidth||170,170)+'px';
+          x=innerWidth-170-22; y=innerHeight-npcEl.offsetHeight-4;
+          npcEl.style.transform='translate3d('+x+'px,'+y+'px,0)';
+        }
+      });
     });
     /* 2D-first：不再让 Three.js/GLB 阻塞首屏，保留相同交互接口。 */
     const gl3d={ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
