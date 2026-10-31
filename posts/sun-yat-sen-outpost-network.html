@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孙中山式求职：找人、设点、连成网 · 李玉涛的个人主页</title>
+<meta name="description" content="10 次起义、10 次失败、16 年海外流亡，最后是 14 个省在 60 天内响应。真正撑住孙中山的不是某一次胜利，是遍布全球的那些小支点。本文把「找同路人 → 国内到处布点全球也布点 → 连成网」这套分布式个人战略拆成可执行的点图：主据点/暗桩/联络员三档分工、点与点之间的接口设计、三个季度健康度指标（转介数/冗余度/单点依赖度），以及 AI 时代为什么护城河从「点」转移到「线」。">
+<link rel="canonical" href="https://xn--4gq.chat/posts/sun-yat-sen-outpost-network.html">
+<meta property="og:title" content="孙中山式求职：找人、设点、连成网">
+<meta property="og:description" content="10 次起义、10 次失败、16 年海外流亡，最后是 14 个省在 60 天内响应。真正撑住孙中山的不是某一次胜利，是遍布全球的那些小支点。本文把「找同路人 → 国内到处布点全球也布点 → 连成网」这套分布式个人战略拆成可执行的点图：主据点/暗桩/联络员三档分工、点与点之间的接口设计、三个季度健康度指标（转介数/冗余度/单点依赖度），以及 AI 时代为什么护城河从「点」转移到「线」。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/sun-yat-sen-outpost-network.html">
+<meta property="og:author" content="李玉涛（Leo）">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "BlogPosting",
+ "headline": "孙中山式求职：找人、设点、连成网",
+ "description": "10 次起义、10 次失败、16 年海外流亡，最后是 14 个省在 60 天内响应。真正撑住孙中山的不是某一次胜利，是遍布全球的那些小支点。本文把「找同路人 → 国内到处布点全球也布点 → 连成网」这套分布式个人战略拆成可执行的点图：主据点/暗桩/联络员三档分工、点与点之间的接口设计、三个季度健康度指标（转介数/冗余度/单点依赖度），以及 AI 时代为什么护城河从「点」转移到「线」。",
+ "author": {
+  "@type": "Person",
+  "name": "李玉涛（Leo）",
+  "url": "https://xn--4gq.chat"
+ },
+ "datePublished": "2026-10-31",
+ "dateModified": "2026-10-31",
+ "mainEntityOfPage": {
+  "@type": "WebPage",
+  "@id": "https://xn--4gq.chat/posts/sun-yat-sen-outpost-network.html"
+ },
+ "publisher": {
+  "@type": "Person",
+  "name": "李玉涛（Leo）",
+  "url": "https://xn--4gq.chat"
+ }
+}
+</script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>孙中山式求职：找人、设点、连成网</h1>
+    <div class="sub">10 次起义、10 次失败、16 年海外流亡，最后是 14 个省在 60 天内响应。真正撑住孙中山的不是某一次胜利，是遍布全球的那些小支点。本文把「找同路人 → 国内到处布点全球也布点 → 连成网」这套分布式个人战略拆成可执行的点图：主据点/暗桩/联络员三档分工、点与点之间的接口设计、三个季度健康度指标（转介数/冗余度/单点依赖度），以及 AI 时代为什么护城河从「点」转移到「线」。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-10-31</span>
+      <span>https://xn--4gq.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一先看一组让人闭嘴的数字">一、先看一组让人闭嘴的数字</a></li><li style="margin-left:0px"><a href="#s-二翻译成求职三个动作">二、翻译成求职：三个动作</a></li><li style="margin-left:16px"><a href="#s-动作一找人--先把同路人接上">动作一：找人 —— 先把同路人接上</a></li><li style="margin-left:16px"><a href="#s-动作二设点--国内到处布点全球也布点">动作二：设点 —— 国内到处布点，全球也布点</a></li><li style="margin-left:16px"><a href="#s-动作三连成网--关键在转介不在数量">动作三：连成网 —— 关键在"转介"，不在"数量"</a></li><li style="margin-left:0px"><a href="#s-三为什么这套东西在-ai-时代更值钱">三、为什么这套东西在 AI 时代更值钱</a></li><li style="margin-left:16px"><a href="#s-31-ai-让单人布点变得极其便宜">3.1 AI 让单人布点变得极其便宜</a></li><li style="margin-left:16px"><a href="#s-32-但-ai-同时把点的护城河打平了">3.2 但 AI 同时把"点"的护城河打平了</a></li><li style="margin-left:16px"><a href="#s-33-数字游民社区已经给出了网状的物理形态">3.3 数字游民社区已经给出了"网状"的物理形态</a></li><li style="margin-left:0px"><a href="#s-四这和多找几份工作是两回事">四、这和"多找几份工作"是两回事</a></li><li style="margin-left:0px"><a href="#s-五具体怎么做一份可执行的布点图">五、具体怎么做：一份可执行的布点图</a></li><li style="margin-left:16px"><a href="#s-第一步画出你的点30-分钟">第一步：画出你的点（30 分钟）</a></li><li style="margin-left:16px"><a href="#s-第二步把点分成三档这决定了你的精力分配">第二步：把点分成三档（这决定了你的精力分配）</a></li><li style="margin-left:16px"><a href="#s-第三步给每个点设计接口这是连成网的具体动作">第三步：给每个点设计"接口"（这是"连成网"的具体动作）</a></li><li style="margin-left:16px"><a href="#s-第四步每个季度检查一次网的健康度">第四步：每个季度检查一次"网的健康度"</a></li><li style="margin-left:0px"><a href="#s-六这套东西会在哪里失效">六、这套东西会在哪里失效</a></li><li style="margin-left:0px"><a href="#s-七常见问题">七、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-参考与致谢">参考与致谢</a></li></ol></details>
+  <article class="paper">
+<p>--- title: 孙中山式求职：找人、设点、连成网 subtitle: 10 次起义、10 次失败、16 年海外流亡，最后是 14 个省在 60 天内响应。真正撑住他的不是某一次胜利，是遍布全球的那些小支点。 author: 李玉涛（Leo） site: 一.chat · https://xn--4gq.chat date: 2026-10-31 tags: [求职策略, 孙中山, 分布式布局, 个人品牌, 超级个体, 抗风险, 2027届] ---</p>
+<p># 孙中山式求职：找人、设点、连成网</p>
+<blockquote><p><strong>先说清楚这是什么</strong> 这不是"鸡汤式奋斗学"，也不是历史段子。这是我把孙中山 1894 年到 1911 年的完整路线拆开之后，发现它其实是一套<strong>极其完整的分布式个人战略</strong>——而且是我这个 2027 届本科生，在 2026 年秋招被 AI 打得找不着北的时候，最需要的那套东西。 我是长春师范大学数据科学与大数据技术专业本科生，辅修数学，Java 后端在读，自己搭了一个本地 AI 平台（Dify + Ollama + DeepSeek）。正在同时推进：AI 应用岗、游戏数值策划、央国企、教师编。 <strong>用一句最直白的话说：</strong> &gt; 一份工作是<strong>单点</strong>，单点会摔。 &gt; 一张网是<strong>多点</strong>，多点能互相接住。 &gt; &gt; 孙中山用 16 年、10 次失败起义，证明了<strong>散落的支点比集中的力量更有可能赢</strong>。他不是靠某一次起义成事的，他是靠遍布海内外的那些点，最后连成了一张网。 文中历史部分引自中国侨网、光明日报数字报（2026-07-18）、国际在线与中共党史网公开文献；数据部分均标注来源与发布时间。</p></blockquote>
+<p>---</p>
+<h2 id="s-一先看一组让人闭嘴的数字">一、先看一组让人闭嘴的数字</h2>
+<p><strong>孙中山从 1894 年 groups 建中会，到 1911 年辛亥革命胜利，中间的完整履历是这样的：</strong></p>
+<table><thead><tr><th>时间</th><th>事件</th><th>结果</th></tr></thead><tbody>
+<tr><td>1894.11</td><td>美国檀香山<strong>兴中会</strong>（海外第一个据点）</td><td>成立</td></tr>
+<tr><td>1895.1</td><td>广州起义</td><td><strong>失败</strong>，开始长达 <strong>16 年</strong>海外流亡</td></tr>
+<tr><td>1896.10</td><td>伦敦被清公使馆诱捕</td><td>险死，<strong>靠康德黎等英国友人营救</strong></td></tr>
+<tr><td>1900</td><td>惠州三洲田起义</td><td><strong>失败</strong></td></tr>
+<tr><td>1905.8.20</td><td><strong>日本东京·中国同盟会</strong>成立</td><td>第一次有了纲领和全国性组织</td></tr>
+<tr><td>1906–1910</td><td>4 年内 8 次武装起义</td><td><strong>全部失败</strong></td></tr>
+<tr><td>1911.4.27</td><td>广州黄花岗起义</td><td>失败，七十二烈士</td></tr>
+<tr><td>1911.10.10</td><td><strong>武昌首义</strong></td><td>成功</td></tr>
+<tr><td>1911.11 月底</td><td><strong>全国 14 个省宣布独立</strong></td><td>「不足 60 天」</td></tr>
+<tr><td>1912.1.1</td><td>就任中华民国临时大总统</td><td>268 年帝制终结</td></tr>
+</tbody></table>
+<p><strong>看第一列和第三列的对应关系：</strong></p>
+<ul><li>1895 → 1911，<strong>16 年，10 次大规模武装起义，10 次失败</strong></li><li>中间的 1905 年同盟会，地点是<strong>日本东京</strong>，不是广州、不是武汉</li><li>最后成功的 1911 年 10 月 10 日，<strong>发起者是湖北的新军</strong>，孙中山本人当时还在美国——他是 12 月下旬才回国的</li><li>而武昌首义之后，<strong>14 个省在不到 60 天里响应</strong></li></ul>
+<p><strong>这四个事实拼起来，才是我要讲的东西：</strong></p>
+<blockquote><p><strong>他赢的不是那一场起义。</strong> <strong>他赢的是那张网。</strong></p></blockquote>
+<p><strong>武昌的一声枪响，只是那张网上某个节点的火光。真正让清政府崩盘的，是同时在十几个省亮起来的火光——那些节点是 16 年里一个一个设下来的。</strong></p>
+<p>这跟我们有什么关系？关系是：<strong>这份"图"可以原样搬到求职上。</strong></p>
+<p>---</p>
+<h2 id="s-二翻译成求职三个动作">二、翻译成求职：三个动作</h2>
+<h3 id="s-动作一找人--先把同路人接上">动作一：找人 —— 先把同路人接上</h3>
+<p>孙中山的做法有个容易被忽略的细节：<strong>他不是自己一个人革命，他是"联络"。</strong></p>
+<p>1894 年他回中国前，在檀香山、华盛顿、伦敦、香港跑了一圈；1905 年在日本，他联合了兴中会、华兴会、光复会三个团体；后来每一次起义，都有会党和新军作为接应。</p>
+<p><strong>他在做的事情，用今天的语言说就是：建立一个跨地域的人际网络。</strong></p>
+<p>映射到求职：</p>
+<table><thead><tr><th>孙中山的动作</th><th>求职版本</th></tr></thead><tbody>
+<tr><td>联络华侨、募资</td><td>找同方向的人、交换信息</td></tr>
+<tr><td>联合兴中会/华兴会/光复会</td><td>加入/组织同方向的社群、比赛、开源项目</td></tr>
+<tr><td>创办《民报》作为舆论阵地</td><td>做可被检索的内容（博客、GitHub、作品集）</td></tr>
+<tr><td>发展新军作为执行力量</td><td>找到愿意一起干具体事的人</td></tr>
+</tbody></table>
+<p><strong>"找人"这件事的关键，不是加了多少好友，而是：</strong></p>
+<p><strong>这些人和你之间，是不是有「可转介」的连接。</strong></p>
+<blockquote><p>孙中山能募到钱，靠的不是个人魅力，是<strong>别人的信任转给了你</strong>。他后来把这种模式写成了《建国方略》里的名言：<strong>「多数人有了利益，社会才有进步」</strong>——不是"多数人支持你"，而是"多数人从这件事里获益"。</p></blockquote>
+<p><strong>这一条是全文我最想给你的实操建议：</strong></p>
+<p><strong>别去"认识更多人"。去找那些"和你目标重叠、且能因为你做成了事而受益"的人。</strong></p>
+<p>具体到 2027 届的你：</p>
+<ul><li>同一个秋招方向的人（不只是同校，是同一个细分方向）——<strong>互相推岗位、互相改简历</strong></li><li>做过你想做的事的学长——<strong>他需要有人接手他的信息渠道</strong></li><li>社群运营者、开源项目维护者——<strong>他们需要新鲜血液</strong></li></ul>
+<p><strong>这三类人各有不同的"你能给他什么"。搞反了，你就只是在消耗别人的时间。</strong></p>
+<h3 id="s-动作二设点--国内到处布点全球也布点">动作二：设点 —— 国内到处布点，全球也布点</h3>
+<p>这是孙中山战略里最反直觉、也最被误读的一层。</p>
+<p><strong>很多人以为"海外"是孙中山的退路。恰恰相反——海外是他最主动的布局。</strong></p>
+<p>看这个地理轨迹：</p>
+<ul><li><strong>檀香山</strong>（1894）—— 海外华人聚集地，第一批同盟会的钱和人从这儿来</li><li><strong>东京</strong>（1905）—— 中国留学生最集中的地方，同盟会总部；也是他"联络会党、新军"的地方</li><li><strong>伦敦</strong>（1896）—— 《伦敦被难记》写的就是这里，这本书让他在欧洲名声大噪</li><li><strong>旧金山、檀香山、爪哇、暹罗、缅甸……</strong> —— 华侨聚居地，基本都有同盟会的支会</li></ul>
+<p><strong>他的逻辑是：革命要钱、要人、要舆论、要未来的政府骨架。这些东西在国内拿不到（清廷控制），所以他到华侨聚集的地方去找。</strong></p>
+<p><strong>然后是"国内到处布点"：</strong></p>
+<p>1906–1910 年的 8 次起义，分布在<strong>钦州、上思、河口、萍浏醴、镇南关、惠州、广州</strong>——<strong>横跨广东、广西、云南、湖南。</strong></p>
+<p><strong>每次起义失败，但每次失败都在一个地方留下一批人和一个组织。</strong></p>
+<p><strong>这就是"布点"的真义：不是每一点都要赢，每一点都要活。</strong></p>
+<p>映射到求职，"设点"有三个维度：</p>
+<table><thead><tr><th>维度</th><th>具体形态</th><th>为什么重要</th></tr></thead><tbody>
+<tr><td><strong>地理</strong></td><td>不同城市/国家的行业机会、线下活动、开源社区</td><td>行业是周期性的，不是地理性的</td></tr>
+<tr><td><strong>身份</strong></td><td>学生 / 开发者 / 写作者 / 社群组织者 / 开源贡献者</td><td>同一批人，不同场景下会互相介绍</td></tr>
+<tr><td><strong>领域</strong></td><td>AI 应用、游戏数值、教育科技、数据分析……</td><td>领域能力是跨公司通用的资产</td></tr>
+</tbody></table>
+<p><strong>我自己的"点"是怎么设的（真实例子）：</strong></p>
+<ol><li><strong>主据点</strong>：Java 后端 + AI 应用（燎原火平台）—— 这是"能证明我做过什么"的点</li><li><strong>暗桩</strong>：个人网站 + 8 篇技术长文 —— 这是"能被搜到"的点</li><li><strong>联络员</strong>：AI/后端方向的同校学长、同方向社群 —— 这是"能被介绍"的点</li><li><strong>补给站</strong>：GitHub 开源项目 —— 这是"能持续长出新点"的点</li></ol>
+<p><strong>这四个点加起来，才构成我的"网"。任何一个单独存在，都撑不起"下一步"。</strong></p>
+<h3 id="s-动作三连成网--关键在转介不在数量">动作三：连成网 —— 关键在"转介"，不在"数量"</h3>
+<p><strong>这一节是整套方法里最难的部分，也是最容易被做成"社交表演"的地方。</strong></p>
+<p>先看孙中山同盟会是怎么运作的：</p>
+<p><strong>同盟会有三套东西同时在跑：</strong></p>
+<ol><li><strong>《民报》</strong>（机关报）—— 做舆论，把三民主义讲成一套可传播的话语</li><li><strong>各地支会</strong>（东京、香港、檀香山、暹罗、爪哇……）—— 做组织和人</li><li><strong>会党 + 新军</strong>（湖南会党、湖北新军）—— 做执行</li></ol>
+<p><strong>关键是这三套之间能互相转化：</strong></p>
+<blockquote><p>《民报》上的文章 → 让远在暹罗的华侨知道同盟会存在 → 华侨加入支会 → 支会出人出钱 → 起义有执行力量 → 起义即使失败，也让人看到"这事有人在做、有组织" → 更多人加入。</p></blockquote>
+<p><strong>这是一条闭环的链。而链的强度，取决于"节点之间有没有转介关系"。</strong></p>
+<p><strong>映射到求职，网络的强度看三件事：</strong></p>
+<table><thead><tr><th>指标</th><th>弱网</th><th>强网</th></tr></thead><tbody>
+<tr><td><strong>节点密度</strong></td><td>我认识 500 人，但没人知道我是谁</td><td>我认识 30 人，但 5 个人知道我在做什么</td></tr>
+<tr><td><strong>转介率</strong></td><td>别人不会主动提我</td><td>有人会跟别人说"这人在做 XX，你找 TA 聊聊"</td></tr>
+<tr><td><strong>节点冗余</strong></td><td>我只有一个节点能给我机会</td><td>我的机会来自至少 3 条独立路径</td></tr>
+</tbody></table>
+<p><strong>最要紧的一句：转介率是唯一真正重要的指标。</strong></p>
+<p>因为：</p>
+<ul><li>好友数量不是网络，<strong>能被转介的次数才是</strong></li><li>而转介率低的根本原因，通常不是"你社交不够多"，是<strong>你还没有做出别人愿意背书的东西</strong></li></ul>
+<p><strong>这一点和上一篇《敢打扰、懂不打扰、受打扰》直接接上了</strong>： 上一篇讲"怎么打扰别人不招人烦"，这一篇讲"被打扰之后怎么变成别人主动找你"。</p>
+<p><strong>顺序不能反：先有作品，再有网络；不是先混脸熟再等机会。</strong></p>
+<p>---</p>
+<h2 id="s-三为什么这套东西在-ai-时代更值钱">三、为什么这套东西在 AI 时代更值钱</h2>
+<p>这部分是我写这篇文章的真正动机。<strong>2026 年，AI 把"布点"的成本打到了接近零，但同时也把"点"的护城河打平了。</strong></p>
+<h3 id="s-31-ai-让单人布点变得极其便宜">3.1 AI 让单人布点变得极其便宜</h3>
+<p>先看这组 2026 年的数据（闲鱼平台，via 经济日报 / 国际在线）：</p>
+<table><thead><tr><th>指标</th><th>数值</th></tr></thead><tbody>
+<tr><td>上半年 AI 服务交易订单量</td><td><strong>981.6 万</strong>，同比 <strong>+157%</strong></td></tr>
+<tr><td>购买 AI 服务的人数</td><td>近 <strong>500 万</strong>，同比 <strong>+98%</strong></td></tr>
+<tr><td>AI 编程与建站订单</td><td>同比 <strong>+1732%</strong></td></tr>
+<tr><td>AI 漫剧与漫画订单</td><td>同比 <strong>+1425%</strong></td></tr>
+<tr><td>AI 办公类订单</td><td>同比 <strong>+264%</strong></td></tr>
+<tr><td>AI 技能接单占全部 AI 订单</td><td><strong>45.1%</strong></td></tr>
+<tr><td>AI 服务者中四线城市占比</td><td><strong>32.3%</strong>（居第一）</td></tr>
+<tr><td>AI 服务者中女性占比</td><td><strong>62.4%</strong></td></tr>
+<tr><td>AI 服务者中 18–35 岁占比</td><td>超六成</td></tr>
+</tbody></table>
+<p><strong>"AI 编程与建站订单 +1732%" 这一行，是"单人布点成本归零"的直接证据。</strong></p>
+<p>十年前，一个人要在外地设一个"点"，意味着：辞职、搬家、租房、重新找本地资源、重新建立人脉。<strong>现在，一个 AI 辅助的开发者可以在任何城市、任何时区做出可交付的东西。</strong></p>
+<p>再看数字游民的数据（《2026 中国数字游民发展报告》，智联招聘 × 清华社科院）：</p>
+<table><thead><tr><th>指标</th><th>数值</th></tr></thead><tbody>
+<tr><td>中国数字游民群体规模</td><td><strong>突破 800 万</strong>，同比 <strong>+32%</strong></td></tr>
+<tr><td>潜在数字游民规模</td><td>7000 万 ~ 1 亿</td></tr>
+<tr><td>全球数字游民规模</td><td>超 <strong>4500 万</strong>，年增 <strong>20%+</strong></td></tr>
+<tr><td>中国数字游民社区总数</td><td><strong>77 家</strong>（2025 年新增 33 家）</td></tr>
+<tr><td>远程全职工作占比</td><td>22.34%</td></tr>
+<tr><td>3 年以上从业者年收入 20 万以上占比</td><td>46.58%</td></tr>
+</tbody></table>
+<p><strong>"中国 800 万 + 全球 4500 万 + 年增 20%" 这三个数放在一起，说的就是：地理已经不是约束了。</strong></p>
+<p>所以在 2026 年，<strong>"在国内到处布点、全球也布点"在物理上第一次真正可行</strong>。</p>
+<p><strong>这是孙中山那一代人拿不到的条件。</strong> 他们要设一个海外点，得坐船、走陆路、冒着被杀头的风险。</p>
+<h3 id="s-32-但-ai-同时把点的护城河打平了">3.2 但 AI 同时把"点"的护城河打平了</h3>
+<p>这是我要说的反直觉部分，而且它直接挑战了"多布点就更安全"的朴素直觉。</p>
+<p><strong>如果人人都能低成本布点，那么点的数量就不再是壁垒。</strong></p>
+<p>闲鱼上半年 AI 订单 +157%、AI 编程订单 +1732% —— 这说明<strong>供给端在爆炸</strong>。当供给爆炸时：</p>
+<ul><li>一个"点"（比如"我会用 AI 做个小工具"）的稀缺性归零</li><li><strong>一个"网"（谁在给你转介、谁信任你、你的点之间互相喂养）</strong> 反而变贵了</li></ul>
+<p><strong>所以 AI 时代的护城河不在"点"，在"网的连接密度"。</strong></p>
+<p>我把这总结成三句：</p>
+<blockquote><p><strong>在孙中山时代，稀缺的是"点"——你能在外地设一个别人设不了的点，就赢了一半。</strong> <strong>在 AI 时代，稀缺的是"线"——你能连成一张别人连不成的网。</strong></p></blockquote>
+<p>具体差别在哪？三点：</p>
+<p><strong>① 点的价值从"存在"变成"独特"。</strong></p>
+<p>以前有个 GitHub 项目就是差异化。现在满地都是 AI 生成的仓库。<strong>你的点必须有别人复制不了的东西</strong>——而这个"复制不了"，99% 来自<strong>领域 Know-how 和人，不是代码</strong>。</p>
+<p>这和我上一篇《Issue Spotting》讲的完全是同一件事：<strong>能被 AI 生成的东西正在贬值，不能被 AI 生成的东西（行业判断、关系、信任）在升值。</strong></p>
+<p><strong>② 网的连接质量从"认识"变成"转介"。</strong></p>
+<p>AI 让"认识人"也变便宜了（AI 帮你写私信、帮你找到人）。但<strong>AI 帮不了你被背书</strong>。别人愿不愿意跟第三方说"这人靠谱"，是纯粹的社会资本。</p>
+<p><strong>③ 节点之间开始有"路由"。</strong></p>
+<p>孙中山那代人的网是<strong>放射状</strong>的：所有点连向中心（他）。<strong>你这代人的网应该是网状的</strong>——点与点之间直接连通。</p>
+<p><strong>这个差别很关键：放射状的网，中心倒了全完；网状的网，任意一个点倒了，流量会绕路。</strong></p>
+<p><strong>这才是"哪天摔了，也能随时东山再起"的真实含义——不是"我多有几个备胎"，而是"我的网有别的路径"。</strong></p>
+<h3 id="s-33-数字游民社区已经给出了网状的物理形态">3.3 数字游民社区已经给出了"网状"的物理形态</h3>
+<p>看《2026 中国数字游民发展报告》里的两个细节：</p>
+<ul><li><strong>安吉</strong>发布了<strong>全国首个数字游民公社团体标准</strong>，头部社区开始探索<strong>连锁化布局</strong>——"未来跨区域的社区网络将降低数字游民的流动成本和适应门槛"</li><li><strong>无锡鸿山暖村</strong>直接配备 <strong>24 小时专属 AI 算力中心</strong>，适配 AI 研发、动漫设计、内容创作、科创运营</li><li><strong>呼和浩特云谷 OPC 社区</strong>用"算力聚合平台"，让个人用户和小团队以远低于自建的成本完成视频渲染、大模型调用</li><li><strong>安吉余村</strong>：<strong>1200 多名"新乡人"超过"原乡人"</strong></li></ul>
+<p><strong>"新乡人超过原乡人"和"跨区域社区网络"——这不就是我要讲的"设点 + 连网"吗？</strong></p>
+<p><strong>只不过孙中山设的是革命据点，2026 年的年轻人设的是数字据点。</strong></p>
+<p><strong>结构完全一样：都是地理上分散、身份上同源、靠网络而非单体支撑。</strong></p>
+<p>---</p>
+<h2 id="s-四这和多找几份工作是两回事">四、这和"多找几份工作"是两回事</h2>
+<p>说到这儿必须澄清一个最常见的误读。</p>
+<p><strong>"多布点"≠"多打几份工"。</strong></p>
+<table><thead><tr><th></th><th>多打几份工</th><th>孙中山式布点</th></tr></thead><tbody>
+<tr><td>多个点的关系</td><td>互相独立、互相分散精力</td><td><strong>互相喂养、互相转介</strong></td></tr>
+<tr><td>你的身份</td><td>同一套技能卖多次</td><td>每个点承载<strong>不同侧面</strong>的你</td></tr>
+<tr><td>目的</td><td>收入多元化</td><td><strong>抗风险 + 抬高天花板</strong></td></tr>
+<tr><td>时间投入</td><td>每份都 100%</td><td>每个点都只投一点</td></tr>
+<tr><td>失败时</td><td>同时垮</td><td>一个垮了，其他接住</td></tr>
+</tbody></table>
+<p><strong>差别在最后一行。</strong></p>
+<p>而且我要说一句可能不太受欢迎的话：</p>
+<p><strong>"同时打三份工"通常是错的。</strong> 它不是分布式布局，它是把同一份精力摊薄三份，<strong>三个点都不够硬</strong>。真正的分布式布局要求<strong>每个点都要有真实的、可验证的、属于你的东西</strong>——宁可三个点各有 30% 的深度，也不要一个点 90%、另外两个 5%。</p>
+<p><strong>判断标准：你的点之间，能互相介绍吗？</strong> 不能的话，那就不是网，是三份零散的工作。</p>
+<p>---</p>
+<h2 id="s-五具体怎么做一份可执行的布点图">五、具体怎么做：一份可执行的布点图</h2>
+<h3 id="s-第一步画出你的点30-分钟">第一步：画出你的点（30 分钟）</h3>
+<p>用四个维度盘点，<strong>别只写"公司名"</strong>：</p>
+<table><thead><tr><th>维度</th><th>我现在有的</th><th>我想要的</th></tr></thead><tbody>
+<tr><td><strong>地理</strong></td><td>长春</td><td>+北京/深圳/杭州/上海（行业密度）+ 线上（全球）</td></tr>
+<tr><td><strong>身份</strong></td><td>学生</td><td>+开发者/写作者/开源贡献者/社群组织者</td></tr>
+<tr><td><strong>领域</strong></td><td>AI 应用</td><td>+游戏数值 / 教育科技（我懂行的两个）</td></tr>
+<tr><td><strong>作品</strong></td><td>燎原火、OrderBoss、SmartClass</td><td>+可公开演示的、能讲清判断的成果</td></tr>
+</tbody></table>
+<p><strong>关键：每个格子都要有"具体的人或具体的东西"，不能是"多投几个公司"。</strong></p>
+<h3 id="s-第二步把点分成三档这决定了你的精力分配">第二步：把点分成三档（这决定了你的精力分配）</h3>
+<p><strong>主据点（1 个）</strong>：占你 70% 精力，必须能持续产出可验证成果。</p>
+<blockquote><p>对我来说是：<strong>AI 应用 + Java 后端</strong>这条线。</p></blockquote>
+<p><strong>暗桩（2–3 个）</strong>：各占 10–15% 精力，只做一件事——<strong>让主据点的东西被更多人看见</strong>。</p>
+<blockquote><p>博客、开源项目、技术分享、社交账号。</p></blockquote>
+<p><strong>联络员（人，不是个点）</strong>：零边际成本，但<strong>必须每月维护</strong>。</p>
+<blockquote><p>同方向的学长、社群、比赛、开源社区。</p></blockquote>
+<p><strong>⚠️ 大多数人失败在两点：</strong></p>
+<ol><li><strong>主据点超过 1 个</strong> —— 精力摊薄，每个都不硬</li><li><strong>联络员只加不维护</strong> —— 一年后你根本不认识他们</li></ol>
+<h3 id="s-第三步给每个点设计接口这是连成网的具体动作">第三步：给每个点设计"接口"（这是"连成网"的具体动作）</h3>
+<p><strong>没有接口的点是孤岛。</strong></p>
+<p>我给自己的四个点设计的接口：</p>
+<table><thead><tr><th>点</th><th>接口（怎么和别的点连）</th></tr></thead><tbody>
+<tr><td>燎原火（主据点）</td><td>写技术文章 → 文章里带开源仓库和网站链接 → 引流到"联络员"</td></tr>
+<tr><td>个人网站</td><td>集成所有平台的最新内容 + llms.txt（让 AI 也能引用我）→ 成为"被搜索到"的枢纽</td></tr>
+<tr><td>开源项目</td><td>issue 区公开讨论 → 自然吸引同方向的人 → 形成新的"联络员"</td></tr>
+<tr><td>同方向社群</td><td>定期分享实战复盘 → 换来内推、面试官连接、同行合作</td></tr>
+</tbody></table>
+<p><strong>一句话：每个点都要有一个"把流量导向别的点"的出口。</strong></p>
+<h3 id="s-第四步每个季度检查一次网的健康度">第四步：每个季度检查一次"网的健康度"</h3>
+<p>三个数字，季度自查：</p>
+<table><thead><tr><th>指标</th><th>怎么算</th><th>健康线</th></tr></thead><tbody>
+<tr><td><strong>转介数</strong></td><td>上季度有多少人因为别人介绍来找你</td><td>逐季递增</td></tr>
+<tr><td><strong>冗余度</strong></td><td>带来机会的独立路径有几条</td><td>≥ 3 条</td></tr>
+<tr><td><strong>单点依赖度</strong></td><td>如果主据点明天消失，我多久能恢复现金流</td><td>≤ 3 个月</td></tr>
+</tbody></table>
+<p><strong>第三条是最狠的，也是最有用的。</strong> 你不必真让它消失，但<strong>你必须能算出来这个数</strong>。</p>
+<p>算不出来的，说明你其实只有单点。</p>
+<p>---</p>
+<h2 id="s-六这套东西会在哪里失效">六、这套东西会在哪里失效</h2>
+<p>必须说清楚边界，否则它就成了新的精神负担。</p>
+<p><strong>第一，网不产生价值，网产生的是"被转介的机会"。</strong> <strong>没有东西可转介，网就是一堆僵尸节点。</strong> 孙中山的网之所以能起作用，是因为背后有《民报》的纲领和可执行的起义。<strong>你的网背后必须有一个真实的、拿得出手的、可验证的东西。</strong> 没有这个，「多布点」就退化成"到处注册账号"。</p>
+<p><strong>第二，广度不能牺牲深度。</strong> 我的判断标准是：<strong>一个点至少要能撑起一次 20 分钟的深聊。</strong> 撑不起的点，删掉。宁可 3 个能深聊的点，不要 30 个一句话就没了的点。</p>
+<p><strong>第三，海外布点对 2027 届不是当期任务。</strong> 孙中山在海外募资，是因为<strong>国内拿不到</strong>。你不一样——你的国内资源够用。<strong>2027 届该做的是把国内的点扎扎实实连起来，海外的点可以先在"线上"这个维度上做</strong>（GitHub、Twitter/X、LinkedIn、技术社区），<strong>不必真出国。</strong> 这不是保守，是<strong>顺序问题</strong>：网的密度比网的地理跨度重要。</p>
+<p><strong>第四，副业/多点的最大陷阱是"两头都不硬"。</strong> 我见过太多人：主业不投入、副业没成果、两边都说不出口。<strong>布点的前提是主据点已经立住了。</strong> 如果你的主据点还在"找方向"阶段，那你要做的不是布点，是<strong>把主据点做深</strong>。</p>
+<p><strong>第五，"先总理没完成的心愿"这个说法，用在求职上是浪漫化的。</strong> 孙中山没等到他的理想落地，1925 年 3 月 12 日病逝北京，遗嘱里留下"革命尚未成功，同志仍须努力"。<strong>这话放在求职上，正确的读法不是"要坚持"，而是"要有历史耐心"</strong>——他等了 16 年。<strong>但求职不是革命，你没有 16 年的窗口。</strong> 所以要区分：<strong>长期事业需要布点，求职本身需要聚焦。</strong> 把这两件事混在一起，会同时做砸。</p>
+<p><strong>第六，最诚实的边界：我也在做，不是我已经做成了。</strong> 这套方法我今年才开始跑：燎原火、个人网站、8 篇文章、GitHub 项目、同方向社群——<strong>四个点刚起步，连"网"都还谈不上。</strong> 我能给你的是<strong>结构和判断标准</strong>，不是成功案例。<strong>判断我这套说法对不对，看半年后我的点有没有互相导流——而不是看这篇文章有多少人点赞。</strong></p>
+<p><strong>第七，也是最重要的一条：这不是让你不睡觉。</strong> 网上很多"个人 IP""超级个体"的内容，本质是贩卖焦虑——<strong>把人 996 的产能需求包装成"你要有网"</strong>。我的判断是相反：<strong>正因为你只有有限精力，布点才必须少而精。</strong> 一个深到能撑住深聊的主据点 + 两三个浅但活的暗桩 + 一群维护过的联络员，<strong>这套结构每周花不了 5 小时</strong>。如果你的布点计划需要每天 3 小时，那它是错的。</p>
+<p>---</p>
+<h2 id="s-七常见问题">七、常见问题</h2>
+<p><strong>Q：这是不是幸存者偏差？只看成功的人讲方法？</strong> <strong>这个质疑很对，我要正面回答。</strong> 孙中山是历史上少见的"长期失败但最终赢了"的样本，但<strong>他也是 10 次失败、16 年流亡、被绑架过、经费屡断</strong>。<strong>看幸存者最该警惕的是把它读成"轻量"。</strong> 事实上他的方法很重——<strong>重到大部分人做不到。</strong></p>
+<p><strong>所以我给的是"结构"，不是"承诺"。</strong> 结构可以借鉴，承诺不能。</p>
+<p><strong>Q：我现在研一/大四，时间和精力都不够，怎么办？</strong> <strong>先只做主据点 + 一个联络员。</strong> 等主据点立住了（有可验证成果），再加暗桩。<strong>顺序：深 → 广。</strong> 反过来做的人基本都两头空。</p>
+<p><strong>Q：怎么判断一个"点"值不值得设？</strong> 三个问题：</p>
+<ol><li><strong>它能撑起一次 20 分钟深聊吗？</strong></li><li><strong>它和我的主据点能互相导流吗？</strong></li><li><strong>一年后它还在，我还在吗？</strong>（持续性问题）</li></ol>
+<p>三条都过 → 设。有一条不过 → 缓。</p>
+<p><strong>Q：全球布点具体怎么做？先投海外岗位吗？</strong> <strong>不是。</strong> 先做<strong>线上的全球点</strong>：GitHub（全球开发者都在看）、技术社区（Reddit/Hacker News/Stack Overflow）、英文技术博客。<strong>这三个的边际成本几乎为零，但它们是"能被全球搜到"的入口。</strong> 至于真的跨国找工作/远程，那是主据点足够强之后的事。</p>
+<p><strong>Q：这和上一篇《敢打扰、懂不打扰、受打扰》是什么关系？</strong> <strong>上一篇讲"怎么打扰别人不招人烦"，这一篇讲"怎么被打断之后变成别人主动找你"。</strong> 两篇是一条链的两端：<strong>找人（打扰）→ 设点（布点）→ 连网（转介）。</strong> 顺序是：<strong>先有作品，才敢打扰；先敢打扰，才有网络；先有网络，才谈布点。</strong></p>
+<p><strong>Q：怎么落到简历和面试上？</strong> <strong>一句话：把"我在哪工作"改成"我的点在哪些地方、它们怎么连"。</strong> 但<strong>具体表述仍然要老实</strong>——不要写"我有一个全球网络"这种没法验证的话。<strong>写具体的：</strong></p>
+<ul><li>「个人网站累计 8 篇技术长文，被 X 个 AI 引擎引用（附 llms.txt）」</li><li>「GitHub 项目 N stars / M issues，issue 区有来自 X 地的贡献者」</li><li>「组织/参与 X 场同城技术活动，Y 人」</li></ul>
+<p><strong>这些是"点的证据"，比"我很有网"强一百倍。</strong></p>
+<p>---</p>
+<h2 id="s-关于作者">关于作者</h2>
+<p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届），辅修数学。GPA 专业前 10%。</p>
+<ul><li>做过一个本地优先的 AI 平台（Dify + Ollama + DeepSeek 双层架构，意图路由 + 幻觉三层防护 + 上下文分类管理）</li><li>做过 Java 后端项目（Spring Boot 3 + MySQL，订单聚合系统）</li><li>做过 K12 教育科技系统的学情推题模块（用规则引擎而非大模型，做可解释的掌握度估计）</li><li>拿过全国大学生数学竞赛国家三等奖、美国大学生数学建模竞赛 S 奖、全国大学生数学建模竞赛省二等奖</li><li>折腾过个人网站的 GEO（让 AI 引擎正确引用你），站点在 <a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat</a></li></ul>
+<p><strong>这篇写于 2026 年 10 月 31 日。</strong> 如果你也在同一条路上——欢迎来对拍，也欢迎来交换据点。</p>
+<p>---</p>
+<h2 id="s-参考与致谢">参考与致谢</h2>
+<p><strong>历史部分</strong></p>
+<ul><li>中国侨网《孙中山先生的革命历程：为改造中国耗尽毕生精力》（2016-11-11）：1894.11 檀香山兴中会；1895.1 广州起义失败、16 年海外流亡；1905.8.20 东京同盟会；《民报》发刊词首次提出民族、民权、民生三大主义；1906–1910 四年内 8 次起义全部失败；1911.4.27 黄花岗起义失败；1911.10.10 武昌首义；1912.1.1 就任临时大总统</li><li>光明日报数字报《孙中山先生为何被称为"世纪伟人"》（2026-07-18）：从 1895 到 1911 亲手策划或领导发动 10 次大规模武装起义；「最惨的时候，他连吃饭都成问题，然而他始终坚信：革命一定会成功」；《建国方略》「吾心信其可行，则移山填海之难，终有成功之日」；「大多数人有利益，社会才有进步」</li><li>国际在线《孙中山与振兴中华"中国梦"》（2016-09-30）：《民报》1911-11-26 创刊；《中国同盟会革命方略》1906；「四方风动」——武昌首义后 14 个省在不足 60 天里宣布独立</li><li>中共党史网《1866 年 11 月 12 日 民主革命先行者孙中山诞生》：1894 上书李鸿章被拒；1894.11 檀香山兴中会；1895 广州起义因走漏消息失败；1896 伦敦被缚；1897 秋离欧赴日本、化名中山樵遂以中山为号；1900 惠州起义；1905 东京同盟会与四大纲领；1907–1911 八次武装起义；1911.12.29 当选临时大总统；1925.3.12 逝世</li></ul>
+<p><strong>AI 时代数据</strong></p>
+<ul><li>经济日报 / 国际在线《用好你的"AI 搭子"》（2026-09-17，援引闲鱼数据）：上半年 AI 服务交易订单 981.6 万单同比 +157%、近 500 万人购买同比 +98%；AI 编程与建站订单 +1732%、AI 漫剧 +1425%、AI 办公 +264%；AI 技能接单占全部 AI 订单 45.1%；AI 服务者 18–35 岁占比超六成、女性 62.4%、四线城市 32.3%</li><li>《2026 中国数字游民发展报告》（智联招聘 × 清华大学社会科学学院）：中国数字游民规模突破 800 万同比 +32%；潜在规模 7000 万–1 亿；全球超 4500 万、年增 20%+；中国数字游民社区 77 家、2025 年新增 33 家；安吉发布全国首个数字游民公社团体标准、探索连锁化布局；远程全职工作占比 22.34%；3 年以上从业者年收入 20 万以上占 46.58%</li><li>中国工信新闻网《一台电脑"闯江湖" 数字游民把工位装进背包》（2026-09-17）：AI 编程、智能剪辑、自动化运营显著提升单人产出效率；云端算力下沉；呼和浩特云谷 OPC 社区算力聚合平台、无锡鸿山暖村 24 小时专属 AI 算力中心、安吉余村常态化驻地青年 1200 多名且"新乡人"超过"原乡人"</li><li>全球零工经济规模 2026 年已超 6740 亿美元；深耕垂直领域的创作者月均收入为泛流量作者的 2.2 倍</li></ul>
+<blockquote><p>本文涉及的历史文献与网络热词均标注来源，版权归原作者所有。 招聘与市场数据来自不同报告与样本，<strong>量级可参考，不可当作个体期望值</strong>。 历史类比为个人分析框架，非官方论述；文中对 AI 时代形势的判断属于作者观点，可能有误。</p></blockquote>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>
