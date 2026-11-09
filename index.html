@@ -1560,6 +1560,9 @@ function renderContent(t){
     const t = D[lang];
     applyMeta(t);
     fillSplash(lang);
+    // ⚠️ 先清掉 body 下的移动端抽屉节点 —— 切换语言时 sidebar 会被重建，
+    //    旧节点若还挂在 body 上会被 getElementById 抢先匹配到，导致菜单停留在旧语言
+    document.querySelectorAll('body > #sbnavList').forEach(function(n){ n.remove(); });
     sidebarEl.innerHTML = renderSidebar(t);
     contentEl.innerHTML = renderContent(t);
     // typed slogan
@@ -1580,6 +1583,8 @@ function renderContent(t){
     setupPosts(t); setupToTop();
     const lb=document.getElementById('langBtn'); if(lb) lb.addEventListener('click', toggleLang);
     if(window.__syncSbh) setTimeout(window.__syncSbh, 40);   // 顶栏高度跟随（移动端防遮挡）
+    // 从文章页返回时恢复浏览位置（内容是动态渲染的，必须在 render 之后）
+    restoreScrollPos();
   }
 
   /* ===================== 文章区：平台筛选 + 分批渲染 ===================== */
@@ -1626,6 +1631,10 @@ function renderContent(t){
     var keys=Object.keys(counts).sort(function(a,b){return counts[b]-counts[a];});
 
     var state={filter:'all', shown:POST_PAGE};
+    // 暴露给外部：返回时恢复「加载更多」已展开的批次
+    window.__setPostShown=function(n){ state.shown=Math.max(POST_PAGE, n||POST_PAGE); paint(); };
+    window.__getPostShown=function(){ return state.shown; };
+    window.__getPostTotal=function(){ return all.length; };
 
     function visible(){
       return all.filter(function(p){ return state.filter==='all' || p._ks.indexOf(state.filter)>=0; });
@@ -1678,7 +1687,7 @@ function renderContent(t){
       bar.querySelectorAll('.pfilter').forEach(function(x){x.classList.toggle('on',x===b2);});
       paint();
     });
-    moreBtn.addEventListener('click',function(){ state.shown+=POST_PAGE; paint(); });
+    moreBtn.addEventListener('click',function(){ state.shown+=POST_PAGE; paint(); restorePostBatch(); });
     // 外链点击：拦截主链接跳转，新窗口打开
     grid.addEventListener('click',function(e){
       var lk=e.target.closest('.plink'); if(!lk) return;
@@ -1713,9 +1722,23 @@ function renderContent(t){
     // 抽屉必须挂到 body：.sidebar 的 backdrop-filter 会创建包含块，
     // 使 position:fixed 的抽屉相对 .sidebar 定位 → 高度塌成 auto
     // 注意：render() 会重建 sidebar，所以每次都重新查询，不能缓存引用
-    function getNav(){ return document.getElementById('sbnavList'); }
+    // ⚠️ 移动端抽屉在 body 下，桌面端在 .sidebar 内 —— 用「实际挂载位置」判断，
+    //    不能只按 id 查（getElementById 会拿到文档里第一个匹配，可能��上一语言���旧节点）
+    function getNav(){
+      var inBody=document.querySelector('body > #sbnavList');
+      if(inBody) return inBody;
+      return sb.querySelector('#sbnavList') || document.getElementById('sbnavList');
+    }
+    // 清理 body 下的历史遗留节点（同一时刻只应有一个）
+    function pruneStaleNavs(){
+      var keep=getNav();
+      document.querySelectorAll('body > #sbnavList').forEach(function(n){
+        if(n!==keep) n.remove();
+      });
+    }
     var nav=getNav();
     if(nav && nav.parentNode!==document.body) document.body.appendChild(nav);
+    pruneStaleNavs();
     // 抽屉内点导航项 → 关闭
     if(nav && !nav.__bound){
       nav.__bound=true;
@@ -1725,6 +1748,7 @@ function renderContent(t){
     function sync(){
       var m=window.matchMedia('(max-width:900px)').matches;
       sb.querySelectorAll('.navtoggle').forEach(function(b){ b.style.display=m?'':'none'; });
+      pruneStaleNavs();
       var nv=getNav();
       if(!m){
         toggleNav(false);
@@ -1732,6 +1756,9 @@ function renderContent(t){
       }else{
         if(nv && nv.parentNode!==document.body) document.body.appendChild(nv);
       }
+      // 汉堡按钮上的「菜单」标签跟随语言切换
+      var nt=sb.querySelector('.navtoggle .nt-label');
+      if(nt) nt.textContent = (getLang()==='en') ? 'Menu' : '菜单';
     }
     sync();
     if(window.__navSync) window.removeEventListener('resize',window.__navSync);
@@ -1762,10 +1789,104 @@ function renderContent(t){
     onScroll();
   }
 
+  /* ===================== 浏览位置记忆（返回时恢复） ===================== */
+  // 场景：点进文章 → 返回首页 → 应该回到刚才浏览的位置，而不是跳回顶部。
+  // 做法：离开首页前把「滚动距离 + 当前区块 id + 文章列表已加载批次」存进 sessionStorage，
+  //      回到首页且内容渲染完成后按 hash 优先、距离兜底的方式恢复。
+  var SCROLL_KEY='onechat_scroll';
+  var pendingRestore=null;   // 待恢复的位置（文章列表批次恢复后再执行滚动）
+  function saveScrollPos(){
+    try{
+      var active=document.querySelector('.sbnav a.active');
+      var sec=active?active.getAttribute('href'):'';
+      // 区块内偏移：scrollY 减去该区块的文档位置。
+      // 用「区块 + 偏移」而不是绝对距离 —— 页面整体高度变化时（字体加载、reveal 动画）
+      // 绝对距离会偏，区块内相对位置不会。
+      var off=0;
+      if(sec){
+        var el=document.querySelector(sec);
+        if(el) off=Math.round(window.scrollY-(el.getBoundingClientRect().top+window.scrollY));
+      }
+      // 已渲染的文章条数（不是剩余数）—— 恢复时要把列表展开到同样长度
+      var shown=window.__getPostShown?window.__getPostShown():0;
+      sessionStorage.setItem(SCROLL_KEY, JSON.stringify({
+        y: Math.round(window.scrollY||0),
+        sec: sec||'',
+        off: off,
+        shown: shown||0,
+        t: Date.now()
+      }));
+    }catch(e){}
+  }
+  function restoreScrollPos(){
+    var raw=null;
+    try{ raw=sessionStorage.getItem(SCROLL_KEY); }catch(e){}
+    if(!raw) return;
+    var d=null; try{ d=JSON.parse(raw); }catch(e){}
+    if(!d) return;
+    // 30 分钟内有效（看一篇长文常超过 5 分钟，5 分钟太短）
+    if(!d.t || (Date.now()-d.t)>30*60*1000){ try{sessionStorage.removeItem(SCROLL_KEY);}catch(e){} return; }
+    try{ sessionStorage.removeItem(SCROLL_KEY); }catch(e){}
+    pendingRestore=d;
+    restorePostBatch();
+    applyRestore();
+  }
+  // 恢复「加载更多」已展开的批次，避免目标文章不在渲染范围内
+  function restorePostBatch(){
+    if(!pendingRestore || !pendingRestore.shown) return;
+    if(!window.__setPostShown) return;
+    window.__setPostShown(pendingRestore.shown);
+  }
+  function applyRestore(){
+    var d=pendingRestore; if(!d) return;
+    var done=false;
+    function go(){
+      if(done) return; done=true;
+      // 优先「区块锚点 + 区块内偏移」—— 对页面整体高度变化免疫
+      if(d.sec){
+        var el=document.querySelector(d.sec);
+        if(el){
+          var secTop=el.getBoundingClientRect().top+window.scrollY;
+          var target=secTop+(d.off||0);
+          // 偏移可能因为内容高度变化而超出该区块范围 → 夹到合理区间
+          var maxTop=Math.max(0, document.documentElement.scrollHeight-window.innerHeight-4);
+          window.scrollTo({top:Math.max(0, Math.min(target, maxTop)),behavior:'auto'});
+          return;
+        }
+      }
+      if(d.y>0) window.scrollTo({top:d.y,behavior:'auto'});
+    }
+    // 内容是 JS 动态渲染的，要等渲染完 + 字体加载完再恢复
+    if(document.readyState==='complete') setTimeout(go,60);
+    else addEventListener('load',function(){ setTimeout(go,80); });
+    setTimeout(go, 350);   // 兜底
+  }
+  // 离开首页前保存（点文章 / 关闭标签页 / 后退）
+  addEventListener('click',function(e){
+    var a=e.target.closest('a[href]'); if(!a) return;
+    var href=a.getAttribute('href')||'';
+    if(href && href.charAt(0)!=='#') saveScrollPos();   // 站内文章页
+  }, true);
+  addEventListener('pagehide', saveScrollPos);
+  addEventListener('beforeunload', saveScrollPos);
+  // 从 bfcache 返回（手机浏览器后退）时也要恢复
+  addEventListener('pageshow',function(e){ if(e.persisted) restoreScrollPos(); });
+
   function toggleLang(){
     const cur=getLang(); const next=cur==='en'?'zh':'en';
+    // ⚠️ 切换语言时保留当前浏览位置 —— 内容重渲染后高度会变，所以记区块 id 优先
+    var active=document.querySelector('.sbnav a.active');
+    var keepSec=active?active.getAttribute('href'):'';
+    var keepY=Math.round(window.scrollY||0);
     localStorage.setItem('lang',next); render();
-    if(window.scrollY>200) window.scrollTo({top:0,behavior:'smooth'});
+    var restore=function(){
+      if(keepSec){
+        var el=document.querySelector(keepSec);
+        if(el){ window.scrollTo({top:Math.max(0, el.getBoundingClientRect().top+window.scrollY-60), behavior:'auto'}); return; }
+      }
+      if(keepY>0) window.scrollTo({top:keepY,behavior:'auto'});
+    };
+    setTimeout(restore,120);
   }
 
   // progress + backtop
