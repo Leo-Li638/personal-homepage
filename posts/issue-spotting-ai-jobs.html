@@ -4,6 +4,161 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务 · 李玉涛的个人主页</title>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html#article",
+   "headline": "AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务",
+   "description": "GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。",
+   "author": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "datePublished": "2026-11-01",
+   "dateModified": "2026-11-01",
+   "inLanguage": "zh-CN",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "name": "一.chat",
+    "url": "https://xn--4gq.chat"
+   },
+   "articleSection": "技术文章",
+   "keywords": "AI编程,智能体,真实任务,评测",
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "长春师范大学"
+    },
+    {
+     "@type": "Thing",
+     "name": "李玉涛"
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "一.chat",
+     "item": "https://xn--4gq.chat"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "技术文章",
+     "item": "https://xn--4gq.chat/#ssec4"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务",
+     "item": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "所以到底还要不要学编程？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "要，而且要学得比现在扎实。理由： 编程是你获得 Issue Spotting 直觉的唯一途径。 你不写过 Spring Boot，就不会知道「这个接口在并发下会炸」；你不踩过序列化、事务、缓存穿透的坑，就不会知道该 review 什么。 AI 能帮你写代码，但它不能替你积累踩坑的样本量。 而且面试里的技术追问，考的往往正是这些。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "那我该学 Python 还是继续 Java？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "继续 Java，而且加一门「AI 应用」技能栈。 理由是上一节说的：Java 渗透率 21.2%（不到 TS 的一半）、存量系统多而 Agent 覆盖差、而且 Java 的强类型约束本身就是好的 Issue Spotting 训练场。再叠上你自己的数据科学底子（Python + 建模），你的定位就很清楚了： 「懂数据建模的 Java 后端 + 会做 Agent 应用」 —— 这个组合在 2027 届不拥挤。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "怎么在简历上体现「Issue Spotting 能力」？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "别写形容词，写「清单 + 取舍 + 验证」。 反例：「具备良好的代码审查能力」。正例：「针对 XX 模块梳理 12 项边界条件清单，实现幂等/并发/精度三类校验，测试用例覆盖 XX 场景，线上 XX 起未复现」。 前者谁都能写，后者证明你真的做过。 我之前给你的简历规则里「不夸大」那条在这里依然成立—— 清单上每一条都必须是你真踩过或真想过 的 。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "面试被问「你怎么用 AI」，怎么答才有分量？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "三段： ① 我用它做什么 （具体到任务类型）； ② 我怎么验证它的产出 （这是核心，讲你的检查清单、灰区反问、确定性校验）； ③ 我在什么情况下不用它 （这一条最能加分，因为它证明你不是在无脑崇拜）。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "我现在还早吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "GitHub 那 40% 是 全体开发者的 PR ，而 Octoverse 里也提到 TypeScript/Python/Rust 都已经 40% 以上。 你要是等到「所有人都准备好了」再练 Issue Spotting，那就晚了。 但也别焦虑 —— 21.2% 那行数字说明，Java 这块还有窗口，而且窗口不长。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<meta name="keywords" content="AI编程,智能体,真实任务,评测">
+<meta name="author" content="李玉涛（Leo）">
+<meta property="article:published_time" content="2026-11-01">
+<meta property="article:modified_time" content="2026-11-01">
+<meta property="og:site_name" content="一.chat">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="probe:main" content="P24">
 <meta name="description" content="GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。">
 <link rel="canonical" href="https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html">
 <meta property="og:title" content="AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务">
@@ -11,30 +166,6 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html">
 <meta property="og:author" content="李玉涛（Leo）">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "BlogPosting",
- "headline": "AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务",
- "description": "GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。",
- "author": {
-  "@type": "Person",
-  "name": "李玉涛（Leo）",
-  "url": "https://xn--4gq.chat"
- },
- "datePublished": "2026-10-30",
- "dateModified": "2026-10-30",
- "mainEntityOfPage": {
-  "@type": "WebPage",
-  "@id": "https://xn--4gq.chat/posts/issue-spotting-ai-jobs.html"
- },
- "publisher": {
-  "@type": "Person",
-  "name": "李玉涛（Leo）",
-  "url": "https://xn--4gq.chat"
- }
-}
-</script>
 <style>
 :root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
   --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
@@ -100,8 +231,6 @@ footer a{color:var(--brand);text-decoration:none;}
   </header>
   <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一句话版">一句话版</a></li><li style="margin-left:0px"><a href="#s-一两份报告两个数字">一、两份报告，两个数字</a></li><li style="margin-left:16px"><a href="#s-报告-agithub-octoverse-202610-月-28-日发布">报告 A：GitHub Octoverse 2026（10 月 28 日发布）</a></li><li style="margin-left:16px"><a href="#s-报告-bdayjob-tax10-月-27-日发布surge-ai">报告 B：DAYJOB: Tax（10 月 27 日发布，Surge AI）</a></li><li style="margin-left:16px"><a href="#s-把两个数字放一起">把两个数字放一起</a></li><li style="margin-left:0px"><a href="#s-二差距到底在哪issue-spotting">二、差距到底在哪：Issue Spotting</a></li><li style="margin-left:16px"><a href="#s-案例一算对了但漏了一个悬崖">案例一：算对了，但漏了一个悬崖</a></li><li style="margin-left:16px"><a href="#s-案例二默认了不该默认的前提">案例二：默认了不该默认的前提</a></li><li style="margin-left:16px"><a href="#s-提炼两种能力两种考法">提炼：两种能力，两种考法</a></li><li style="margin-left:0px"><a href="#s-三这对你的择业意味着什么这是本文最实用的部分">三、这对你的择业意味着什么（这是本文最实用的部分）</a></li><li style="margin-left:16px"><a href="#s-31-写代码这个能力贬值了而且贬得很快">3.1 「写代码」这个能力，贬值了——而且贬得很快</a></li><li style="margin-left:16px"><a href="#s-32-但有个例外而且它对你极其有利java-只有-212">3.2 但有个例外，而且它对你极其有利：Java 只有 21.2%</a></li><li style="margin-left:16px"><a href="#s-33-你的数学和数据背景在这件事上是主场不是辅科">3.3 你的数学和数据背景，在这件事上是主场不是辅科</a></li><li style="margin-left:16px"><a href="#s-34-三个可迁移的问题清单">3.4 三个可迁移的「问题清单」</a></li><li style="margin-left:0px"><a href="#s-四三个可以这周就做的动作">四、三个可以这周就做的动作</a></li><li style="margin-left:16px"><a href="#s-动作-1给你正在做的每个项目写一份issue-清单">动作 1：给你正在做的每个项目，写一份「Issue 清单」</a></li><li style="margin-left:16px"><a href="#s-动作-2给-ai-的产出加一道issue-spotting-层">动作 2：给 AI 的产出加一道「Issue Spotting 层」</a></li><li style="margin-left:16px"><a href="#s-动作-3把模型选择当成设置项而不是信仰">动作 3：把「模型选择」当成设置项，而不是信仰</a></li><li style="margin-left:0px"><a href="#s-五三个反直觉的推论">五、三个反直觉的推论</a></li><li style="margin-left:16px"><a href="#s-推论-1合并速度不是能力指标">推论 1：合并速度不是能力指标</a></li><li style="margin-left:16px"><a href="#s-推论-2密钥泄露率翻倍说明责任问题没解决">推论 2：密钥泄露率翻倍，说明责任问题没解决</a></li><li style="margin-left:16px"><a href="#s-推论-3真正稀缺的可能不是判断是知道该判断什么">推论 3：真正稀缺的可能不是「判断」，是「知道该判断什么」</a></li><li style="margin-left:0px"><a href="#s-六这套判断会在哪里失效">六、这套判断会在哪里失效</a></li><li style="margin-left:0px"><a href="#s-七常见问题">七、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-参考与致谢">参考与致谢</a></li></ol></details>
   <article class="paper">
-<p>--- title: AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务 subtitle: GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距，就是你未来的职业价值所在。 author: 李玉涛（Leo） site: 一.chat · https://xn--4gq.chat date: 2026-10-30 tags: [AI编程, 职业判断力, issue spotting, Agent评测, 2027届秋招, Java后端] ---</p>
-<p># AI 包办了 40% 的代码起草，最强 Agent 却只做得对 10.8% 的真实任务</p>
 <blockquote><p><strong>先说清楚这是什么</strong> 2026 年 10 月 28 日，GitHub 发布 Octoverse 2026 年度报告。 2026 年 10 月 27 日，Surge AI 发布 DAYJOB: Tax 评测基准。 这两份东西隔了一天发布，但放在一起看，是今年最锋利的一组对照。 我是长春师范大学一名 2027 届在校本科生，数据科学与大数据技术专业，辅修数学，Java 后端在读，同时自己搭了一个本地 AI 平台（Dify + Ollama + DeepSeek）。所以下面写的，是一个<strong>正在用 AI 写代码、同时在学怎么不被 AI 取代</strong>的人，把这两份报告读完之后逼自己回答的问题。 文中所有数据均标注来源与发布时间，版权归原作者所有。</p></blockquote>
 <p>---</p>
 <h2 id="s-一句话版">一句话版</h2>

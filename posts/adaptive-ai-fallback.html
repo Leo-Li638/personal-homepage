@@ -4,6 +4,161 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>随机应变，不是见招拆招：AI 干6 倍工时之后，我把它做成了三层降级链路 · 李玉涛的个人主页</title>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://xn--4gq.chat/posts/adaptive-ai-fallback.html#article",
+   "headline": "随机应变，不是见招拆招：AI 干6 倍工时之后，我把它做成了三层降级链路",
+   "description": "Anthropic 说智能体干的活已是人类的 6 倍，初级技术岗招聘从 27% 掉到 9%。真正在涨的是「切换决策」能力——用期望值算清切换是否划算，再把降级落成主方案+触发条件+兜底出口的三件套。",
+   "author": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "datePublished": "2026-11-01",
+   "dateModified": "2026-11-01",
+   "inLanguage": "zh-CN",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xn--4gq.chat/posts/adaptive-ai-fallback.html"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "name": "一.chat",
+    "url": "https://xn--4gq.chat"
+   },
+   "articleSection": "技术文章",
+   "keywords": "三层降级,AI工程,容错,随机应变",
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "长春师范大学"
+    },
+    {
+     "@type": "Thing",
+     "name": "李玉涛"
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://xn--4gq.chat/posts/adaptive-ai-fallback.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "一.chat",
+     "item": "https://xn--4gq.chat"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "技术文章",
+     "item": "https://xn--4gq.chat/#ssec4"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "随机应变，不是见招拆招：AI 干6 倍工时之后，我把它做成了三层降级链路",
+     "item": "https://xn--4gq.chat/posts/adaptive-ai-fallback.html"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://xn--4gq.chat/posts/adaptive-ai-fallback.html#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "不会写代码，能练这套吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "能。上面四个动作里,前三个跟写代码没关系，跟 把事情设计清楚 有关。你用 Excel 都能做。更重要的是，绝大多数 AI 流程的降级设计并不需要多难的技术，缺的是 「提前想一遍会怎么坏」的习惯 。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "这跟「会写 prompt」是一回事吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "不是。Prompt 是单次交互的输入质量；随机应变是 跨多次、跨工具、跨失败 的系统性设计。前者决定上限，后者决定下限。你在 prompt 上再努力，也架不住底层服务挂掉时没有兜底。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "面试怎么讲这个？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "讲 结构 ，不讲工具。面试官不在乎你用什么框架，在乎的是你能不能说清：主方案是什么、失效怎么判断、切过去要花什么、谁负责验收。我自己的项目里，Laya 意图路由的双层兜底、幻觉三层防护、上下文分类管理，就是这个思路的三个实例——具体技术不重要， 「我为什么要这么设计、放弃了什么」才重要 。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "AI 越来越强，人还有什么用？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "我不敢给大话。但从上面那三组数据看， 执行在贬值，判断在升值 。而判断的本质就是在信息不全时做取舍——这恰好是「随机应变」这个词最扎实的内核。你不需要比 AI 跑得快，你需要比 AI 更清楚 什么时候该信它、什么时候该换条路 。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "怎么练「随机应变」最快？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "最快的方法是 给自己造一个会失败的系统 。跑一次 AI 流程，故意让它失败一次，你对「失败长什么样」的体感，比看十篇文章都深。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<meta name="keywords" content="三层降级,AI工程,容错,随机应变">
+<meta name="author" content="李玉涛（Leo）">
+<meta property="article:published_time" content="2026-11-01">
+<meta property="article:modified_time" content="2026-11-01">
+<meta property="og:site_name" content="一.chat">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="probe:main" content="P24">
 <meta name="description" content="Anthropic 说智能体干的活已是人类的 6 倍，初级技术岗招聘从 27% 掉到 9%。真正在涨的是「切换决策」能力——用期望值算清切换是否划算，再把降级落成主方案+触发条件+兜底出口的三件套。">
 <link rel="canonical" href="https://xn--4gq.chat/posts/adaptive-ai-fallback.html">
 <meta property="og:title" content="随机应变，不是见招拆招：AI 干6 倍工时之后，我把它做成了三层降级链路">
@@ -11,30 +166,6 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://xn--4gq.chat/posts/adaptive-ai-fallback.html">
 <meta property="og:author" content="李玉涛（Leo）">
-<script type="application/ld+json">
-{
- "@context": "https://schema.org",
- "@type": "BlogPosting",
- "headline": "随机应变，不是见招拆招：AI 干6 倍工时之后，我把它做成了三层降级链路",
- "description": "Anthropic 说智能体干的活已是人类的 6 倍，初级技术岗招聘从 27% 掉到 9%。真正在涨的是「切换决策」能力——用期望值算清切换是否划算，再把降级落成主方案+触发条件+兜底出口的三件套。",
- "author": {
-  "@type": "Person",
-  "name": "李玉涛（Leo）",
-  "url": "https://xn--4gq.chat"
- },
- "datePublished": "2026-10-27",
- "dateModified": "2026-10-27",
- "mainEntityOfPage": {
-  "@type": "WebPage",
-  "@id": "https://xn--4gq.chat/posts/adaptive-ai-fallback.html"
- },
- "publisher": {
-  "@type": "Person",
-  "name": "李玉涛（Leo）",
-  "url": "https://xn--4gq.chat"
- }
-}
-</script>
 <style>
 :root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
   --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
@@ -100,8 +231,6 @@ footer a{color:var(--brand);text-decoration:none;}
   </header>
   <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一句话版">一句话版</a></li><li style="margin-left:0px"><a href="#s-一先看三组会让人坐直的数据">一、先看三组会让人坐直的数据</a></li><li style="margin-left:16px"><a href="#s-数据一anthropic-自己变成了试验田">数据一：Anthropic 自己变成了试验田</a></li><li style="margin-left:16px"><a href="#s-数据二治理跟不上权限就成了坟场">数据二：治理跟不上，权限就成了坟场</a></li><li style="margin-left:16px"><a href="#s-数据三员工在偷用而且要交ai-返工税">数据三：员工在偷用，而且要交「AI 返工税」</a></li><li style="margin-left:0px"><a href="#s-二随机应变被误解成什么了">二、「随机应变」被误解成什么了</a></li><li style="margin-left:16px"><a href="#s-用数学说清这个差别">用数学说清这个差别</a></li><li style="margin-left:0px"><a href="#s-三我的实战ai-逼我造了三层降级链路">三、我的实战：AI 逼我造了三层降级链路</a></li><li style="margin-left:16px"><a href="#s-第一层意图路由不匹配--降级到规则匹配">第一层：意图路由不匹配 → 降级到规则匹配</a></li><li style="margin-left:16px"><a href="#s-第二层生成不合规--降级到结构化输出--事后校验">第二层：生成不合规 → 降级到结构化输出 + 事后校验</a></li><li style="margin-left:16px"><a href="#s-第三层底层服务不可用--降级到云端--固定话术">第三层：底层服务不可用 → 降级到云端 / 固定话术</a></li><li style="margin-left:0px"><a href="#s-四随机应变的核心不是应变是不失控">四、随机应变的核心不是「应变」，是「不失控」</a></li><li style="margin-left:16px"><a href="#s-动作一主方案要显式且只有一个">动作一：主方案要显式，且只有一个</a></li><li style="margin-left:16px"><a href="#s-动作二触发条件要可观测不能靠感觉">动作二：触发条件要可观测，不能靠感觉</a></li><li style="margin-left:16px"><a href="#s-动作三兜底出口必须真的能跑">动作三：兜底出口必须真的能跑</a></li><li style="margin-left:0px"><a href="#s-五顺便说说数学给了我什么">五、顺便说说数学给了我什么</a></li><li style="margin-left:0px"><a href="#s-六给-2027-届的四个可练动作">六、给 2027 届的四个可练动作</a></li><li style="margin-left:16px"><a href="#s-动作-1给你手上任何一个-ai-流程写下主方案--备选方案--触发条件">动作 1：给你手上任何一个 AI 流程，写下主方案 + 备选方案 + 触发条件</a></li><li style="margin-left:16px"><a href="#s-动作-2故意制造一次失败">动作 2：故意制造一次失败</a></li><li style="margin-left:16px"><a href="#s-动作-3给-ai-输出加一道确定性校验">动作 3：给 AI 输出加一道「确定性校验」</a></li><li style="margin-left:16px"><a href="#s-动作-4建一个ai-抽风实录">动作 4：建一个「AI 抽风实录」</a></li><li style="margin-left:0px"><a href="#s-七这套方法会在哪里失效">七、这套方法会在哪里失效</a></li><li style="margin-left:0px"><a href="#s-八常见问题">八、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-参考与致谢">参考与致谢</a></li></ol></details>
   <article class="paper">
-<p>--- title: 随机应变，不是见招拆招：AI 干 6 倍工时之后，我把它做成了三层降级链路 subtitle: Anthropic 说智能体干的活已是人类的 6 倍，初级技术岗招聘从 27% 掉到 9%。真正在涨的，是「切换决策」的能力。 author: 李玉涛（Leo） site: 一.chat · https://xn--4gq.chat date: 2026-10-27 tags: [随机应变, AI智能体, 降级策略, 置信度, 秋招2027, Agent工程] ---</p>
-<p># 随机应变，不是见招拆招</p>
 <blockquote><p><strong>先说清楚这是什么</strong> 这不是鸡汤。这是 2026 年 10 月下半月的三组真实数据，加上我在自己做的那个 AI 平台上被模型抽风逼出来的工程解法。 我是长春师范大学一名 2027 届在校本科生，数据科学与大数据技术专业，辅修数学。做过一个本地 AI 平台（Dify + Ollama + DeepSeek），踩过的坑比大部分人看过的教程多。所以下面写的，是一个<strong>正在被 AI 逼着长出新肌肉的人</strong>，把新肌肉拆开给你看。 文中所有热点数据均标注来源与发布时间，版权归原作者所有。</p></blockquote>
 <p>---</p>
 <h2 id="s-一句话版">一句话版</h2>
