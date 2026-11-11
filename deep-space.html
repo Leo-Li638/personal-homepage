@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>深空制图仪 · 手势地球 | 一.chat</title>
+  <meta name="description" content="深空制图仪 · 手势地球项目详情：Vue 3 + Three.js + MediaPipe 的实时深空可视化装置，点阵地球与流星雨双模式，用摄像头隔空手势旋转、缩放与切换形态，纯静态部署到 GitHub Pages。">
+  <link rel="canonical" href="https://xn--4gq.chat/deep-space.html">
+  <meta property="og:title" content="深空制图仪 · 手势地球 | 一.chat">
+  <meta property="og:description" content="点阵地球 + 流星雨双模式的实时 3D 可视化装置，MediaPipe 隔空手势交互。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://xn--4gq.chat/deep-space.html">
+  <meta property="og:image" content="https://xn--4gq.chat/assets/deep-space-chart.jpg">
+  <link rel="stylesheet" href="portfolio-pages.css">
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="page-nav"><a class="brand" href="./">一.chat</a><div class="page-nav-links"><a href="./">主页</a><a href="./#ssec3">项目</a><a href="https://leo-li638.github.io/particle-earth-hand/" target="_blank" rel="noopener">在线体验</a><a href="https://github.com/Leo-Li638/particle-earth-hand" target="_blank" rel="noopener">GitHub</a></div></nav>
+    <header class="hero-project">
+      <div class="eyebrow">Project 04 / Real-time 3D &amp; gesture</div>
+      <h1>深空制图仪 · 手势地球</h1>
+      <p>一个纯前端的深空可视化装置：点阵地球与流星雨双模式叠加在同一套着色器状态上，用摄像头识别隔空手势完成旋转、缩放与形态切换。画面全部在本机 GPU 与 WASM 推理中生成，不上传任何摄像头数据。</p>
+      <div class="hero-actions"><a class="button" href="https://leo-li638.github.io/particle-earth-hand/" target="_blank" rel="noopener">在线体验</a><a class="button secondary" href="https://github.com/Leo-Li638/particle-earth-hand" target="_blank" rel="noopener">查看源码</a></div>
+    </header>
+    <div class="content-grid">
+      <div class="main-column">
+        <section class="panel">
+          <h2>背景与目标</h2>
+          <p>起点是一段竖屏演示视频：左上角是滚动遥测面板，中央是点阵地球与城市间弧线，下方是大号城市名，月球与恒星构成空间纵深。我想把它做成一个可以真的跑起来的网页装置 —— 不需要安装、不需要后端，还要能在集显笔记本上跑到 60fps。</p>
+          <p>因此约束先定下来：纯静态可部署（GitHub Pages 子路径也要能用）、手势推理在浏览器本地完成、无摄像头时用鼠标与键盘也要能完整操作。</p>
+          <div class="metrics"><div class="metric"><b>2 种模式</b><span>制图模式 / 流星雨模式，uniform 层插值切换</span></div><div class="metric"><b>6.4 万点</b><span>经纬等距抽样的点阵地球</span></div><div class="metric"><b>21 个关键点</b><span>MediaPipe 手部关键点，本地 WASM 推理</span></div></div>
+        </section>
+        <section class="panel">
+          <h2>两种模式</h2>
+          <div class="flow">
+            <div class="flow-step"><i>01</i><div><b>制图模式 · 点阵地球</b><p>陆地比海洋更亮，夜间城市由夜光贴图采样出金色灯点；50 座城市之间按球面大圆插值生成抬升弧线，弧线按目标城市的朝向淡入淡出。捏合缩放、手掌平移旋转、方向键切换焦点城市。</p></div></div>
+            <div class="flow-step"><i>02</i><div><b>流星雨模式 · 实体球</b><p>握拳触发：点阵过渡为带云层、大气辉光与蓝色光晕环的实体地球，外圈出现轨道环，星空同时划过流星；五指张开回到制图模式。切换只插值着色器状态，不重建几何。</p></div></div>
+            <div class="flow-step"><i>03</i><div><b>构图挂在相机下</b><p>HUD 引线、月球、光晕环与轨道环都是相机的子对象，缩放与旋转时构图关系保持不变，缩放不会把月球挤出画面。</p></div></div>
+            <div class="flow-step"><i>04</i><div><b>相机轨道代替自转</b><p>地球本身不旋转，改为绕地球移动相机，避免远距离物体在大坐标下累积浮点误差，弧线与点阵的定位也随之稳定。</p></div></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>关键实现</h2>
+          <ul>
+            <li><b>点阵着色器：</b>等距抽样生成点阵几何，顶点着色器按经纬度重建位置，逐点计算昼/夜、陆地/海洋与城市夜光，颜色在线性空间混合后再做色调映射。</li>
+            <li><b>屏幕空间城市标签：</b>标签是 HTML/CSS 而非贴图，按相机朝向与 NDC 边界过滤背面与边缘，避免文字在球面背面反着贴上来。</li>
+            <li><b>后处理：</b>UnrealBloom 与自定义 ACES 色调映射配合，让大气边缘发光但不糊掉城市灯点。</li>
+            <li><b>手势到参数：</b>21 个手部关键点换算成捏合距离、手掌旋转角与握拳置信度，经平滑与死区处理后驱动缩放、旋转与模式切换，抖动被吸收在参数层而不影响帧率。</li>
+            <li><b>资源自托管：</b>MediaPipe WASM 与手部模型由脚本复制到 <code>public/</code>，统一用 <code>import.meta.env.BASE_URL</code> 拼路径，因此同一份构建既能跑在根路径，也能跑在 <code>/particle-earth-hand/</code> 子路径下。</li>
+          </ul>
+          <div class="stack"><span>Vue 3</span><span>Vite</span><span>TypeScript</span><span>Three.js</span><span>MediaPipe Tasks Vision</span><span>WebGL Shader</span><span>GitHub Pages</span></div>
+        </section>
+        <section class="panel">
+          <h2>画面</h2>
+          <h3>制图模式 · 上海</h3>
+          <img class="project-image" src="assets/deep-space-chart.jpg" alt="深空制图仪 制图模式：点阵地球与上海城市弧线" width="1280" height="800" loading="lazy" decoding="async">
+          <p>左侧遥测面板给出经纬度、帧率、焦点城市与测距等信息；底部是大号城市名与副标题；城市标签和弧线在球体正面才出现。</p>
+          <h3>流星雨模式</h3>
+          <img class="project-image" src="assets/deep-space-meteor.jpg" alt="深空制图仪 流星雨模式：带云层与大气光晕的实体地球" width="1280" height="800" loading="lazy" decoding="async">
+          <p>同一个地球换了渲染路径：云层、大气菲涅尔与光晕环出现，轨道环与月球保持构图，星空同时划过流星。</p>
+        </section>
+        <section class="panel">
+          <h2>结果与验证</h2>
+          <ul>
+            <li>在只有 Intel Iris Xe 集显的笔记本上稳定 60fps（1600×1000 窗口，双模式均验证）。</li>
+            <li>手势推理全部在本地 WASM 中完成，摄像头画面不离开浏览器；权限门明确提示只在本机计算。</li>
+            <li>无摄像头也能完整操作：鼠标拖拽旋转、滚轮缩放、方向键与 M 键切换模式与城市。</li>
+            <li>同一份构建已验证根路径与 GitHub Pages 子路径两种部署方式，WASM 与模型资源均正常加载。</li>
+            <li>README 记录了模式对照表、手势/键盘/鼠标映射、URL 参数（<code>?preview=1&amp;city=上海</code>）与已知限制。</li>
+          </ul>
+        </section>
+      </div>
+      <aside class="side-column">
+        <section class="panel"><h2>项目信息</h2><ul class="aside-list"><li><span>角色</span><b>独立开发</b></li><li><span>渲染</span><b>Three.js</b></li><li><span>手势</span><b>MediaPipe</b></li><li><span>框架</span><b>Vue 3 + Vite</b></li><li><span>部署</span><b>GitHub Pages</b></li><li><span>授权</span><b>MIT</b></li></ul></section>
+        <section class="panel"><h2>在线演示</h2><p>直接打开即可看地球；允许摄像头后可开启隔空手势。</p><a class="button secondary" href="https://leo-li638.github.io/particle-earth-hand/" target="_blank" rel="noopener">打开演示页</a></section>
+        <section class="panel"><h2>项目文档</h2><p>仓库 README 含模式对照表、手势与键鼠映射、URL 参数、目录结构与实现要点。</p><a class="button secondary" href="https://github.com/Leo-Li638/particle-earth-hand" target="_blank" rel="noopener">打开 README</a></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>© 2026 李玉涛（Leo）</span><a href="./">返回一.chat</a></footer>
+  </main>
+</body>
+</html>
