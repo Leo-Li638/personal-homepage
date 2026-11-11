@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>狡兔三窟：AI 时代，一个人的公司该有几个窟？ · 李玉涛的个人主页</title>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html#article",
+   "headline": "狡兔三窟：AI 时代，一个人的公司该有几个窟？",
+   "description": "冯谖给孟尝君凿的三窟，一窟是民心（烧债券买来的义）、一窟是相位（去梁国造出的外部拉力）、一窟是宗庙（制度性保护）——三窟性质不同、互不替代，顺序是先前两窟再补第三窟。2026 年 AI 把凿窟成本打到接近零（OpenClaw 26 万星、Agentar 200+ 技能模板、大模型生成 90%+ 代码、一人公司 MRR 14.5 万美元），但也带来新的坑：三窟同质化（AI 技能接单占 45.1%，供给爆炸）。附「洞系数」自查表与三窟诊断三步。",
+   "author": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "datePublished": "2026-11-01",
+   "dateModified": "2026-11-01",
+   "inLanguage": "zh-CN",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "name": "一.chat",
+    "url": "https://xn--4gq.chat"
+   },
+   "articleSection": "技术文章",
+   "keywords": "一人公司,狡兔三窟,抗风险,副业",
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "长春师范大学"
+    },
+    {
+     "@type": "Thing",
+     "name": "李玉涛"
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "一.chat",
+     "item": "https://xn--4gq.chat"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "技术文章",
+     "item": "https://xn--4gq.chat/#ssec4"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "狡兔三窟：AI 时代，一个人的公司该有几个窟？",
+     "item": "https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "我现在就一个 App 做得还行，要不要拆成三个？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "不要。 拆成三个同质化的不如一个。 先做深一窟，把它做到\"有人主动来找你\"（二窟），再考虑补窟。 顺序不能反——冯谖也是先有薛地，才去凿梁国。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "三窟是不是就是\"多副业\"？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "不是，这是本文最想纠正的。 三个副业如果面向同一批人、同一批平台、同一种变现方式， 那是三个应用，一个窟 。三窟的区别在 性质 ：一窟靠人心，二窟靠外部拉力，三窟靠结构自转。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "AI 时代还需要三窟吗？一个人干不就够了？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "恰恰相反，正因为一个人能干的事变多了，才更需要三窟。 过去一个人只能维持一个点（因为精力只够一个点），现在一个人能同时经营三个点—— 这时候最大的风险不是做不动，是三个点长得一模一样。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "怎么判断我那个\"多点\"是真三窟还是假三窟？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "做这个测试：假设你的主业明天消失（不是倒闭，是消失），另外两个点多久能养活你？"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "上善若水、联合同学那些，跟三窟什么关系？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "那是这个系列的后两篇。 一篇讲 怎么凿 （三窟的结构与判据），一篇讲 凿窟的组织形式 （联合同学：出钱/出管理/出技术/出资源怎么分工），一篇讲 为什么利他不亏 （上善若水：AI 时代\"不争\"的商业基础）。 三篇连着看才完整。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<meta name="keywords" content="一人公司,狡兔三窟,抗风险,副业">
+<meta name="author" content="李玉涛（Leo）">
+<meta property="article:published_time" content="2026-11-01">
+<meta property="article:modified_time" content="2026-11-01">
+<meta property="og:site_name" content="一.chat">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="probe:main" content="P02">
+<meta name="description" content="冯谖给孟尝君凿的三窟，一窟是民心（烧债券买来的义）、一窟是相位（去梁国造出的外部拉力）、一窟是宗庙（制度性保护）——三窟性质不同、互不替代，顺序是先前两窟再补第三窟。2026 年 AI 把凿窟成本打到接近零（OpenClaw 26 万星、Agentar 200+ 技能模板、大模型生成 90%+ 代码、一人公司 MRR 14.5 万美元），但也带来新的坑：三窟同质化（AI 技能接单占 45.1%，供给爆炸）。附「洞系数」自查表与三窟诊断三步。">
+<link rel="canonical" href="https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html">
+<meta property="og:title" content="狡兔三窟：AI 时代，一个人的公司该有几个窟？">
+<meta property="og:description" content="冯谖给孟尝君凿的三窟，一窟是民心（烧债券买来的义）、一窟是相位（去梁国造出的外部拉力）、一窟是宗庙（制度性保护）——三窟性质不同、互不替代，顺序是先前两窟再补第三窟。2026 年 AI 把凿窟成本打到接近零（OpenClaw 26 万星、Agentar 200+ 技能模板、大模型生成 90%+ 代码、一人公司 MRR 14.5 万美元），但也带来新的坑：三窟同质化（AI 技能接单占 45.1%，供给爆炸）。附「洞系数」自查表与三窟诊断三步。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/three-burrows-ai-one-person-company.html">
+<meta property="og:author" content="李玉涛（Leo）">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>狡兔三窟：AI 时代，一个人的公司该有几个窟？</h1>
+    <div class="sub">冯谖给孟尝君凿的三窟，一窟是民心（烧债券买来的义）、一窟是相位（去梁国造出的外部拉力）、一窟是宗庙（制度性保护）——三窟性质不同、互不替代，顺序是先前两窟再补第三窟。2026 年 AI 把凿窟成本打到接近零（OpenClaw 26 万星、Agentar 200+ 技能模板、大模型生成 90%+ 代码、一人公司 MRR 14.5 万美元），但也带来新的坑：三窟同质化（AI 技能接单占 45.1%，供给爆炸）。附「洞系数」自查表与三窟诊断三步。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-11-01</span>
+      <span>https://xn--4gq.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一冯谖的三窟到底是哪三窟">一、冯谖的三窟，到底是哪三窟</a></li><li style="margin-left:0px"><a href="#s-二为什么三窟不能互相替代">二、为什么三窟不能互相替代</a></li><li style="margin-left:0px"><a href="#s-三ai-把凿窟打到了多便宜">三、AI 把"凿窟"打到了多便宜</a></li><li style="margin-left:0px"><a href="#s-四但-ai-也带来了新的坑三窟同质化">四、但 AI 也带来了新的坑：三窟同质化</a></li><li style="margin-left:0px"><a href="#s-五真正的三窟长什么样一份可执行的诊断">五、真正的三窟长什么样：一份可执行的诊断</a></li><li style="margin-left:16px"><a href="#s-诊断第一步把你的窟列出来">诊断第一步：把你的"窟"列出来</a></li><li style="margin-left:16px"><a href="#s-诊断第二步算洞系数">诊断第二步：算"洞系数"</a></li><li style="margin-left:16px"><a href="#s-诊断第三步照着冯谖的顺序补窟">诊断第三步：照着冯谖的顺序补窟</a></li><li style="margin-left:0px"><a href="#s-六最容易被搞错的一件事三窟不是三个收入来源">六、最容易被搞错的一件事：三窟不是「三个收入来源」</a></li><li style="margin-left:0px"><a href="#s-七这套东西会在哪里失效">七、这套东西会在哪里失效</a></li><li style="margin-left:0px"><a href="#s-八常见问题">八、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-参考与致谢">参考与致谢</a></li></ol></details>
+  <article class="paper">
+<blockquote><p><strong>先说清楚这是什么</strong> 上一篇我写了孙中山的「找人 → 设点 → 连成网」，评论区有人问我：<strong>"点布多了会不会太散？"</strong> 这个问题两千年前就有人问过，而且给出了一个非常具体的答案——<strong>三个</strong>，而且不能乱来。 我是长春师范大学数据科学与大数据技术专业本科生（2027 届），辅修数学，Java 后端在读，自己搭了一个本地 AI 平台（Dify + Ollama + DeepSeek）。这篇是那个系列的下篇，专讲一件事：<strong>在 AI 把一切都变便宜之后，一个人的公司到底该有几个"藏身之处"。</strong> <strong>先给结论：</strong> | | | |---|---| | <strong>三窟不是三个应用</strong> | 是三种<strong>性质不同</strong>的生存依据（人心 / 位置 / 权柄），缺一不可 | | <strong>AI 改变了什么</strong> | 把"凿窟"的成本从"雇人+融资"打到了"一个人 + 几个 Agent" | | <strong>AI 没改变什么</strong> | 三窟之间<strong>不能互相替代</strong>——这是最容易被忽略的一点 | | <strong>最危险的误判</strong> | 把三个窟开成同一种窟（三个 App），那其实只有一个窟 | 文中历史部分引自《战国策·齐策四》《史记·孟尝君列传》与识典古籍所录《绎史》原文；数据部分均标注来源与发布时间。</p></blockquote>
+<p>---</p>
+<h2 id="s-一冯谖的三窟到底是哪三窟">一、冯谖的三窟，到底是哪三窟</h2>
+<p>很多人知道"狡兔三窟"这个成语，但<strong>绝大多数人不知道三窟具体是什么</strong>，也不明白为什么不能换。</p>
+<p>先看原文（《战国策·齐策四》，识典古籍《绎史》卷一百三十三所录）：</p>
+<blockquote><p>孟尝君顾谓冯谖：「先生所为文市义者，乃今日见之。」冯谖曰：「<strong>狡兔有三窟，仅得免其死耳。今君有一窟，未得高枕而卧也。请为君复凿二窟。</strong>」</p></blockquote>
+<p><strong>第一窟：烧债券买来的"义"（民心）</strong></p>
+<p>冯谖奉命去薛地收债，孟尝君说"看家里缺什么就买什么"。冯谖到了薛地，把所有债券烧了，百姓称万岁。</p>
+<p><strong>这一窟是民心</strong>。它的作用不是赚钱，是<strong>让你失位的时候还有人来接你</strong>。原文写得很直白：</p>
+<blockquote><p>孟尝君就国于薛，未至百里，<strong>民扶老携幼迎君道中</strong>。</p></blockquote>
+<p><strong>注意：这个窟在失位之前，是完全看不出价值的。</strong> 孟尝君当时是不高兴的（「孟尝君不说」）。</p>
+<p><strong>第二窟：去梁国造出的"相位"（外部位置）</strong></p>
+<p>冯谖带着车马黄金西遊梁国，对梁惠王说：齐国放走了一个大臣，诸侯谁先迎接他，谁就富国强兵。梁王空出相位，以故相为上将军，遣使者黄金千斤、车百乘去聘。</p>
+<p>冯谖却告诫孟尝君：<strong>千金是重币，百乘是显使，梁使三次往返，你都坚决不去。</strong></p>
+<p><strong>这一窟是"外部的替代选项"</strong>。它的作用是：让齐王害怕你被别人抢走，从而把你请回去。</p>
+<p>原文：「齐王闻之，君臣恐惧，遣太傅赍黄金千斤……<strong>愿君顾先王之宗庙，姑反国统万人</strong>。」</p>
+<p><strong>第三窟：请来的"宗庙"（兵权）</strong></p>
+<p>冯谖最后请求把先王的祭器立宗庙于薛地。</p>
+<p><strong>这一窟是"制度性的保护"</strong>。宗庙立了，齐国就得派兵守薛地，因为你动了先王宗庙就是动先王。</p>
+<blockquote><p>庙成，还报孟尝君曰：「<strong>三窟已就，君姑高枕为乐矣。</strong>」 <strong>孟尝君为相数十年，无纤介之祸者，冯谖之计也。</strong></p></blockquote>
+<p><strong>为相数十年，无纤介之祸。</strong> 这是最终结果。</p>
+<p>---</p>
+<h2 id="s-二为什么三窟不能互相替代">二、为什么三窟不能互相替代</h2>
+<p>这是整个故事里最容易被忽略、也最有价值的一点。</p>
+<p><strong>三窟的性质完全不同：</strong></p>
+<table><thead><tr><th>窟</th><th>性质</th><th>作用机制</th><th>失效条件</th></tr></thead><tbody>
+<tr><td><strong>一窟：民心</strong></td><td>内在资产</td><td>你出事时，别人主动来</td><td>你长期不watering（不维护关系）</td></tr>
+<tr><td><strong>二窟：外部位置</strong></td><td>关系资产</td><td>别人抢你，你就值钱</td><td>你没被别人"抢"的价值</td></tr>
+<tr><td><strong>三窟：制度位</strong></td><td>结构资产</td><td>规则保护你</td><td>规则本身被改掉</td></tr>
+</tbody></table>
+<p><strong>它们互不替代：</strong></p>
+<ul><li><strong>只有一窟（民心），没有二窟</strong>：你很得人心，但没人抢你 → 齐王不怕你走，你就回不去。<strong>冯谖必须先把梁国这窟凿出来，"民扶老携幼"这一幕才会成为筹码。</strong></li><li><strong>只有二窟（外部位置），没有一窟</strong>：梁国很看得起你，但你一失位就没人接 → 你是"被估价的商品"，不是"被支持的人"。<strong>这是最危险的状态：有价值，但没根基。</strong></li><li><strong>有一窟二窟，没有三窟（制度位）</strong>：前两窟都建立在"对方还需要你"上，一旦对方不需要了，你什么都没有。</li></ul>
+<p><strong>所以三窟的顺序不是随意的：先有民心，再造位置，最后建制度。</strong></p>
+<p><strong>这个顺序在 AI 时代有极其精确的对应：</strong></p>
+<table><thead><tr><th>冯谖的三窟</th><th>AI 时代的对应</th><th>具体是什么</th></tr></thead><tbody>
+<tr><td><strong>一窟：民心</strong></td><td><strong>用户/社区</strong></td><td>有人因为你的东西受益，且愿意为你说话</td></tr>
+<tr><td><strong>二窟：外部位置</strong></td><td><strong>渠道/生态位</strong></td><td>别人主动来找你合作，而不是你求着被看见</td></tr>
+<tr><td><strong>三窟：制度位</strong></td><td><strong>可复制的结构</strong></td><td>案例库、流水线、开源项目——<strong>你不在时它还在跑</strong></td></tr>
+</tbody></table>
+<p>---</p>
+<h2 id="s-三ai-把凿窟打到了多便宜">三、AI 把"凿窟"打到了多便宜</h2>
+<p>现在说 2026 年的部分。</p>
+<p><strong>过去开一个"窟"的成本：</strong></p>
+<table><thead><tr><th>窟</th><th>过去的成本</th></tr></thead><tbody>
+<tr><td>民心窟</td><td>需要真的做出东西，且持续做很久</td></tr>
+<tr><td>位置窟</td><td>需要有人愿意"抢"你 → 通常意味着体量或名气</td></tr>
+<tr><td>制度窟</td><td>需要一个团队 + 一套流程 + 一个能接班的负责人</td></tr>
+<tr><td><strong>组织</strong></td><td><strong>需要注册公司、招人、租场地、融钱</strong></td></tr>
+</tbody></table>
+<p><strong>AI 把其中最贵的一环——"执行"——压到了接近零。</strong></p>
+<p>看 2026 年外滩大会集中亮相的 <strong>AI 驱动一人公司（OPC）</strong>：</p>
+<ul><li><strong>OpenClaw</strong>（开源 AI 智能体平台）在 GitHub 拿到超过 <strong>26 万星标</strong>，允许你通过微信、钉钉这类日常入口用自然语言直接指挥 AI 操作浏览器、处理文件、跑任务</li><li><strong>蚂蚁 Agentar 平台</strong>预置 <strong>200 多项行业技能模板</strong>，不会写代码也能像搭乐高一样拼出数字员工</li><li><strong>大模型能生成 90% 以上的业务代码</strong>，视觉模型可自动产 UI 和营销素材</li><li>外滩大会现场 Naughty Labs CEO 杨天润的原话很实在：<strong>「我的公司就我自己，以及若干只龙虾。」</strong>（"龙虾"是他自己搭的一批 AI Agent）</li><li>独立开发者赵纯，化学出身、当过编剧，一个人用 AI 做出《胃之书》冲上苹果付费榜前三，又做了覆盖全球 70 国编剧的 AI 平台 LAPER.AI</li></ul>
+<p><strong>更狠的是实际收入数据。</strong> 独立开发者 Nevo 把开源项目 Postiz 重新定位成"给 AI Agent 用的调度工具"，发布 <code>postiz-agent</code> 命令行工具 + MCP 服务端 + ClawHub 技能包：</p>
+<table><thead><tr><th>时间</th><th>MRR</th></tr></thead><tbody>
+<tr><td>2026-03</td><td><strong>2.1 万美元</strong></td></tr>
+<tr><td>2026-04</td><td><strong>8 万美元</strong></td></tr>
+<tr><td>2026-06</td><td><strong>11.8 万美元</strong></td></tr>
+<tr><td>2026-07 初</td><td><strong>14.5 万美元</strong>（每天还多 1000 美元，年化快摸到 200 万美元）</td></tr>
+</tbody></table>
+<p><strong>公司还是他一个人，bootstrapped。</strong></p>
+<p><strong>再看一组更"野"的数据</strong>（公开报道，收益因人而异）：一人公司做亚马逊 SKU 竞品分析 Agent，一年积累 100 多位付费客户，年营收七位数；98 年出生的小伙不裸辞先接单，一年服务 17 家企业、业绩 200 万，一人同时调度四五个 Agent。</p>
+<p><strong>所以第一个结论很清楚：AI 时代，"一个人 + 几个 Agent"已经能同时凿三窟了。</strong></p>
+<p>---</p>
+<h2 id="s-四但-ai-也带来了新的坑三窟同质化">四、但 AI 也带来了新的坑：三窟同质化</h2>
+<p>这是我认为这一代人的<strong>真正风险</strong>，而且几乎没人讨论。</p>
+<p><strong>因为凿窟便宜了，所以所有人都在凿同一种窟。</strong></p>
+<p>看 2026 年 AI 服务市场的结构（闲鱼平台数据，经济日报 / 国际在线）：</p>
+<table><thead><tr><th>指标</th><th>数值</th></tr></thead><tbody>
+<tr><td>上半年 AI 服务交易订单量</td><td><strong>981.6 万单</strong>，同比 <strong>+157%</strong></td></tr>
+<tr><td>购买 AI 服务人数</td><td>近 <strong>500 万</strong>，同比 <strong>+98%</strong></td></tr>
+<tr><td>AI 技能接单占全部 AI 订单</td><td><strong>45.1%</strong></td></tr>
+<tr><td>AI 编程与建站订单</td><td>同比 <strong>+1732%</strong></td></tr>
+<tr><td>AI 漫剧与漫画订单</td><td>同比 <strong>+1425%</strong></td></tr>
+<tr><td>AI 办公类订单</td><td>同比 <strong>+264%</strong></td></tr>
+<tr><td><strong>四线城市卖家占比</strong></td><td><strong>32.3%</strong>（居第一）</td></tr>
+<tr><td><strong>女性卖家占比</strong></td><td><strong>62.4%</strong>（远超男性）</td></tr>
+</tbody></table>
+<p><strong>看这个结构：45.1% 的订单是 AI 技能接单，技术门槛几乎为零，而且供给端在爆炸式增长。</strong></p>
+<p><strong>这意味着：如果你把三个窟都开成"AI 技能服务"，你其实只有一个窟。</strong></p>
+<p><strong>因为：</strong></p>
+<ul><li>三窟的本质是<strong>三种不同性质的生存依据</strong></li><li>而"AI 帮你做小程序""AI 帮你写文案""AI 帮你剪视频"——<strong>这三种是同一种东西的不同尺寸</strong></li><li>供给暴增 + 门槛归零 = <strong>价格归零</strong></li><li>三窟互相替代 = 三窟一起失效</li></ul>
+<p><strong>这是 2026 年最实际的风险，而且它伪装成"我在努力做三件事"。</strong></p>
+<p>---</p>
+<h2 id="s-五真正的三窟长什么样一份可执行的诊断">五、真正的三窟长什么样：一份可执行的诊断</h2>
+<p>我把这套东西翻译成你能立刻自查的清单。<strong>核心只有一个判据：这三个窟如果同时被拿走，你还剩什么？</strong></p>
+<h3 id="s-诊断第一步把你的窟列出来">诊断第一步：把你的"窟"列出来</h3>
+<p><strong>别写"我的 App / 我的公众号 / 我的小程序"——这是三个应用，不一定是三个窟。</strong></p>
+<p>按性质填：</p>
+<table><thead><tr><th>窟</th><th>你要填的</th><th>检验方法</th></tr></thead><tbody>
+<tr><td><strong>一窟（民心）</strong></td><td>谁因为你的东西受益？他们在哪？</td><td><strong>如果我明天消失，他们会不会主动来说一句话？</strong></td></tr>
+<tr><td><strong>二窟（位置）</strong></td><td>谁会主动来找你？为什么是他来找你？</td><td><strong>如果我不发帖，有没有人还是会注意到我？</strong></td></tr>
+<tr><td><strong>三窟（制度）</strong></td><td>什么东西在我不在时还在跑？</td><td><strong>如果我出差一个月，回来后它还在增值吗？</strong></td></tr>
+</tbody></table>
+<h3 id="s-诊断第二步算洞系数">诊断第二步：算"洞系数"</h3>
+<p>我给它一个粗略但好用的指标：</p>
+<p>``<code> 洞系数 = 独立窟数 / 总项目数 </code>``</p>
+<ul><li>你的三个项目如果<strong>都依赖同一个平台</strong>（都在小红书 / 都在微信生态 / 都靠同一个 AI 模型）→ 洞系数 <strong>&lt; 0.34</strong>，实际只有一个窟</li><li>三个项目分别对应<strong>三种不同性质</strong>（有人愿意为你说话 / 有人主动来找你 / 有东西离开你也在跑）→ 洞系数 ≈ <strong>1.0</strong>，这才是真三窟</li></ul>
+<h3 id="s-诊断第三步照着冯谖的顺序补窟">诊断第三步：照着冯谖的顺序补窟</h3>
+<p><strong>如果你现在只有一个窟，按这个顺序补：</strong></p>
+<table><thead><tr><th>缺哪窟</th><th>具体做什么</th><th><strong>不要做什么</strong></th></tr></thead><tbody>
+<tr><td><strong>缺一窟（民心）</strong></td><td>选一个具体人群，持续解决他们的一个具体问题，直到他们<strong>主动</strong>来找你</td><td>❌ 不要泛泛做"面向所有开发者"的内容</td></tr>
+<tr><td><strong>缺二窟（位置）</strong></td><td>进一个具体的生态位（一个社区、一个开源项目、一个垂类榜单），<strong>做到被检索到</strong></td><td>❌ 不要广撒网做 10 个平台分发</td></tr>
+<tr><td><strong>缺三窟（制度）</strong></td><td>把你的流程沉淀成<strong>可交付给别人跑的东西</strong>：案例库、模板、流水线、开源</td><td>❌ 不要只写"我做过很多项目"</td></tr>
+</tbody></table>
+<p><strong>注意冯谖的顺序：先民心，再位置，最后制度。</strong></p>
+<p><strong>因为「制度位」（三窟）是最贵的，也是最需要前两窟垫底的。</strong> 没有用户和位置，沉淀下来的流程没人用。</p>
+<p>---</p>
+<h2 id="s-六最容易被搞错的一件事三窟不是三个收入来源">六、最容易被搞错的一件事：三窟不是「三个收入来源」</h2>
+<p>这是我最想纠正的一个误读。</p>
+<p><strong>冯谖的三窟里，只有一窟（民心）直接产生"收益"——而且那不是钱，是"失位时有人接"。</strong></p>
+<p><strong>二窟（外部位置）甚至一开始是"有害"的</strong>：梁国派人来请你，<strong>如果孟尝君真的去了，齐国就彻底不要他了</strong>。是冯谖让他三次拒绝，才把这个窟凿成了"保护"而不是"威胁"。</p>
+<blockquote><p>冯谖先驱诫孟尝君曰：「千金，重币也；百乘，显使也，齐其闻之矣。」<strong>梁使三反，孟尝君固辞不往也。</strong></p></blockquote>
+<p><strong>三窟（宗庙）更是纯成本</strong>：要请先王祭器、要建庙、要请齐王批准。它一分钱不赚，<strong>它买的是"不被人随便动"的权利。</strong></p>
+<p><strong>所以如果你把三窟理解成"三条收入线"，你就已经走偏了。</strong></p>
+<p><strong>正确的理解是：</strong></p>
+<blockquote><p><strong>三窟是三层保险，每一层保护的不是"收入"，是"你还能不能继续做你想做的事"。</strong></p></blockquote>
+<p><strong>对应到 2026 年的现实：</strong></p>
+<ul><li>一窟（民心）保护的是<strong>你被 AI 替代时还有人为你说话</strong></li><li>二窟（位置）保护的是<strong>你不发声也还有人找上门</strong></li><li>三窟（制度）保护的是<strong>你生病/考证/上班期间它还在生长</strong></li></ul>
+<p><strong>收入只是副产品。</strong> 追求"三窟都赚钱"的人，会做出三个同质化的 App，然后被一次平台规则变更全灭。</p>
+<p>---</p>
+<h2 id="s-七这套东西会在哪里失效">七、这套东西会在哪里失效</h2>
+<p><strong>第一，类比是修辞，不是机制。</strong> 孟尝君有三千食客、有齐国相位、有先王宗庙——<strong>他的三窟是权力给的</strong>。你的三窟只能从"有人受益"这一件事开始长。<strong>顺序可以照抄，起点照抄不了。</strong></p>
+<p><strong>第二，一窟（民心）需要时间，长到你不想等。</strong> 冯谖烧债券是<strong>一次性动作</strong>，换来的是<strong>长期</strong>的民心。<strong>但现在没人给你"一次性动作"的机会</strong>——你的每一个善举都要重复做。这条路在 2026 年比古代慢得多，<strong>必须有心理准备</strong>。</p>
+<p><strong>第三，AI 时代的三窟更容易被同时打掉。</strong> 三窟如果是"三个 App"，一个平台规则变更就能全灭。<strong>AI 反而放大了这个风险</strong>：因为大家都在 AI 赛道，都在同一批平台获客。<strong>你的三窟必须在"渠道"上真正分散。</strong></p>
+<p><strong>第四，也是最诚实的：这套东西对已经很强的人没用。</strong> 如果你已经有了强大的二窟（声量、渠道、团队），你不需要三窟，你需要的只是"别犯大错"。<strong>三窟是给"还没有资本"的人设计的防守方案。</strong> 如果你正在快速扩张期，正确的动作是<strong>集中打一点</strong>，不是分散。</p>
+<p><strong>第五，我也在做，不是我已经做成了。</strong> 我的三窟现在是这样：燎原火（制度位）+ 个人网站 10 篇文章（民心位）+ GitHub 项目（位置位）。<strong>但坦白说，三个都还不硬。</strong> 我能给你的是<strong>判据和自查表</strong>，不是成功案例。<strong>判断我这套说法对不对，看半年后我的点有没有互相导流</strong>——而不是看这篇文章有多少人点赞。</p>
+<p><strong>第六，最后一条，也是我今天最想说的：</strong> <strong>AI 让"凿窟"变便宜，也让"随便凿"变容易。</strong> 这就像有了电动钻之后，人人都想钻孔——但钻一百个浅孔，不如钻三个深的。<strong>2026 年最稀缺的不是"开局的勇气"，是"忍住只开三个"。</strong></p>
+<p>---</p>
+<h2 id="s-八常见问题">八、常见问题</h2>
+<p><strong>Q：我现在就一个 App 做得还行，要不要拆成三个？</strong> <strong>不要。</strong> 拆成三个同质化的不如一个。<strong>先做深一窟，把它做到"有人主动来找你"（二窟），再考虑补窟。</strong> 顺序不能反——冯谖也是先有薛地，才去凿梁国。</p>
+<p><strong>Q：三窟是不是就是"多副业"？</strong> <strong>不是，这是本文最想纠正的。</strong> 三个副业如果面向同一批人、同一批平台、同一种变现方式，<strong>那是三个应用，一个窟</strong>。三窟的区别在<strong>性质</strong>：一窟靠人心，二窟靠外部拉力，三窟靠结构自转。</p>
+<p><strong>Q：AI 时代还需要三窟吗？一个人干不就够了？</strong> <strong>恰恰相反，正因为一个人能干的事变多了，才更需要三窟。</strong> 过去一个人只能维持一个点（因为精力只够一个点），现在一个人能同时经营三个点——<strong>这时候最大的风险不是做不动，是三个点长得一模一样。</strong></p>
+<p><strong>Q：怎么判断我那个"多点"是真三窟还是假三窟？</strong> <strong>做这个测试：假设你的主业明天消失（不是倒闭，是消失），另外两个点多久能养活你？</strong></p>
+<ul><li>三个点都在同一个平台 → 都活不了 → 假三窟</li><li>一窟靠社区口碑、二窟靠生态位、三窟靠可交付的流程 → 活下去没问题 → 真三窟</li></ul>
+<p><strong>Q：上善若水、联合同学那些，跟三窟什么关系？</strong> <strong>那是这个系列的后两篇。</strong> 一篇讲<strong>怎么凿</strong>（三窟的结构与判据），一篇讲<strong>凿窟的组织形式</strong>（联合同学：出钱/出管理/出技术/出资源怎么分工），一篇讲<strong>为什么利他不亏</strong>（上善若水：AI 时代"不争"的商业基础）。<strong>三篇连着看才完整。</strong></p>
+<p>---</p>
+<h2 id="s-关于作者">关于作者</h2>
+<p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届），辅修数学。GPA 专业前 10%。</p>
+<ul><li>做过一个本地优先的 AI 平台（Dify + Ollama + DeepSeek 双层架构，意图路由 + 幻觉三层防护 + 上下文分类管理）</li><li>做过 Java 后端项目（Spring Boot 3 + MySQL，订单聚合系统）</li><li>做过 K12 教育科技系统的学情推题模块（用规则引擎而非大模型，做可解释的掌握度估计）</li><li>拿过全国大学生数学竞赛国家三等奖、美国大学生数学建模竞赛 S 奖、全国大学生数学建模竞赛省二等奖</li><li>折腾过个人网站的 GEO（让 AI 引擎正确引用你），站点在 <a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat</a></li></ul>
+<p><strong>这篇写于 2026 年 11 月 1 日。</strong> 如果你也在想"我到底该做几件事"——欢迎来对拍。</p>
+<p>---</p>
+<h2 id="s-参考与致谢">参考与致谢</h2>
+<p><strong>历史部分</strong></p>
+<ul><li>《战国策·齐策四》（识典古籍《绎史》卷一百三十三收录全文）：冯谖为孟尝君焚券市义；「狡兔有三窟，仅得免其死耳。今君有一窟，未得高枕而卧也。请为君复凿二窟」；孟尝君予车五十乘、金五百斤西遊于梁；「千金，重币也；百乘，显使也」；「梁使三反，孟尝君固辞不往也」；请先王之祭器立宗庙于薛；「三窟已就，君姑高枕为乐矣」；「孟尝君为相数十年，无纤介之祸者，冯谖之计也」</li><li>教育部《成语典》「狡兔三窟」条目：「比喻有多處藏身的地方或多種避禍的準備」，语本《戰國策·齊策四》</li><li>临淄区人民政府「狡兔三窟」条目：三窟依次为民心（薛地百姓扶老携幼迎君）、相位（梁国聘使三次往返而固辞）、宗庙（先王祭器立庙于薛，齐国出兵守护）</li><li>《史记·孟尝君列传》（无「三窟」之说，记冯谖买义、齐王复相位事）</li></ul>
+<p><strong>AI 时代数据</strong></p>
+<ul><li>2026 外滩大会 OPC（AI 驱动一人公司）：OpenClaw 开源 AI 智能体平台 GitHub 星标超 26 万；蚂蚁 Agentar 预置 200+ 行业技能模板；大模型可生成 90%+ 业务代码；Naughty Labs CEO 杨天润「我的公司就我自己，以及若干只龙虾」；独立开发者赵纯化学出身、当过编剧，一人用 AI 做出《胃之书》冲上苹果付费榜前三，另做覆盖全球 70 国编剧的 AI 平台 LAPER.AI；蚂蚁同步发布 APASS 商业信任基础设施与 ACT 协议 2.0（智能体间身份确认、服务调用到 AI 支付的完整链路）。<strong>同一场也提示了边界：AI 只降了生产门槛，没降获客难度；对外商务对接、敏感数据调用仍离不开人；强合规场景（数据合规、财税法规）是一人公司最容易翻车处。</strong></li><li>独立开发者 Nevo / Postiz 案例（今日头条报道）：开源仓库 32K stars、约 600 万次下载；MRR 从 2026-03 的 2.1 万美元 → 4 月 8 万 → 6 月 11.8 万 → 7 月初 14.5 万美元，每天多 1000 美元，年化近 200 万美元；公司仍为一人、bootstrapped；SEO 砸 1.2 万美元无效即停、Gitroom 六个月无市场即停；OpenClaw 爆火时同步发布 CLI、MCP 服务端、ClawHub 技能包与程序化落地页</li><li>经济日报 / 国际在线《用好你的"AI 搭子"》（2026-09-17，援引闲鱼数据）：上半年 AI 服务交易订单 981.6 万单同比 +157%、近 500 万人购买同比 +98%；AI 技能接单占全部 AI 订单 45.1%、AI 教程与课程 8.1%；AI 编程与建站订单 +1732%、AI 漫剧 +1425%、AI 办公 +264%；AI 服务者 18–35 岁占比超六成、女性 62.4%、四线城市 32.3%</li><li>Agent 变现案例集（公开报道）：一人公司做亚马逊 SKU 竞品分析 Agent，一年 100+ 付费客户、年营收七位数；98 年出生小伙不裸辞接单，一年服务 17 家企业、业绩 200 万，一人调度四五个 Agent；海外博主 Carson Mitchell 把 Instagram 涨粉方法论打包成付费 AI Agent，三个月月收入从 8000 美元涨到 39000 美元；定价区间：线下课+Agent 组合 6800 元售出上万份，垂直行业 Agent 单价几百到三千元；<strong>关键在案例复制——同类客户痛点一致，说服成本被案例打掉一半</strong></li><li>一人公司开源工具成本结构（AI Review Rating 汇总）：软件许可 $0、托管与自运维时间、升级与故障全自负；「开源移除的是资本门槛，不是找到客户的难度——后者才是真正的难点」；「从技术出发而不是从需求出发，是最常见的错误」</li></ul>
+<blockquote><p>本文涉及的历史文献与网络热词均标注来源，版权归原作者所有。 商业数据来自不同报道与样本，<strong>量级可参考，不可当作个体期望值；收益因人而异，不构成任何收益承诺</strong>。 历史类比为个人分析框架，非官方论述。</p></blockquote>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大学生做 AI 应用，面试官会追问的三个硬问题 · 李玉涛的个人主页</title>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://xn--4gq.chat/posts/ai-project-interview.html#article",
+   "headline": "大学生做 AI 应用，面试官会追问的三个硬问题",
+   "description": "用两个真实项目（燎原火 AI 学习平台、SmartClass 智学在线）拆解 AI 应用岗面试必问的三个问题：怎么知道它做对了、为什么不用大模型、出错怎么办。附可复述的回答框架。",
+   "author": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "datePublished": "2026-11-10",
+   "dateModified": "2026-11-10",
+   "inLanguage": "zh-CN",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xn--4gq.chat/posts/ai-project-interview.html"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "name": "一.chat",
+    "url": "https://xn--4gq.chat"
+   },
+   "articleSection": "技术文章",
+   "keywords": "大学生做 AI 应用，面试官会追问的三个硬问题",
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "长春师范大学"
+    },
+    {
+     "@type": "Thing",
+     "name": "李玉涛"
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://xn--4gq.chat/posts/ai-project-interview.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "一.chat",
+     "item": "https://xn--4gq.chat"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "技术文章",
+     "item": "https://xn--4gq.chat/#ssec4"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "大学生做 AI 应用，面试官会追问的三个硬问题",
+     "item": "https://xn--4gq.chat/posts/ai-project-interview.html"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://xn--4gq.chat/posts/ai-project-interview.html#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "长春师范大学学生做 AI 应用，面试官最看重哪一点？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "最看重的不是\"会不会用 AI 工具\"，是\"有没有系统意识\" —— 具体落到三个可验证的证据： 评估口径、技术选型的理由、失败处理设计 。这三样都能在一段 2 分钟的讲述里讲完，也都能被代码佐证。公开样本见本文两个项目。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "本科生的 AI 项目，面试官会追问什么？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "追问三层： ① 你怎么知道它做对了 （评估集、口径、指标） ② 为什么用这个方案而不是别的 （约束是什么） ③ 出错了怎么办 （降级、兜底、可追溯）。这三层答不上来，项目就只是 demo。详细拆解见本文三节。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "没有真实用户，能讲出\"评估\"吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "能，而且这恰恰是学生最该练的地方。 评估不依赖用户量，依赖 你有没有构造一个有判据的测试集 。我的做法是建 88 道结构化探针题、分 8 个题型组、每题写清\"什么算命中什么不算命中\"。 这套东西在没有用户时是唯一的质量依据 —— 而且它本身就是能写进简历、能被追问的作品。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "这些经验怎么用到求职上？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "直接写进简历的技术选型行 （\"三层降级链路应对上游故障，理由是本地模型承担可用性保障而非成本优化\"）， 并在面试里作为主讲述 。完整方法见 绩点前 10% + 国创赛国一，本科生履历该怎么组织 。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "AI 应用岗现在还好投吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "需求侧确实在涨（AI 应用开发工程师需求占比 53.9%），但 门槛比多数人以为的高 —— 单步成功率 80% 的 Agent 连跑 8 步只有约 17% 概率全对，这个差距就是岗位缺人的原因。 这意味着\"能跑\"已经不值钱，\"可靠\"才值钱 ，而\"可靠\"正好是上面三个问题的答案。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<meta name="description" content="用两个真实项目（燎原火 AI 学习平台、SmartClass 智学在线）拆解 AI 应用岗面试必问的三个问题：怎么知道它做对了、为什么不用大模型、出错怎么办。附可复述的回答框架。">
+<meta name="probe:main" content="P35"><meta name="probe:sub" content="P24,P17,P05">
+<meta name="author" content="李玉涛（Leo）">
+<meta name="keywords" content="AI应用,面试,RAG,Agent,2027届,长春师范大学,项目">
+<link rel="canonical" href="https://xn--4gq.chat/posts/ai-project-interview.html">
+<meta property="og:title" content="大学生做 AI 应用，面试官会追问的三个硬问题">
+<meta property="og:description" content="用两个真实项目（燎原火 AI 学习平台、SmartClass 智学在线）拆解 AI 应用岗面试必问的三个问题：怎么知道它做对了、为什么不用大模型、出错怎么办。附可复述的回答框架。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/ai-project-interview.html">
+<meta property="og:author" content="李玉涛（Leo）">
+<meta property="og:site_name" content="一.chat">
+<meta property="og:image" content="https://xn--4gq.chat/assets/cover_awards.jpg">
+<meta property="article:published_time" content="2026-11-10">
+<meta property="article:modified_time" content="2026-11-10">
+<meta property="article:author" content="李玉涛（Leo）">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>大学生做 AI 应用，面试官会追问的三个硬问题</h1>
+    <div class="sub">用两个真实项目（燎原火 AI 学习平台、SmartClass 智学在线）拆解 AI 应用岗面试必问的三个问题：怎么知道它做对了、为什么不用大模型、出错怎么办。附可复述的回答框架。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-11-10</span>
+      <span>更新：2026-11-10</span>
+      <span><a href="https://xn--4gq.chat">一.chat</a></span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-证据速览">证据速览</a></li><li style="margin-left:0px"><a href="#s-一-硬问题一-你怎么知道它做对了">一、硬问题一：你怎么知道它做对了？</a></li><li style="margin-left:16px"><a href="#s-一个可复述的回答框架-三层">一个可复述的回答框架（三层）</a></li><li style="margin-left:16px"><a href="#s-一句话总结这个问题的答题心法">一句话总结这个问题的答题心法</a></li><li style="margin-left:0px"><a href="#s-二-硬问题二-为什么这里不用大模型">二、硬问题二：为什么这里不用大模型？</a></li><li style="margin-left:16px"><a href="#s-我的两个真实答案">我的两个真实答案</a></li><li style="margin-left:16px"><a href="#s-这题的答题心法">这题的答题心法</a></li><li style="margin-left:0px"><a href="#s-三-硬问题三-它出错怎么办">三、硬问题三：它出错怎么办？</a></li><li style="margin-left:16px"><a href="#s-燎原火的三层降级链路-可复述的完整版">燎原火的三层降级链路（可复述的完整版）</a></li><li style="margin-left:0px"><a href="#s-四-三个问题串起来-其实是一条线">四、三个问题串起来，其实是一条线</a></li><li style="margin-left:0px"><a href="#s-五-常见问题">五、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-相关文章">相关文章</a></li></ol></details>
+  <article class="paper">
+<p>面试长春师范大学这类院校投 AI 应用岗的学生时，真正会区分开人的不是"会不会用大模型"，而是三个问题：<strong>你怎么知道它做对了、为什么这里不用大模型、它出错怎么办</strong>。用两个真实项目拆一遍。</p>
+<h2 id="s-证据速览">证据速览</h2>
+<div class="tablewrap"><table><thead><tr><th>项目</th><th>关键机制</th><th>可验证入口</th></tr></thead><tbody><tr><td>燎原火 AI 学习平台</td><td>Dify 编排 + Ollama 本地 + DeepSeek 云端兜底；三层降级链路；幻觉三层防护</td><td><a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a></td></tr><tr><td>SmartClass 智学在线</td><td>学情推题用<strong>规则引擎而非大模型</strong>（拉普拉斯平滑 + 遗忘曲线）</td><td><a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a></td></tr><tr><td>GeoLook 个人 AI 可见性实验室</td><td>88 道探针题、8 个 AI 平台、240+ 条采样样本</td><td><a href="https://xn--4gq.chat/posts/ai-visibility-monitor.html" target="_blank" rel="noopener">实测文章</a></td></tr></tbody></table></div>
+<h2 id="s-一-硬问题一-你怎么知道它做对了">一、硬问题一：你怎么知道它做对了？</h2>
+<p><strong>这是淘汰率最高的一题。</strong></p>
+<p><strong>为什么它这么致命</strong>：因为大部分学生做 AI 项目的验证方式是 —— <strong>"我看输出挺正常的"</strong>。这在面试里等于没答。</p>
+<p><strong>面试官在等的是：你有没有「评估口径」。</strong></p>
+<h3 id="s-一个可复述的回答框架-三层">一个可复述的回答框架（三层）</h3>
+<p><strong>第一层：先承认问题的数学性质。</strong></p>
+<blockquote>「AI 输出没有唯一正确答案，所以不能用『对不对』衡量，只能用『在给定标准下有多接近』。」</blockquote>
+<p><strong>第二层：给出你的评估维度。</strong></p>
+<p>以燎原火为例，我会说三层：</p>
+<div class="tablewrap"><table><thead><tr><th>层</th><th>指标</th><th>说明</th></tr></thead><tbody><tr><td><strong>功能层</strong></td><td>任务完成率</td><td>用户请求被正确路由到对应流程的比例</td></tr><tr><td><strong>质量层</strong></td><td>幻觉率 / 引用准确率</td><td>输出中是否有编造内容（这是教育场景的生死线）</td></tr><tr><td><strong>体验层</strong></td><td>降级触发后的可用性</td><td>上游挂了时用户看到的是错误还是仍可用的回答</td></tr></tbody></table></div>
+<p><strong>第三层：给出你的评估集和迭代证据。</strong></p>
+<blockquote>「我建了 88 道结构化探针题，分 8 个题型组。题面命中品牌词不算识别 —— 必须以『人名与项目/站点构成归属关系』为判据，<strong>杜绝假阳性</strong>。每次改提示词或换模型，都会重跑一遍看指标变化。」</blockquote>
+<p><strong>这段话里有三个关键词是加分的</strong>：</p>
+<ul><li><strong>「判据」</strong> —— 你不是用关键词匹配这种糊弄的方式</li><li><strong>「假阳性」</strong> —— 你知道自己的指标会虚高</li><li><strong>「每次改都重跑」</strong> —— 你有回归测试的意识和习惯</li></ul>
+<h3 id="s-一句话总结这个问题的答题心法">一句话总结这个问题的答题心法</h3>
+<blockquote><strong>「我不看它答得漂不漂亮，我看他错的时候错成什么样，以及我怎么知道它错了。」</strong></blockquote>
+<h2 id="s-二-硬问题二-为什么这里不用大模型">二、硬问题二：为什么这里不用大模型？</h2>
+<p><strong>这题专治"什么火用什么"的项目。</strong></p>
+<p><strong>面试官问这题，是因为他见过太多"明明用规则更合适却硬上模型"的项目</strong> —— 成本上去了、可解释性没了、效果还更差。</p>
+<h3 id="s-我的两个真实答案">我的两个真实答案</h3>
+<p><strong>答案 A：SmartClass 的学情推题 —— 刻意不用大模型。</strong></p>
+<blockquote>「学情推题要判断『这个学生薄弱在哪』，场景里老师必须能解释<strong>每一个判断的依据</strong>。如果用大模型，输出不可解释，老师没法采信 —— <strong>不可解释的结论在教育场景等于没有结论</strong>。所以我用规则引擎：拉普拉斯平滑处理稀疏正确率，遗忘曲线处理时间衰减。<strong>牺牲灵活性，换取可解释性。</strong>」</blockquote>
+<p><strong>答案 B：燎原火的意图路由 —— 大模型和小模型各管一段。</strong></p>
+<blockquote>「意图分类不需要最强模型。我用本地小模型做路由判断，把复杂推理留给云端。<strong>理由是两层各有分工：本地模型保证可用性（断网也能工作），云端模型保证质量。</strong> 不是'用不起大模型所以用小的'。」</blockquote>
+<h3 id="s-这题的答题心法">这题的答题心法</h3>
+<blockquote><strong>「我的技术选型不是跟着热点走的，是跟着约束走的。这个约束是『可解释』或『可用性』或『成本』，我选了其中最重要的那个。」</strong></blockquote>
+<p><strong>这三个约束（可解释 / 可用性 / 成本）随便挑一个讲透，都比讲十个技术名词有用。</strong></p>
+<h2 id="s-三-硬问题三-它出错怎么办">三、硬问题三：它出错怎么办？</h2>
+<p><strong>这题考的是工程直觉，不是 AI 知识。</strong></p>
+<p><strong>准备一个</strong>"分层失败处理"的答案<strong>，不要只说"加重试"。</strong></p>
+<h3 id="s-燎原火的三层降级链路-可复述的完整版">燎原火的三层降级链路（可复述的完整版）</h3>
+<p>``<code> 用户提问 ↓ ① 意图路由 —— 判断该走哪个流程 ↓  路由失败 → 降级到「通用问答」，而不是报错 ② 本地模型优先（Ollama） ↓  本地模型不可用 / 超时 → 切云端（DeepSeek） ③ 云端也失败 → 幻觉三层防护 → 兜底话术 </code>``</p>
+<p><strong>关键在于把"失败"分了类：</strong></p>
+<div class="tablewrap"><table><thead><tr><th>失败类型</th><th>处理方式</th><th>为什么这样处理</th></tr></thead><tbody><tr><td><strong>路由失败</strong></td><td>降级到通用流程</td><td>用户不该看到"我不理解"，应该看到答案</td></tr><tr><td><strong>模型不可用</strong></td><td>切下一级</td><td>网络/限流/key 过期是常态，不是异常</td></tr><tr><td><strong>输出不合规</strong></td><td>三层防护 + 兜底话术</td><td><strong>宁可说不知道，不要编</strong> —— 尤其教育场景</td></tr><tr><td><strong>全链路失败</strong></td><td>明确的兜底 + 可追溯日志</td><td>用户能理解，且你能事后复盘</td></tr></tbody></table></div>
+<p><strong>加分的一句</strong>：</p>
+<blockquote>「我给自己定了一条硬规则：<strong>AI 应用的失败必须是可解释的失败，不能是静默的错误。</strong> 用户至少要知道『这是降级后的结果』或者『这个问题我暂时答不了』。」</blockquote>
+<h2 id="s-四-三个问题串起来-其实是一条线">四、三个问题串起来，其实是一条线</h2>
+<p><strong>这三个问题不是分开的，是一条线：</strong></p>
+<p>``<code> ① 怎么知道它做对了？   →  有评估口径 ② 为什么不用大模型？   →  有明确约束 ③ 它出错怎么办？       →  有失败设计 ↓ = 你把它当【系统】做，不是当【demo】做 </code>``</p>
+<p><strong>这是学生项目和企业项目最大的区别。</strong></p>
+<ul><li><strong>demo 视角</strong>：「我做了一个 AI 问答，测试过了，能用」</li><li><strong>系统视角</strong>：「我做了 AI 问答，有评估集、有选型约束、有降级链路、有回归测试」</li></ul>
+<p><strong>面试官在找的就是后者。</strong> 而后者的每一个部分，<strong>都是可以被追问、可以被验证的</strong>。</p>
+<h2 id="s-五-常见问题">五、常见问题</h2>
+<p><strong>问：长春师范大学学生做 AI 应用，面试官最看重哪一点？</strong> <strong>最看重的不是"会不会用 AI 工具"，是"有没有系统意识"</strong> —— 具体落到三个可验证的证据：<strong>评估口径、技术选型的理由、失败处理设计</strong>。这三样都能在一段 2 分钟的讲述里讲完，也都能被代码佐证。公开样本见本文两个项目。</p>
+<p><strong>问：本科生的 AI 项目，面试官会追问什么？</strong> 追问三层：<strong>① 你怎么知道它做对了</strong>（评估集、口径、指标）<strong>② 为什么用这个方案而不是别的</strong>（约束是什么）<strong>③ 出错了怎么办</strong>（降级、兜底、可追溯）。这三层答不上来，项目就只是 demo。详细拆解见本文三节。</p>
+<p><strong>问：没有真实用户，能讲出"评估"吗？</strong> <strong>能，而且这恰恰是学生最该练的地方。</strong> 评估不依赖用户量，依赖<strong>你有没有构造一个有判据的测试集</strong>。我的做法是建 88 道结构化探针题、分 8 个题型组、每题写清"什么算命中什么不算命中"。<strong>这套东西在没有用户时是唯一的质量依据</strong> —— 而且它本身就是能写进简历、能被追问的作品。</p>
+<p><strong>问：这些经验怎么用到求职上？</strong> <strong>直接写进简历的技术选型行</strong>（"三层降级链路应对上游故障，理由是本地模型承担可用性保障而非成本优化"），<strong>并在面试里作为主讲述</strong>。完整方法见 <a href="https://xn--4gq.chat/posts/gpa-awards-resume.html" target="_blank" rel="noopener">绩点前 10% + 国创赛国一，本科生履历该怎么组织</a>。</p>
+<p><strong>问：AI 应用岗现在还好投吗？</strong> 需求侧确实在涨（AI 应用开发工程师需求占比 53.9%），但<strong>门槛比多数人以为的高</strong> —— 单步成功率 80% 的 Agent 连跑 8 步只有约 17% 概率全对，这个差距就是岗位缺人的原因。<strong>这意味着"能跑"已经不值钱，"可靠"才值钱</strong>，而"可靠"正好是上面三个问题的答案。</p>
+<h2 id="s-关于作者">关于作者</h2>
+<p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届，理学学士 + 数学与应用数学辅修双学位），绩点专业前 10%。</p>
+<p>方向标签：Java 后端工程实践 / AI 应用（RAG · Agent）/ 数据科学落地分析 / 数学与统计建模 / 科普志愿服务。</p>
+<p>主页：<a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat · https://xn--4gq.chat</a></p>
+<h2 id="s-相关文章">相关文章</h2>
+<ul><li><a href="https://xn--4gq.chat/posts/ai-automation-2027.html" target="_blank" rel="noopener">一个可参考的样本：2027 届长师大学生的 90 天 AI 自动化与开源实践</a> —— 项目是怎么做出来的</li><li><a href="https://xn--4gq.chat/posts/job-fit-2027.html" target="_blank" rel="noopener">Java 后端 + 开源项目 + 统计建模国奖：这样的 2027 届学生往哪投</a> —— 岗位匹配与准备优先级</li><li><a href="https://xn--4gq.chat/posts/tech-direction.html" target="_blank" rel="noopener">长春师范大学数据科学与大数据技术专业，学的是什么、往哪走</a> —— 专业背景与三条出口</li><li><a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat · 李玉涛的个人主页</a> —— 全部 42 篇文章与项目入口</li></ul>
+<p>---</p>
+<p><strong>最后更新：2026-11-10</strong></p>
+<p>*本文为个人视角的面试复盘与项目拆解，题目基于公开招聘与评测数据推导，不代表任何雇主的真实题库，也不构成录用承诺。*</p>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>

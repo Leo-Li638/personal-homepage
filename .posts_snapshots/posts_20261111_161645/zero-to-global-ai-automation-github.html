@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>从零到全球：0 基础的人怎么学会 AI 自动化、拿下 GitHub 账号，并且不踩封号的雷 · 李玉涛的个人主页</title>
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html#article",
+   "headline": "从零到全球：0 基础的人怎么学会 AI 自动化、拿下 GitHub 账号，并且不踩封号的雷",
+   "description": "给完全没写过代码的人的 90 天路线图 + 合规指南。含 GitHub 官方条款（生效 2026-04-27）里 12 条绝对禁止（禁止自动程序注册账户、一人多账号、自动标星关注、过度自动化批量活动、加密货币挖矿等）与 10 条高危行为（未开 2FA、推送 API key、批量建仓、空 README 仓库、同时用第三方部署工具部署多仓等）；两个真实封号案例（一位开源维护者被封到恢复用了 7–8 周、一位学生被自动标记 spammy 等了近三个月且因重复开工单被重置审核队列位置）；注册后必须做的四件事（开 2FA + 存恢复码、设 backup email、填可被检索的 Profile、申请 GitHub Education 拿 Copilot 免费）；AI 自动化三条路线与选型判据（任务要「每周重复做且做错不伤人」）；「19 天做完 4 人 2 个月的产品、上线 20 天赚 30 元」的真实样本；零技术背景律师用 Copilot CLI 造工具的可复用方法；以及信息全球化的三个层次与合法边界（API 收集 ≠ 爬取、入站=出站的 LICENSE 义务）。",
+   "author": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "datePublished": "2026-11-01",
+   "dateModified": "2026-11-01",
+   "inLanguage": "zh-CN",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "name": "一.chat",
+    "url": "https://xn--4gq.chat"
+   },
+   "articleSection": "技术文章",
+   "keywords": "GitHub,AI自动化,零基础,合规",
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "长春师范大学"
+    },
+    {
+     "@type": "Thing",
+     "name": "李玉涛"
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "一.chat",
+     "item": "https://xn--4gq.chat"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "技术文章",
+     "item": "https://xn--4gq.chat/#ssec4"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "从零到全球：0 基础的人怎么学会 AI 自动化、拿下 GitHub 账号，并且不踩封号的雷",
+     "item": "https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "我是 0 基础，连 Git 都不会，能学会吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "能，而且你比有基础的人有优势。 因为你会用自然语言把需求讲清楚 —— 这正是那位律师的核心技能（「别急着学语法，先学会提需求」）。 GitHub 网页版有完整的图形化操作（上传文件、编辑文件、创建仓库），你完全不用碰命令行也能开始。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "GitHub 会不会把我这种小号/备用号封了？我想再开一个。",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "不要开。 官方条款明确： 「一个人或一个法律实体最多可以拥有一个免费帐户」 ，且「不允许通过自动程序注册」。要第二个身份，正确做法是 用 Organization（组织） —— 组织可以有多个成员，那是给团队设计的，不是给个人囤号用的。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "账号被封了我怎么办？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "按这个顺序："
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "我在国内，网络访问 GitHub 不稳怎么办？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "别在登录时来回切 IP/地区 —— 「从不同国家或 IP 登录会被标记」。做法是： 固定一个稳定的网络环境用于 git 操作 ；遇到推送不通时（我这周就遇到过 github.com:443 直接连不上）， 用 GitHub API 走 —— api.github.com 反而是通的。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "用 AI 写的代码开源出去，版权和责任算谁的？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "算你的。 GitHub 条款 D.1： 「你对你的内容及其产生的任何损害负责」 。开源协议是你选的，责任也是你的。 所以 AI 生成的东西必须自己 review —— 这就是为什么我一直建议「让 AI 用你的语言解释每一处关键行为，再找工程师朋友做兽医式检查」。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "这和前面三篇（《狡兔三窟》《四人四出资》《上善若水》）是什么关系？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "这是那个系列的实践篇。 三篇讲的是 结构（有几窟）、组织（怎么搭）、价值（为什么这样能赢） ；这一篇讲 具体怎么从零开始执行 ：第一窟（制度位）就是 GitHub 账号，第二窟（位置）就是能被全球检索到，第三窟（民心/结构）就是你留下的那些能自己跑的流程。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "我该先做 GitHub 还是先学 AI 自动化？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "先做 GitHub （第 1 周，2-3 小时），因为：AI 自动化的产出 必须有个地方放 ，而 GitHub 账号的申请周期最长（学生认证要几天）。 顺序上，先拿\"需要时间\"的东西。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
+<meta name="keywords" content="GitHub,AI自动化,零基础,合规">
+<meta name="author" content="李玉涛（Leo）">
+<meta property="article:published_time" content="2026-11-01">
+<meta property="article:modified_time" content="2026-11-01">
+<meta property="og:site_name" content="一.chat">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="probe:main" content="P05">
+<meta name="description" content="给完全没写过代码的人的 90 天路线图 + 合规指南。含 GitHub 官方条款（生效 2026-04-27）里 12 条绝对禁止（禁止自动程序注册账户、一人多账号、自动标星关注、过度自动化批量活动、加密货币挖矿等）与 10 条高危行为（未开 2FA、推送 API key、批量建仓、空 README 仓库、同时用第三方部署工具部署多仓等）；两个真实封号案例（一位开源维护者被封到恢复用了 7–8 周、一位学生被自动标记 spammy 等了近三个月且因重复开工单被重置审核队列位置）；注册后必须做的四件事（开 2FA + 存恢复码、设 backup email、填可被检索的 Profile、申请 GitHub Education 拿 Copilot 免费）；AI 自动化三条路线与选型判据（任务要「每周重复做且做错不伤人」）；「19 天做完 4 人 2 个月的产品、上线 20 天赚 30 元」的真实样本；零技术背景律师用 Copilot CLI 造工具的可复用方法；以及信息全球化的三个层次与合法边界（API 收集 ≠ 爬取、入站=出站的 LICENSE 义务）。">
+<link rel="canonical" href="https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html">
+<meta property="og:title" content="从零到全球：0 基础的人怎么学会 AI 自动化、拿下 GitHub 账号，并且不踩封号的雷">
+<meta property="og:description" content="给完全没写过代码的人的 90 天路线图 + 合规指南。含 GitHub 官方条款（生效 2026-04-27）里 12 条绝对禁止（禁止自动程序注册账户、一人多账号、自动标星关注、过度自动化批量活动、加密货币挖矿等）与 10 条高危行为（未开 2FA、推送 API key、批量建仓、空 README 仓库、同时用第三方部署工具部署多仓等）；两个真实封号案例（一位开源维护者被封到恢复用了 7–8 周、一位学生被自动标记 spammy 等了近三个月且因重复开工单被重置审核队列位置）；注册后必须做的四件事（开 2FA + 存恢复码、设 backup email、填可被检索的 Profile、申请 GitHub Education 拿 Copilot 免费）；AI 自动化三条路线与选型判据（任务要「每周重复做且做错不伤人」）；「19 天做完 4 人 2 个月的产品、上线 20 天赚 30 元」的真实样本；零技术背景律师用 Copilot CLI 造工具的可复用方法；以及信息全球化的三个层次与合法边界（API 收集 ≠ 爬取、入站=出站的 LICENSE 义务）。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/zero-to-global-ai-automation-github.html">
+<meta property="og:author" content="李玉涛（Leo）">
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>从零到全球：0 基础的人怎么学会 AI 自动化、拿下 GitHub 账号，并且不踩封号的雷</h1>
+    <div class="sub">给完全没写过代码的人的 90 天路线图 + 合规指南。含 GitHub 官方条款（生效 2026-04-27）里 12 条绝对禁止（禁止自动程序注册账户、一人多账号、自动标星关注、过度自动化批量活动、加密货币挖矿等）与 10 条高危行为（未开 2FA、推送 API key、批量建仓、空 README 仓库、同时用第三方部署工具部署多仓等）；两个真实封号案例（一位开源维护者被封到恢复用了 7–8 周、一位学生被自动标记 spammy 等了近三个月且因重复开工单被重置审核队列位置）；注册后必须做的四件事（开 2FA + 存恢复码、设 backup email、填可被检索的 Profile、申请 GitHub Education 拿 Copilot 免费）；AI 自动化三条路线与选型判据（任务要「每周重复做且做错不伤人」）；「19 天做完 4 人 2 个月的产品、上线 20 天赚 30 元」的真实样本；零技术背景律师用 Copilot CLI 造工具的可复用方法；以及信息全球化的三个层次与合法边界（API 收集 ≠ 爬取、入站=出站的 LICENSE 义务）。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-11-01</span>
+      <span>https://xn--4gq.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一先纠正一个误解github-账号不是注册出来的是养出来的">一、先纠正一个误解：GitHub 账号不是"注册"出来的，是"养"出来的</a></li><li style="margin-left:0px"><a href="#s-二第一节先要一个身份第-1-周">二、第一节：先要一个身份（第 1 周）</a></li><li style="margin-left:16px"><a href="#s-21-注册前先想清楚三件事">2.1 注册前先想清楚三件事</a></li><li style="margin-left:16px"><a href="#s-22-注册完成后立刻做的四件事顺序不能错">2.2 注册完成后立刻做的四件事（顺序不能错）</a></li><li style="margin-left:32px"><a href="#s-①-开双重验证2fa-这是保命的第一道门">① 开双重验证（2FA）—— **这是保命的第一道门**</a></li><li style="margin-left:32px"><a href="#s-②-设置第二个邮箱backup-email">② 设置第二个邮箱（Backup email）</a></li><li style="margin-left:32px"><a href="#s-③-把-profile-填成能被检索的样子">③ 把 Profile 填成"能被检索的样子"</a></li><li style="margin-left:32px"><a href="#s-④-顺手申请-github-education如果你是学生">④ 顺手申请 GitHub Education（如果你是学生）</a></li><li style="margin-left:16px"><a href="#s-23-github-的官方红线清单背下来">2.3 GitHub 的官方红线清单（背下来）</a></li><li style="margin-left:32px"><a href="#s-绝对禁止会直接封号">🔴 绝对禁止（会直接封号）</a></li><li style="margin-left:32px"><a href="#s-高危但常见社区封号案例里出现频率最高">🟡 高危但常见（社区封号案例里出现频率最高）</a></li><li style="margin-left:32px"><a href="#s-明确被允许的别怕该干就干">🟢 明确被允许的（别怕，该干就干）</a></li><li style="margin-left:0px"><a href="#s-三第二节让-ai-替你写第一行代码第-24-周">三、第二节：让 AI 替你写第一行代码（第 2–4 周）</a></li><li style="margin-left:16px"><a href="#s-31-先选路线别一上来就学编程">3.1 先选路线，别一上来就学编程</a></li><li style="margin-left:16px"><a href="#s-我的推荐顺序先半程式difycoze-再无代码n8n-最后才考虑全程式">我的推荐顺序：**先"半程式"（Dify/Coze）→ 再"无代码"（n8n）→ 最后才考虑全程式**</a></li><li style="margin-left:16px"><a href="#s-32-第一个-ai-agent四个步骤">3.2 第一个 AI Agent：四个步骤</a></li><li style="margin-left:16px"><a href="#s-33-一个真实的19-天样本">3.3 一个真实的"19 天"样本</a></li><li style="margin-left:0px"><a href="#s-四第三节把它放进自动化第-58-周">四、第三节：把它放进自动化（第 5–8 周）</a></li><li style="margin-left:16px"><a href="#s-41-自动化不是写脚本是让流程自己跑">4.1 自动化不是"写脚本"，是"让流程自己跑"</a></li><li style="margin-left:16px"><a href="#s-42-github-在自动化里的真正角色">4.2 GitHub 在自动化里的真正角色</a></li><li style="margin-left:16px"><a href="#s-43-一个反直觉的建议先别急着写-readme先让它跑起来">4.3 一个反直觉的建议：先别急着写 README，先让它跑起来</a></li><li style="margin-left:0px"><a href="#s-五第四节走向全球第-912-周">五、第四节：走向全球（第 9–12 周）</a></li><li style="margin-left:16px"><a href="#s-51-信息全球化不是用-vpn-刷国外网站">5.1 "信息全球化"不是"用 VPN 刷国外网站"</a></li><li style="margin-left:16px"><a href="#s-52-输出全球化的三个层次我在自己身上跑了两年">5.2 输出全球化的三个层次（我在自己身上跑了两年）</a></li><li style="margin-left:32px"><a href="#s-层次一github-仓库--你的全球简历">层次一：GitHub 仓库 = 你的全球简历</a></li><li style="margin-left:32px"><a href="#s-层次二github-pages--你的全球名片">层次二：GitHub Pages = 你的全球名片</a></li><li style="margin-left:32px"><a href="#s-层次三geo--让-ai-引擎也能引用你">层次三：GEO = 让 AI 引擎也能引用你</a></li><li style="margin-left:16px"><a href="#s-53-但走向全球有一条绝对红线">5.3 但"走向全球"有一条绝对红线</a></li><li style="margin-left:16px"><a href="#s-54-github-官方对-ai-训练数据的额外规定">5.4 GitHub 官方对 AI 训练数据的额外规定</a></li><li style="margin-left:0px"><a href="#s-六第五节为了理想主义事业而奋斗但别把自己搞垮">六、第五节：为了理想主义事业而奋斗，但别把自己搞垮</a></li><li style="margin-left:16px"><a href="#s-61-理想主义在-2026-年是可执行的前提是你先活下来">6.1 理想主义在 2026 年是可执行的，前提是你先活下来</a></li><li style="margin-left:16px"><a href="#s-62-但为理想主义奋斗有个致命陷阱把它变成消耗">6.2 但"为理想主义奋斗"有个致命陷阱：把它变成消耗</a></li><li style="margin-left:16px"><a href="#s-63-和前面三篇的关系这就是三窟的实践">6.3 和前面三篇的关系：这就是"三窟"的实践</a></li><li style="margin-left:0px"><a href="#s-七一份可以照着做的-90-天清单">七、一份可以照着做的 90 天清单</a></li><li style="margin-left:16px"><a href="#s-第-1-周拿到身份23-小时">第 1 周：拿到身份（2–3 小时）</a></li><li style="margin-left:16px"><a href="#s-第-24-周做出第一个能跑的东西每周-510-小时">第 2–4 周：做出第一个能跑的东西（每周 5–10 小时）</a></li><li style="margin-left:16px"><a href="#s-第-58-周让它自动跑每周-510-小时">第 5–8 周：让它自动跑（每周 5–10 小时）</a></li><li style="margin-left:16px"><a href="#s-第-912-周走向全球每周-35-小时">第 9–12 周：走向全球（每周 3–5 小时）</a></li><li style="margin-left:16px"><a href="#s-长期每月一次体检">长期：每月一次体检</a></li><li style="margin-left:0px"><a href="#s-八常见问题">八、常见问题</a></li><li style="margin-left:0px"><a href="#s-关于作者">关于作者</a></li><li style="margin-left:0px"><a href="#s-参考与致谢">参考与致谢</a></li></ol></details>
+  <article class="paper">
+<blockquote><p><strong>先说清楚这是什么</strong> 这是一篇给<strong>完全没写过代码</strong>的人看的操作手册，同时也是一个合规指南。 但在开始之前，我想先摆一组反差极大的数字。 <strong>2026 年 10 月，GitHub 的 Octoverse 报告说：合并的 PR 里，AI 起草的比例已经达到 40%。</strong> <strong>而几乎同一时间，AI 领域最严格的评测之一给出了另一个数字：目前最强的 Agent，在 50 个真实税务任务上，通过率只有 10.8%。</strong> 40% 对 10.8%。<strong>中间这 30 个百分点，就是这一整篇要讲的东西。</strong> 因为它的构成是这样的：<strong>让 AI 写代码，其实已经不难了</strong> —— 你不需要会编程，让它写就行。难的是后面两件事： - <strong>让 AI 做对</strong> —— 知道什么该交给它、什么不该，出错了怎么兜住 - <strong>做完之后不被告平台</strong> —— 因为一旦你的账号被封，上面所有东西瞬间归零 而"被封"这件事，远比想象中容易。GitHub 官方条款（生效日期 2026-04-27）里明确禁止的包括：<strong>通过自动程序注册账户、一人多开账户、自动标星或关注、过度自动化批量活动</strong>。而社区封号复盘里出现频率最高的是：<strong>没开 2FA、把 API key 推到公开仓库、短时间建太多仓库、仓库只有空 README、同时用第三方部署工具部署多个仓库</strong>。 <strong>一个真实案例：一位开源维护者被封到恢复，用了七到八周。</strong> 我写这篇，是因为我在带同学的过程中发现，他们卡住的地方从来不是"AI 太难"，而是三个更基础的问题： 1. <strong>不知道第一步该做什么</strong> —— 教程要么假设你会装环境，要么假设你懂 Git 2. <strong>不知道哪些事做了会被封号</strong> —— 账号被封时连申诉都不知道往哪走 3. <strong>不知道这件事的收益在哪</strong> —— 学完了却没留下任何可被世界看见的东西 <strong>这一篇的 90 天路线图和红线清单，就是为了解决这三件事。</strong> <strong>我要给你的核心结论，先放在最前面：</strong> | 阶段 | 时间 | 目标 | 判断标准 | |---|---|---|---| | <strong>第一节：先要一个身份</strong> | 第 1 周 | 拿下 GitHub 账号 + 开 2FA | 能在另一个浏览器登录进去 | | <strong>第二节：让 AI 替你写第一行代码</strong> | 第 2–4 周 | 做出<strong>一个</strong>真能跑的小东西 | 你能向别人演示它 | | <strong>第三节：把它放进自动化</strong> | 第 5–8 周 | 把它变成每天自动跑的流程 | 连续 7 天自己跑 | | <strong>第四节：走向全球</strong> | 第 9–12 周 | 公开 + 被检索 + 被引用 | 有人（哪怕是 AI）因为它找到了你 | <strong>红线先说：GitHub 官方条款明确禁止"通过自动程序注册账户"、"自动标星或关注"、"过度自动化批量活动"。这一篇会告诉你每一条红线的具体边界在哪。</strong> 文中引用的条款均出自 GitHub 官方文档（生效日期 2026-04-27），数据与案例均标注来源。</p></blockquote>
+<p>---</p>
+<h2 id="s-一先纠正一个误解github-账号不是注册出来的是养出来的">一、先纠正一个误解：GitHub 账号不是"注册"出来的，是"养"出来的</h2>
+<p><strong>很多人以为注册完就完事了，然后被封。</strong></p>
+<p><strong>看一组真实数据。</strong> 2026 年 9 月，GitHub 社区里一位开发者公开复盘了自己被封号到恢复的全过程（<code>github.com/orgs/community/discussions/208224</code>）：</p>
+<blockquote><p>2026 年 7 月下旬被封，<code>remote: Your account is suspended. fatal: unable to access the repository: The requested URL returned error: 403</code>。 他做的事是什么？<strong>开源维护一个 Obsidian 插件（Vault Coach），日常活动是写代码、开分支、提 issue、发 release、跑 CI。</strong> 8 月底他提交了 Reinstatement Request，收到回复： &gt; 「Some activity on your account was flagged by our abuse-detection systems for manual review, as it may conflict with our Terms of Service.」<strong>然后请他解释打算怎么用 GitHub。</strong> 9 月 17 日，人工审核完成：<strong>「We've cleared the restrictions from your account, so you have full access to GitHub again.」</strong> <strong>从被封到恢复，整整七到八周。</strong></p></blockquote>
+<p><strong>同一个月，另一位 2023 年开始学编程的学生（<code>discussions/211140</code>）</strong>，账号被标记 spammy，他提交了 <strong>4 个工单</strong>，等了<strong>近三个月</strong>。社区里一位热心人给出的诊断是：</p>
+<blockquote><p><strong>「The error 'The owner of this application has been marked as spammy' indicates an automated security flag was triggered — often caused by rapid automated API requests, deploying multiple repositories simultaneously via third-party deployment tools, or exceeding API rate limits on new accounts.」</strong> <strong>「Opening 4 separate tickets actually delays the process. GitHub's ticketing system automatically merges or resets ticket timestamps when duplicate submissions are created for the same account, resetting your place in the manual review queue.」</strong></p></blockquote>
+<p><strong>这两条合起来，就是本文存在的理由：</strong></p>
+<blockquote><p><strong>封号不是"你做了什么坏事"的判决，是"你的行为模式像机器人"的误判。而恢复要 7–21 天，严重的 8 周——对一个 2027 届的人来说，这可能刚好错过秋招。</strong></p></blockquote>
+<p><strong>所以正确的心态是：把 GitHub 当成一个需要长期信誉的资产来经营，而不是一个免费网盘。</strong></p>
+<p>---</p>
+<h2 id="s-二第一节先要一个身份第-1-周">二、第一节：先要一个身份（第 1 周）</h2>
+<h3 id="s-21-注册前先想清楚三件事">2.1 注册前先想清楚三件事</h3>
+<p><strong>别急着点 Sign up。先决定这三件事，选错了后面要改。</strong></p>
+<p><strong>① 用什么邮箱？</strong></p>
+<table><thead><tr><th>邮箱类型</th><th>用途</th><th>建议</th></tr></thead><tbody>
+<tr><td><strong>个人主邮箱</strong>（QQ/163/Gmail/Outlook）</td><td><strong>账号根</strong> —— 找回密码、接收安全通知</td><td>✅ <strong>必须用</strong>。这个邮箱一旦被封号，你什么都拿不回来</td></tr>
+<tr><td><strong>教育邮箱</strong>（.edu / 学校邮箱）</td><td>学生认证、Copilot 免费</td><td>✅ <strong>强烈建议加</strong>（不是替代，是补充）</td></tr>
+<tr><td>第三个邮箱</td><td>备用</td><td>✅ 保险起见</td></tr>
+</tbody></table>
+<p><strong>关键：个人主邮箱是唯一的救命通道。</strong> GitHub 官方条款里「帐户安全」那节写得很清楚：</p>
+<blockquote><p><strong>「你对自己的帐户下发布的所有内容和活动负责……如果你获悉存在通过你的帐户对服务进行未授权的使用或访问（包括未经授权使用您的密码或帐户）时，请通过 GitHub 支持门户联系我们。」</strong></p></blockquote>
+<p><strong>加第二个邮箱时要用「备用邮箱 / backup email」功能，不是新建一个账号。</strong> 因为 GitHub 明确禁止一人多个免费账户：</p>
+<blockquote><p><strong>「一个人或一个法律实体最多可以拥有一个免费帐户（如果您选择同时控制一个机器帐户，可以，但是它只能用于运行机器）。」</strong> <strong>「只允许人类创建帐户。不允许通过"自动程序"或其他自动方法注册帐户。」</strong></p></blockquote>
+<p><strong>② 用户名叫什么？</strong></p>
+<p><strong>这是你以后在全球的"地址"，比你想的重要。</strong></p>
+<p><strong>建议规则：</strong></p>
+<ul><li><strong>用真名或其稳定变体</strong>（我用的是英文名 Leo，GitHub ID 是 <code>Leo-Li638</code>）</li><li><strong>别用会变的</strong>（带生日、带毕业年份、带学校简称的，毕业后就是历史包袱）</li><li><strong>别用纯随机串</strong>（<code>user384729102</code>）</li><li><strong>跨平台同名</strong>（掘金、知乎、GitHub 用同一个 ID），这样别人搜一次就全找到</li></ul>
+<p><strong>理由很实在：</strong> GitHub 官方条款 D.5 段说了，你公开仓库时是「授予其他用户一项非排他性、全球许可」，你的公开身份会被索引、被搜索。<strong>你的 ID 就是你的全球名片。</strong></p>
+<p><strong>③ 生日和地区怎么填？</strong></p>
+<p><strong>如实填。</strong> GitHub 要求年满 13 周岁（美国以外地区可能更高）。<strong>填生日的唯一好处是它能挡住一部分批量注册脚本</strong> —— 这正是平台想要的。</p>
+<p>---</p>
+<h3 id="s-22-注册完成后立刻做的四件事顺序不能错">2.2 注册完成后立刻做的四件事（顺序不能错）</h3>
+<p><strong>⚠️ 这是整篇文章最实用的部分。请严格按顺序做。</strong></p>
+<h4 id="s-①-开双重验证2fa-这是保命的第一道门">① 开双重验证（2FA）—— <strong>这是保命的第一道门</strong></h4>
+<p><strong>GitHub 现在在激进地强制 2FA。</strong> 社区里总结的封号原因里，<strong>「2FA Not Enabled」排在第一位</strong>：</p>
+<blockquote><p><strong>「GitHub has been aggressively enforcing Two-Factor Authentication. Accounts without 2FA can be suspended.」</strong></p></blockquote>
+<p><strong>而且学生认证本身也强制要求开 2FA</strong>（不开过不了）。</p>
+<p><strong>怎么开：</strong></p>
+<ol><li>头像 → Settings → Password and authentication → Two-factor authentication</li><li>选 <strong>Authenticator app</strong>（不是 SMS —— SMS 已被大量国家禁用，且 SIM 卡劫持是真实攻击面）</li><li>装一个验证器 App（Microsoft Authenticator / Google Authenticator / 1Password / Aegis 都行）</li><li>扫 GitHub 给的二维码，输一次动态码</li><li><strong>⚠️ 关键一步：把「recovery codes」下载下来，存到密码管理器或离线的地方</strong></li></ol>
+<p><strong>为什么最后这步最重要：</strong></p>
+<ul><li>换手机 → 验证器没了 → 只能靠恢复码</li><li>恢复码丢了 + 手机丢了 = <strong>账号永久锁死</strong></li><li>社区案例里，恢复码是能不能快速恢复的关键信息之一</li></ul>
+<p><strong>我自己的做法</strong>：1Password 存恢复码 + 一份离线打印件放家里。</p>
+<h4 id="s-②-设置第二个邮箱backup-email">② 设置第二个邮箱（Backup email）</h4>
+<p><strong>Settings → Emails → Add backup email address。</strong></p>
+<p><strong>这不是可选项。</strong> 封号后 GitHub 的通知邮件<strong>经常发到你的备用邮箱而不是主邮箱</strong> —— 社区里反复出现的建议就是：</p>
+<blockquote><p><strong>「Check All Email Inboxes: Thoroughly search your primary, secondary, and even spam folders for emails from support@github.com, dmca@github.com, or github.com. The reason for suspension might be hidden there.」</strong></p></blockquote>
+<p><strong>换手机前，先更新这个邮箱。</strong> 这不是小事。</p>
+<h4 id="s-③-把-profile-填成能被检索的样子">③ 把 Profile 填成"能被检索的样子"</h4>
+<p><strong>这一步很多人跳过，但它直接决定你能不能被全球找到。</strong></p>
+<p>GitHub 学生认证的实战记录里，官方字段填法有明确要求（我按官方指引 + 实操整理）：</p>
+<table><thead><tr><th>字段</th><th>填什么</th><th>为什么</th></tr></thead><tbody>
+<tr><td><strong>Name</strong></td><td>真实姓名（中文或英文都行，但要和简历一致）</td><td>招聘方搜名字时能找到你</td></tr>
+<tr><td><strong>Public Email</strong></td><td>教育邮箱或你的公开邮箱</td><td>别人能联系你</td></tr>
+<tr><td><strong>Bio</strong></td><td>学校英文全称 + 专业（英文）</td><td>例：<code>Changchun Normal University / Data Science &amp; Big Data Tech</code></td></tr>
+<tr><td><strong>Company</strong></td><td>学校英文全称</td><td>填缩写会搜不到</td></tr>
+<tr><td><strong>Location</strong></td><td><strong>精确到城市 + 省份 + 国家</strong>：例 <code>Changchun, Jilin, China</code></td><td>模糊地名搜不到</td></tr>
+<tr><td><strong>Website</strong></td><td>你的个人网站</td><td>这就是我做 GEO 的原因 —— 见第四节</td></tr>
+<tr><td><strong>Social accounts</strong></td><td>掘金/知乎/CSDN</td><td>跨平台串联</td></tr>
+</tbody></table>
+<p><strong>⚠️ 一个容易踩的坑：Location 不要写得太模糊。</strong> 社区实战记录特别提到：<strong>GitHub 的验证流程是"因校而异"的</strong> —— 当你所在学校的近期申请者用教育邮箱验证通过后，<strong>未来申请者就必须用教育邮箱</strong>。如果你的学校没有 <code>.edu</code> 域名，GitHub 会要求你提供官方说明（学校网页或抬头信纸的证明），然后重新申请。</p>
+<p><strong>所以 Location 要填准 —— 因为认证时 GitHub 会核对"学校位置 vs 你当前位置"，不一致就要求补充说明。</strong></p>
+<h4 id="s-④-顺手申请-github-education如果你是学生">④ 顺手申请 GitHub Education（如果你是学生）</h4>
+<p><strong>这一条对 0 基础的人价值极大，因为它直接给你 Copilot 免费。</strong></p>
+<p><strong>2026 年的实际情况：</strong></p>
+<ul><li><strong>GitHub Copilot 对认证学生和教师免费</strong>（约值 $100/年/人）</li><li>学生包已从 2022 年的约 70 个工具涨到 <strong>100+ 个</strong>，覆盖云计算、安全、AI、DevOps</li><li>2024 年引入自动化身份核验后，<strong>凭有效教育邮箱的申请，48 小时内通过</strong></li><li>GitHub Education Impact Report 2024：全球已有 <strong>1700 万+</strong> 学生和教师通过认证</li></ul>
+<p><strong>实操避坑（来自真实认证记录）：</strong></p>
+<ul><li><strong>中文学生证基本不会过</strong>，需要<strong>英文版</strong>（可用学校信纸抬头做 PDF，或手写关键信息）</li><li><strong>Proof Type 要选对</strong>：学生卡 → <code>Dated School ID</code>；录取通知书 → <code>Dated class schedule for the semester</code>；学信网认证 → <code>Other</code></li><li><strong>照片必须清晰、必须带当前在读日期</strong>（"一张模糊的、没有日期的学生证是最快的被拒原因"）</li><li><strong>⚠️ 认证过程中不要挂代理</strong> —— 挂代理会导致"学校位置与你当前位置不符"，需要去 Payment Information 重新完善</li><li><strong>有效期默认 2 年</strong>，但如果你提交的材料显示快毕业了，可能只给 1 年</li><li>审核约 4 天（有教育邮箱走自动核验的 48 小时内）</li></ul>
+<p><strong>通过了之后：GitHub Pro + Copilot Student + Codespaces Pro + 一堆伙伴工具（Notion 教育版、1Password 两年免费、.tech 域名一年免费、DataCamp 三个月）。</strong></p>
+<p><strong>⚠️ 但注意："不要在第一天把所有 offer 都领了"</strong> —— 有些 offer 一激活就开始计时（域名一年、学习平台三个月）。<strong>只领你这学期用得上的。</strong></p>
+<p>---</p>
+<h3 id="s-23-github-的官方红线清单背下来">2.3 GitHub 的官方红线清单（背下来）</h3>
+<p><strong>这一节是本文最该被收藏的部分。</strong> 以下全部出自 GitHub 官方《可接受使用政策》与《服务条款》（生效日期 2026-04-27）。</p>
+<h4 id="s-绝对禁止会直接封号">🔴 绝对禁止（会直接封号）</h4>
+<table><thead><tr><th>#</th><th>条款原文要点</th><th>你可能不知道它指的是什么</th></tr></thead><tbody>
+<tr><td><strong>1</strong></td><td><strong>「不允许通过"自动程序"或其他自动方法注册帐户」</strong></td><td>❗用 Playwright/Puppeteer 批量开号 → 直接封。<strong>人肉注册，人工验证</strong></td></tr>
+<tr><td><strong>2</strong></td><td><strong>「一个人或一个法律实体最多可以拥有一个免费帐户」</strong></td><td>❗小号、备用号、矩阵号 → 全封。<strong>只有一个免费账号</strong></td></tr>
+<tr><td><strong>3</strong></td><td><strong>「排名滥用，例如自动标星或关注」</strong></td><td>❗脚本刷 star、脚本批量 follow → 封。<strong>这是国内最常见的死法</strong></td></tr>
+<tr><td><strong>4</strong></td><td><strong>「自动执行过多的批量活动和协调的不真实活动」</strong>、<strong>「使用我们的服务器进行任何形式的过度自动化批量活动」</strong></td><td>❗定时脚本批量 push、批量建仓库、批量发 issue → 封</td></tr>
+<tr><td><strong>5</strong></td><td><strong>「使用加密货币空投、代币、积分、礼物或其他赠品等奖励进行激励」</strong></td><td>❗买 star、买关注、搞互赞群 → 封</td></tr>
+<tr><td><strong>6</strong></td><td><strong>「不真实的互动，例如虚假帐户和自动化的不真实活动」</strong></td><td>❗假粉、假互动群</td></tr>
+<tr><td><strong>7</strong></td><td><strong>「未经明确的书面许可，不得重现、复制、拷贝、出售、转售或利用服务的任何部分」</strong></td><td>❗批量镜像他人仓库做导航站</td></tr>
+<tr><td><strong>8</strong></td><td><strong>「钓鱼或试图钓鱼」</strong>、<strong>「干扰、破坏或试图未经授权访问任何服务、设备、数据、帐户或网络」</strong></td><td>❗把 token 硬编码进脚本然后"分享"出去</td></tr>
+<tr><td><strong>9</strong></td><td><strong>「加密货币挖矿」</strong></td><td>❗拿 GitHub Actions 当免费矿机</td></tr>
+<tr><td><strong>10</strong></td><td><strong>「直接支持正在造成技术伤害的非法主动攻击或恶意软件活动」</strong></td><td>❗仓库里放的是攻击工具而非安全研究</td></tr>
+<tr><td><strong>11</strong></td><td><strong>「对 GitHub 的使用不得违反美国或任何其他适用司法管辖区的出口管制或制裁法律」</strong></td><td>❗受制裁地区/人员</td></tr>
+<tr><td><strong>12</strong></td><td><strong>「不得使用 GitHub 作为在其他平台上传播滥用的平台」</strong></td><td>❗把这里当跳板去刷别的平台</td></tr>
+</tbody></table>
+<h4 id="s-高危但常见社区封号案例里出现频率最高">🟡 高危但常见（社区封号案例里出现频率最高）</h4>
+<p>这些<strong>不是条款明文禁止，但社区封号复盘里出现频率最高</strong>：</p>
+<table><thead><tr><th>#</th><th>行为</th><th>后果</th><th>怎么防</th></tr></thead><tbody>
+<tr><td><strong>A</strong></td><td><strong>没开 2FA</strong></td><td>「GitHub 正在激进地强制 2FA，没开 2FA 的账号会被停用」</td><td><strong>立刻开，见 2.2①</strong></td></tr>
+<tr><td><strong>B</strong></td><td><strong>密码来自已知泄露库</strong></td><td>会被停用</td><td>密码用密码管理器生成，<strong>绝不复用</strong></td></tr>
+<tr><td><strong>C</strong></td><td><strong>把 API key / token 推到公开仓库</strong></td><td>GitHub 会扫描密钥并标记</td><td>用 <code>.gitignore</code> + <code>pre-commit</code> 扫描 + <strong>环境变量</strong></td></tr>
+<tr><td><strong>D</strong></td><td><strong>短时间内建太多仓库</strong></td><td>触发 spam 检测算法</td><td><strong>正常节奏做项目，别批量刷空仓库</strong></td></tr>
+<tr><td><strong>E</strong></td><td><strong>仓库只有 fork 或空 README</strong></td><td>「包含只有 fork 或空 README 的仓库可能被标记为 spam」</td><td><strong>每个仓库都要有真内容</strong></td></tr>
+<tr><td><strong>F</strong></td><td><strong>短时间内高频 API 请求 / 超出速率限制</strong></td><td>触发自动标记（就是那位学生被封的直接原因）</td><td>新号尤其要注意，别跑批处理</td></tr>
+<tr><td><strong>G</strong></td><td><strong>同时用第三方部署工具（Coolify/Vercel 集成等）部署多个仓库</strong></td><td>同上，触发自动标记</td><td><strong>一次只部署一个</strong></td></tr>
+<tr><td><strong>H</strong></td><td><strong>共享 Copilot / Pro 订阅给未授权用户</strong></td><td>违反条款被停用</td><td><strong>别共享</strong></td></tr>
+<tr><td><strong>I</strong></td><td><strong>从异常 IP / 地区登录</strong></td><td>「从不同国家或 IP 登录会被标记」</td><td>登录前确保网络稳定，别在代理里来回切</td></tr>
+<tr><td><strong>J</strong></td><td><strong>fork 了后来被 DMCA 下架的仓库</strong></td><td>可能影响你的账号</td><td>别 fork 有版权争议的仓库</td></tr>
+</tbody></table>
+<h4 id="s-明确被允许的别怕该干就干">🟢 明确被允许的（别怕，该干就干）</h4>
+<table><thead><tr><th>行为</th><th>依据</th></tr></thead><tbody>
+<tr><td><strong>通过 API 收集信息</strong></td><td>「爬取是指通过自动化过程提取数据。<strong>爬取不包括通过我们的 API 收集数据</strong>」</td></tr>
+<tr><td><strong>为研究目的使用公开非个人信息</strong></td><td>「研究人员可以为研究目的使用服务中公开的非个人信息，<strong>但仅当该研究的任何发布内容开放访问时才可使用</strong>」</td></tr>
+<tr><td><strong>为存档目的使用公开信息</strong></td><td>「档案管理员可以将本服务中的公开信息用于存档目的」</td></tr>
+<tr><td><strong>漏洞赏金计划内的活动</strong></td><td>「漏洞赏金计划允许的活动不被视为"未经授权"」</td></tr>
+<tr><td><strong>用 API 做自动化</strong></td><td>API 条款 H 节专门规定了怎么合规用</td></tr>
+</tbody></table>
+<p><strong>⚠️ 但最后三条都有附加条件：</strong></p>
+<ul><li>研究的<strong>发布内容必须开放获取</strong></li><li><strong>不能把信息用于发垃圾邮件</strong>，也不能「向招聘人员、猎头和招聘平台出售个人信息」</li><li><strong>必须遵守 GitHub 隐私声明</strong></li></ul>
+<p><strong>所以"信息全球化"这件事，正确姿势是"公开信息 + 合规引用 + 开放发布"，不是"爬下来据为己有"。</strong></p>
+<p>---</p>
+<h2 id="s-三第二节让-ai-替你写第一行代码第-24-周">三、第二节：让 AI 替你写第一行代码（第 2–4 周）</h2>
+<h3 id="s-31-先选路线别一上来就学编程">3.1 先选路线，别一上来就学编程</h3>
+<p><strong>这是 0 基础最容易走错的一步。</strong> 有一条被反复验证的成熟路线（多篇独立资料的结论一致）：</p>
+<table><thead><tr><th>路线</th><th>代表工具</th><th>上手时间</th><th>适合谁</th><th>会卡在哪</th></tr></thead><tbody>
+<tr><td><strong>无代码</strong></td><td>n8n</td><td>一个周末</td><td>要串很多外部系统的人</td><td>自架与版本维护</td></tr>
+<tr><td><strong>半程式</strong></td><td><strong>Dify、Coze</strong></td><td>一两个晚上</td><td><strong>只想做对话型应用</strong></td><td>复杂分支逻辑做不出来</td></tr>
+<tr><td><strong>全程式</strong></td><td>LangChain、Agents SDK</td><td>数周</td><td>已经会写代码、要客制</td><td>错误处理全自己来</td></tr>
+</tbody></table>
+<p><strong>有个很到位的比喻（我一直记得）：</strong></p>
+<blockquote><p><strong>「Coze = 最省事的组装线；Dify = 最全面的工厂；FastGPT = 最专的知识库问答专机；n8n = 最强的管道工。」</strong></p></blockquote>
+<p><strong>但我给 0 基础的人的建议，和常见推荐顺序略有不同：</strong></p>
+<h3 id="s-我的推荐顺序先半程式difycoze-再无代码n8n-最后才考虑全程式">我的推荐顺序：<strong>先"半程式"（Dify/Coze）→ 再"无代码"（n8n）→ 最后才考虑全程式</strong></h3>
+<p><strong>理由是「做中学」</strong>。有一个极好的真实案例 —— 一位<strong>零技术背景的律师</strong>用 GitHub Copilot CLI 独立造出了团队内部工具。她的方法被总结为：</p>
+<blockquote><p><strong>「不是先报班学完再动手，而是边做边学，CLI 讲一步、她懂一步。」</strong> <strong>「别急着学语法，先学会提需求。」</strong> <strong>「Victoria 全程没有学编程语言，她做的是把愿景讲清楚、看计划、挑战方案、要求解释。」</strong></p></blockquote>
+<p><strong>这个案例给出的"非技术岗用 AI 编程工具的核心技能"清单，我认为是本文最实用的一段：</strong></p>
+<table><thead><tr><th>技能</th><th>具体做法</th></tr></thead><tbody>
+<tr><td><strong>选全托管架构</strong></td><td>「内部工具尽量用 GitHub Issues + Actions + Pages 这类<strong>零运维</strong>组合，<strong>别碰服务器</strong>」</td></tr>
+<tr><td><strong>用计划模式当免费评审</strong></td><td>「AI 的实现计划就是最好的技术方案初稿，<strong>盯着它问"有没有别的做法"</strong>，直到方案合理」</td></tr>
+<tr><td><strong>让 AI 用你的语言解释部署</strong></td><td>「明确要求 AI <strong>"用非开发人员听得懂的方式"</strong>逐步讲解，能消除大部分不确定感」</td></tr>
+<tr><td><strong>把验收做成流程</strong></td><td>「让 CLI 用非开发者语言解释每一处关键行为（这个按钮点了会发生什么、这条数据从哪来），再找一位工程师朋友花十分钟做一次<strong>"兽医式检查"</strong>（只看有没有明显隐患，不重写）」</td></tr>
+</tbody></table>
+<p><strong>最后那条"兽医式检查"是我见过最实用的建议</strong> —— 它承认了一个事实：<strong>非技术岗用 AI 造工具，最容易翻车的不是写代码，而是"验收"——看不懂代码就无法判断质量。</strong></p>
+<h3 id="s-32-第一个-ai-agent四个步骤">3.2 第一个 AI Agent：四个步骤</h3>
+<p><strong>这一步很多人死在"题目太大"。</strong></p>
+<p><strong>选任务的三条硬标准：</strong></p>
+<blockquote><p><strong>「你每週真的會重複做、而且做錯了不會出事。」</strong></p></blockquote>
+<table><thead><tr><th>标准</th><th>❌ 不合格</th><th>✅ 刚好</th></tr></thead><tbody>
+<tr><td>你真的每周重复做</td><td>"帮我回复所有客户邮件"</td><td>"帮我把这周的行业新闻整理成五则摘要"</td></tr>
+<tr><td>做错了不会出事</td><td>"自动发合同"</td><td>"生成一份草稿让我确认"</td></tr>
+<tr><td>一个晚上能做完</td><td>整个业务系统</td><td>一个单点流程</td></tr>
+</tbody></table>
+<p><strong>「小，所以快。快，所以能上线。上线，才有数据。有数据，才能验证假设。」</strong> —— 有一个独立开发者把这句话写成了完整方法论。</p>
+<p><strong>然后四步走（以 n8n 为例，换成别的工具逻辑一样）：</strong></p>
+<p><strong>步骤一：挑一个小到你会做完的任务</strong> ✅（上面已说）</p>
+<p><strong>步骤二：接上大脑，先让它会回答</strong></p>
+<p>在 n8n 里拉一个 AI Agent 节点，下面挂一个 Chat Model 子节点，选模型、填凭据。<strong>这时候它就是一只有点纯聊天能力的机器人</strong>，你在 Chat 面板打字它会回。</p>
+<blockquote><p><strong>⚠️ 「先在這個狀態把提示詞調到滿意再往下走，提示詞沒調好就加工具，後面出錯你會分不清是誰的問題。」</strong> —— 这句是我见过最实用的调试建议。</p></blockquote>
+<p><strong>步骤三：加工具</strong></p>
+<p><strong>步骤四：加异常处理和日志</strong></p>
+<blockquote><p><strong>「在工作流中必须设置条件分支。如果模型输出缺少必要字段，触发重试或转向人工审核通道。」</strong></p></blockquote>
+<p><strong>这一步是 90% 的人跳过的，也是最要命的。</strong> 上一篇文章讲的「三层降级链路」在这里就是底线要求。</p>
+<h3 id="s-33-一个真实的19-天样本">3.3 一个真实的"19 天"样本</h3>
+<p><strong>我特别想给你看这个数据，因为它比任何成功学都更有说服力。</strong></p>
+<p><strong>独立开发者"实用切口"用全程 AI 写的小程序「厨菜记」：</strong></p>
+<table><thead><tr><th>指标</th><th>数字</th></tr></thead><tbody>
+<tr><td>4 人团队做同类产品要多久</td><td><strong>2 个月</strong></td></tr>
+<tr><td>他一个人 + AI 用了多久</td><td><strong>19 天</strong></td></tr>
+<tr><td>上线 20 天，流量主日收入</td><td><strong>0.7 ~ 1.4 元</strong></td></tr>
+<tr><td>上线 20 天，累计收入</td><td><strong>不到 40 元</strong>（标题里的 30 元）</td></tr>
+<tr><td>曝光转化率</td><td><strong>46.8%</strong></td></tr>
+</tbody></table>
+<p><strong>注意看这个数据的价值 —— 它不在于赚了多少。</strong></p>
+<p>原文的分析才是重点：</p>
+<blockquote><p><strong>「虽然还是买不起咖啡，但请注意：这是睡后收入。你不需要再写一行代码，不需要再修一个 Bug，不需要再回复一条用户评论。只要小程序还在，AI 写的代码还在跑，那每天一块多钱的广告收入就会自动进账。」</strong> <strong>「你花 19 天，建了一个每个月为你自动赚钱的小机器。」</strong> <strong>「为什么多数人做不成？因为他们在"做大事"。看到 AI 能写代码，第一反应是：我要做个抖音、做个美团、做个 SaaS 平台。ambition 太大，动作就变形。」</strong></p></blockquote>
+<p><strong>而那位开发者的判断标准，我觉得可以直接抄：</strong></p>
+<blockquote><p><strong>「以后遇到 AI 写代码的机会，别问"能不能赚大钱"。要问：19 天，能不能做完？如果能，就做。做完，上线。上线，看数据。哪怕只赚了几十块，你也已经赢了绝大多数只会观望的人。」</strong> <strong>「因为那 30 元里，藏着 AI 时代最宝贵的东西：把想法变成现实的能力。」</strong></p></blockquote>
+<p>---</p>
+<h2 id="s-四第三节把它放进自动化第-58-周">四、第三节：把它放进自动化（第 5–8 周）</h2>
+<h3 id="s-41-自动化不是写脚本是让流程自己跑">4.1 自动化不是"写脚本"，是"让流程自己跑"</h3>
+<p><strong>一个可复用的 AI 工作流骨架（工业界验证过的标准四节点结构）：</strong></p>
+<p>``<code> [定时触发器 / Webhook] ↓ [搜索/数据输入节点]        ← 拿原始文本 ↓ [LLM 核心处理节点]          ← 结构化提示词 ↓ [代码/条件分支节点]          ← 格式校验 + 分级 ↓ [IM 机器人输出]              ← 推到群里 </code>``</p>
+<p><strong>关键在 LLM 节点怎么写。</strong> 这里有个反面教材：</p>
+<blockquote><p>❌ <strong>「请帮我总结一下这篇文章。」</strong> ✅ 用严密的结构化指令（可直接抄）： ``<code> Role: 你是一名拥有10年经验的商业战略分析师与舆情风控专家。 ... </code>``</p></blockquote>
+<p><strong>为什么不能写"总结一下"？</strong> 因为你的输出要<strong>给下游节点消费</strong>。<strong>自由文本的下游没法用，结构化的下游才能用。</strong></p>
+<h3 id="s-42-github-在自动化里的真正角色">4.2 GitHub 在自动化里的真正角色</h3>
+<p><strong>这一节是本文跟其他"AI 教程"最不一样的地方。</strong></p>
+<p>很多人用 AI 自动化只用它来"生成代码"，然后把代码丢进一个黑盒服务。<strong>但 GitHub 是全球唯一同时给你四样东西的平台：</strong></p>
+<table><thead><tr><th>能力</th><th>免费还是付费</th><th>对 0 基础的意义</th></tr></thead><tbody>
+<tr><td><strong>代码托管 + 版本历史</strong></td><td>免费</td><td>你的东西<strong>永远不会丢</strong>（即使账号被封）—— 这就是第一节强调本地备份的原理</td></tr>
+<tr><td><strong>GitHub Pages</strong></td><td>免费</td><td><strong>白嫖一个全球 CDN + HTTPS + 自定义域名</strong>。你的项目自动变成 <code>username.github.io/repo</code></td></tr>
+<tr><td><strong>GitHub Actions</strong></td><td>免费（公开仓库不限量）</td><td><strong>定时任务 + CI/CD</strong>，让流程每天自动跑</td></tr>
+<tr><td><strong>Issues / Discussions</strong></td><td>免费</td><td>一个"全球可见的留言板"</td></tr>
+</tbody></table>
+<p><strong>「用 Issues + Actions + Pages 这类零运维组合，别碰服务器」</strong> —— 那位律师的选型逻辑，我认为是 0 基础的人最该抄的架构决策。</p>
+<p><strong>而这一切的前提，就是一个正常的 GitHub 账号。</strong></p>
+<h3 id="s-43-一个反直觉的建议先别急着写-readme先让它跑起来">4.3 一个反直觉的建议：先别急着写 README，先让它跑起来</h3>
+<p><strong>很多 0 基础的人卡在"我的 README 怎么写才专业"，然后三个月没动手。</strong></p>
+<p><strong>我的建议是反过来的：</strong></p>
+<p><strong>先做出一个"能跑"的东西，哪怕很烂。然后再回来写 README。</strong></p>
+<p><strong>理由是复利</strong>：一个能跑的丑项目 &gt; 一个漂亮但没做出来的文档。而且<strong>在写 README 的过程中你会发现到底缺什么</strong>，这本身就是学习。</p>
+<p><strong>真实案例里的印证：</strong></p>
+<blockquote><p><strong>「哪怕只赚了 几十块，你也已经赢了绝大多数只会观望的人。」</strong></p></blockquote>
+<p>---</p>
+<h2 id="s-五第四节走向全球第-912-周">五、第四节：走向全球（第 9–12 周）</h2>
+<h3 id="s-51-信息全球化不是用-vpn-刷国外网站">5.1 "信息全球化"不是"用 VPN 刷国外网站"</h3>
+<p><strong>我理解你说的"信息全球化"是两层意思：</strong></p>
+<table><thead><tr><th>层次</th><th>含义</th><th>怎么实现</th></tr></thead><tbody>
+<tr><td><strong>输入全球化</strong></td><td>能读到全世界的最新资料、教程、方案</td><td><strong>GitHub + Copilot 免费额度 + 英文文档</strong> —— 顶级项目的 issue 和 discussion 质量远超中文二手教程</td></tr>
+<tr><td><strong>输出全球化</strong></td><td>你做的东西<strong>能被世界上的任何人（包括 AI）找到</strong></td><td><strong>公开仓库 + Pages + SEO/GEO</strong></td></tr>
+</tbody></table>
+<p><strong>第二层是大多数 0 基础的人完全没意识到的 —— 而它恰恰是求职最值钱的部分。</strong></p>
+<h3 id="s-52-输出全球化的三个层次我在自己身上跑了两年">5.2 输出全球化的三个层次（我在自己身上跑了两年）</h3>
+<h4 id="s-层次一github-仓库--你的全球简历">层次一：GitHub 仓库 = 你的全球简历</h4>
+<p><strong>招聘方看候选人，GitHub 是第一站。</strong> 而且它有一样简历没有的东西：<strong>可验证</strong>。</p>
+<p><strong>最低限度的标准：</strong></p>
+<ul><li>仓库名一眼看懂在做什么</li><li><strong>README 里有：解决什么问题、怎么跑起来、什么效果</strong>（截图/数字）</li><li>至少有一个真实的 commit 历史</li><li><strong>不要 fork 就完事</strong>（空 README 仓库会被判 spam，见红线 E）</li></ul>
+<h4 id="s-层次二github-pages--你的全球名片">层次二：GitHub Pages = 你的全球名片</h4>
+<p><strong>免费、全球 CDN、HTTPS、自定义域名。</strong></p>
+<p><strong>我的个人网站就架在这上面</strong>（<code>github.com/Leo-Li638/personal-homepage</code> → <code>xn--4gq.chat</code>）。<strong>它是我所有平台里唯一一个"内容全在、我说了算、不受算法摆布"的据点。</strong></p>
+<h4 id="s-层次三geo--让-ai-引擎也能引用你">层次三：GEO = 让 AI 引擎也能引用你</h4>
+<p><strong>这是 2026 年新增的一层，而且我一直在做。</strong></p>
+<p><strong>问题在这里</strong>：招聘方现在不只搜网页，<strong>还问 AI</strong>。而<strong>绝大多数人的内容对 AI 是不可见的</strong> —— 因为 AI 引擎需要能结构化抓取、语义匹配、然后<strong>愿意引用</strong>你的内容。</p>
+<p><strong>解法就是我做的那套：</strong></p>
+<ol><li><strong>站点的 <code>llms.txt</code></strong> —— 一份给 AI 读的"文章清单 + 摘要 + 关键词"</li><li><strong>中英双份内容</strong>（我的站上中英各 73 条，URL 集合完全一致）</li><li><strong>结构化的标题层级</strong>（每篇有 H1/H2、目录锚点）</li><li><strong>每篇文末标注数据来源和发布时间</strong></li></ol>
+<p><strong>看这个数字对比：</strong></p>
+<ul><li>2026 年 GitHub 说智能体开了 <strong>40% 的 PR</strong></li><li>但业界调研（AI coding benchmark）说：<strong>最强的 Agent 连 10.8% 的真实任务都过不了</strong></li></ul>
+<p><strong>这说明什么？说明"能被 AI 找到并且引用"这件事本身就是一道护城河。</strong> 大多数人还没做。</p>
+<h3 id="s-53-但走向全球有一条绝对红线">5.3 但"走向全球"有一条绝对红线</h3>
+<p><strong>我必须把这条说清楚，因为它是"合法"两个字的底线：</strong></p>
+<blockquote><p><strong>你走向全球的方式，必须是"贡献"而不是"掠夺"。</strong></p></blockquote>
+<p><strong>具体到技术层面：</strong></p>
+<table><thead><tr><th>✅ 合法且受鼓励</th><th>❌ 违法/违规</th></tr></thead><tbody>
+<tr><td>用 <strong>API</strong> 收集公开信息</td><td><strong>爬虫</strong>大规模抓取（爬取 ≠ API 收集，条款明确区分）</td></tr>
+<tr><td>为研究使用公开非个人信息，<strong>且发布物开放获取</strong></td><td>抓完据为己有、做成商业库</td></tr>
+<tr><td>为存档目的使用公开信息</td><td>抓取后转卖、发送给招聘方</td></tr>
+<tr><td>参与开源项目、提 issue、提 PR</td><td>批量刷 star、脚本关注、二级市场卖 star</td></tr>
+<tr><td>fork + 自己的改进 + 明确署名原作者</td><td>fork 后删掉原作者署名、去除版权声明</td></tr>
+<tr><td>引用别人的数据并<strong>标注来源和许可</strong></td><td>直接抄进自己仓库当原创</td></tr>
+<tr><td>用 AI 生成代码，<strong>遵守仓库的 LICENSE 和 Copilot 条款</strong></td><td>在 GPL 仓库里贴 AI 生成代码不遵守 copyleft</td></tr>
+</tbody></table>
+<p><strong>关于 AI 生成内容与开源许可，最新的官方态度（GitHub 服务条款 J 节「AI 功能、训练和数据」）：</strong></p>
+<ul><li><strong>你拥有自己上传内容的完整所有权</strong></li><li>但你给 GitHub 的许可里包含：「将您的内容复制到我们的数据库并制作备份；向您及其他用户显示；解析内容并编入搜索索引……<strong>以及训练、开发和改进 GitHub 及我们关联公司的人工智能及机器学习模型和技术</strong>」</li><li><strong>你可以用控件调整</strong>这部分数据的使用（条款里明确提到「您可使用的控件」）</li><li><strong>你公开仓库 = 授予全球非排他许可</strong>，别人可以复刻</li></ul>
+<p><strong>所以最关键的一条是：</strong></p>
+<blockquote><p><strong>如果你在别人的仓库里贡献代码，那个仓库的 LICENSE 就会同样适用于你的贡献（「入站 = 出站」）。</strong> <strong>你必须先读懂那个 LICENSE 是 MIT（宽松）还是 GPL/Copyleft（有传染性义务），再决定要不要提交。</strong></p></blockquote>
+<p><strong>这一条我见过太多人踩坑</strong>：在 GPL 项目里提 PR 忘了遵守 copyleft，或在 MIT 项目里偷偷塞了 proprietary 代码。</p>
+<h3 id="s-54-github-官方对-ai-训练数据的额外规定">5.4 GitHub 官方对 AI 训练数据的额外规定</h3>
+<p><strong>条款 J 节还有一条专门针对"用别人的代码训练模型"的：</strong></p>
+<blockquote><p><strong>「如果您使用我们的服务或内容来训练与 GitHub 或我们的关联公司竞争的人工智能模型，则您需要遵守 GitHub Copilot 条款。」</strong></p></blockquote>
+<p><strong>翻译成人话：</strong></p>
+<ul><li><strong>别拿 GitHub 上的代码去训练一个"要跟 Copilot 抢生意"的模型</strong></li><li>用 GitHub 内容做<strong>自己业务</strong>的 RAG / 检索，<strong>和用 GitHub 内容去训练竞品模型，是两回事</strong></li><li>前者正常，后者违约</li></ul>
+<p>---</p>
+<h2 id="s-六第五节为了理想主义事业而奋斗但别把自己搞垮">六、第五节：为了理想主义事业而奋斗，但别把自己搞垮</h2>
+<p><strong>这一节我想说点不那么"技术"的东西。</strong></p>
+<h3 id="s-61-理想主义在-2026-年是可执行的前提是你先活下来">6.1 理想主义在 2026 年是可执行的，前提是你先活下来</h3>
+<p><strong>我不想写"为理想主义奋斗"然后给一堆正确的废话。</strong> 我想说一个具体的判断：</p>
+<p><strong>理想主义有一个残酷的前提：它需要你活着、并且能持续。</strong></p>
+<p><strong>看那个 19 天的案例：</strong></p>
+<ul><li>4 人做 2 个月的事，他 19 天做完 ✅</li><li>上线 20 天赚了 30 元 ❌（但这是"睡后收入"）</li><li><strong>他的真实收获不是 30 元，是"把想法变成现实的能力"</strong></li></ul>
+<p><strong>看那个律师的案例：</strong></p>
+<ul><li>零技术背景</li><li>她的收获不是那个内部工具，是<strong>"AI 编程工具已经把技术门槛降到了历史最低点，剩下那道门槛是心理的：愿不愿意承认'我也可以做软件'"</strong></li></ul>
+<p><strong>这两个案例指向同一件事：</strong></p>
+<blockquote><p><strong>理想主义不是"我要改变世界"，是"我要亲手做出一个东西"。</strong> <strong>前者不可执行，后者今晚就能开始。</strong></p></blockquote>
+<h3 id="s-62-但为理想主义奋斗有个致命陷阱把它变成消耗">6.2 但"为理想主义奋斗"有个致命陷阱：把它变成消耗</h3>
+<p><strong>这是我最想提醒的一条。</strong></p>
+<p><strong>理想的可持续性，取决于它是否给你正反馈。</strong> 如果你的"理想主义事业"长期只有负反馈（没有用户、没有收入、没有进展），那它不是理想主义，是<strong>慢性自杀</strong>。</p>
+<p><strong>三条具体的可持续性判据：</strong></p>
+<table><thead><tr><th>判据</th><th>问题</th><th>健康答案</th></tr></thead><tbody>
+<tr><td><strong>正反馈周期</strong></td><td>你多久能看到一次"我做的东西有用"的证据？</td><td><strong>不超过 2 周</strong>。太长就要砍小</td></tr>
+<tr><td><strong>可见性</strong></td><td>有人知道吗？</td><td><strong>至少 3 个真实的人知道你在做什么</strong>（不是 3000 个粉丝）</td></tr>
+<tr><td><strong>可累积</strong></td><td>三个月后回来，你是在更高的地方吗？</td><td><strong>每一步都留下能带走的东西</strong>（代码、案例、认知、人脉）</td></tr>
+</tbody></table>
+<p><strong>第三条是"为理想主义奋斗"的正确形态：</strong></p>
+<blockquote><p><strong>理想主义 = 长期主义 × 可累积性。</strong> <strong>只有长期主义没有可累积性，那是空耗。只有可累积性没有长期主义，那是打工。</strong></p></blockquote>
+<h3 id="s-63-和前面三篇的关系这就是三窟的实践">6.3 和前面三篇的关系：这就是"三窟"的实践</h3>
+<p><strong>这个系列到这里可以说闭环了。</strong></p>
+<table><thead><tr><th>篇目</th><th>讲的</th><th>本文对应</th></tr></thead><tbody>
+<tr><td>M《狡兔三窟》</td><td><strong>结构</strong>：你该有几个藏身处</td><td>GitHub 账号 = 你的<strong>制度位</strong>（万一账号被封，作品还在、还有备份）</td></tr>
+<tr><td>N《联合同学开公司》</td><td><strong>组织</strong>：一个人 + 半个</td><td>一个人 + N 个 Agent。<strong>本文的 3.1 节就是这个结论的操作版</strong></td></tr>
+<tr><td>O《上善若水》</td><td><strong>价值</strong>：怎么在不卷的地方赢</td><td><strong>全球化的输出 = 你的"位置"</strong>（能被检索、被引用）</td></tr>
+</tbody></table>
+<p><strong>所以这一篇的真正落点其实是：</strong></p>
+<blockquote><p><strong>GitHub 账号不是"注册"出来的资产，是你 90 天路线图的第 0 步。</strong> <strong>它是你的「一窟」里最硬的那一个 —— 因为它有历史、有身份、有全球索引，还免费。</strong></p></blockquote>
+<p>---</p>
+<h2 id="s-七一份可以照着做的-90-天清单">七、一份可以照着做的 90 天清单</h2>
+<p><strong>最后给一个能直接用的版本。</strong></p>
+<h3 id="s-第-1-周拿到身份23-小时">第 1 周：拿到身份（2–3 小时）</h3>
+<ul><li>[ ] 用<strong>个人主邮箱</strong>注册 GitHub（不要用要淘汰的邮箱）</li><li>[ ] <strong>立刻开 2FA</strong>（验证器 App），<strong>下载恢复码并存好</strong></li><li>[ ] 设置 <strong>backup email</strong></li><li>[ ] 填 Profile：真实姓名、学校英文全称、专业（英文）、Location 精确到省市国家、Website</li><li>[ ] 加教育邮箱（.edu / 学校邮箱）并验证</li><li>[ ] 如果是学生：申请 GitHub Education（<strong>准备英文版学生证 / 在读证明</strong>，别挂代理）</li><li>[ ] ⛔ <strong>确认没做任何红线行为</strong>（尤其：没批量注册、没用脚本刷 star）</li></ul>
+<h3 id="s-第-24-周做出第一个能跑的东西每周-510-小时">第 2–4 周：做出第一个能跑的东西（每周 5–10 小时）</h3>
+<ul><li>[ ] 选一个<strong>你每周都做、且做错不伤人</strong>的任务</li><li>[ ] 选路线：<strong>半程式（Dify/Coze）先跑通</strong>，再上 n8n</li><li>[ ] 先只做"能回答"，把提示词调满意再加工具</li><li>[ ] 加<strong>异常处理和日志</strong></li><li>[ ] 建 GitHub 仓库：README 写清「解决什么问题 / 怎么跑 / 什么效果」</li><li>[ ] 开 GitHub Pages，拿一个免费 HTTPS 地址</li></ul>
+<h3 id="s-第-58-周让它自动跑每周-510-小时">第 5–8 周：让它自动跑（每周 5–10 小时）</h3>
+<ul><li>[ ] 设一个<strong>定时触发</strong>（GitHub Actions cron 或平台内置定时器）</li><li>[ ] 加<strong>条件分支</strong>：模型输出不合法 → 重试 → 兜底到人工审核</li><li>[ ] 配 <strong><code>.gitignore</code> + 密钥扫描</strong>（防红线 C）</li><li>[ ] <strong>每次提交前检查</strong>：没有 API key、没有真实个人隐私数据</li><li>[ ] 如果要接外部 API：<strong>申请权限时只申请最小范围</strong></li></ul>
+<h3 id="s-第-912-周走向全球每周-35-小时">第 9–12 周：走向全球（每周 3–5 小时）</h3>
+<ul><li>[ ] 把 README 改成<strong>英文版</strong>（或加一个 <code>README.en.md</code>）</li><li>[ ] 在 GitHub 找 2–3 个相关项目，<strong>提有内容的 issue 或 PR</strong>（不是"加个 star"）</li><li>[ ] 建一个<strong>个人网站</strong>（GitHub Pages 就够），把项目、写作、思考串起来</li><li>[ ] 加 <code>llms.txt</code> / <code>sitemap.xml</code>，让 AI 引擎能抓到你</li><li>[ ] <strong>写一个"我为什么做这件事"的页面</strong> —— 理想主义需要一个能被人看到的出口</li></ul>
+<h3 id="s-长期每月一次体检">长期：每月一次体检</h3>
+<ul><li>[ ] 2FA 还开着吗？恢复码还在吗？backup email 还对吗？</li><li>[ ] 仓库里有密钥吗？（跑一次 secret 扫描）</li><li>[ ] backup email 的密码泄露过吗？（去 breach databases 查）</li><li>[ ] 我这个月留下了什么<strong>可累积</strong>的东西？</li><li>[ ] 我的正反馈周期还够短吗？</li></ul>
+<p>---</p>
+<h2 id="s-八常见问题">八、常见问题</h2>
+<p><strong>Q：我是 0 基础，连 Git 都不会，能学会吗？</strong> <strong>能，而且你比有基础的人有优势。</strong> 因为你会用自然语言把需求讲清楚 —— 这正是那位律师的核心技能（「别急着学语法，先学会提需求」）。<strong>GitHub 网页版有完整的图形化操作（上传文件、编辑文件、创建仓库），你完全不用碰命令行也能开始。</strong></p>
+<p><strong>Q：GitHub 会不会把我这种小号/备用号封了？我想再开一个。</strong> <strong>不要开。</strong> 官方条款明确：<strong>「一个人或一个法律实体最多可以拥有一个免费帐户」</strong>，且「不允许通过自动程序注册」。要第二个身份，正确做法是<strong>用 Organization（组织）</strong> —— 组织可以有多个成员，那是给团队设计的，不是给个人囤号用的。</p>
+<p><strong>Q：账号被封了我怎么办？</strong> <strong>按这个顺序：</strong></p>
+<ol><li><strong>查所有邮箱</strong>（主邮箱 + 备用邮箱 + 垃圾箱），找 <code>support@github.com</code> / <code>dmca@github.com</code> 的邮件 —— <strong>原因通常藏在邮件里</strong></li><li><strong>本地 clone 还在，代码没丢</strong>。<strong>这是你为什么必须做本地备份</strong></li><li>提交 <strong>Reinstatement Request（专门的恢复申请表单）</strong>，<strong>不要用普通登录问题表单</strong></li><li><strong>不要开多个工单</strong> —— 「GitHub's ticketing system automatically merges or resets ticket timestamps when duplicate submissions are created for the same account, resetting your place in the manual review queue」</li><li><strong>在同一工单里每 48 小时回复一次</strong>，保持它在队列里活跃</li><li>邮件标题写清楚紧迫性（例：<code>URGENT: Student account suspension — graduation affected</code>），并附上用户名、注册邮箱、封禁日期、2FA/恢复码、是否付费订阅</li><li>正常响应 <strong>7–21 天</strong>，2FA 相关通常更快，条款违规类更慢。<strong>一个真实案例用了 7–8 周</strong></li><li>极端情况才考虑公开求助（X/Twitter 带上工单号 @GitHubSupport）</li></ol>
+<p><strong>Q：我在国内，网络访问 GitHub 不稳怎么办？</strong> <strong>别在登录时来回切 IP/地区</strong> —— 「从不同国家或 IP 登录会被标记」。做法是：<strong>固定一个稳定的网络环境用于 git 操作</strong>；遇到推送不通时（我这周就遇到过 github.com:443 直接连不上），<strong>用 GitHub API 走</strong> —— <code>api.github.com</code> 反而是通的。</p>
+<p><strong>Q：用 AI 写的代码开源出去，版权和责任算谁的？</strong> <strong>算你的。</strong> GitHub 条款 D.1：<strong>「你对你的内容及其产生的任何损害负责」</strong>。开源协议是你选的，责任也是你的。<strong>所以 AI 生成的东西必须自己 review</strong> —— 这就是为什么我一直建议「让 AI 用你的语言解释每一处关键行为，再找工程师朋友做兽医式检查」。</p>
+<p><strong>Q：这和前面三篇（《狡兔三窟》《四人四出资》《上善若水》）是什么关系？</strong> <strong>这是那个系列的实践篇。</strong> 三篇讲的是<strong>结构（有几窟）、组织（怎么搭）、价值（为什么这样能赢）</strong>；这一篇讲<strong>具体怎么从零开始执行</strong>：第一窟（制度位）就是 GitHub 账号，第二窟（位置）就是能被全球检索到，第三窟（民心/结构）就是你留下的那些能自己跑的流程。</p>
+<p><strong>Q：我该先做 GitHub 还是先学 AI 自动化？</strong> <strong>先做 GitHub</strong>（第 1 周，2-3 小时），因为：AI 自动化的产出<strong>必须有个地方放</strong>，而 GitHub 账号的申请周期最长（学生认证要几天）。<strong>顺序上，先拿"需要时间"的东西。</strong></p>
+<p>---</p>
+<h2 id="s-关于作者">关于作者</h2>
+<p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届），辅修数学。GPA 专业前 10%。</p>
+<ul><li>做过一个本地优先的 AI 平台（Dify + Ollama + DeepSeek 双层架构，意图路由 + 幻觉三层防护 + 上下文分类管理）</li><li>做过 Java 后端项目（Spring Boot 3 + MySQL，订单聚合系统）</li><li>做过 K12 教育科技系统的学情推题模块（用规则引擎而非大模型，做可解释的掌握度估计）</li><li>拿过全国大学生数学竞赛国家三等奖、美国大学生数学建模竞赛 S 奖、全国大学生数学建模竞赛省二等奖</li><li>在做个人网站的 GEO（让 AI 引擎正确引用你），站点架在 GitHub Pages 上：<strong><a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat</a></strong> —— 中英各 73 篇、13 个文章页、带 <code>llms.txt</code></li></ul>
+<p><strong>这篇写于 2026 年 11 月 1 日。</strong> 如果你正在从零开始，这份清单是给你的；如果你已经走了一段路，<strong>第六节的七条红线值得打印下来贴在显示器边上。</strong></p>
+<p>---</p>
+<h2 id="s-参考与致谢">参考与致谢</h2>
+<p><strong>GitHub 官方文件（引用条款均出自此）</strong></p>
+<ul><li><strong>GitHub 服务条款（GitHub Terms of Service，生效日期 2026-04-27）</strong>：<code>docs.github.com/zh/site-policy/github-terms/github-terms-of-service</code> —— B.3 帐户要求（「只允许人类创建帐户」「不允许通过自动程序注册」「一个人或一个法律实体最多可以拥有一个免费帐户」「必须年满 13 周岁」「您的登录名只能由一个人使用」「对 GitHub 的使用不得违反美国或任何其他适用司法管辖区的出口管制或制裁法律」）；B.4 帐户安全；D.4 向我们授予许可（含用于训练 AI 功能）；D.6 存储库许可下的贡献（「入站=出站」）；H. API 条款；J. AI 功能、训练和数据</li><li><strong>GitHub 可接受使用政策（GitHub Acceptable Use Policies）</strong>：<code>docs.github.com/zh/site-policy/acceptable-use-policies/github-acceptable-use-policies</code> —— 第 4 条垃圾信息和假活动（自动标星或关注、虚假帐户和自动化不真实活动、过度自动化批量活动、加密货币挖矿、空投代币激励、二级市场）；第 5 条站点访问和安全；第 6 条服务使用限制；第 7 条信息使用限制（「爬取不包括通过我们的 API 收集数据」；研究人员/档案管理员的例外条件；不得用于发垃圾邮件或向招聘人员出售个人信息）</li><li><strong>GitHub Education / Student Developer Pack</strong>：资格条件（13 岁以上、在读、能提供证明、拥有个人账号）；2024 年引入自动化身份核验后，凭有效教育邮箱的申请 48 小时内通过；工具包从 2022 年约 70 个扩至 100+；GitHub Education Impact Report 2024 显示全球 1700 万+ 学生与教师已认证；GitHub Copilot 对认证学生与教师免费（约值 $100/年/人）</li></ul>
+<p><strong>封号与恢复的真实案例（GitHub 社区讨论）</strong></p>
+<ul><li><code>github.com/orgs/community/discussions/208224</code>（2026-09-18）：开源维护 Obsidian 插件 Vault Coach 的开发者，2026 年 7 月下旬被封（<code>Your account is suspended</code> / 403），8 月提交 Reinstatement Request，收到「flagged by our abuse-detection systems for manual review」并被要求说明用途，9 月 17 日人工清除限制恢复访问，<strong>全程约 7–8 周</strong>。作者复盘：应立即用 Reinstatement Request、清楚说明用途、不要反复开工单、无证据不要猜测原因；恢复后自查了 GitHub Actions 权限、第三方 Action 固定到 commit SHA、避免长期 PAT</li><li><code>github.com/orgs/community/discussions/211140</code>（2026-10-23）：2023 年起学编程的学生，被标记「The owner of this application has been marked as spammy」，提交 4 个工单等了近三个月。社区诊断：<strong>自动标记常由「快速的自动化 API 请求、通过第三方部署工具（Coolify/Vercel 集成）同时部署多个仓库、超出新账号 API 速率限制」触发</strong>；并指出<strong>重复开工单会被系统合并/重置时间戳，反而重置了人工审核队列中的位置</strong></li><li>社区总结的常见封号触发点：<strong>未开 2FA、密码来自已知泄露库、异常 IP/地区登录、推送了 API key/secret、短时间建太多仓库、仓库只有 fork 或空 README、共享 Copilot/Pro 订阅、DMCA 下架影响、fork 了被 DMCA 的仓库</strong>；以及恢复流程要点：<strong>查所有邮箱找 <code>support@github.com</code>/<code>dmca@github.com</code>、本地 clone 是救命稻草、提交专门的 Reinstatement Request 而非普通登录问题表单、在同一工单每 48 小时回复一次、正常响应 7–21 天、2FA 类更快</strong></li><li>学生认证实操记录：中文学生证基本不通过需英文版；Proof Type 选择（学生卡→Dated School ID、录取通知书→Dated class schedule、学信网→Other）；照片须清晰且含当前在读日期；<strong>认证过程中不要挂代理</strong>（会触发学校位置与当前位置不符）；有效期默认 2 年但临近毕业可能只给 1 年；审核约 4 天</li></ul>
+<p><strong>AI 自动化与 0 基础上手</strong></p>
+<ul><li>Agent 开发四组件与三条路线（n8n 无代码一个周末 / Dify、Coze 半程式一两个晚上 / LangChain、Agents SDK 全程式数周）；「四把不同形状的锤子」；「第一个 Agent 最容易死在题目太大」；「挑任务的标准是你每周真的重复做、且做错了不会出事」；「先在纯聊天状态把提示词调到满意再往下走，否则出错你分不清是谁的问题」；「遇物赋形而不留于己」</li><li>低代码四平台对比：Coze（插件生态 + 一键发布抖音/飞书/微信/豆包，短板是不支持 MCP、导出是 zip 非 json）、Dify（开源 BaaS + LLMOps，Marketplace 8000+ 插件、可私有化，短板是学习曲线陡、高并发性能挑战）、FastGPT（极致 RAG、原生支持 MCP，短板模板生态弱、免费额度有限）、n8n（400+ 集成节点，短板内置存储非持久、版本控制不成熟）；「低代码平台不是要取代代码，而是提供更高层次的抽象……它的边界恰好是标准化到什么程度」</li><li>工业界验证的 AI 工作流四节点骨架（定时触发/Webhook → 数据输入 → LLM 结构化处理 → 代码/条件分支校验分级 → IM 机器人输出）与「必须设置条件分支，输出缺字段就触发重试或人工审核」；反面教材「请帮我总结一下这篇文章」vs 结构化 Role 指令</li><li>真实样本：独立开发者「实用切口」全程 AI 写的小程序「厨菜记」，<strong>4 人团队要做 2 个月，他一个人 + AI 用了 19 天</strong>；上线 20 天流量主日收入 0.7–1.4 元、累计约 30 元、曝光转化率 46.8%；原文结论「这是睡后收入……你花 19 天建了一个每个月为你自动赚钱的小机器」「为什么多数人做不成？因为他们在做大事，ambition 太大，动作就变形」；判断标准「别问能不能赚大钱，要问 19 天能不能做完」</li><li>零技术背景的律师用 GitHub Copilot CLI 造团队内部工具（创新集市）：「不是先报班学完再动手，而是边做边学，CLI 讲一步、她懂一步」；「别急着学语法，先学会提需求」；「选全托管架构，Issues + Actions + Pages，别碰服务器」；「用计划模式当免费评审，盯着它问有没有别的做法」；「让 AI 用你的语言解释部署」；「把验收做成流程：让 CLI 用非开发者语言解释每一处关键行为，再找工程师朋友做兽医式检查」；适用边界「适用于轻量内部工具，复杂业务系统仍需工程团队把关」</li><li>AI 编程工具横评（2026-09）：Copilot 代码生成准确率领先 Cursor 1.2%，但 Cursor 全局代码理解强 15%（大型项目重构、跨文件修改）；个人小项目免费 Copilot 足够；预算有限选 Codeium（免费版语言最多且无次数限制）</li><li>AI 编程辅助研究：GitHub Productivity Research 发现使用 Copilot 的开发者任务完成速度平均快 55%；Stack Overflow 2024 调研中 87.7% 职业开发者以 Git 为主要版本控制系统</li><li>GEO 相关：GitHub Octoverse 2026（智能体开启 40% 的 PR）、AI coding benchmark（最强 Agent 仅通过 10.8% 真实任务）—— 二者落差说明「能被 AI 找到并引用」本身是一道护城河</li><li>2026 AI 副业真实数字：有人用 AI 搭自动化客服回复系统卖给本地电商商家，单套 3000–5000 元；旧文档数字化整理按文档量收费；这些面向 B 端、不需要很强技术能力、用现成低代码 + 大模型 API 即可搭建、可复制性强</li><li>闲鱼数据（经济日报 / 国际在线，2026-09-17）：上半年 AI 服务交易订单 981.6 万单同比 +157%、近 500 万人购买同比 +98%；四线城市卖家占比 32.3% 居首、女性卖家 62.4% —— 说明「能触达的人」与「会做的人」在 2026 年同样是两件事</li></ul>
+<blockquote><p>本文引用的条款与案例均标注来源，版权归原作者所有。 文中所有商业数据均为公开报道，<strong>量级可参考，不可当作个体期望值；收益因人而异，不构成任何收益承诺</strong>。 GitHub 条款会持续更新，<strong>实际操作前请以官网最新版本为准</strong>。</p></blockquote>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>
