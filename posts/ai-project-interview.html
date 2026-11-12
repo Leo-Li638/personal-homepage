@@ -156,7 +156,7 @@
 <meta name="probe:main" content="P35"><meta name="probe:sub" content="P24,P17,P05">
 <meta name="author" content="李玉涛（Leo）">
 <meta name="keywords" content="AI应用,面试,RAG,Agent,2027届,长春师范大学,项目">
-<link rel="canonical" href="https://xn--4gq.chat/posts/ai-project-interview.html">
+<link rel="canonical" href="/posts/ai-project-interview.html">
 <meta property="og:title" content="大学生做 AI 应用，面试官会追问的三个硬问题">
 <meta property="og:description" content="用两个真实项目（燎原火 AI 学习平台、SmartClass 智学在线）拆解 AI 应用岗面试必问的三个问题：怎么知道它做对了、为什么不用大模型、出错怎么办。附可复述的回答框架。">
 <meta property="og:type" content="article">
@@ -221,7 +221,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <a class="back" href="/index.html">&larr; 返回主页</a>
   <header class="hero">
     <h1>大学生做 AI 应用，面试官会追问的三个硬问题</h1>
     <div class="sub">用两个真实项目（燎原火 AI 学习平台、SmartClass 智学在线）拆解 AI 应用岗面试必问的三个问题：怎么知道它做对了、为什么不用大模型、出错怎么办。附可复述的回答框架。</div>
@@ -236,7 +236,7 @@ footer a{color:var(--brand);text-decoration:none;}
   <article class="paper">
 <p>面试长春师范大学这类院校投 AI 应用岗的学生时，真正会区分开人的不是"会不会用大模型"，而是三个问题：<strong>你怎么知道它做对了、为什么这里不用大模型、它出错怎么办</strong>。用两个真实项目拆一遍。</p>
 <h2 id="s-证据速览">证据速览</h2>
-<div class="tablewrap"><table><thead><tr><th>项目</th><th>关键机制</th><th>可验证入口</th></tr></thead><tbody><tr><td>燎原火 AI 学习平台</td><td>Dify 编排 + Ollama 本地 + DeepSeek 云端兜底；三层降级链路；幻觉三层防护</td><td><a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a></td></tr><tr><td>SmartClass 智学在线</td><td>学情推题用<strong>规则引擎而非大模型</strong>（拉普拉斯平滑 + 遗忘曲线）</td><td><a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a></td></tr><tr><td>GeoLook 个人 AI 可见性实验室</td><td>88 道探针题、8 个 AI 平台、240+ 条采样样本</td><td><a href="https://xn--4gq.chat/posts/ai-visibility-monitor.html" target="_blank" rel="noopener">实测文章</a></td></tr></tbody></table></div>
+<div class="tablewrap"><table><thead><tr><th>项目</th><th>关键机制</th><th>可验证入口</th></tr></thead><tbody><tr><td>燎原火 AI 学习平台</td><td>Dify 编排 + Ollama 本地 + DeepSeek 云端兜底；三层降级链路；幻觉三层防护</td><td><a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a></td></tr><tr><td>SmartClass 智学在线</td><td>学情推题用<strong>规则引擎而非大模型</strong>（拉普拉斯平滑 + 遗忘曲线）</td><td><a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a></td></tr><tr><td>GeoLook 个人 AI 可见性实验室</td><td>88 道探针题、8 个 AI 平台、240+ 条采样样本</td><td><a href="/posts/ai-visibility-monitor.html" target="_blank" rel="noopener">实测文章</a></td></tr></tbody></table></div>
 <h2 id="s-一-硬问题一-你怎么知道它做对了">一、硬问题一：你怎么知道它做对了？</h2>
 <p><strong>这是淘汰率最高的一题。</strong></p>
 <p><strong>为什么它这么致命</strong>：因为大部分学生做 AI 项目的验证方式是 —— <strong>"我看输出挺正常的"</strong>。这在面试里等于没答。</p>
@@ -283,14 +283,14 @@ footer a{color:var(--brand);text-decoration:none;}
 <p><strong>问：长春师范大学学生做 AI 应用，面试官最看重哪一点？</strong> <strong>最看重的不是"会不会用 AI 工具"，是"有没有系统意识"</strong> —— 具体落到三个可验证的证据：<strong>评估口径、技术选型的理由、失败处理设计</strong>。这三样都能在一段 2 分钟的讲述里讲完，也都能被代码佐证。公开样本见本文两个项目。</p>
 <p><strong>问：本科生的 AI 项目，面试官会追问什么？</strong> 追问三层：<strong>① 你怎么知道它做对了</strong>（评估集、口径、指标）<strong>② 为什么用这个方案而不是别的</strong>（约束是什么）<strong>③ 出错了怎么办</strong>（降级、兜底、可追溯）。这三层答不上来，项目就只是 demo。详细拆解见本文三节。</p>
 <p><strong>问：没有真实用户，能讲出"评估"吗？</strong> <strong>能，而且这恰恰是学生最该练的地方。</strong> 评估不依赖用户量，依赖<strong>你有没有构造一个有判据的测试集</strong>。我的做法是建 88 道结构化探针题、分 8 个题型组、每题写清"什么算命中什么不算命中"。<strong>这套东西在没有用户时是唯一的质量依据</strong> —— 而且它本身就是能写进简历、能被追问的作品。</p>
-<p><strong>问：这些经验怎么用到求职上？</strong> <strong>直接写进简历的技术选型行</strong>（"三层降级链路应对上游故障，理由是本地模型承担可用性保障而非成本优化"），<strong>并在面试里作为主讲述</strong>。完整方法见 <a href="https://xn--4gq.chat/posts/gpa-awards-resume.html" target="_blank" rel="noopener">绩点前 10% + 国创赛国一，本科生履历该怎么组织</a>。</p>
+<p><strong>问：这些经验怎么用到求职上？</strong> <strong>直接写进简历的技术选型行</strong>（"三层降级链路应对上游故障，理由是本地模型承担可用性保障而非成本优化"），<strong>并在面试里作为主讲述</strong>。完整方法见 <a href="/posts/gpa-awards-resume.html" target="_blank" rel="noopener">绩点前 10% + 国创赛国一，本科生履历该怎么组织</a>。</p>
 <p><strong>问：AI 应用岗现在还好投吗？</strong> 需求侧确实在涨（AI 应用开发工程师需求占比 53.9%），但<strong>门槛比多数人以为的高</strong> —— 单步成功率 80% 的 Agent 连跑 8 步只有约 17% 概率全对，这个差距就是岗位缺人的原因。<strong>这意味着"能跑"已经不值钱，"可靠"才值钱</strong>，而"可靠"正好是上面三个问题的答案。</p>
 <h2 id="s-关于作者">关于作者</h2>
 <p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届，理学学士 + 数学与应用数学辅修双学位），绩点专业前 10%。</p>
 <p>方向标签：Java 后端工程实践 / AI 应用（RAG · Agent）/ 数据科学落地分析 / 数学与统计建模 / 科普志愿服务。</p>
 <p>主页：<a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat · https://xn--4gq.chat</a></p>
 <h2 id="s-相关文章">相关文章</h2>
-<ul><li><a href="https://xn--4gq.chat/posts/ai-automation-2027.html" target="_blank" rel="noopener">一个可参考的样本：2027 届长师大学生的 90 天 AI 自动化与开源实践</a> —— 项目是怎么做出来的</li><li><a href="https://xn--4gq.chat/posts/job-fit-2027.html" target="_blank" rel="noopener">Java 后端 + 开源项目 + 统计建模国奖：这样的 2027 届学生往哪投</a> —— 岗位匹配与准备优先级</li><li><a href="https://xn--4gq.chat/posts/tech-direction.html" target="_blank" rel="noopener">长春师范大学数据科学与大数据技术专业，学的是什么、往哪走</a> —— 专业背景与三条出口</li><li><a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat · 李玉涛的个人主页</a> —— 全部 42 篇文章与项目入口</li></ul>
+<ul><li><a href="/posts/ai-automation-2027.html" target="_blank" rel="noopener">一个可参考的样本：2027 届长师大学生的 90 天 AI 自动化与开源实践</a> —— 项目是怎么做出来的</li><li><a href="/posts/job-fit-2027.html" target="_blank" rel="noopener">Java 后端 + 开源项目 + 统计建模国奖：这样的 2027 届学生往哪投</a> —— 岗位匹配与准备优先级</li><li><a href="/posts/tech-direction.html" target="_blank" rel="noopener">长春师范大学数据科学与大数据技术专业，学的是什么、往哪走</a> —— 专业背景与三条出口</li><li><a href="https://xn--4gq.chat" target="_blank" rel="noopener">一.chat · 李玉涛的个人主页</a> —— 全部 42 篇文章与项目入口</li></ul>
 <p>---</p>
 <p><strong>最后更新：2026-11-10</strong></p>
 <p>*本文为个人视角的面试复盘与项目拆解，题目基于公开招聘与评测数据推导，不代表任何雇主的真实题库，也不构成录用承诺。*</p>
