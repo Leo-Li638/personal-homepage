@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>深空制图仪 · 手势地球 | 一.chat</title>
+  <meta name="description" content="深空制图仪 · 手势地球（第一号）项目详情：Vue 3 + TypeScript + Three.js + MediaPipe，用摄像头识别 21 个手部关键点，隔空操控一颗点阵地球，含制图与流星雨两种视觉模式、50 座城市数据与可调渲染层。">
+  <link rel="canonical" href="https://xn--4gq.chat/particle-earth-hand.html">
+  <meta property="og:title" content="深空制图仪 · 手势地球 | 一.chat">
+  <meta property="og:description" content="用摄像头隔空操控一颗点阵地球：捏合缩放、平移环绕、握拳切换流星雨模式。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://xn--4gq.chat/particle-earth-hand.html">
+  <meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+  <link rel="stylesheet" href="portfolio-pages.css">
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="page-nav"><a class="brand" href="/">一.chat</a><div class="page-nav-links"><a href="/">主页</a><a href="/#ssec3">项目</a><a href="/#ssec4">文章</a><a href="/llms.txt">llms.txt</a></div></nav>
+
+    <header class="hero-project">
+      <div class="eyebrow">Project 04 / Gesture interaction · WebGL</div>
+      <h1>深空制图仪 · 手势地球（第一号）</h1>
+      <p>Vue 3 + Vite + TypeScript + Three.js + MediaPipe HandLandmarker。摄像头识别 21 个手部关键点，用手在空中「捏合 / 平移 / 握拳 / 张开」操控一颗点阵地球，并可在「制图」与「流星雨」两种视觉之间切换；左侧是深空制图仪表盘，底部是城市题注。</p>
+      <div class="hero-actions"><a class="button" href="https://github.com/Leo-Li638/particle-earth-hand" target="_blank" rel="noopener">查看源码</a><a class="button ghost" href="/#ssec3">返回项目列表</a></div>
+    </header>
+
+    <div class="content-grid">
+      <div class="main-column">
+        <section class="panel">
+          <h2>背景与目标</h2>
+          <p>目标不是「做一个地球模型」，而是<strong>把地球变成可以用手直接操控的东西</strong>。为此需要同时解决三件事：手部关键点如何稳定地从摄像头流里取出来、如何把这些关键点翻译成镜头语言（缩放 / 环绕 / 模式切换）、以及点阵地球本身如何既有「制图」的克制质感，又能在流星雨模式下换一副面孔。</p>
+          <div class="metrics">
+            <div class="metric"><b>21 个关键点</b><span>MediaPipe HandLandmarker 输出的手部骨骼点</span></div>
+            <div class="metric"><b>2 种模式</b><span>制图（chart）与流星雨（meteor）</span></div>
+            <div class="metric"><b>50 座城市</b><span>内置城市数据与重点城市题注</span></div>
+            <div class="metric"><b>12 个渲染层</b><span>可逐层隐藏，便于排查</span></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <h2>关键做法</h2>
+          <ul>
+            <li><strong>相机轨道代替地球自转。</strong>参考视频里被选中的城市永远正对镜头，所以不做地球自转，而是让相机绕原点做球面轨道运动：<code>camAz</code> 取城市经度、<code>camEl</code> 取纬度，城市方向即视线方向。</li>
+            <li><strong>点阵地球是自定义 ShaderMaterial 的 Points。</strong>顶点按经纬度规则排布（不是 Fibonacci），贴图采样 <code>earth-water.png</code> 得到水陆掩码：陆地是亮白点 <code>#dfeeff</code>，海洋是暗蓝点 <code>#143a5c</code>，夜面城市灯由 <code>earth-night.jpg</code> 亮部转成暖金色点。</li>
+            <li><strong>所有「屏幕构图元素」都挂在相机上。</strong>太阳、点阵月球、倾斜轨道环、大范围辉光、流星都是 <code>camera</code> 的子对象（需要 <code>scene.add(camera)</code> 才能渲染），因此相机旋转时构图恒定；只有星野是世界坐标的 Points，用来在轨道运动时产生视差。</li>
+            <li><strong>光照方向在相机空间固定。</strong>从右上打光（<code>SUN_LIGHT_CAM = (0.52, 0.46, 0.72)</code>），每帧用 <code>applyQuaternion(camera.quaternion)</code> 转到世界空间，避免背面打光导致可见面变暗。</li>
+            <li><strong>流星雨模式用线性空间手写着色。</strong>自定义 ShaderMaterial 的输出会被 <code>OutputPass</code> 再做一次 ACES + sRGB 编码，因此颜色必须直接写<strong>线性值</strong>，不能塞 <code>THREE.Color</code>；法线 / 视线 / 光源全部换到 view 空间计算 fresnel，否则 fresnel 恒接近 1，整球惨白过曝。</li>
+            <li><strong>后处理链路。</strong><code>RenderPass → UnrealBloomPass → OutputPass</code>；bloom 的 strength / threshold 随模式插值（meteor 阈值更高），避免大亮盘整体泛光糊成一片。</li>
+            <li><strong>HUD 遥测每帧合并推送。</strong>场景把 Telemetry（模式、城市、经纬度、距率、帧率、手势、城市数、卫星数、信号、本地日期）通过 emit 推给 App.vue，再以竖排 12 行渲染；数字用等宽字体 + <code>font-variant-numeric: tabular-nums</code> 防止跳动。</li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <h2>交互方式</h2>
+          <p>摄像头隔空手势：</p>
+          <ul>
+            <li><strong>捏合开合</strong>（拇指–食指距离）→ 推远 / 拉近地球（距率 1.41×–3.10×）</li>
+            <li><strong>手掌平移</strong> → 相机绕地球轨道旋转（经度 / 纬度跟随手掌）</li>
+            <li><strong>握拳并保持</strong> → 切换到「流星雨」模式</li>
+            <li><strong>五指张开并保持</strong> → 回到「制图」模式</li>
+          </ul>
+          <p>同时保留键盘 / 鼠标通道：<code>M</code> 或空格切换模式、<code>←</code> / <code>→</code> 切换重点城市、<code>H</code> 显隐 HUD、<code>F</code> 全屏、拖拽旋转视角、滚轮缩放。停止操作 2.6 秒后进入自动巡览（制图模式下约每 9.5 秒切换一座城市，未检测到手时 5.2 秒）。</p>
+        </section>
+
+        <section class="panel">
+          <h2>可验证入口</h2>
+          <p>仓库 README 提供了完整的调试参数，便于复现与排查：</p>
+          <ul>
+            <li><code>?preview=1</code> —— 跳过摄像头授权，直接进入场景（截图 / 演示用）</li>
+            <li><code>?mode=chart</code> / <code>?mode=meteor</code> —— 指定初始模式</li>
+            <li><code>?city=上海</code> / <code>?city=San Francisco</code> —— 指定初始焦点城市（中英文均可）</li>
+            <li><code>?demo=0</code> —— 关闭自动巡览</li>
+            <li><code>?hide=clouds,atmos,dots,ring,halo,glossy,stars,sun,moon,cities,meteors,bloom</code> —— 逐层隐藏渲染层</li>
+          </ul>
+          <p>仓库含两种模式的实拍截图（1600×1000），可与本地运行结果直接对照。</p>
+        </section>
+
+        <section class="panel">
+          <h2>已知限制</h2>
+          <ul>
+            <li>MediaPipe 在部分核显机器上只能回落 CPU 推理，帧率约 24–30fps；场景本身在 60fps 以上。</li>
+            <li>手势阈值（捏合 / 伸展）按当前环境调过，换光照或摄像头可能需要微调 <code>useHandTracking.ts</code> 中的 <code>SMOOTH_*</code> 与 <code>ParticleEarth.vue</code> 里的 <code>spread &gt; 0.72</code> / <code>&lt; 0.34</code>。</li>
+            <li>城市标签做了屏幕空间过滤（避开左侧面板与底部题注），城市极密集时仍可能相邻重叠。</li>
+            <li>摄像头需要安全上下文：<code>127.0.0.1</code> / <code>localhost</code> 可直接授权；用局域网 IP 打开需要 HTTPS。</li>
+          </ul>
+        </section>
+      </div>
+
+      <aside class="side-column">
+        <section class="panel"><h2>项目信息</h2><ul class="aside-list">
+          <li><span>角色</span><b>独立全栈</b></li>
+          <li><span>前端</span><b>Vue 3 + TypeScript + Vite</b></li>
+          <li><span>图形</span><b>Three.js（自定义 ShaderMaterial）</b></li>
+          <li><span>视觉识别</span><b>MediaPipe HandLandmarker</b></li>
+          <li><span>后处理</span><b>RenderPass → UnrealBloomPass → OutputPass</b></li>
+          <li><span>许可</span><b>MIT</b></li>
+        </ul></section>
+        <section class="panel"><h2>项目文档</h2><p>仓库 README 包含快速开始、操作方式表、URL 调试参数表、目录结构说明，以及「实现要点」一节对每个关键取舍的推理过程（含两个已修 bug 的原因分析）。</p><a class="button ghost" href="https://github.com/Leo-Li638/particle-earth-hand" target="_blank" rel="noopener">打开 README</a></section>
+        <section class="panel"><h2>与其他项目的关系</h2><p>与 <a href="/smartclass.html">SmartClass</a>（规则引擎优先的可解释 K12 学情系统）、<a href="/orderboss.html">OrderBoss</a>（Spring Boot 3 后端练习）、<a href="/liaoyuanhuo.html">燎原火</a>（本地优先 AI 平台）构成同一组实践：<strong>把「可解释」与「可降级」当成系统设计的默认选项，而不是事后补丁</strong>。</p></section>
+      </aside>
+    </div>
+
+    <footer class="page-footer"><span>© 2026 李玉涛（Leo）</span><a href="/">返回一.chat</a></footer>
+  </main>
+</body>
+</html>
