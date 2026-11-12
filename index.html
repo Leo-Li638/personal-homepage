@@ -27,6 +27,18 @@
 <link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero.avif" media="(min-width:641px)">
 <link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero-small.avif" media="(max-width:640px)">
 <style>
+  /* QQ/微信 内置浏览器提示条 */
+  #qqBrowserTip{position:fixed;left:12px;right:12px;bottom:12px;z-index:10080;display:flex;align-items:flex-start;gap:9px;
+    padding:11px 13px;border-radius:12px;font-size:13px;line-height:1.6;
+    background:rgba(12,26,38,.92);color:#dcefff;border:1px solid rgba(150,200,235,.3);
+    box-shadow:0 6px 24px rgba(0,0,0,.3);backdrop-filter:blur(8px);}
+  #qqBrowserTip .qbt-ico{flex:none;font-size:14px;line-height:1.5;}
+  #qqBrowserTip .qbt-txt{flex:1;}
+  #qqBrowserTip .qbt-x{flex:none;background:none;border:none;color:#9fd0ef;font-size:19px;line-height:1;
+    cursor:pointer;padding:0 2px;}
+  #qqBrowserTip .qbt-x:hover{color:#fff;}
+  @media(max-width:640px){#qqBrowserTip{left:8px;right:8px;bottom:8px;font-size:12.5px;}}
+
   /* 静态 SEO 兜底区：给爬虫与 AI 的链接与实体，不对正常用户展示 */
   .seo-static{position:absolute;left:-99999px;top:auto;width:1px;height:1px;overflow:hidden;}
   /* 白屏降级：JS 失败时把静态兜底转成可见的文档式降级页 */
@@ -2844,7 +2856,77 @@ function renderContent(t){
       });
     });
     /* 2D-first：不再让 Three.js/GLB 阻塞首屏，保留相同交互接口。 */
-    const gl3d={ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
+const gl3d=(function(){
+      if(!window.WebGLRenderingContext) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
+      if(matchMedia('(prefers-reduced-motion: reduce)').matches) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
+      const cvs=document.getElementById('sp-npc-gl');
+      if(!cvs) return {ready:false,pose:function(){},spinNow:function(){},party:function(){},stats:function(){return null;}};
+      let ready=false,renderer=null,scene,camera,model,group,yaw=0,pitch=0,spinA=0,lw=0,lh=0,
+          keyL=null,rimL=null,hemiL=null,partyOn=false;
+      function loadScript(src){ return new Promise(function(res,rej){
+        const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+      function fit(){
+        const box=new THREE.Box3().setFromObject(model);
+        const size=box.getSize(new THREE.Vector3()), c=box.getCenter(new THREE.Vector3());
+        const fov=32*Math.PI/180, dist=(size.y/2)/Math.tan(fov/2)*1.1;
+        camera.aspect=Math.max(.2,cvs.clientWidth/Math.max(1,cvs.clientHeight));
+        camera.updateProjectionMatrix();
+        camera.position.set(c.x,c.y,c.z+dist); camera.lookAt(c.x,c.y,c.z);
+      }
+      function init(){
+        try{ renderer=new THREE.WebGLRenderer({canvas:cvs,alpha:true,antialias:true}); }catch(e){ return; }
+        renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+        renderer.outputEncoding=THREE.sRGBEncoding;
+        scene=new THREE.Scene();
+        camera=new THREE.PerspectiveCamera(32,1,.1,50);
+        scene.add(hemiL=new THREE.HemisphereLight(0xcfe8ff,0x86a86b,1.0));
+        keyL=new THREE.DirectionalLight(0xfff1d6,.85); keyL.position.set(2,3,4); scene.add(keyL);
+        rimL=new THREE.DirectionalLight(0xa8d8ff,.5); rimL.position.set(-3,2,-3); scene.add(rimL);
+        group=new THREE.Group(); scene.add(group);
+        new THREE.GLTFLoader().load('assets/npc_maid_3d.glb',function(g){
+          model=g.scene; group.add(model);
+          model.traverse(function(o){ if(o.isMesh) o.frustumCulled=false; });
+          ready=true; cvs.classList.add('on'); npcEl.classList.add('gl');
+          (function loop(t){ requestAnimationFrame(loop); if(!ready)return;
+            const w=cvs.clientWidth,h=cvs.clientHeight;
+            if(w!==lw||h!==lh){ lw=w; lh=h; renderer.setSize(w,h,false); fit(); }
+            if(spinA>0){ spinA=Math.max(0,spinA-.05); yaw+=spinA*.55; }
+            if(partyOn){ const hue=(t*.00016)%1;
+              keyL.color.setHSL(hue,.72,.62); rimL.color.setHSL((hue+.45)%1,.85,.6);
+              hemiL.intensity=1.05+.32*Math.sin(t*.011); }
+            else{ keyL.color.setHex(0xfff1d6); rimL.color.setHex(0xa8d8ff); hemiL.intensity=1.0; }
+            group.rotation.y=yaw;
+            group.rotation.x=pitch*.6+Math.sin((t||0)*.0011)*.012;
+            group.rotation.z=Math.sin((t||0)*.0009)*.03;
+            group.position.y=Math.sin((t||0)*.0021)*.006;
+            renderer.render(scene,camera); })(performance.now());
+        },undefined,function(){ /* GLB 加载失败：保持 2D 立绘 */ });
+      }
+      function startNpcGL(){
+        loadScript('assets/three.min.js')
+          .then(function(){ return loadScript('assets/GLTFLoader.js'); })
+          .then(init).catch(function(){ /* three 加载失败：保持 2D */ });
+      }
+      // 启动时机：preloader 放完动画会派发 cinematic:complete。
+      // ⚠️ 加兜底：万一 preloader 出错没派发事件，9 秒后强制启动，
+      //    否则 3D 手办会永远不出现（用户以为"功能没了"）。
+      var glStarted=false;
+      function onceStartNpcGL(){ if(glStarted) return; glStarted=true; startNpcGL(); }
+      if(document.getElementById('cinematic-preloader')){
+        addEventListener('cinematic:complete',onceStartNpcGL,{once:true});
+        setTimeout(onceStartNpcGL,9000);
+      } else {
+        onceStartNpcGL();
+      }
+      return {
+        get ready(){ return ready; },
+        pose:function(y,p){ yaw=y; pitch=p; },
+        spinNow:function(){ if(ready) spinA=1; },
+        party:function(on){ partyOn=!!on; },
+        stats:function(){ return ready?{tri:renderer.info.render.triangles,w:cvs.width,h:cvs.height}:null; }
+      };
+    })();
+    window.__npcGL=gl3d;
     window.__npcGL=gl3d;
     /* 键盘驾驶（bruno-simon 小车风）：方向键/WASD + 漂移胎痕 + H 喇叭 */
     var keys={}, skidT=0, driveTipped=false, driveHeading=Math.PI, driveHeld=false,
@@ -3194,5 +3276,48 @@ function renderContent(t){
 })();
 </script>
 <script src="npc-drive.js"></script>
+
+<script>
+/* ===== QQ / 微信内置浏览器提示 =====
+   腾讯对该域名的安全评级会导致 QQ WebView 用特殊方式打开站内链接，
+   返回时历史栈断裂 → 表现为「点开文章后返回直接退出网站」。
+   代码层无法根治域名评级，只能引导用户切到系统浏览器打开。 */
+(function(){
+  var ua=navigator.userAgent||'';
+  if(!/MQQBrowser|MicroMessenger|wxwork/i.test(ua)) return;
+  var KEY='onechat_app_tip_closed';
+  try{ if(localStorage.getItem(KEY)==='1') return; }catch(e){}
+  function show(){
+    if(document.getElementById('qqBrowserTip')) return;
+    var el=document.createElement('div');
+    el.id='qqBrowserTip';
+    el.setAttribute('role','note');
+    el.innerHTML='<span class="qbt-ico">\u2139\uFE0F</span>'
+      +'<span class="qbt-txt">在 QQ / 微信内打开时，站内跳转可能被系统拦截而无法返回。'
+      +'建议点右上角「\u00B7\u00B7\u00B7 \u2192 在浏览器打开」，体验更完整。</span>'
+      +'<button class="qbt-x" type="button" aria-label="关闭提示">\u00D7</button>';
+    document.body.appendChild(el);
+    var x=el.querySelector('.qbt-x');
+    if(x) x.addEventListener('click',function(){
+      el.remove();
+      try{ localStorage.setItem(KEY,'1'); }catch(e){}
+    });
+  }
+  addEventListener('portfolio:enter',function(){ setTimeout(show,700); },{once:true});
+  // 兜底：直接打开文章页（没有 splash 动画）或 portfolio:enter 没派发时也要显示
+  // ⚠️ 不能用 `!document.getElementById('splash')` 判断 —— splash 元素一直在 DOM 里，
+  //    只是被加了 hide 类。必须判断它是否【可见】。
+  function tryShow(){
+    if(document.getElementById('qqBrowserTip')) return;
+    var sp=document.getElementById('splash');
+    var gone = !sp || sp.classList.contains('hide') || sp.classList.contains('leaving')
+               || (sp.style && sp.style.opacity==='0');
+    if(gone) show();
+  }
+  setTimeout(tryShow,2500);
+  setTimeout(tryShow,5000);
+  setTimeout(tryShow,9000);
+})();
+</script>
 </body>
 </html>
