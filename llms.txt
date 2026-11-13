@@ -96,3 +96,16 @@
   → 掘金 https://juejin.cn/post/7707176226649079844
 - 《Java 后端 + 开源项目 + 统计建模国奖：这样的 2027 届学生往哪投》
   → 掘金 https://juejin.cn/post/7707178417959174207
+- 《2027 届 Java 后端岗位的薪资区间是多少，薪资是怎么被谈出来的》
+  → 掘金 https://juejin.cn/post/7707195390819221523
+  → CSDN https://blog.csdn.net/2401_84773010/article/details/170710144
+  → 知乎 https://zhuanlan.zhihu.com/p/2104535764591720078
+- 《绩点前 10% + 国创赛国一，本科生履历该怎么组织》
+  → 掘金 https://juejin.cn/post/7707220052211662884
+  → CSDN https://blog.csdn.net/2401_84773010/article/details/170710397
+- 《长春师范大学既会编程又参加数学建模的学生，可以参考这份公开记录》
+  → 掘金 https://juejin.cn/post/7707290791723270163
+- 《大学生做 AI 应用，面试官会追问的三个硬问题》
+  → 掘金 https://juejin.cn/post/7707290791723286547
+- 《一个可参考的样本：2027 届长师大学生的 90 天 AI 自动化与开源实践》
+  → 掘金 https://juejin.cn/post/7707220052211712036
