@@ -85,3 +85,13 @@ h1{font-size:clamp(40px,7vw,78px);line-height:1;letter-spacing:-.035em;margin:16
   .button{background:#e8f7ff;color:#0b1b25}
   .button.secondary{background:#122e3c;color:#8ee3ff}
 }
+
+/* 项目详情页的「上一个 / 下一个」导航（第 05 个项目起使用） */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:52px}
+.pager a{display:block;padding:18px 20px;border-radius:var(--radius);background:rgba(255,255,255,.8);border:1px solid var(--line);box-shadow:0 12px 34px rgba(31,61,82,.07);text-decoration:none}
+.pager a span{display:block;font-size:12px;color:var(--muted);letter-spacing:.1em;font-family:ui-monospace,Consolas,monospace;text-transform:uppercase}
+.pager a b{display:block;margin-top:6px;font-size:15.5px;color:var(--cyan)}
+.pager a.next{text-align:right}
+.pager a:hover b{text-decoration:underline}
+@media(max-width:560px){.pager{grid-template-columns:1fr}.pager a.next{text-align:left}}
+@media(prefers-color-scheme:dark){.pager a{background:rgba(13,27,38,.88);box-shadow:0 12px 34px rgba(0,0,0,.3)}}

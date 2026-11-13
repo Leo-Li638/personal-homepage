@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TURBOCORE · 涡扇 3D 爆炸分解 | 一.chat</title>
+  <meta name="description" content="TURBOCORE · 涡扇 3D 爆炸分解项目详情：Three.js 0.187 + TypeScript 的 TC-X135 高涵道比涡扇发动机实时演示，24 个部件沿确定性轨迹散开成爆炸图，支持实时剖切、气流粒子与 8 个显示开关，全部在浏览器 WebGL 中渲染。">
+  <link rel="canonical" href="https://xn--4gq.chat/turbocore.html">
+  <meta property="og:title" content="TURBOCORE · 涡扇 3D 爆炸分解 | 一.chat">
+  <meta property="og:description" content="在浏览器里把一台涡扇发动机拆开看：24 个部件沿确定性轨迹散开成爆炸图，可剖切、可看气流，全部实时渲染。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://xn--4gq.chat/turbocore.html">
+  <meta property="og:image" content="https://xn--4gq.chat/assets/turbocore-02-exploded.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233d7fb5'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M50 48 L50 14 A34 34 0 0 1 71.5 22.5 Z'/%3E%3Cpath d='M52 50 L86 50 A34 34 0 0 1 77.5 71.5 Z' opacity='.82'/%3E%3Cpath d='M50 52 L50 86 A34 34 0 0 1 28.5 77.5 Z'/%3E%3Cpath d='M48 50 L14 50 A34 34 0 0 1 22.5 28.5 Z' opacity='.82'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='9' fill='%23d9a53a'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="portfolio-pages.css">
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="page-nav"><a class="brand" href="./">一.chat</a><div class="page-nav-links"><a href="./">主页</a><a href="./#ssec3">项目</a><a href="https://leo-li638.github.io/turbocore-engine/" target="_blank" rel="noopener">在线体验</a><a href="https://github.com/Leo-Li638/turbocore-engine" target="_blank" rel="noopener">GitHub</a></div></nav>
+    <header class="hero-project">
+      <div class="eyebrow">Project 05 / Real-time 3D &amp; WebGL</div>
+      <h1>TURBOCORE · 涡扇 3D 爆炸分解</h1>
+      <p>在浏览器里把一台涡扇发动机拆开看：24 个部件沿确定性轨迹散开成爆炸图、可剖切、可看气流，全部实时渲染。演示对象是 TC-X135 高涵道比涡扇发动机——推力 135 kN、涵道比 9.2、总压比 42、风扇直径 2.05 m、总长 4.20 m、净重 2,410 kg，没有任何一帧是预渲染视频。</p>
+      <div class="hero-actions"><a class="button" href="https://leo-li638.github.io/turbocore-engine/" target="_blank" rel="noopener">在线体验</a><a class="button secondary" href="https://github.com/Leo-Li638/turbocore-engine" target="_blank" rel="noopener">查看源码</a></div>
+    </header>
+    <div class="content-grid">
+      <div class="main-column">
+        <section class="panel">
+          <h2>背景与目标</h2>
+          <p>起点是一张「看不清楚」的结构图：涡轮风扇发动机的部件层层嵌套，风扇、压气机、燃烧室、涡轮与尾喷管被机匣包在一起，静态剖面图很难同时交代「谁在谁里面」和「气流往哪走」。我想做一个可以自己拖动分解进度的网页演示——从整机装配滑到完全散开，中间任意一帧都必须是确定的、可复现的画面。</p>
+          <p>因此约束先定下来：纯前端静态部署，不加载任何预渲染视频或序列帧；同一 progress 下每个部件的位姿由纯函数算出，而不是靠补间动画的运行时状态；爆炸进度、剖切平面与 8 个显示开关都落在同一套状态源上，避免「动画在跑但 UI 不知道」。</p>
+          <div class="metrics"><div class="metric"><b>24 个部件</b><span>沿确定性轨迹散开的整机装配置信</span></div><div class="metric"><b>9 秒</b><span>自动分解时长，重新装配 6.5 秒，滑块可停任意进度</span></div><div class="metric"><b>8 个开关</b><span>DISPLAY CONTROL 面板，逐项验证过可见效果</span></div></div>
+        </section>
+        <section class="panel">
+          <h2>系统构成</h2>
+          <div class="flow">
+            <div class="flow-step"><i>01</i><div><b>部件树与整机</b><p>24 个部件组成一台 TC-X135 高涵道比涡扇发动机。左侧部件树带搜索，点击任意节点高亮对应部件并同步到右侧检视面板；整体由解析式几何拼出，不依赖外部模型文件。</p></div></div>
+            <div class="flow-step"><i>02</i><div><b>确定性爆炸位姿</b><p>每个部件有装配位姿与分解位姿两端，中间由 partEase 缓动纯函数按 progress 插值。同一 progress 下位姿完全一致，所以拖动滑块、反向播放、重新装配都不会出现「回不到原位」的漂移。</p></div></div>
+            <div class="flow-step"><i>03</i><div><b>剖切平面</b><p>一个可移动的裁剪平面实时裁切整机与本体，配合剖切 gizmo 调整位置。剖切不是隐藏半个壳体，而是让几何真正被切开，压气机与燃烧室的内部流道在切口处可见。</p></div></div>
+            <div class="flow-step"><i>04</i><div><b>气流粒子</b><p>进气道、压气机、燃烧室、涡轮尾喷四个分区各自发射粒子，颜色沿流程由蓝到青、橙、红，直接叠在分解态上说明空气怎么走。</p></div></div>
+            <div class="flow-step"><i>05</i><div><b>显示控制与检视</b><p>左下 8 个开关（部件标注 / 整机剖切 / 辉光效果 / 环境粒子 / 气流演示 / 聚焦淡化 / 实时阴影 / 自动旋转）+ 剖切 Y 滑块；底部时间轴提供反向、重新装配、重置视角与本体剖切视图。</p></div></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>关键实现</h2>
+          <ul>
+            <li><b>单一 progress 状态源：</b>装配与分解、时间轴、滑块、反向播放、自动播放全部读写同一个 progress，UI 只做映射。任何一路操作都会被其余控件正确反映，不会出现两套动画状态打架。</li>
+            <li><b>partEase 缓动纯函数：</b>位姿是 progress 的纯函数——没有累积时间、没有随机数，同一进度下可逐帧复现同一画面，也让「同一角度的截图像素对比」这种验证方式成立。</li>
+            <li><b>实时剖切：</b>用 Plane 裁剪做真正的几何切面，而不是把模型隐藏一半；裁切只影响渲染，不重建几何，因此拖动切面时帧率不掉。</li>
+            <li><b>自定义 GLSL 着色器：</b>风扇叶片与壳体各有一套着色器。叶片按半径与攻角给出高光带，壳体保留金属菲涅尔与环境色，24 个部件在分解态下仍能区分材质。</li>
+            <li><b>辉光与部件标注：</b>EffectComposer + UnrealBloomPass 让燃烧室与尾喷发光；部件标注由 CSS2DRenderer 输出 HTML 标签，聚焦淡化通过透明度实现，不删节点、不重排场景。</li>
+            <li><b>性能取舍：</b>几何尽量合并，辉光与阴影可单独关闭作为降级；headless SwiftShader 软渲染下 HUD 仍有 22–27 fps，真实 GPU 更高。</li>
+          </ul>
+          <div class="stack"><span>Three.js 0.187</span><span>TypeScript</span><span>Vite</span><span>WebGL</span><span>GLSL</span><span>EffectComposer + UnrealBloomPass</span><span>CSS2DRenderer</span></div>
+        </section>
+        <section class="panel" id="shots">
+          <h2>画面</h2>
+          <h3>装配态 · 整机</h3>
+          <img class="project-image" src="assets/turbocore-01-assembly.jpg" alt="TURBOCORE 装配态：TC-X135 涡扇发动机整机、左侧部件树与右侧检视面板" width="1280" height="843" loading="lazy" decoding="async">
+          <p>进入页面时是整机装配态：左侧 24 部件树、右侧检视面板、底部时间轴与左下 DISPLAY CONTROL 同时在位。</p>
+          <h3>100% 爆炸分解</h3>
+          <img class="project-image" src="assets/turbocore-02-exploded.jpg" alt="TURBOCORE 100% 爆炸分解：24 个部件沿各自轨迹散开" width="1280" height="843" loading="lazy" decoding="async">
+          <p>24 个部件沿各自轨迹散开到最大间距，风扇、压气机、燃烧室、涡轮与尾喷管的层级关系一眼可见；HUD 上的帧率来自 headless 软渲染，属于性能下限。</p>
+          <h3>分解 + 气流粒子</h3>
+          <img class="project-image" src="assets/turbocore-03-airflow.jpg" alt="TURBOCORE 分解态叠加气流粒子：进气道到涡轮尾喷四段颜色过渡" width="1280" height="843" loading="lazy" decoding="async">
+          <p>打开气流演示后，进气道、压气机、燃烧室、涡轮尾喷四个分区依次亮起，颜色由蓝过渡到青、橙、红，把「空气怎么被压缩、点燃、喷出」直接画在分解图上。</p>
+          <h3>剖切视图</h3>
+          <img class="project-image" src="assets/turbocore-04-section.jpg" alt="TURBOCORE 剖切视图：剖切平面切进机匣，内部流道可见" width="1280" height="843" loading="lazy" decoding="async">
+          <p>剖切平面切进机匣，压气机与燃烧室的内部流道暴露出来；剖切 gizmo 可以继续拖动改变切面位置，切面在装配态与分解态都成立。</p>
+          <h3>选中部件 · 检视面板</h3>
+          <img class="project-image" src="assets/turbocore-05-inspector.jpg" alt="TURBOCORE 选中零件：高亮部件并在右侧检视面板显示规格" width="1280" height="843" loading="lazy" decoding="async">
+          <p>点击部件树节点或直接点模型，该部件高亮、其余部件聚焦淡化，右侧检视面板给出部件名称、规格与说明，形成「整机—部件」两级阅读。</p>
+          <h3>DISPLAY CONTROL 面板</h3>
+          <img class="project-image" src="assets/turbocore-06-panel.jpg" alt="TURBOCORE DISPLAY CONTROL 面板：8 个显示开关与剖切 Y 滑块" width="294" height="215" loading="lazy" decoding="async">
+          <p>8 个显示开关与剖切 Y 滑块的特写。每个开关都用 CDP 真实鼠标点击验证过 store 与场景状态同步翻转，并做过开/关两帧的像素级对比。</p>
+        </section>
+        <section class="panel">
+          <h2>结果与验证</h2>
+          <ul>
+            <li>8/8 显示开关通过 CDP 真实鼠标点击验证：store 与场景状态同步翻转，复位后回到初始值，过程中无 console 错误。</li>
+            <li>像素级对比证明每个开关都有可见效果：辉光开/关 17.6% 像素变化、剖切 25.4%、部件标注 5.9%、聚焦淡化 3.9%、实时阴影 1.0%；气流粒子在分解态下可见。</li>
+            <li>爆炸位姿确定性：同一 progress 下重复渲染结果一致，拖动滑块、反向播放与重新装配都能回到同一画面，不存在「装不回去」的残留偏移。</li>
+            <li>性能：headless SwiftShader 软渲染下 HUD 显示 22–27 fps，真实 GPU 更高；辉光与实时阴影可单独关闭，作为低端设备的降级路径。</li>
+            <li>响应式：390px 宽度下页面无横向溢出，左侧部件树与右侧检视面板折叠为可滚动区域。</li>
+            <li>加载：无 console 错误、无 404，几何与着色器随构建产物本地加载，不依赖任何外部 CDN 资源。</li>
+          </ul>
+        </section>
+      </div>
+      <aside class="side-column">
+        <section class="panel"><h2>项目信息</h2><ul class="aside-list"><li><span>角色</span><b>独立开发</b></li><li><span>渲染</span><b>Three.js + WebGL</b></li><li><span>语言</span><b>TypeScript + GLSL</b></li><li><span>构建</span><b>Vite</b></li><li><span>部件</span><b>24 个</b></li><li><span>产物</span><b>静态 dist</b></li><li><span>部署</span><b>GitHub Pages</b></li></ul></section>
+        <section class="panel"><h2>发动机参数</h2><ul class="aside-list"><li><span>型号</span><b>TC-X135</b></li><li><span>推力</span><b>135 kN</b></li><li><span>涵道比</span><b>9.2</b></li><li><span>总压比</span><b>42</b></li><li><span>风扇直径</span><b>2.05 m</b></li><li><span>总长</span><b>4.20 m</b></li><li><span>净重</span><b>2,410 kg</b></li></ul></section>
+        <section class="panel"><h2>在线演示</h2><p>直接打开即可拖动时间轴分解整机；WebGL 不可用时页面会给出提示。</p><a class="button secondary" href="https://leo-li638.github.io/turbocore-engine/" target="_blank" rel="noopener">打开演示页</a></section>
+        <section class="panel"><h2>项目文档</h2><p>仓库 README 含部件树、8 个显示开关、剖切与气流分区说明，以及 <code>npm install</code> / <code>npm run dev</code> / <code>npm run build</code> 的开发与构建方式。</p><a class="button secondary" href="https://github.com/Leo-Li638/turbocore-engine" target="_blank" rel="noopener">打开 README</a></section>
+      </aside>
+    </div>
+    <nav class="pager"><a class="prev" href="particle-earth-hand.html"><span>上一个项目</span><b>深空制图仪 · 手势地球</b></a><a class="next" href="./#ssec3"><span>项目列表</span><b>返回全部 5 个项目</b></a></nav>
+    <footer class="page-footer"><span>© 2026 李玉涛（Leo）</span><a href="./">返回一.chat</a></footer>
+  </main>
+</body>
+</html>
