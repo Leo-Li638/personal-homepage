@@ -2093,7 +2093,7 @@ function renderContent(t){
       bar.querySelectorAll('.pfilter').forEach(function(x){x.classList.toggle('on',x===b2);});
       paint();
     });
-    moreBtn.addEventListener('click',function(){ state.shown+=POST_PAGE; paint(); restorePostBatch(); });
+    moreBtn.addEventListener('click',function(){ state.shown+=POST_PAGE; paint(); });
     // 外链点击：拦截主链接跳转，新窗口打开
     grid.addEventListener('click',function(e){
       var lk=e.target.closest('.plink'); if(!lk) return;
@@ -2236,6 +2236,9 @@ function renderContent(t){
     pendingRestore=d;
     restorePostBatch();
     applyRestore();
+    // 用完即清：否则之后每次点「加载更多」，restorePostBatch 都会把
+    // state.shown 重置回恢复值，刚展开的批次立刻被撤回（表现为按钮无反应）
+    pendingRestore=null;
   }
   // 恢复「加载更多」已展开的批次，避免目标文章不在渲染范围内
   function restorePostBatch(){
