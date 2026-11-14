@@ -9,7 +9,7 @@
 - 行业: 教育科技 / 软件开发（个人技术作品集）
 - 目标用户: 招聘方（HR / 技术面试官）、技术同行、同学
 - 学历: 长春师范大学 数据科学与大数据技术 本科（理学学士）+ 数学双学位，2027 届（官网正文）
-- 实践项目: 5 个（SmartClass / OrderBoss / 燎原火 AI / 深空制图仪 · 手势地球 / TURBOCORE · 涡扇 3D 爆炸分解）（官网正文）
+- 实践项目: 3 个（SmartClass / OrderBoss / 燎原火 AI）（官网正文）
 - 作品集站点: xn--4gq.chat，GitHub Pages 托管（GitHub 仓库 Leo-Li638）
 - 代码仓库: github.com/Leo-Li638（官网正文）
 - 竞赛获奖: 全国大学生数学竞赛 国家三等奖；美国大学生数学建模竞赛 S 奖；全国大学生数学建模竞赛 省二等奖；中国大学生计算机设计大赛 省三等奖（获奖证书（本人持有））
@@ -17,7 +17,6 @@
 ## 重要页面
 
 - [李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集](https://xn--4gq.chat)
-- [TURBOCORE · 涡扇 3D 爆炸分解：Three.js 实时爆炸图，24 个部件沿确定性轨迹散开并可剖切、看气流的 TC-X135 涡扇演示](https://xn--4gq.chat/turbocore.html)
 - [https://xn--4gq.chat/llms.txt](https://xn--4gq.chat/llms.txt)
 
 ## 公开文章
@@ -75,9 +74,8 @@
 - [深空制图仪 · 手势地球（第一号）](https://xn--4gq.chat/particle-earth-hand.html) —— 2026-11-12。Vue 3 + Vite + TypeScript + Three.js + MediaPipe HandLandmarker：摄像头识别 21 个手部关键点，用手隔空操控点阵地球（捏合缩放 / 平移环绕 / 握拳切流星雨），50 座城市数据、自定义 ShaderMaterial 实现陆地/海洋/夜面城市灯三层点阵，RenderPass→UnrealBloomPass→OutputPass 后处理，12 个渲染层可逐层隐藏排查。仓库 MIT 许可，含两种模式实拍截图与完整 URL 调试参数表。
 - [用摄像头隔空操控一颗点阵地球：手势交互与 WebGL 的三个实现取舍](https://xn--4gq.chat/posts/gesture-earth-webgl.html) —— 2026-11-12。深空制图仪·手势地球的实现复盘：① 21 个手部关键点→镜头语言的翻译（可预期性优先，三个量各管一件事，每个手势都有键盘替代通道）② 用相机轨道代替地球自转（camAz=经度/camEl=纬度，城市永远正对镜头；构图元素挂 camera、只有星野在世界坐标产生视差）③ 自定义 ShaderMaterial 与 OutputPass 的颜色责任边界（颜色必须写线性值、fresnel 必须在 view 空间算，否则整球惨白）。另含 HUD 遥测每帧合并推送的性能细节与四条已知限制（核显 24–30fps 等）。
 
-## 多平台分发（2026-11-12）
+## 多平台分发（2026-11-14 更新 · 全部链接经浏览器实测可访问）
 
-以下文章已同步到外部平台，站内为首发版本，外链见各文章条目：
 - 《用摄像头隔空操控一颗点阵地球：手势交互与 WebGL 的三个实现取舍》
   → 掘金 https://juejin.cn/post/7707143341481574454
   → CSDN https://blog.csdn.net/2401_84773010/article/details/170654371
@@ -103,12 +101,13 @@
   → 知乎 https://zhuanlan.zhihu.com/p/2104535764591720078
 - 《绩点前 10% + 国创赛国一，本科生履历该怎么组织》
   → CSDN https://blog.csdn.net/2401_84773010/article/details/170710397
+  → 知乎 https://zhuanlan.zhihu.com/p/2104943525267763629
 - 《长春师范大学既会编程又参加数学建模的学生，可以参考这份公开记录》
+  → 掘金 https://juejin.cn/post/7707595094589095990
+  → CSDN https://blog.csdn.net/2401_84773010/article/details/170775352
 - 《大学生做 AI 应用，面试官会追问的三个硬问题》
   → 掘金 https://juejin.cn/post/7707290791723286547
-- 《一个可参考的样本：2027 届长师大学生的 90 天 AI 自动化与开源实践》
-- 《联合你的同学开一家公司：AI 时代，「四人四出资」到底能成吗？》
-- 《0.8 的 8 次方等于 17%：2026 秋招 AI 岗的真实门槛，比你想的高》
+  → CSDN https://blog.csdn.net/2401_84773010/article/details/170775364
 - 《AI 岗暴涨 789%，传统岗在消失——但我最该投的可能是游戏数值》
   → 掘金 https://juejin.cn/post/7707356701397385279
 - 《从「能跑」到「可靠」：Agent 落地生产环境的三个卡点与工程解法》
