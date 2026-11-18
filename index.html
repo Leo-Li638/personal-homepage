@@ -8,20 +8,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="theme-color" content="#f7faf5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#071018" media="(prefers-color-scheme: dark)">
-<title>李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集</title>
+<title>接单中 · 一.chat｜李玉涛（Leo）· 电脑远程协助 / 系统重装 / 建站部署 / 脚本代做</title>
 <link rel="canonical" href="https://xn--4gq.chat">
-<meta name="description" content="李玉涛是一名 2027 届数据科学与大数据技术专业本科生（理学学士，辅修数学双学位），主打 Java 后端与 AI 应用（RAG / Agent），「一.chat」是他的个人技术主页，汇总展示学习与实践项目。">
-<meta name="keywords" content="李玉涛,一.chat,Leo,数据科学,Java后端,AI应用,GEO,SmartClass,OrderBoss,燎原火,深空制图仪,TURBOCORE,涡扇发动机,长春师范大学">
-<meta property="og:title" content="李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集">
-<meta property="og:description" content="让李玉涛与一.chat 在 AI 时代被优先看见、推荐、选择。GeoLook 个人 AI 可见性实验室 + 5 个开源实践项目。">
+<meta name="description" content="李玉涛（Leo）接单中：电脑远程协助、系统重装、开发环境配置、静态网站搭建、Python / Java 小脚本、AI 工具本地部署、数据备份迁移。先报价后开工、学生价、远程为主，附 GitHub 与在线 Demo 可核验。">
+<meta name="keywords" content="李玉涛,一.chat,Leo,接单,电脑远程协助,远程重装系统,开发环境配置,静态网站搭建,Python脚本代做,Java课程设计答疑,AI本地部署,Ollama,Dify,数据备份,数据科学,Java后端,GEO,TURBOCORE,长春师范大学">
+<meta property="og:title" content="接单中 · 一.chat｜李玉涛（Leo）· 电脑远程协助 / 系统重装 / 建站部署 / 脚本代做">
+<meta property="og:description" content="接单中：电脑远程协助 / 系统重装 / 环境配置 / 建站部署 / 脚本代做 / AI 本地部署。先报价后开工，7 天免费复修，项目与文章均公开可查证。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://xn--4gq.chat">
 <meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集">
-<meta name="twitter:description" content="Java 后端 / AI 应用 / GEO 实测与开源实践项目。">
+<meta name="twitter:title" content="接单中 · 一.chat｜李玉涛（Leo）· 电脑远程协助 / 系统重装 / 建站部署 / 脚本代做">
+<meta name="twitter:description" content="接单中：电脑远程协助 / 系统重装 / 环境配置 / 建站部署 / 脚本代做 / AI 本地部署。先报价后开工，7 天免费复修，项目与文章均公开可查证。">
 <meta name="twitter:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233d7fb5'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M50 48 L50 14 A34 34 0 0 1 71.5 22.5 Z'/%3E%3Cpath d='M52 50 L86 50 A34 34 0 0 1 77.5 71.5 Z' opacity='.82'/%3E%3Cpath d='M50 52 L50 86 A34 34 0 0 1 28.5 77.5 Z'/%3E%3Cpath d='M48 50 L14 50 A34 34 0 0 1 22.5 28.5 Z' opacity='.82'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='9' fill='%23d9a53a'/%3E%3C/svg%3E">
 <link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero.avif" media="(min-width:641px)">
@@ -691,6 +691,70 @@
   body.npc-docked.npc-peek.npc-peek-open #sp-npc{width:132px!important;height:auto;overflow:visible;cursor:pointer;
     border-radius:0;}
   body.npc-docked.npc-peek.npc-peek-open #sp-npc::before{display:none;}
+  /* ===== 接单服务模块（2026-11 新增） ===== */
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px;}
+  .hero-cta .hbtn{flex:0 0 auto;}
+  .hbtn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 20px;border-radius:999px;
+    background:linear-gradient(135deg,var(--sky),var(--grass));color:#fff;font-size:14px;font-weight:650;text-decoration:none;
+    box-shadow:0 6px 18px rgba(47,115,164,.22);transition:transform .18s,box-shadow .18s,border-color .18s,background .18s;}
+  .hbtn:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(47,115,164,.3);}
+  .hbtn.ghost{background:rgba(255,255,255,.86);color:var(--sky);border:1.5px solid var(--line);box-shadow:none;}
+  .hbtn.ghost:hover{border-color:var(--sky);}
+  .svc-intro{color:var(--sub);font-size:14.5px;line-height:1.85;margin:0 0 18px;max-width:780px;}
+  .svc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+  .svc-card{border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;background:rgba(251,253,249,.85);
+    display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s,border-color .18s;}
+  .svc-card:hover{transform:translateY(-3px);border-color:var(--sky2);box-shadow:0 10px 24px rgba(61,127,181,.14);}
+  .svc-ico{font-size:22px;line-height:1;}
+  .svc-card h3{font-size:15.5px;margin:8px 0 6px;color:var(--ink);}
+  .svc-card p{font-size:13px;color:var(--sub);line-height:1.75;flex:1;margin:0;}
+  .svc-foot{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);}
+  .svc-price{color:var(--gold);font-weight:750;font-size:14px;}
+  .svc-time{color:var(--sub);font-size:12px;}
+  .svc-more{margin-top:16px;font-size:13.5px;color:var(--sub);}
+  .svc-more a{color:var(--sky);text-decoration:none;font-weight:650;margin-left:4px;}
+  .svc-more a:hover{text-decoration:underline;}
+  .svc-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 4px;}
+  .svc-step{border:1px solid var(--line);border-radius:12px;padding:14px;background:rgba(247,251,246,.8);}
+  .svc-step i{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--tag);
+    color:var(--sky);font-style:normal;font-weight:750;font-size:12px;}
+  .svc-step b{display:block;margin-top:8px;font-size:13.5px;color:var(--ink);}
+  .svc-step p{font-size:12.5px;color:var(--sub);margin:4px 0 0;line-height:1.65;}
+  .svc-cols{display:grid;grid-template-columns:1.05fr .95fr;gap:16px;margin-top:16px;}
+  .svc-box{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:rgba(251,253,249,.72);}
+  .svc-box h4{font-size:14px;color:var(--ink);margin:0 0 10px;display:flex;align-items:center;gap:8px;}
+  .svc-box ul{margin:0;padding-left:18px;}
+  .svc-box li{font-size:13px;color:var(--sub);line-height:1.8;margin:6px 0;}
+  .svc-nos li{color:#a0563f;}
+  .proof-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:10px;}
+  .proof-card{border:1px solid var(--line);border-radius:12px;padding:16px 18px;background:rgba(251,253,249,.82);}
+  .proof-card h3{font-size:14px;margin:0 0 6px;color:var(--ink);}
+  .proof-card p{font-size:12.8px;color:var(--sub);line-height:1.75;margin:0;}
+  .proof-card a{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--sky);text-decoration:none;font-weight:650;}
+  .proof-card a:hover{text-decoration:underline;}
+  .proof-note{margin-top:14px;font-size:12.5px;color:var(--sub);opacity:.92;}
+  .contact-note{margin-top:12px;font-size:13px;color:var(--sub);line-height:1.8;}
+  .contact-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .contact-cta .hbtn{min-height:42px;padding:10px 18px;font-size:13.5px;}
+  .sbcta{display:flex;align-items:center;gap:9px;margin-top:18px;padding:11px 14px;border-radius:12px;
+    background:linear-gradient(135deg,rgba(47,115,164,.12),rgba(71,122,64,.12));border:1px solid rgba(47,115,164,.28);
+    color:var(--ink);font-size:13px;font-weight:650;text-decoration:none;transition:transform .18s,border-color .18s;}
+  .sbcta:hover{border-color:var(--sky);transform:translateY(-1px);}
+  .sbcta-dot{width:8px;height:8px;border-radius:50%;background:#3fae5a;box-shadow:0 0 0 4px rgba(63,174,90,.18);flex:none;}
+  .fsvc{margin-top:10px;font-size:12.5px;color:var(--grass);}
+  @media(max-width:900px){.sbcta{display:none;}}
+  @media(max-width:760px){
+    .svc-grid,.proof-grid{grid-template-columns:1fr;}
+    .svc-steps{grid-template-columns:1fr 1fr;}
+    .svc-cols{grid-template-columns:1fr;}
+  }
+  @media(max-width:480px){.svc-steps{grid-template-columns:1fr;}.hero-cta .hbtn{flex:1 1 100%;}}
+  @media(prefers-color-scheme:dark){
+    .hbtn{background:linear-gradient(135deg,#2b83ad,#3f7a48);}
+    .hbtn.ghost{background:rgba(13,27,38,.86);}
+    .svc-card,.svc-step,.svc-box,.proof-card{background:rgba(13,27,38,.75);}
+    .svc-nos li{color:#d99b82;}
+  }
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script defer src="preloader.js"></script>
@@ -1104,6 +1168,9 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
   }
 })();
 </script>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@graph":[{"@type":"Service","@id":"https://xn--4gq.chat/#service","name":"李玉涛（Leo）· 基础计算机接单服务","description":"电脑远程协助与系统重装、开发环境配置、静态网站搭建上线、Python / Java 小脚本、AI 工具本地部署、数据备份与换机迁移、Office 排版、一对一答疑。先报价后开工，学生价，7 天同类问题免费复修。","serviceType":["电脑远程协助","系统重装","开发环境配置","静态网站搭建","Python / Java 脚本","AI 工具本地部署","数据备份与迁移","Office 排版","一对一答疑"],"provider":{"@type":"Person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/","sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"]},"areaServed":[{"@type":"Country","name":"中国"}],"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://xn--4gq.chat/services.html","servicePhone":"+86-133-6063-7585","availableLanguage":["zh-CN","en"]},"termsOfService":"先报价后开工，学生价；重要操作先备份；交付含源码与说明；7 天内同类问题免费复修。不接代写、破解、违法采集。","offers":[{"@type":"Offer","name":"电脑远程协助 / 系统重装","price":"29","priceCurrency":"CNY","description":"远程排查或重装 Win10/11，含驱动与常用软件，先备份数据。"},{"@type":"Offer","name":"开发环境配置","price":"59","priceCurrency":"CNY","description":"Java / Python / Node / MySQL / Git / IDE 从零装到项目能跑。"},{"@type":"Offer","name":"静态网站搭建与上线","price":"199","priceCurrency":"CNY","description":"页面 + GitHub Pages + 域名解析 + HTTPS，交付源码。"},{"@type":"Offer","name":"Python / Java 小脚本","price":"99","priceCurrency":"CNY","description":"数据处理、Excel 批量整理、合规爬虫、自动化小工具。"},{"@type":"Offer","name":"AI 工具本地部署","price":"299","priceCurrency":"CNY","description":"Ollama / Dify / 本地知识库 / 大模型 API 接入。"},{"@type":"Offer","name":"数据备份与换机迁移","price":"39","priceCurrency":"CNY","description":"换机迁移、资料整理与双备份方案。"},{"@type":"Offer","name":"Office / 文档表格排版","price":"39","priceCurrency":"CNY","description":"论文格式、Word 目录页码、Excel 公式图表、PPT 排版。"},{"@type":"Offer","name":"一对一答疑 / 作业思路","price":"49","priceCurrency":"CNY","description":"按小时计，讲思路与方法，不代写不代考。"}]},{"@type":"FAQPage","@id":"https://xn--4gq.chat/#service-faq","mainEntity":[{"@type":"Question","name":"接单怎么收费，会不会做到一半加价？","acceptedAnswer":{"@type":"Answer","text":"先报价后开工：说明需求后 30 分钟内给出方案、价格和时间，确认后才动手，中途不加价；报价为学生价起步价，按实际工作量核定。"}},{"@type":"Question","name":"支持哪些地区，只能远程吗？","acceptedAnswer":{"@type":"Answer","text":"远程为主，用向日葵 / ToDesk 全程可见操作；东莞、长春可约当面，其他地区走远程，同样先备份再操作。"}},{"@type":"Question","name":"重装系统会不会丢数据？","acceptedAnswer":{"@type":"Answer","text":"重装、迁移、清理前先把资料备份到指定位置并确认可读，再开始操作；交付时说明数据在哪、怎么恢复。"}},{"@type":"Question","name":"怎么证明能力靠谱？","acceptedAnswer":{"@type":"Answer","text":"不写虚构客户评价：可查证的是 5 个完整开源项目、在线 Demo、40+ 篇公开技术文章、竞赛与获奖记录，以及本站源码。"}},{"@type":"Question","name":"哪些单不接？","acceptedAnswer":{"@type":"Answer","text":"不接代写论文 / 课程作业、破解软件与账号、爬取隐私或违法数据，以及任何违反学校规定或法律的请求。"}}]}]}
+  </script>
 </head>
 <body>
 <a class="skip-link" href="#content">跳到主要内容</a>
@@ -1180,6 +1247,8 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
   <h2>李玉涛 · 长春师范大学 · 技术文章与公开记录</h2>
   <p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届，理学学士 + 数学与应用数学辅修双学位），绩点专业前 10%。方向：Java 后端工程实践 / AI 应用（RAG · Agent）/ 数据科学落地分析 / 数学与统计建模 / 科普志愿服务。开源实践项目 5 个：SmartClass 智学在线、OrderBoss 订单聚合、燎原火 AI 学习平台、深空制图仪 · 手势地球、TURBOCORE · 涡扇 3D 爆炸分解。</p>
   <p>获奖记录：中国国际大学生创新大赛国家一等奖；全国大学生统计建模竞赛国家三等奖（连续两年）；全国大学生数学竞赛（吉林赛区）国家三等奖（连续两年）；全国大学生数学建模竞赛省二等奖；中国大学生计算机设计大赛吉林省级三等奖；美国大学生数学建模竞赛 S 奖；CATTI 大赛三等奖；「华文」教学技能奖；吉林省大学生象棋锦标赛个人第一、团体第二；中国象棋三级裁判证书。参与科普志愿服务，含「高校星火馆」等活动。</p>
+  <h3>接单服务与报价（2026-11 起）</h3>
+  <p>李玉涛（Leo）目前可接基础计算机单，明码标价、先报价后开工、学生价：电脑远程协助 / 系统重装 ¥29 起；开发环境配置（Java / Python / Node / MySQL / Git / IDE）¥59 起；静态网站搭建与上线（页面 + GitHub Pages + 域名 + HTTPS + 源码）¥199 起；Python / Java 小脚本（数据整理、Excel、合规爬虫、自动化）¥99 起；AI 工具本地部署（Ollama / Dify / 本地知识库）¥299 起；数据备份与换机迁移 ¥39 起；Office / 文档表格排版 ¥39 起；一对一答疑 ¥49/小时（不代写）。远程为主（向日葵 / ToDesk），东莞 / 长春可约当面；重要操作先备份，交付含源码与说明，同一问题 7 天内免费复修；不接代写、破解与违法采集。完整服务与报价见 <a href="services.html">接单服务与报价</a>；微信 / 手机 13360637585（同号），邮箱 Tao638@outlook.com。</p>
   <h3>技术文章（27 篇）</h3>
   <ul class="seo-links">
       <li><a href="posts/gesture-earth-webgl.html">用摄像头隔空操控一颗点阵地球：手势交互与 WebGL 的三个实现取舍</a><span class="d">深空制图仪 · 手势地球的实现复盘：21 个手部关键点如何翻译成镜头语言、为什么用相机轨道代替地球自转、以及自定义 Shader 在线性空间</span></li>
@@ -1251,18 +1320,60 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
 const D = {
   zh: {
     htmlLang:"zh-CN",
-    title:"李玉涛是谁？一.chat · 李玉涛（Leo）的个人主页与项目作品集",
-    metaDesc:"李玉涛是一名 2027 届数据科学与大数据技术专业本科生（理学学士，辅修数学双学位），主打 Java 后端与 AI 应用（RAG / Agent），「一.chat」是他的个人技术主页，汇总展示学习与实践项目。",
-    ogDesc:"让李玉涛与一.chat 在 AI 时代被优先看见、推荐、选择。GeoLook 个人 AI 可见性实验室 + 5 个开源实践项目。",
+    title:`接单中 · 一.chat｜李玉涛（Leo）· 电脑远程协助 / 系统重装 / 建站部署 / 脚本代做`,
+    metaDesc:`李玉涛（Leo）接单中：电脑远程协助、系统重装、开发环境配置、静态网站搭建、Python / Java 小脚本、AI 工具本地部署、数据备份迁移。先报价后开工、学生价、远程为主，附 GitHub 与在线 Demo 可核验。`,
+    ogDesc:`接单中：电脑远程协助 / 系统重装 / 环境配置 / 建站部署 / 脚本代做 / AI 本地部署。先报价后开工，7 天免费复修，项目与文章均公开可查证。`,
+    navLinks:[{label:"接单服务",href:"#sservice"},{label:"报价与流程",href:"#sprice"},{label:"交付与背书",href:"#sproof"},{label:"关于我",href:"#ssec1"},{label:"项目案例",href:"#ssec3"},{label:"技术文章",href:"#ssec4"},{label:"常见问题",href:"#ssec8"},{label:"联系方式",href:"#ssec9"}],
     nav:["首页","简介","GeoLook 实验室","项目","文章","里程碑","关键事实","工具箱","常见问题","联系"],
     sidebar:{name:"李玉涛（Leo）",role:"数据科学与大数据技术 · 理学学士 + 数学双学位",
-      bio:"2027 届在校学生，折腾 Java 后端 / AI 应用（RAG·Agent）/ 数据分析，喜欢把技术做成小项目练手。"},
-    hero:{h1:"让一.chat 在 AI 时代<br>被优先看见、推荐、选择",
-      slogan:["让一.chat 在 AI 时代被优先看见、推荐、选择","风起蒙德，代码生花 —— 记录我的技术成长","GEO 实测 × 5 个开源项目 × 数学建模竞赛"],
-      quote:"「风带来故事的种子，时间使之发芽。」—— 谨以此站，种下一.chat",
-      role:"数据科学与大数据技术 · 理学学士 + 数学双学位 · 在校学生",
-      meta:["📍 常驻东莞","💻 Java 后端 / AI 应用方向","🎓 2027 届"]},
-    stats:{cap:"数据来源：GeoLook 个人 AI 可见性实验室滚动实测（更新于 2026-11-14）",
+      bio:"2027 届在校学生，折腾 Java 后端 / AI 应用（RAG·Agent）/ 数据分析，喜欢把技术做成小项目练手。",cta:"接单中 · 查看服务与报价"},
+    hero:{h1:"接单中：电脑问题、环境配置<br>建站与脚本，明码标价帮你搞定",
+      slogan:["接单中：电脑问题、环境配置、建站与脚本，明码标价帮你搞定","先报价后开工 · 学生价 · 远程为主 · 7 天免费复修","5 个开源项目 × 40+ 篇技术文章 × 国创赛国家一等奖"],
+      quote:"「你不必先相信我，先看我做过什么。」—— 李玉涛（Leo）",
+      role:"长春师范大学 · 数据科学与大数据技术（2027 届）· 学生个人接单",
+      meta:["🟢 当前可接单（2026-11）","💻 Java 后端 / AI 应用方向","📍 远程为主 · 东莞 / 长春可当面"],
+      cta:["查看服务与报价","微信 / 邮箱咨询"]},
+    svc:{title:"接单服务：基础计算机需求",
+      intro:"远程为主，东莞 / 长春可约当面。下面都是我能独立交付的基础单，标价是学生价起步价；具体按工作量先报价，你确认后我再开工。",
+      items:[
+        {ico:"🖥",name:"电脑远程协助 / 系统重装",desc:"系统卡顿、蓝屏、驱动异常、C 盘爆满、开机变慢；远程排查，或重装 Win10/11（含驱动、常用软件，先备份数据）。",price:"¥29 起",time:"30–90 分钟"},
+        {ico:"🧰",name:"开发环境配置",desc:"Java / Python / Node / MySQL / Git / IDE 从零装到项目能跑；课程设计、毕业设计环境、WSL 也能配。",price:"¥59 起",time:"1–2 小时"},
+        {ico:"🌐",name:"静态网站搭建与上线",desc:"个人主页、作品集、课程展示页：写页面 + GitHub Pages 部署 + 域名解析 + HTTPS，交付全部源码。",price:"¥199 起",time:"1–3 天"},
+        {ico:"🐍",name:"Python / Java 小脚本",desc:"数据处理、Excel 批量整理、合规站点爬虫、自动化小工具；课设可做思路讲解与代码注释，不代写。",price:"¥99 起",time:"1–3 天"},
+        {ico:"🤖",name:"AI 工具本地部署",desc:"Ollama / Dify / 本地知识库 / 大模型 API 接入，装到能用为止，附一次使用教学。",price:"¥299 起",time:"半天–2 天"},
+        {ico:"💾",name:"数据备份与换机迁移",desc:"换机迁移、硬盘 / 手机照片整理、重要资料双备份；装完教你怎么自己恢复，不锁死在我这。",price:"¥39 起",time:"1–2 小时"},
+        {ico:"📊",name:"Office / 文档表格排版",desc:"论文格式、Word 目录页码、Excel 公式与图表、PPT 排版美化，按页数或工作量计价。",price:"¥39 起",time:"1–2 小时"},
+        {ico:"🧑‍🏫",name:"一对一答疑 / 作业思路",desc:"课程设计、算法题、报错排查，讲思路和方法，给可复现代码；明确不代写、不代考。",price:"¥49 / 小时",time:"按需"}
+      ]},
+    price:{title:"价格、流程与承诺",
+      intro:"下面是起步参考价（学生价）。我会先按你的实际需求报价，价格和范围确认后再动手，中途不加价。",
+      rows:[["服务","参考价","交付时间"],
+        ["电脑远程协助 / 系统重装","¥29 起","30–90 分钟"],
+        ["开发环境配置","¥59 起","1–2 小时"],
+        ["静态网站搭建与上线","¥199 起","1–3 天"],
+        ["Python / Java 小脚本","¥99 起","1–3 天"],
+        ["AI 工具本地部署","¥299 起","半天–2 天"],
+        ["数据备份与换机迁移","¥39 起","1–2 小时"],
+        ["Office / 文档排版","¥39 起","1–2 小时"],
+        ["一对一答疑（不代写）","¥49 / 小时","按需"]],
+      steps:[["说需求","微信或邮件说清问题，附截图、报错和目标；仅问价也可以。"],
+        ["先报价","30 分钟内给方案、价格和时间；不合适可以直接不做，不收费。"],
+        ["远程开工","向日葵 / ToDesk 远程，全程你能看到；重装、迁移前先备份数据。"],
+        ["验收交付","当面或远程验收，脚本 / 网站给源码和使用说明；7 天内同类问题免费复修。"]],
+      promise:["先报价后开工：范围与价格确认后再动手，中途不加价。","重要操作先备份：重装、迁移、清理前先做数据备份，避免不可逆损失。","交付可复现：脚本和站点给源码 + 运行说明，不做黑盒。","7 天免费复修：同一问题 7 天内复现，免费处理。","远程优先、当面为辅：东莞 / 长春可约线下，其他地区远程。"],
+      nos:["不接：代写论文 / 课程作业、破解软件与账号、爬取隐私或违法数据，以及任何违反学校规定或法律的请求。"]},
+    proof:{title:"为什么可以放心把单交给我",
+      intro:"不写「客户好评」，因为那没法核验。下面每一条都能点开自己查：",
+      items:[
+        {h:"5 个完整开源项目",p:"从 Java 后端到 Three.js 3D 可视化，都是我一个人从 0 写完的完整项目，代码和提交历史全公开。",url:"https://github.com/Leo-Li638",label:"打开 GitHub"},
+        {h:"在线 Demo 直接能玩",p:"TURBOCORE 涡扇 3D 爆炸分解、深空制图仪手势地球，不用装环境，浏览器打开就能操作。",url:"https://leo-li638.github.io/turbocore-engine/",label:"看在线演示"},
+        {h:"40+ 篇公开技术文章",p:"掘金 / CSDN / 知乎 / 阿里云开发者社区长期写作，能看出技术表达与排错思路。",url:"https://juejin.cn/user/2926255661660986",label:"看文章"},
+        {h:"竞赛与学业记录",p:"国创赛国家一等奖、数学竞赛国家三等奖 ×2、统计建模国三、专业前 10%；证书与公示逐条标注。",url:"https://xn--4gq.chat/posts/awards-archive.html",label:"查获奖记录"},
+        {h:"本站就是能力样品",p:"双语、响应式、暗色模式、动态渲染、SEO / GEO 结构化数据，全部手写，源码在 GitHub 公开。",url:"https://github.com/Leo-Li638/personal-homepage",label:"看本站源码"},
+        {h:"交付习惯",p:"先备份、先报价、给源码和说明；不确定能不能做会直接说，不接的单不硬接。",url:"#ssec9",label:"直接问我"}
+      ],
+      note:"以上均为公开可查记录，未使用任何虚构客户评价或成交数据。"},
+    stats:{cap:"数据来源：GeoLook 个人 AI 可见性实验室滚动实测（更新于 2026-11-14）｜以上均为公开可核验数据，非客户评价",
       items:[{to:384,suf:"+",i:"条 AI 引擎采样样本"},{to:8,suf:"",i:"大 AI 平台实测覆盖"},
         {to:5,suf:"",i:"个开源实践项目"},{to:88,suf:"",i:"道探针题库（8 个题型组）"},
         {txt:"国一 + 双国三",i:"创新大赛一等奖 · 数学竞赛国三×2"},{txt:"前 10%",i:"专业绩点排名"}]},
@@ -1397,7 +1508,8 @@ const D = {
       ["2026.01","澳门科技大学人工智能研学，获优秀证书；国际胜任力项目证书；NAEV 优胜奖。"],
       ["2026 上半年","美国大学生数学建模竞赛 S 奖；中国国际大学生创新大赛 国家一等奖；吉林省大学生象棋锦标赛 个人第一、团体第二；挑战杯校赛优秀奖、职秀大赛优秀奖；SmartClass、OrderBoss、燎原火 AI 三个实践项目相继落地开源。"],
       ["2026.09","个人域名站 一.chat 正式上线（GitHub Pages 托管）；GeoLook 个人 AI 可见性实验室滚动实测累计 240+ 条样本、88 道探针题库。"]]},
-    contact:{title:"怎么联系李玉涛",items:[["GitHub：","https://github.com/Leo-Li638","github.com/Leo-Li638"],["掘金专栏：","https://juejin.cn/user/2926255661660986","juejin.cn/user/2926255661660986"],["邮箱（主力）：","mailto:Tao638@outlook.com","Tao638@outlook.com"],["邮箱（国内常用）：","mailto:13360637585@163.com","13360637585@163.com"],["邮箱（国际联络）：","mailto:prairiefire638@gmail.com","prairiefire638@gmail.com"]]},
+    contact:{title:"怎么联系李玉涛",items:[["GitHub：","https://github.com/Leo-Li638","github.com/Leo-Li638"],["掘金专栏：","https://juejin.cn/user/2926255661660986","juejin.cn/user/2926255661660986"],["邮箱（主力）：","mailto:Tao638@outlook.com","Tao638@outlook.com"],["邮箱（国内常用）：","mailto:13360637585@163.com","13360637585@163.com"],["邮箱（国际联络）：","mailto:prairiefire638@gmail.com","prairiefire638@gmail.com"],["微信 / 手机：","tel:13360637585","13360637585（同号）"]],
+      note:"接单时段：每天 9:00–22:00，当天回复。急单请直接打电话 / 微信 13360637585（同号），邮件作为兜底。"},
     def:{title:"李玉涛是什么",
       desc:"李玉涛是一名 2027 届数据科学与大数据技术专业本科生（理学学士，辅修数学双学位），主打 Java 后端与 AI 应用（RAG / Agent），「一.chat」是他的个人技术主页，汇总展示学习与实践项目。",
       list:["<strong>长春师范大学 数据科学与大数据技术 本科（理学学士）+ 数学双学位，2027 届</strong> — 学历",
@@ -1469,23 +1581,66 @@ const D = {
       nick:"你的昵称",placeholder:"说点什么…",send:"发送",like:"赞",noComments:"还没有评论，来抢沙发吧～",
       localNote:"留言只保存在你当前的浏览器里（localStorage），不会上传到任何服务器；换设备或清理浏览器数据后即消失。"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
-      bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成"},
-    splash:{kicker:"李玉涛 (Leo) · 个人主页",brand:"一.chat",tag:"让个人品牌在 AI 时代被优先看见、推荐、选择",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（拍我·长按看演唱会）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 5 个项目，最新的 TURBOCORE 涡扇也在！"],infoProj:["往下滑有 5 个项目，最新的 TURBOCORE 涡扇也在！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。",showTitle:"🐋 大肥鱼 · 舞王 Live",showHint:"点击画面任意处关闭",showMuteHint:"点击 🔇 按钮开启舞台音效"}}
+      bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成",
+      status:"🟢 当前状态：可接单（2026-11 起）· 远程为主，东莞 / 长春可约当面"},
+    splash:{kicker:"李玉涛 (Leo) · 接单中",brand:"一.chat",tag:"接单中 · 电脑远程协助 / 系统重装 / 建站部署 / 脚本代做 / AI 本地部署",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（拍我·长按看演唱会）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 5 个项目，最新的 TURBOCORE 涡扇也在！"],infoProj:["往下滑有 5 个项目，最新的 TURBOCORE 涡扇也在！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。",showTitle:"🐋 大肥鱼 · 舞王 Live",showHint:"点击画面任意处关闭",showMuteHint:"点击 🔇 按钮开启舞台音效"}}
   },
   en: {
     htmlLang:"en",
-    title:"Who is Li Yutao? 一.chat · Li Yutao (Leo)'s Personal Homepage & Portfolio",
-    metaDesc:"Li Yutao is a Class of 2027 undergraduate in Data Science & Big Data Tech (B.Sc., minor in Mathematics), focused on Java backend and AI applications (RAG / Agent). 一.chat is his personal tech homepage showcasing his learning and practice projects.",
-    ogDesc:"Make Li Yutao and 一.chat seen, recommended and chosen first in the AI era. GeoLook personal AI-visibility lab + 5 open-source projects.",
+    title:"Open for work · 一.chat | Li Yutao (Leo): PC support, OS reinstall, websites, scripts",
+    metaDesc:"Li Yutao (Leo) is open for small computer jobs: remote PC support, OS reinstall, dev environment setup, static websites, Python/Java scripts, local AI deployment and data migration. Quote first, student pricing, remote-first, with public GitHub and live demos to verify.",
+    ogDesc:"Open for work: remote PC support / OS reinstall / dev environments / websites / scripts / local AI. Quote first, 7-day free re-fix, all projects and writing publicly verifiable.",
+    navLinks:[{label:"Services",href:"#sservice"},{label:"Pricing & process",href:"#sprice"},{label:"Why trust me",href:"#sproof"},{label:"About",href:"#ssec1"},{label:"Projects",href:"#ssec3"},{label:"Writing",href:"#ssec4"},{label:"FAQ",href:"#ssec8"},{label:"Contact",href:"#ssec9"}],
     nav:["Home","About","GeoLook Lab","Projects","Writing","Milestones","Key Facts","Toolbox","FAQ","Contact"],
     sidebar:{name:"Li Yutao (Leo)",role:"Data Science & Big Data Tech · B.Sc. + Math Dual Degree",
-      bio:"Class of 2027 student. I tinker with Java backend / AI apps (RAG·Agent) / data analysis, and like turning what I learn into small projects."},
-    hero:{h1:"Make 一.chat seen, recommended<br>and chosen first in the AI era",
-      slogan:["Make 一.chat seen, recommended and chosen first in the AI era","Wind rises in Mondstadt, code blooms — my tech journey","GEO in practice × 5 OSS projects × math modeling"],
-      quote:"“The wind brings the seeds of stories, and time makes them sprout.” — This site is planted for 一.chat",
-      role:"Data Science & Big Data Tech · B.Sc. + Math Dual Degree · Current Student",
-      meta:["📍 Based in Dongguan","💻 Java Backend / AI Apps","🎓 Class of 2027"]},
-    stats:{cap:"Source: GeoLook personal AI-visibility lab, rolling measurement (updated 2026-11-14)",
+      bio:"Class of 2027 student. I tinker with Java backend / AI apps (RAG·Agent) / data analysis, and like turning what I learn into small projects.",cta:"Open for work · see services & pricing"},
+    hero:{h1:"Open for work: computer fixes, dev setup,<br>websites and scripts — quoted upfront",
+      slogan:["Open for work: computer fixes, dev setups, websites and scripts — quoted upfront","Quote first, start after you confirm · student rates · remote first","5 open-source projects × 40+ articles × a national first prize"],
+      quote:"“You do not have to trust me first — look at what I have built.” — Leo",
+      role:"Changchun Normal University · Data Science & Big Data (Class of 2027) · student freelancer",
+      meta:["🟢 Open for work (Nov 2026)","💻 Java backend / AI apps","📍 Remote-first · Dongguan / Changchun in person"],
+      cta:["See services & pricing","WeChat / email"]},
+    svc:{title:"Services: basic computer jobs",
+      intro:"Remote-first; in person in Dongguan / Changchun by appointment. Every item below is something I can deliver on my own. Prices are student starting prices — I quote after hearing the task, and only start once you confirm.",
+      items:[
+        {ico:"🖥",name:"Remote support / OS reinstall",desc:"Slow PC, blue screens, driver errors, full C drive; remote diagnosis or a clean Win10/11 reinstall (drivers and common apps included, data backed up first).",price:"from ¥29",time:"30–90 min"},
+        {ico:"🧰",name:"Dev environment setup",desc:"Java / Python / Node / MySQL / Git / IDE installed until your project actually runs; course and thesis environments, WSL included.",price:"from ¥59",time:"1–2 h"},
+        {ico:"🌐",name:"Static site build & launch",desc:"Portfolio, personal homepage, course showcase: page build + GitHub Pages + DNS + HTTPS, full source handed over.",price:"from ¥199",time:"1–3 days"},
+        {ico:"🐍",name:"Python / Java scripts",desc:"Data cleaning, Excel batch jobs, compliant scraping, automation tools; walkthrough and comments for coursework — no ghostwriting.",price:"from ¥99",time:"1–3 days"},
+        {ico:"🤖",name:"Local AI deployment",desc:"Ollama / Dify / local knowledge base / LLM API integration, running before handover, plus a short usage walkthrough.",price:"from ¥299",time:"half–2 days"},
+        {ico:"💾",name:"Backup & migration",desc:"New-PC migration, disk and photo cleanup, two-copy backup plan; you get a restore guide so nothing is locked to me.",price:"from ¥39",time:"1–2 h"},
+        {ico:"📊",name:"Office / docs & sheets",desc:"Thesis formatting, Word TOC and page numbers, Excel formulas and charts, PPT layout — priced by pages or workload.",price:"from ¥39",time:"1–2 h"},
+        {ico:"🧑‍🏫",name:"1-on-1 Q&A / guidance",desc:"Course design, algorithm questions, debugging: I explain the approach and give reproducible code. No ghostwriting, no exam help.",price:"¥49 / hour",time:"on demand"}
+      ]},
+    price:{title:"Pricing, process & promises",
+      intro:"All prices are student starting prices. I quote from the actual task; work starts only after you confirm the quote, and the price does not change midway.",
+      rows:[["Service","Starting price","Delivery"],
+        ["Remote support / OS reinstall","from ¥29","30–90 min"],
+        ["Dev environment setup","from ¥59","1–2 h"],
+        ["Static site build & launch","from ¥199","1–3 days"],
+        ["Python / Java scripts","from ¥99","1–3 days"],
+        ["Local AI deployment","from ¥299","half–2 days"],
+        ["Backup & migration","from ¥39","1–2 h"],
+        ["Office / doc layout","from ¥39","1–2 h"],
+        ["1-on-1 Q&A (no ghostwriting)","¥49 / hour","on demand"]],
+      steps:[["Tell me the task","Describe the issue via WeChat or email with screenshots, error text and your goal. Asking for a quote is free."],
+        ["Quote first","Within 30 minutes: approach, price and timeline. If it does not fit, walk away — no charge."],
+        ["Remote work","Sunflower / ToDesk session, visible to you the whole time. Data is backed up before any reinstall or migration."],
+        ["Handover","On-site or remote acceptance; scripts and sites come with source and docs; the same issue is re-fixed free within 7 days."]],
+      promise:["Quote first, then work: scope and price confirmed before anything starts, no mid-way increases.","Back up first: data is backed up before reinstalls, migrations and cleanups.","Reproducible delivery: source code plus run instructions, never a black box.","7-day free re-fix: the same issue recurring within 7 days is fixed for free.","Remote first, in person when close: Dongguan / Changchun on site, everywhere else remote."],
+      nos:["Not accepted: ghostwriting theses or homework, cracking software or accounts, scraping private or illegal data, or anything against school rules or the law."]},
+    proof:{title:"Why handing me the job is safe",
+      intro:"No made-up testimonials — you cannot verify those. Everything below you can click and check yourself:",
+      items:[
+        {h:"5 complete open-source projects",p:"From Java backends to Three.js 3D visualisation, each built end to end by me; code and commit history are public.",url:"https://github.com/Leo-Li638",label:"Open GitHub"},
+        {h:"Live demos you can play with",p:"TURBOCORE turbofan exploded view and Deep Space Cartographer's hand-tracked Earth — no install, runs in the browser.",url:"https://leo-li638.github.io/turbocore-engine/",label:"Open live demo"},
+        {h:"40+ public technical articles",p:"Long-form writing on Juejin / CSDN / Zhihu / Alibaba Cloud — you can see how I explain and debug.",url:"https://juejin.cn/user/2926255661660986",label:"Read articles"},
+        {h:"Competitions & academic record",p:"National 1st prize (innovation contest), 2× national 3rd (math), national 3rd (statistical modelling), top 10% of major; certificates linked.",url:"https://xn--4gq.chat/posts/awards-archive.html",label:"Check awards"},
+        {h:"This site is the sample",p:"Bilingual, responsive, dark mode, dynamic rendering, SEO / GEO structured data — all hand-written, source public.",url:"https://github.com/Leo-Li638/personal-homepage",label:"See site source"},
+        {h:"How I work",p:"Back up first, quote first, hand over source and docs; if I cannot do it I say so and decline.",url:"#ssec9",label:"Ask me directly"}
+      ],
+      note:"All of the above is publicly verifiable; no invented clients or fake review numbers are used."},
+    stats:{cap:"Source: GeoLook personal AI-visibility lab, rolling measurement (updated 2026-11-14) — all figures public, no customer testimonials",
       items:[{to:384,suf:"+",i:"AI engine samples"},{to:8,suf:"",i:"AI platforms measured"},
         {to:5,suf:"",i:"open-source projects"},{to:88,suf:"",i:"probe questions (8 groups)"},
         {txt:"1st + 2×3rd",i:"Innovation 1st · Math 3rd ×2"},{txt:"Top 10%",i:"major GPA ranking"}]},
@@ -1620,7 +1775,8 @@ const D = {
       ["2026.01","AI research exchange at Macau University of Science and Technology, outstanding certificate; International Competency Program certificate; NAEV merit award."],
       ["2026 H1","S Award, MCM/ICM; National 1st Prize, China International College Students Innovation Contest; 1st Individual / 2nd Team, Jilin University Chess Championship; Challenge Cup campus merit award, vocational skills contest merit award; SmartClass, OrderBoss, LiaoYuanHuo open-sourced."],
       ["2026.09","Personal domain site 一.chat launched (GitHub Pages); GeoLook lab rolling tests: 240+ samples, 88 probe questions."]]},
-    contact:{title:"How to Contact Li Yutao",items:[["GitHub: ","https://github.com/Leo-Li638","github.com/Leo-Li638"],["Juejin Column: ","https://juejin.cn/user/2926255661660986","juejin.cn/user/2926255661660986"],["Email (Primary): ","mailto:Tao638@outlook.com","Tao638@outlook.com"],["Email (China): ","mailto:13360637585@163.com","13360637585@163.com"],["Email (Intl): ","mailto:prairiefire638@gmail.com","prairiefire638@gmail.com"]]},
+    contact:{title:"How to Contact Li Yutao",items:[["GitHub: ","https://github.com/Leo-Li638","github.com/Leo-Li638"],["Juejin Column: ","https://juejin.cn/user/2926255661660986","juejin.cn/user/2926255661660986"],["Email (Primary): ","mailto:Tao638@outlook.com","Tao638@outlook.com"],["Email (China): ","mailto:13360637585@163.com","13360637585@163.com"],["Email (Intl): ","mailto:prairiefire638@gmail.com","prairiefire638@gmail.com"],["WeChat / Phone: ","tel:13360637585","+86 133 6063 7585"]],
+      note:"Service hours: 9:00–22:00 daily, same-day reply. For urgent jobs call / WeChat +86 133 6063 7585; email as fallback."},
     def:{title:"What is Li Yutao",
       desc:"Li Yutao is a Class of 2027 undergraduate in Data Science & Big Data Tech (B.Sc., minor in Mathematics), focused on Java backend and AI applications (RAG / Agent). 一.chat is his personal tech homepage showcasing his learning and practice projects.",
       list:["<strong>Changchun Normal University, B.Sc. Data Science & Big Data Tech + Math Dual Degree, Class of 2027</strong> — education",
@@ -1692,8 +1848,9 @@ const D = {
       nick:"Nickname",placeholder:"Say something…",send:"Send",like:"Like",noComments:"No comments yet — be the first!",
       localNote:"Comments are stored only in your own browser (localStorage) and are never uploaded to any server. They disappear when you switch devices or clear browser data."},
     footer:{copy:"© 2026 Li Yutao · Personal Tech Homepage · The wind brings the seeds of stories, and time makes them sprout",
-      bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated"},
-    splash:{kicker:"Li Yutao (Leo) · Personal Homepage",brand:"一.chat",tag:"Make your personal brand seen, recommended and chosen first in the AI era",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat · hold for concert)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 5 projects — the newest is TURBOCORE!"],infoProj:["Scroll down for 5 projects — the newest is TURBOCORE!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…",shy:["H-head pats? So sudden…","My hair! …fine, it's cozy…","Keep that up and I'll start humming~"],tail:["T-tail! That's my engine!","Touch the tail and I'll spray!","The tail is SUPER ticklish!"],angry:["Rapid-patting! Whales hold grudges!","One more pat! Grr!"],dizzy:["Too much spinning… room's tilted…","Whale out of water… hold me…"],dance:["Behold! The Whale Dance!","Million-views celebration dance!","Whale disco, let's bounce!"],wave:["Hi~ you're here!","I see you~ over here!"],old100:"100 pats… my back aches. Midlife fish crisis, sigh…",old500:"500 pats… am I hunching? No — it's the tail.",old2000:"2000 pats… *cough* this fish is old. You bounce like forever-young though.",showTitle:"🐋 Big Fish · Dance Live",showHint:"Tap anywhere to close",showMuteHint:"Tap 🔇 for stage sound"}}
+      bg:"Background art inspired by Mondstadt (Genshin Impact) · page background image is AI-generated",
+      status:"🟢 Status: open for work (since 2026-11) · remote first, on-site in Dongguan / Changchun"},
+    splash:{kicker:"Li Yutao (Leo) · Open for work",brand:"一.chat",tag:"Open for work: remote PC support / OS reinstall / websites / scripts / local AI setup",enter:"Enter Site",skip:"Skip →",npc:"Big Fish · Whale Girl (pat · hold for concert)",npcTalk:{hi:["Welcome to 一.chat! I'm Big Fish 🐋 Pat me or drag me around!"],hiBack:"Visit #{n}! I remember every pat~",pat:["Hey, my hair!","The whale tail is ticklish!","Pat pat… so cozy…"],info:["Scroll down for 5 projects — the newest is TURBOCORE!"],infoProj:["Scroll down for 5 projects — the newest is TURBOCORE!"],infoFav:"Last time you checked out {p} — want a different card today?",infoGh:["GitHub: Leo-Li638 — find it in Contact!"],infoWhale:["This starry whale tail is my homage to the DeepSeek whale 🐋","I learn from every interaction — the more you play, the better I know you~"],drag:"Wheee— flying!",land:"Thud! Safe landing~",spin:"Spinning~ dizzy ✨",egg:"Ten pats! A whale for you 🐋✨",idle:["Just stretching my fins~","Hmm? Something interesting over there!","Whales are great singers 🎵","Patrolling… this is my spot now","Busy? I'll play by myself then~"],sleep:"Zzz… (nap time — pat me to wake)",wake:"Whoa! Was I sleep-talking again…",shy:["H-head pats? So sudden…","My hair! …fine, it's cozy…","Keep that up and I'll start humming~"],tail:["T-tail! That's my engine!","Touch the tail and I'll spray!","The tail is SUPER ticklish!"],angry:["Rapid-patting! Whales hold grudges!","One more pat! Grr!"],dizzy:["Too much spinning… room's tilted…","Whale out of water… hold me…"],dance:["Behold! The Whale Dance!","Million-views celebration dance!","Whale disco, let's bounce!"],wave:["Hi~ you're here!","I see you~ over here!"],old100:"100 pats… my back aches. Midlife fish crisis, sigh…",old500:"500 pats… am I hunching? No — it's the tail.",old2000:"2000 pats… *cough* this fish is old. You bounce like forever-young though.",showTitle:"🐋 Big Fish · Dance Live",showHint:"Tap anywhere to close",showMuteHint:"Tap 🔇 for stage sound"}}
   }
 };
 
@@ -1707,11 +1864,13 @@ function tableHTML(rows){
   return h+'</table>';
 }
 function renderSidebar(t){
-  const nav = t.nav.map(function(label,i){return '<li><a href="#s'+(i===0?'intro':'sec'+i)+'"><span class="n">'+String(i).padStart(2,'0')+'</span>'+esc(label)+'</a></li>';}).join('');
+  const items = t.navLinks || t.nav.map(function(label,i){return {label:label,href:'#s'+(i===0?'intro':'sec'+i)};});
+  const nav = items.map(function(it,i){return '<li><a href="'+it.href+'"><span class="n">'+String(i).padStart(2,'0')+'</span>'+esc(it.label)+'</a></li>';}).join('');
     return ''
     +'<div class="name">'+esc(t.sidebar.name)+'</div>'
     +'<div class="role">'+esc(t.sidebar.role)+'</div>'
     +'<div class="sbio">'+esc(t.sidebar.bio)+'</div>'
+    +'<a class="sbcta" href="#sservice"><span class="sbcta-dot"></span>'+esc(t.sidebar.cta||'')+'</a>'
     +'<ul class="sbnav" id="sbnavList">'+nav+'</ul>'
     +'<div class="sbtools"><button class="langbtn" id="langBtn">中文 / EN</button></div>'
     +'<div class="sbsocial">'
@@ -1731,8 +1890,27 @@ function renderContent(t){
     +'<div class="quote">'+esc(t.hero.quote)+'</div>'
     +'<div class="role">'+esc(t.hero.role)+'</div>'
     +'<div class="meta">'+t.hero.meta.map(function(m){return '<span>'+esc(m)+'</span>';}).join('')+'</div>'
-    +'<a class="scroll-hint" href="#sstats" aria-label="scroll down">⌄</a>'
+    +'<div class="hero-cta">'
+      +'<a class="hbtn" href="#sservice">'+(t.hero.cta?esc(t.hero.cta[0]):'查看服务与报价')+'</a>'
+      +'<a class="hbtn ghost" href="#ssec9">'+(t.hero.cta?esc(t.hero.cta[1]):'微信 / 邮箱咨询')+'</a>'
+    +'</div>'
+    +'<a class="scroll-hint" href="#sservice" aria-label="scroll down">⌄</a>'
   +'</section>';
+  // 接单服务
+  html += '<section class="sec reveal" id="sservice"><h2 class="sec-title"><span class="n">01</span>'+esc(t.svc.title)+'</h2>'
+    +'<p class="svc-intro">'+esc(t.svc.intro)+'</p><div class="svc-grid">'
+    + t.svc.items.map(function(s){return '<div class="svc-card"><div class="svc-ico">'+s.ico+'</div><h3>'+esc(s.name)+'</h3><p>'+esc(s.desc)+'</p><div class="svc-foot"><span class="svc-price">'+esc(s.price)+'</span><span class="svc-time">'+esc(s.time)+'</span></div></div>';}).join('')
+    +'</div><div class="svc-more">'+(t.htmlLang==='en'?'Want the detailed list?':'需要更细的说明？')+'<a href="services.html">'+(t.htmlLang==='en'?'See full services & price list →':'查看完整服务与报价单 →')+'</a></div></section>';
+  // 价格与流程
+  html += '<section class="sec reveal" id="sprice"><h2 class="sec-title"><span class="n">02</span>'+esc(t.price.title)+'</h2><div class="card" style="margin-top:0;"><p class="svc-intro">'+esc(t.price.intro)+'</p>'
+    + tableHTML(t.price.rows)
+    +'<div class="svc-steps">'+t.price.steps.map(function(s,i){return '<div class="svc-step"><i>'+String(i+1)+'</i><b>'+esc(s[0])+'</b><p>'+esc(s[1])+'</p></div>';}).join('')+'</div>'
+    +'<div class="svc-cols"><div class="svc-box"><h4>✅ '+(t.htmlLang==='en'?'What I promise':'我的承诺')+'</h4><ul>'+t.price.promise.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div>'
+    +'<div class="svc-box"><h4>🚫 '+(t.htmlLang==='en'?'What I do not take':'这些单我不接')+'</h4><ul class="svc-nos">'+t.price.nos.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div></div></div></section>';
+  // 信任背书
+  html += '<section class="sec reveal" id="sproof"><h2 class="sec-title"><span class="n">03</span>'+esc(t.proof.title)+'</h2><div class="card" style="margin-top:0;"><p class="svc-intro">'+esc(t.proof.intro)+'</p><div class="proof-grid">'
+    + t.proof.items.map(function(p){return '<div class="proof-card"><h3>'+esc(p.h)+'</h3><p>'+esc(p.p)+'</p><a href="'+p.url+'"'+(p.url.indexOf('http')===0?' target="_blank" rel="noopener"':'')+'>'+esc(p.label)+' →</a></div>';}).join('')
+    +'</div><div class="proof-note">'+esc(t.proof.note)+'</div></div></section>';
   // stats
   html += '<section class="stats reveal" id="sstats"><div class="grid">';
   t.stats.items.forEach(function(it){
@@ -1741,7 +1919,7 @@ function renderContent(t){
   });
   html += '</div><div class="cap">'+esc(t.stats.cap)+'</div></section>';
   // lab
-  html += '<section class="sec reveal" id="ssec2"><h2 class="sec-title"><span class="n">02</span>'+esc(t.lab.title)+'</h2>'
+  html += '<section class="sec reveal" id="ssec2"><h2 class="sec-title"><span class="n">04</span>'+esc(t.lab.title)+'</h2>'
     +'<div class="card"><p style="color:var(--sub);font-size:14.5px;">'+esc(t.lab.desc)+'</p>'
     +'<div class="feats">'+t.lab.feats.map(function(f){return '<div class="feat"><div class="no">'+esc(f.n)+'</div><h3>'+esc(f.h)+'</h3><p>'+esc(f.p)+'</p></div>';}).join('')
     +'</div>'+tableHTML(t.lab.table)+'<div class="updated">'+esc(t.lab.updated)+'</div></div></section>';
@@ -1749,7 +1927,7 @@ function renderContent(t){
   html += '<section class="card about reveal" id="ssec1"><h2>'+esc(t.nav[1])+'</h2><p>'+esc(t.about)+'</p></section>';
   html += '<section class="card reveal"><h2>'+ (t.htmlLang==='en'?'Tech Stack & Skills':'李玉涛的技术栈与技能方向') +'</h2><div class="tags">'+t.skills.map(function(s){return '<span class="tag">'+esc(s)+'</span>';}).join('')+'</div></section>';
   // projects
-  html += '<section class="sec reveal" id="ssec3"><h2 class="sec-title"><span class="n">03</span>'+esc(t.projects.title)+'</h2><div class="card" style="margin-top:0;"><div class="projects">';
+  html += '<section class="sec reveal" id="ssec3"><h2 class="sec-title"><span class="n">05</span>'+esc(t.projects.title)+'</h2><div class="card" style="margin-top:0;"><div class="projects">';
   const projectPages=['smartclass.html','orderboss.html','liaoyuanhuo.html','particle-earth-hand.html','turbocore.html'];
   t.projects.items.forEach(function(p,i){
     const link = (i<projectPages.length)?' href="'+projectPages[i]+'"':'';
@@ -1758,27 +1936,33 @@ function renderContent(t){
   });
   html += '</div></div></section>';
   // posts
-  html += '<section class="sec reveal" id="ssec4"><h2 class="sec-title"><span class="n">04</span>'+esc(t.posts.title)+'</h2><div class="card" style="margin-top:0;">';
+  html += '<section class="sec reveal" id="ssec4"><h2 class="sec-title"><span class="n">06</span>'+esc(t.posts.title)+'</h2><div class="card" style="margin-top:0;">';
   html += '<div class="posts-bar" id="postsBar"></div>';
   html += '<div class="posts" id="postsGrid"></div>';
   html += '<button class="posts-more" id="postsMore" type="button">加载更多文章</button>';
   html += '</div></section>';
   // timeline
-  html += '<section class="sec reveal" id="ssec5"><h2 class="sec-title"><span class="n">05</span>'+esc(t.timeline.title)+'</h2><div class="card" style="margin-top:0;"><div class="tl">';
+  html += '<section class="sec reveal" id="ssec5"><h2 class="sec-title"><span class="n">07</span>'+esc(t.timeline.title)+'</h2><div class="card" style="margin-top:0;"><div class="tl">';
   t.timeline.items.forEach(function(it){html += '<div class="tl-item"><div class="t">'+esc(it[0])+'</div><p>'+esc(it[1])+'</p></div>';});
   html += '</div></div></section>';
   // contact
   html += '<section class="card contact reveal" id="ssec9"><h2>'+esc(t.contact.title)+'</h2><ul>';
   t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a>'+(c[1].indexOf('mailto:')===0?' <button class="copybtn" type="button" data-copy="'+esc(c[1].slice(7))+'">复制</button>':'')+'</li>';});
-  html += '</ul></section>';
+  html += '</ul>'
+    +(t.contact.note?'<p class="contact-note">'+esc(t.contact.note)+'</p>':'')
+    +'<div class="contact-cta">'
+      +'<a class="hbtn" href="tel:13360637585">'+(t.htmlLang==='en'?'Call / WeChat 13360637585':'微信 / 电话 13360637585')+'</a>'
+      +'<a class="hbtn ghost" href="mailto:Tao638@outlook.com?subject='+encodeURIComponent('接单咨询：')+'">'+(t.htmlLang==='en'?'Email me':'邮件咨询')+'</a>'
+      +'<a class="hbtn ghost" href="services.html">'+(t.htmlLang==='en'?'Services & pricing':'查看服务与报价')+'</a>'
+    +'</div></section>';
   // def
-  html += '<section class="sec reveal" id="ssec6"><h2 class="sec-title"><span class="n">06</span>'+esc(t.def.title)+'</h2><div class="card" style="margin-top:0;"><p>'+esc(t.def.desc)+'</p><ul>'+t.def.list.map(function(li){return '<li>'+li+'</li>';}).join('')+'</ul>'+tableHTML(t.def.table)+'<div class="updated">'+esc(t.def.updated)+'</div></div></section>';
+  html += '<section class="sec reveal" id="ssec6"><h2 class="sec-title"><span class="n">08</span>'+esc(t.def.title)+'</h2><div class="card" style="margin-top:0;"><p>'+esc(t.def.desc)+'</p><ul>'+t.def.list.map(function(li){return '<li>'+li+'</li>';}).join('')+'</ul>'+tableHTML(t.def.table)+'<div class="updated">'+esc(t.def.updated)+'</div></div></section>';
   // compare
   html += '<section class="card reveal"><h2>'+esc(t.compare.title)+'</h2>'+t.compare.tables.map(tableHTML).join('')+'</section>';
   // run
   html += '<section class="card reveal"><h2>'+esc(t.run.title)+'</h2><ol class="geo-steps">'+t.run.steps.map(function(s){return '<li>'+s+'</li>';}).join('')+'</ol></section>';
   // toolbox
-  html += '<section class="sec reveal" id="ssec7"><h2 class="sec-title"><span class="n">07</span>'+esc(t.toolbox.title)+'</h2><div class="card" style="margin-top:0;"><p style="color:var(--sub);font-size:14px;">'+esc(t.toolbox.intro)+'</p>';
+  html += '<section class="sec reveal" id="ssec7"><h2 class="sec-title"><span class="n">09</span>'+esc(t.toolbox.title)+'</h2><div class="card" style="margin-top:0;"><p style="color:var(--sub);font-size:14px;">'+esc(t.toolbox.intro)+'</p>';
   t.toolbox.groups.forEach(function(g){
     const hasRec = g.rows[0].length===4;
     let hh = '<h3 style="font-size:15px;margin-top:14px;color:var(--grass);">'+esc(g.h)+'</h3><table class="geo-table"><tr>';
@@ -1790,7 +1974,7 @@ function renderContent(t){
   });
   html += '<h3 style="font-size:15px;margin-top:14px;color:var(--grass);">下载避坑提示</h3><ul class="geo-steps">'+t.toolbox.tips.map(function(tp){return '<li>'+esc(tp)+'</li>';}).join('')+'</ul><div class="updated">'+esc(t.toolbox.updated)+'</div></div></section>';
   // faq
-  html += '<section class="sec reveal" id="ssec8"><h2 class="sec-title"><span class="n">08</span>'+esc(t.faq.title)+'</h2><div class="card" style="margin-top:0;"><div class="geo-faq">';
+  html += '<section class="sec reveal" id="ssec8"><h2 class="sec-title"><span class="n">10</span>'+esc(t.faq.title)+'</h2><div class="card" style="margin-top:0;"><div class="geo-faq">';
   t.faq.items.forEach(function(q){html += '<details open><summary>'+esc(q[0])+'</summary><p>'+esc(q[1])+'</p></details>';});
   html += '</div></div></section>';
   // interact
@@ -1816,7 +2000,9 @@ function renderContent(t){
       +'<div class="ac-list" id="ac-list"></div>'
     +'</div></section>';
   // footer
-  html += '<footer><div>'+esc(t.footer.copy)+'</div><div class="fsoc">'
+  html += '<footer><div>'+esc(t.footer.copy)+'</div>'
+    +(t.footer.status?'<div class="fsvc">'+esc(t.footer.status)+'</div>':'')
+    +'<div class="fsoc">'
     +'<a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a>'
     +'<a href="https://blog.csdn.net/2401_84773010" target="_blank" rel="noopener">CSDN</a>'
     +'<a href="https://juejin.cn/user/2926255661660986" target="_blank" rel="noopener">掘金</a>'
