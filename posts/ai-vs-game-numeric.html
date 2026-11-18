@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -227,7 +227,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>AI 岗暴涨 789%，传统岗在消失——但我最该投的可能是游戏数值</h1>
     <div class="sub">所有人都在往 AI 挤，但游戏数值策划对数学+数据背景几乎量身定做。用 2027 届公开校招数据拆解两条赛道的真实竞争者画像。</div>
@@ -285,5 +285,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

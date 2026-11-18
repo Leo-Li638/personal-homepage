@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -219,7 +219,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>AI 已经包办 40% 的代码起草，最强的 Agent 却只做得对 10.8% 的真实任务</h1>
     <div class="sub">GitHub 说智能体开了 40% 的 PR，Surge AI 说最强 Agent 连一成的真实税务工作都过不了。中间那段差距叫 Issue Spotting——先发现该问什么，再回答它。本文含 Java 仅 21.2% AI 渗透率这个择业关键信号、三张可迁移的领域问题清单，以及「别押注模型，要说选型方法」的简历话术。</div>
@@ -400,5 +400,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

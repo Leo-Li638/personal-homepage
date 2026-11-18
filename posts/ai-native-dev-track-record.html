@@ -72,7 +72,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单</h1>
     <div class="sub">5 个开源项目、40+ 篇多平台技术发文、384+ 条 GEO 采样实测——每一项都能公开查证</div>
@@ -185,5 +185,14 @@ GitHub 仓库全部公开可搜（<a href="https://github.com/Leo-Li638">Leo-Li6
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -211,7 +211,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>0.8 的 8 次方等于 17%：2026 秋招 AI 岗的真实门槛，比你想的高</h1>
     <div class="sub">单步成功率 80% 的 Agent 连跑 8 步只剩 17% 可用性。从可靠性工程、数学差异化、圈层选择三个层面，给普通人的可执行挤入路径。</div>
@@ -268,5 +268,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

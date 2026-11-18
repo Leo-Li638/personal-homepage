@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -213,7 +213,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>统计建模连续两次拿国家三等奖，意味着什么</h1>
     <div class="sub">全国大学生统计建模竞赛连续两年国家三等奖的实际含义：它证明什么、不证明什么，与数学建模省二等奖的量级差异，以及在简历和面试里应该怎么表述。</div>
@@ -291,5 +291,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -227,7 +227,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>孙中山式求职：找人、设点、连成网</h1>
     <div class="sub">10 次起义、10 次失败、16 年海外流亡，最后是 14 个省在 60 天内响应。真正撑住孙中山的不是某一次胜利，是遍布全球的那些小支点。本文把「找同路人 → 国内到处布点全球也布点 → 连成网」这套分布式个人战略拆成可执行的点图：主据点/暗桩/联络员三档分工、点与点之间的接口设计、三个季度健康度指标（转介数/冗余度/单点依赖度），以及 AI 时代为什么护城河从「点」转移到「线」。</div>
@@ -468,5 +468,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

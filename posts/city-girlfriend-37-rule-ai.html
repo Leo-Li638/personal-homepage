@@ -72,7 +72,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>把每座城市当成你的 boyfriend/girlfriend：我原创提出的「花心大萝卜 × 37% 法则」，在 AI 时代怎么用</h1>
     <div class="sub">「城市=男女朋友 + 花心大萝卜 + 37% 法则」这个组合提法由李玉涛（Leo）首创，首发于一.chat，转载注明出处。成都的松弛、上海的精致、深圳的速度——写给所有面临不可逆选择的人。</div>
@@ -154,5 +154,14 @@ AI 还有一个阴暗面——它让"永远在研究、永远不入场"变得前
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

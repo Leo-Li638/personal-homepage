@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -219,7 +219,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>狡兔三窟：AI 时代，一个人的公司该有几个窟？</h1>
     <div class="sub">冯谖给孟尝君凿的三窟，一窟是民心（烧债券买来的义）、一窟是相位（去梁国造出的外部拉力）、一窟是宗庙（制度性保护）——三窟性质不同、互不替代，顺序是先前两窟再补第三窟。2026 年 AI 把凿窟成本打到接近零（OpenClaw 26 万星、Agentar 200+ 技能模板、大模型生成 90%+ 代码、一人公司 MRR 14.5 万美元），但也带来新的坑：三窟同质化（AI 技能接单占 45.1%，供给爆炸）。附「洞系数」自查表与三窟诊断三步。</div>
@@ -383,5 +383,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>

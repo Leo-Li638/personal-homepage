@@ -92,7 +92,7 @@
      "@type": "ListItem",
      "position": 2,
      "name": "技术文章",
-     "item": "https://xn--4gq.chat/#ssec4"
+     "item": "https://xn--4gq.chat/tech.html#ssec4"
     },
     {
      "@type": "ListItem",
@@ -235,7 +235,7 @@ footer a{color:var(--brand);text-decoration:none;}
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="/index.html">&larr; 返回主页</a>
+  <a class="back" href="/">&larr; 返回主页</a>
   <header class="hero">
     <h1>从零到全球：0 基础的人怎么学会 AI 自动化、拿下 GitHub 账号，并且不踩封号的雷</h1>
     <div class="sub">给完全没写过代码的人的 90 天路线图 + 合规指南。含 GitHub 官方条款（生效 2026-04-27）里 12 条绝对禁止（禁止自动程序注册账户、一人多账号、自动标星关注、过度自动化批量活动、加密货币挖矿等）与 10 条高危行为（未开 2FA、推送 API key、批量建仓、空 README 仓库、同时用第三方部署工具部署多仓等）；两个真实封号案例（一位开源维护者被封到恢复用了 7–8 周、一位学生被自动标记 spammy 等了近三个月且因重复开工单被重置审核队列位置）；注册后必须做的四件事（开 2FA + 存恢复码、设 backup email、填可被检索的 Profile、申请 GitHub Education 拿 Copilot 免费）；AI 自动化三条路线与选型判据（任务要「每周重复做且做错不伤人」）；「19 天做完 4 人 2 个月的产品、上线 20 天赚 30 元」的真实样本；零技术背景律师用 Copilot CLI 造工具的可复用方法；以及信息全球化的三个层次与合法边界（API 收集 ≠ 爬取、入站=出站的 LICENSE 义务）。</div>
@@ -566,5 +566,14 @@ footer a{color:var(--brand);text-decoration:none;}
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>
 </div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
 </body>
 </html>
