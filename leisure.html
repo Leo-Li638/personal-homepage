@@ -73,8 +73,8 @@
   .bg::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(247,250,245,.42),rgba(228,240,235,.58));}
   @media(max-width:640px){.bg{background-image:image-set(url(assets/mondstadt-hero-small.avif) type("image/avif"),url(assets/mondstadt-hero-small.webp) type("image/webp"),url(assets/mondstadt-hero-small.jpg) type("image/jpeg"));}}
-  .layout{display:flex;align-items:flex-start;min-height:100vh;}
-  .sidebar{position:fixed;top:0;left:0;width:min(38vw,400px);height:100vh;z-index:40;
+  .layout{display:flex;align-items:flex-start;min-height:100vh;min-height:100svh;}
+  .sidebar{position:fixed;top:0;left:0;width:min(38vw,400px);height:100vh;height:100svh;z-index:40;
     display:flex;flex-direction:column;justify-content:center;padding:30px 44px;overflow-y:auto;
     overscroll-behavior:contain;scrollbar-width:none;}
   .sidebar::-webkit-scrollbar{display:none;}
@@ -224,6 +224,7 @@
   .tl-item p{font-size:13.5px;color:var(--sub);margin-top:2px;}
   .contact a{color:var(--sky);text-decoration:none;font-weight:500;word-break:break-all;}
   .contact a:hover{text-decoration:underline;}
+.city-line{margin:12px 0 0;padding:9px 12px;border:1px dashed var(--line);border-radius:10px;font-size:12.8px;color:var(--sub);line-height:1.7;}
   .contact ul{padding:0;margin:0;list-style:none;}
   .contact li{list-style:none;padding:6px 0;font-size:15px;border-bottom:1px dashed var(--line);
     display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
@@ -251,7 +252,7 @@
   .ibtn-icon{font-size:24px;}
   .ibtn-main b{display:block;font-size:14.5px;color:var(--ink);}
   .ibtn-main i{display:block;font-style:normal;font-size:12px;color:var(--sub);margin-top:2px;}
-  body.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);will-change:transform,opacity;}
+  body.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
   body.js .reveal.on{opacity:1;transform:none;}
   #backtop{position:fixed;right:18px;bottom:22px;z-index:60;width:42px;height:42px;border-radius:50%;
     border:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
@@ -335,7 +336,7 @@
     .contact li{padding:10px 0;}
     .contact a{line-height:1.5;}
     /* 横向溢出防护：跑马灯与背景层不得撑出视口 */
-    .sb-track{will-change:transform;}
+    .sb-track{will-change:auto;}
     .splash-awards{overflow:hidden;max-width:100%;}
     .splash-inner{max-width:100vw;}
   }
@@ -347,9 +348,9 @@
 /* ===== 前置页 splash（苹果发布会风：近黑留白、字重对比、克制动效） ===== */
   #splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
     overflow:hidden;background:#04060b;transform-origin:50% 46%;
-    transition:opacity .5s ease-out,visibility .5s ease-out,filter .5s ease-out,transform .5s ease-out;}
+    transition:opacity .5s ease-out,visibility .5s ease-out,transform .5s ease-out;}
   #splash.hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
-  #splash.leaving{opacity:0;filter:blur(6px);transform:scale(1.008);}
+  #splash.leaving{opacity:0;transform:scale(1.008);} /* 只用 transform/opacity，避免移动端 filter 掉帧 */
   .splash-bg{position:absolute;inset:0;background:#04060b url(assets/mondstadt-hero.jpg) center/cover no-repeat;
     background-image:image-set(url(assets/mondstadt-hero.avif) type("image/avif"),url(assets/mondstadt-hero.webp) type("image/webp"),url(assets/mondstadt-hero.jpg) type("image/jpeg"));
     background-position:center;background-size:cover;background-repeat:no-repeat;
@@ -419,7 +420,7 @@
     #splash.cine .splash-npc-name,#sp-npc.sp-arrive{opacity:1!important;animation:none!important;}
   }
   /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」立绘版：待机漂浮+拍拍反应+抛掷物理，可拖拽） */
-  .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;perspective:750px;}
+  .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;perspective:750px;} .splash-npc.dragging{will-change:transform;}
   .npc-stage{position:relative;transform-style:preserve-3d;}
   #sp-npc-gl{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .6s;pointer-events:none;z-index:3;}
   #sp-npc-gl.on{opacity:1;}
@@ -515,14 +516,14 @@
     color:#7fa8c4;font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
   /* stabondar 式离场分栏 */
   .splash-transition{display:none;}
-  #splash.leaving .splash-inner{opacity:0;filter:blur(4px);transform:scale(.98) translateY(8px);
-    transition:opacity .34s ease-out,transform .4s cubic-bezier(.16,1,.3,1),filter .4s ease-out;}
+  #splash.leaving .splash-inner{opacity:0;transform:scale(.98) translateY(8px);
+    transition:opacity .34s ease-out,transform .4s cubic-bezier(.16,1,.3,1);}
   .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
     mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
   .npc-mirror img{width:100%;height:auto;display:block;transform:scaleY(-1);filter:blur(1.5px) saturate(1.05) brightness(1.04);}
   .splash-npc.grab{cursor:grabbing;}
-  .splash-npc img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(10,25,50,.45)) saturate(.95) brightness(1.03);animation:npc-idle 3.6s ease-in-out infinite;will-change:transform;}
+  .splash-npc img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(10,25,50,.45)) saturate(.95) brightness(1.03);animation:npc-idle 3.6s ease-in-out infinite;}  /* 不再常驻 will-change：动画本身已走合成层 */
   .splash-npc.grab img,.splash-npc.air img{animation:none;}
   .splash-npc img.spin{animation:npc-spin .9s cubic-bezier(.3,.1,.3,1) 1;}
   @keyframes npc-idle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(-1.6deg)}}
@@ -535,7 +536,7 @@
   @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
   @media(max-width:640px){
     .bg,.splash-bg{animation:none!important}
-    #splash.leaving{filter:blur(4px);}
+    /* 离场不再用 filter（移动端 GPU 掉帧）：只用 transform+opacity */
     .splash-inner{padding:8px 12px 12px;max-height:100svh;}
     .splash-npc{width:124px;margin-bottom:0;}
     .npc-mirror{height:42px;}
@@ -1261,6 +1262,7 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
     <div class="show-hint" id="npc-show-hint">点击画面任意处关闭</div>
   </div>
 </div>
+<script src="assets/site-data.js"></script>
 <script>
 /* ===================== 双语数据源（单一真源，改一处两边同步） ===================== */
 const D = {
@@ -1787,7 +1789,9 @@ function renderContent(t){
   // contact
   html += '<section class="card contact reveal" id="ssec9"><h2>'+esc(t.contact.title)+'</h2><ul>';
   t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a>'+(c[1].indexOf('mailto:')===0?' <button class="copybtn" type="button" data-copy="'+esc(c[1].slice(7))+'">复制</button>':'')+'</li>';});
-  html += '</ul></section>';
+  html += '</ul>'
+    +(window.SITE_DATA?'<p class="city-line">'+esc(window.SITE_DATA.cityLine(t.htmlLang==='en'?'en':'zh'))+'</p>':'')
+    +'</section>';
   // def
   html += '<section class="sec reveal" id="ssec6"><h2 class="sec-title"><span class="n">06</span>'+esc(t.def.title)+'</h2><div class="card" style="margin-top:0;"><p>'+esc(t.def.desc)+'</p><ul>'+t.def.list.map(function(li){return '<li>'+li+'</li>';}).join('')+'</ul>'+tableHTML(t.def.table)+'<div class="updated">'+esc(t.def.updated)+'</div></div></section>';
   // compare
@@ -2390,7 +2394,11 @@ function renderContent(t){
     var sp0=document.getElementById('splash'); if(sp0) sp0.classList.add('leaving','hide');
     render();
   }
-  else renderGate();
+  else {
+    /* 预渲染：正文在 splash 覆盖期间先画好，点「进入站点」立即显示（LCP 提前、避免点击后白屏） */
+    renderGate();
+    render();
+  }
 
   // ===== 白屏降级（防 QQ WebView / 低端机 JS 异常导致整页空白）=====
   // 静态兜底区平时对爬虫可见、对用户隐藏；一旦检测到正文渲染失败，

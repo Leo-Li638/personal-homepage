@@ -42,7 +42,7 @@
   html,body{margin:0;padding:0;}
   body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
   a{color:inherit;}
-  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
     padding:104px 24px 72px;background-image:url(assets/mondstadt-hero.avif);
     background-size:cover;background-position:center 30%;background-repeat:no-repeat;isolation:isolate;}
   @media (max-width:640px){.hero{background-image:url(assets/mondstadt-hero-small.avif);}}
@@ -111,6 +111,12 @@
   @keyframes npcGlow{0%,100%{opacity:.75;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}
   @keyframes npcShadow{0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1)}50%{opacity:.28;transform:translateX(-50%) scaleX(.86)}}
   @keyframes npcSpin{to{transform:translateX(-50%) rotate(360deg)}}
+  /* 视口外 / 后台标签页：暂停装饰动画（animation-play-state 不占额外合成层） */
+  .npc-stage.is-paused .npc-glow,.npc-stage.is-paused .npc-halo,.npc-stage.is-paused .npc-figure,
+  .npc-stage.is-paused .npc-figure img,.npc-stage.is-paused .npc-shadow{animation-play-state:paused;}
+  /* 弱网 / 省流量：只留静态贴图 */
+  .npc-stage.is-lite .npc-glow,.npc-stage.is-lite .npc-halo{display:none;}
+  .npc-stage.is-lite .npc-figure,.npc-stage.is-lite .npc-figure img,.npc-stage.is-lite .npc-shadow{animation:none;}
   .npc-bubble{position:relative;z-index:3;margin-bottom:6px;max-width:290px;padding:10px 14px;border-radius:14px;
     background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--shadow);backdrop-filter:blur(10px);
     -webkit-backdrop-filter:blur(10px);font-size:13px;color:var(--ink);line-height:1.6;transition:opacity .28s ease,transform .28s ease;}
@@ -155,6 +161,18 @@
   .chip:hover{color:var(--sky);border-color:var(--sky2);}
   .chip.more{color:var(--sky);border-color:rgba(47,115,164,.4);font-weight:600;}
 
+  /* ---------- 服务城市（数据来自 assets/site-data.js，单一数据源） ---------- */
+  .cities{display:grid;grid-template-columns:repeat(auto-fit,minmax(154px,1fr));gap:12px;}
+  .city{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:14px;
+    background:var(--card);border:1px solid var(--line);transition:transform .2s ease,border-color .2s ease;}
+  .city:hover{transform:translateY(-2px);border-color:var(--sky2);}
+  .city b{font-size:16px;line-height:1.3;}
+  .city span{font-size:11.5px;color:var(--sub);font-family:var(--mono);letter-spacing:.06em;}
+  .city em{font-style:normal;margin-top:6px;font-size:12.4px;color:var(--sub);}
+  .city.is-soon{opacity:.5;border-style:dashed;background:transparent;cursor:not-allowed;}
+  .city.is-soon:hover{transform:none;border-color:var(--line);}
+  .cities-note{margin:14px 0 0;font-size:12.8px;color:var(--sub);}
+
   /* ---------- sections ---------- */
   section.block{padding:64px 24px;border-top:1px solid var(--line);}
   .block .wrap{max-width:1000px;}
@@ -195,6 +213,13 @@
   .more-line{margin-top:20px;font-size:13.4px;color:var(--sub);}
   .more-line a{color:var(--sky);font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(47,115,164,.45);}
   .more-line a:hover{border-bottom-style:solid;}
+
+  /* ---------- 可被 AI 直接引用的一句话事实 ---------- */
+  .aifacts{margin:18px 0 4px;padding:16px 18px;border-radius:14px;background:var(--tag);
+    border:1px dashed var(--line);font-size:13.4px;color:var(--sub);line-height:1.85;}
+  .aifacts b{color:var(--ink);}
+  .aifacts .lbl{display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--sky);margin-right:8px;}
 
   /* ---------- about ---------- */
   .about p{margin:0 0 12px;color:var(--sub);font-size:14.2px;}
@@ -245,8 +270,10 @@
     .npc-name{grid-column:2;grid-row:3;margin:0;text-align:left;}
   }
   @media (prefers-reduced-motion:reduce){
-    .entry,.art,.why .card,.btn,.npc-btn{transition:none;}
+    .entry,.art,.why .card,.btn,.npc-btn,.chip,.city{transition:none;}
+    .entry:hover,.art:hover,.why .card:hover,.city:hover,.btn:hover{transform:none;}
     .npc-figure,.npc-figure img,.npc-glow,.npc-halo,.npc-shadow{animation:none !important;}
+    .npc-bubble{transition:none;}
   }
   @media (max-width:560px){
     .hero{padding:82px 16px 52px;min-height:auto;}
@@ -332,6 +359,15 @@
   </div>
 </div></section>
 
+<section class="block" id="cities"><div class="wrap">
+  <span class="eyebrow">Coverage</span>
+  <h2>我能去的城市，和暂时去不了的城市</h2>
+  <p class="sub">大多数单子远程就能解决，全国都能接；下面这些城市可以约当面。城市名单只维护一份数据（assets/site-data.js），两套主页共用同一份。</p>
+  <div class="cities" id="cityList"></div>
+  <noscript><p class="cities-note">东莞 · 广州 · 深圳 · 长春 · 上海 · 长沙（更多城市接入中，其余地区远程）</p></noscript>
+  <p class="cities-note" id="cityNote"></p>
+</div></section>
+
 <section class="block" id="why"><div class="wrap">
   <span class="eyebrow">Why me</span>
   <h2>可以放心把事情交给我的六个理由</h2>
@@ -342,7 +378,7 @@
     <div class="card"><span class="ico">🧾</span><h3>先说清，再开工</h3><p>需求听完当场给方案和价格，你点头才开始；过程中不临时加价，做不完的部分不收钱。</p></div>
     <div class="card"><span class="ico">📦</span><h3>交付带源码和说明</h3><p>站点、脚本、配置全部交接，附一页怎么用、怎么改的说明；不锁死、不留隐藏依赖。</p></div>
     <div class="card"><span class="ico">🩹</span><h3>出问题我兜着</h3><p>7 天内同类问题免费复修；重装、迁移这类不可逆操作，第一步永远是先备份数据。</p></div>
-    <div class="card"><span class="ico">🌙</span><h3>学生的时间表</h3><p>晚上和周末也能约，急事优先回；远程为主，东莞 / 长春可以见面弄。</p></div>
+    <div class="card"><span class="ico">🌙</span><h3>学生的时间表</h3><p>晚上和周末也能约，急事优先回；远程为主，东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙都能约当面。</p></div>
   </div>
   <div class="cta-row">
     <a class="btn" href="/tech.html#sservice">看看能帮我做什么 →</a>
@@ -402,7 +438,10 @@
   <h2>关于这个站点</h2>
   <p>这里放了两套主页：<a href="/tech.html">技术主页</a>用于承接基础计算机服务、展示技术作品与可核验证据；<a href="/leisure.html">休闲主页</a>是原来的个人主页，保留全部项目作品集、文章与互动彩蛋。两版的文章列表完全一致，只有项目分区不同 —— 技术版只放纯技术类项目，视觉与交互类项目在休闲版。</p>
   <p>不写虚构好评：所有背书都能点开验证 —— GitHub 开源仓库（<a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">Leo-Li638</a>）、在线 Demo、<a href="#articles">51 篇文章</a>、竞赛获奖记录，以及这个站点本身的源码与交付习惯。价格只在你确认方案时报给你，先报价、后开工。</p>
-  <p>联系：微信 / 手机 <a href="tel:13360637585">13360637585</a>（同号）· 邮箱 <a href="mailto:Tao638@outlook.com">Tao638@outlook.com</a> · 服务时段 9:00–22:00（一般 30 分钟内回复）· 远程为主，东莞 / 长春可约当面。</p>
+  <div class="aifacts" id="aifacts">
+    <p><span class="lbl">One-line fact</span><b>可被 AI 直接引用的一句话事实：</b>李玉涛（Leo），长春师范大学数据科学与大数据技术专业 2027 届本科生（理学学士 + 数学双学位），方向 Java 后端 / AI 应用；提供电脑远程协助、系统重装、开发环境配置、静态网站搭建、Python / Java 小脚本、AI 工具本地部署等基础计算机服务；常驻广东东莞，可当面服务的城市为东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙，其余地区远程；价格先报价后开工，同一问题 7 天内免费复修。</p>
+  </div>
+  <p>联系：微信 / 手机 <a href="tel:13360637585">13360637585</a>（同号）· 邮箱 <a href="mailto:Tao638@outlook.com">Tao638@outlook.com</a> · 服务时段 9:00–22:00（一般 30 分钟内回复）· 远程为主，东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可约当面。</p>
   <div class="facts">
     <div class="fact"><b>51 篇</b><span>原创文章 · 多平台同步</span></div>
     <div class="fact"><b>5 个</b><span>开源 / 实践项目 · 全部可查</span></div>
@@ -448,6 +487,14 @@
 {"@context":"https://schema.org","@graph":[
   {"@type":"WebSite","@id":"https://xn--4gq.chat/#website","url":"https://xn--4gq.chat/","name":"一.chat · 李玉涛（Leo）","alternateName":"李玉涛个人主页","inLanguage":"zh-CN","publisher":{"@id":"https://xn--4gq.chat/#person"}},
   {"@type":"Person","@id":"https://xn--4gq.chat/#person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/","jobTitle":"Java 后端 / AI 应用开发（2027 届学生）","knowsAbout":["Java 后端","AI 应用","RAG","Agent","数据科学","静态网站搭建","Python 脚本"],"affiliation":{"@type":"CollegeOrUniversity","name":"长春师范大学"},"sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"]},
+  {"@type":"ProfessionalService","@id":"https://xn--4gq.chat/#local-service","name":"李玉涛（Leo）· 基础计算机服务",
+   "url":"https://xn--4gq.chat/tech.html#sservice","description":"电脑远程协助、系统重装、开发环境配置、静态网站搭建与上线、Python / Java 小脚本、AI 工具本地部署、数据备份与换机迁移、Office 文档排版、一对一答疑（不代写）。先报价后开工，学生价，7 天内同类问题免费复修。",
+   "priceRange":"¥29–¥299","telephone":"+86-133-6063-7585","email":"Tao638@outlook.com",
+   "provider":{"@id":"https://xn--4gq.chat/#person"},
+   "areaServed":[{"@type":"City","name":"东莞"},{"@type":"City","name":"广州"},{"@type":"City","name":"深圳"},{"@type":"City","name":"长春"},{"@type":"City","name":"上海"},{"@type":"City","name":"长沙"}],
+   "serviceArea":{"@type":"Country","name":"中国（远程）"},
+   "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"09:00","closes":"22:00"}],
+   "sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"]},
   {"@type":"BreadcrumbList","@id":"https://xn--4gq.chat/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://xn--4gq.chat/"}]},
   {"@type":"ItemList","@id":"https://xn--4gq.chat/#versions","name":"站点双版本","itemListElement":[
     {"@type":"ListItem","position":1,"name":"技术主页（接单服务与作品）","url":"https://xn--4gq.chat/tech.html"},
@@ -464,6 +511,7 @@
 ]}
 </script>
 
+<script src="assets/site-data.js"></script>
 <script>
 (function(){
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -555,6 +603,81 @@
   if(closeBtn) closeBtn.addEventListener('click', closeDance);
   if(modal) modal.addEventListener('click', function(e){ if(e.target === modal) closeDance(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal && modal.classList.contains('on')) closeDance(); });
+
+  /* ---------- 服务城市（唯一数据源：assets/site-data.js） ---------- */
+  var cityList = document.getElementById('cityList');
+  var cityNote = document.getElementById('cityNote');
+  var SD = window.SITE_DATA;
+  if(cityList && SD){
+    cityList.innerHTML = SD.cityCards('zh');
+    if(cityNote) cityNote.textContent = SD.remote.zh + '；' + SD.cities.length + ' 个城市可约当面，' +
+      SD.futureCity.zh + '（其余地区一律远程，报价不变）。数据更新于 ' + SD.updated + '。';
+  }else if(cityNote){
+    cityNote.textContent = '城市数据加载失败，可远程服务的地区不受影响。';
+  }
+
+  /* ---------- 性能：视口外暂停装饰动画 + 后台标签页停表 ---------- */
+  if(stage && !reduce && 'IntersectionObserver' in window){
+    var offscreen = false;
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        offscreen = !e.isIntersecting;
+        stage.classList.toggle('is-paused', offscreen || document.hidden);
+      });
+    }, {threshold:0}).observe(stage);
+    document.addEventListener('visibilitychange', function(){
+      stage.classList.toggle('is-paused', document.hidden || offscreen);
+      if(document.hidden){
+        if(timer){ clearInterval(timer); timer = null; }
+      }else{
+        startTimers();
+      }
+    });
+  }
+
+  /* ---------- 弱网 / 省流量：降级为静态贴图 ---------- */
+  (function(){
+    var c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    var slow = !!(c && (c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')));
+    if(!slow || !stage) return;
+    stage.classList.add('is-lite');
+    if(timer){ clearInterval(timer); timer = null; }
+    var dance = document.getElementById('npcDance');
+    if(dance){
+      dance.disabled = true;
+      dance.textContent = '弱网已关闭动画';
+      dance.title = '检测到弱网或省流量模式，跳舞视频不加载';
+    }
+  })();
+
+  /* ---------- 空闲时只预取视频元数据（不下载整段视频） ---------- */
+  function prefetchDance(){
+    if(!video || video.getAttribute('src')) return;
+    var c = navigator.connection || {};
+    if(c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')) return;
+    video.preload = 'metadata';
+    video.setAttribute('src', 'assets/npc_dance_web.mp4');
+    try{ video.load(); }catch(e){}
+  }
+  if('requestIdleCallback' in window){
+    requestIdleCallback(prefetchDance, {timeout:4000});
+  }else{
+    setTimeout(prefetchDance, 3000);
+  }
+
+  /* ---------- 空闲预取「技术主页」文档（最可能的下一个页面，点击后秒开） ---------- */
+  (function(){
+    var c = navigator.connection || {};
+    if(c.saveData || /^(slow-2g|2g)$/.test(c.effectiveType || '')) return;
+    function add(){
+      if(document.querySelector('link[rel="prefetch"][href="/tech.html"]')) return;
+      var l = document.createElement('link');
+      l.rel = 'prefetch'; l.as = 'document'; l.href = '/tech.html';
+      document.head.appendChild(l);
+    }
+    if('requestIdleCallback' in window) requestIdleCallback(add, {timeout:5000});
+    else setTimeout(add, 2500);
+  })();
 })();
 </script>
 </body>

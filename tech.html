@@ -73,8 +73,8 @@
   .bg::after{content:"";position:absolute;inset:0;
     background:linear-gradient(180deg,rgba(247,250,245,.42),rgba(228,240,235,.58));}
   @media(max-width:640px){.bg{background-image:image-set(url(assets/mondstadt-hero-small.avif) type("image/avif"),url(assets/mondstadt-hero-small.webp) type("image/webp"),url(assets/mondstadt-hero-small.jpg) type("image/jpeg"));}}
-  .layout{display:flex;align-items:flex-start;min-height:100vh;}
-  .sidebar{position:fixed;top:0;left:0;width:min(38vw,400px);height:100vh;z-index:40;
+  .layout{display:flex;align-items:flex-start;min-height:100vh;min-height:100svh;}
+  .sidebar{position:fixed;top:0;left:0;width:min(38vw,400px);height:100vh;height:100svh;z-index:40;
     display:flex;flex-direction:column;justify-content:center;padding:30px 44px;overflow-y:auto;
     overscroll-behavior:contain;scrollbar-width:none;}
   .sidebar::-webkit-scrollbar{display:none;}
@@ -251,7 +251,7 @@
   .ibtn-icon{font-size:24px;}
   .ibtn-main b{display:block;font-size:14.5px;color:var(--ink);}
   .ibtn-main i{display:block;font-style:normal;font-size:12px;color:var(--sub);margin-top:2px;}
-  body.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);will-change:transform,opacity;}
+  body.js .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s cubic-bezier(.16,1,.3,1),transform .5s cubic-bezier(.16,1,.3,1);}
   body.js .reveal.on{opacity:1;transform:none;}
   #backtop{position:fixed;right:18px;bottom:22px;z-index:60;width:42px;height:42px;border-radius:50%;
     border:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);
@@ -335,7 +335,7 @@
     .contact li{padding:10px 0;}
     .contact a{line-height:1.5;}
     /* 横向溢出防护：跑马灯与背景层不得撑出视口 */
-    .sb-track{will-change:transform;}
+    .sb-track{will-change:auto;}
     .splash-awards{overflow:hidden;max-width:100%;}
     .splash-inner{max-width:100vw;}
   }
@@ -347,9 +347,9 @@
 /* ===== 前置页 splash（苹果发布会风：近黑留白、字重对比、克制动效） ===== */
   #splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
     overflow:hidden;background:#04060b;transform-origin:50% 46%;
-    transition:opacity .5s ease-out,visibility .5s ease-out,filter .5s ease-out,transform .5s ease-out;}
+    transition:opacity .5s ease-out,visibility .5s ease-out,transform .5s ease-out;}
   #splash.hide{opacity:0!important;visibility:hidden!important;pointer-events:none!important;}
-  #splash.leaving{opacity:0;filter:blur(6px);transform:scale(1.008);}
+  #splash.leaving{opacity:0;transform:scale(1.008);} /* 只用 transform/opacity，避免移动端 filter 掉帧 */
   .splash-bg{position:absolute;inset:0;background:#04060b url(assets/mondstadt-hero.jpg) center/cover no-repeat;
     background-image:image-set(url(assets/mondstadt-hero.avif) type("image/avif"),url(assets/mondstadt-hero.webp) type("image/webp"),url(assets/mondstadt-hero.jpg) type("image/jpeg"));
     background-position:center;background-size:cover;background-repeat:no-repeat;
@@ -419,7 +419,7 @@
     #splash.cine .splash-npc-name,#sp-npc.sp-arrive{opacity:1!important;animation:none!important;}
   }
   /* 前置页 NPC（原创同人「大肥鱼 · 鲸鱼娘」立绘版：待机漂浮+拍拍反应+抛掷物理，可拖拽） */
-  .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;will-change:transform;perspective:750px;}
+  .splash-npc{position:relative;width:190px;margin:0 auto 6px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;perspective:750px;} .splash-npc.dragging{will-change:transform;}
   .npc-stage{position:relative;transform-style:preserve-3d;}
   #sp-npc-gl{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity .6s;pointer-events:none;z-index:3;}
   #sp-npc-gl.on{opacity:1;}
@@ -515,14 +515,14 @@
     color:#7fa8c4;font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
   /* stabondar 式离场分栏 */
   .splash-transition{display:none;}
-  #splash.leaving .splash-inner{opacity:0;filter:blur(4px);transform:scale(.98) translateY(8px);
-    transition:opacity .34s ease-out,transform .4s cubic-bezier(.16,1,.3,1),filter .4s ease-out;}
+  #splash.leaving .splash-inner{opacity:0;transform:scale(.98) translateY(8px);
+    transition:opacity .34s ease-out,transform .4s cubic-bezier(.16,1,.3,1);}
   .npc-mirror{height:66px;overflow:hidden;opacity:.3;margin-top:-2px;pointer-events:none;
     -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);
     mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 82%);}
   .npc-mirror img{width:100%;height:auto;display:block;transform:scaleY(-1);filter:blur(1.5px) saturate(1.05) brightness(1.04);}
   .splash-npc.grab{cursor:grabbing;}
-  .splash-npc img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(10,25,50,.45)) saturate(.95) brightness(1.03);animation:npc-idle 3.6s ease-in-out infinite;will-change:transform;}
+  .splash-npc img{display:block;width:100%;height:auto;pointer-events:none;filter:drop-shadow(0 14px 16px rgba(10,25,50,.45)) saturate(.95) brightness(1.03);animation:npc-idle 3.6s ease-in-out infinite;}  /* 不再常驻 will-change：动画本身已走合成层 */
   .splash-npc.grab img,.splash-npc.air img{animation:none;}
   .splash-npc img.spin{animation:npc-spin .9s cubic-bezier(.3,.1,.3,1) 1;}
   @keyframes npc-idle{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(-1.6deg)}}
@@ -535,7 +535,7 @@
   @keyframes npc-fly{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}18%{opacity:1}100%{opacity:0;transform:translate(-50%,calc(-50% - 92px)) scale(1.25) rotate(16deg)}}
   @media(max-width:640px){
     .bg,.splash-bg{animation:none!important}
-    #splash.leaving{filter:blur(4px);}
+    /* 离场不再用 filter（移动端 GPU 掉帧）：只用 transform+opacity */
     .splash-inner{padding:8px 12px 12px;max-height:100svh;}
     .splash-npc{width:124px;margin-bottom:0;}
     .npc-mirror{height:42px;}
@@ -733,7 +733,8 @@
   .proof-card a{display:inline-block;margin-top:8px;font-size:12.5px;color:var(--sky);text-decoration:none;font-weight:650;}
   .proof-card a:hover{text-decoration:underline;}
   .proof-note{margin-top:14px;font-size:12.5px;color:var(--sub);opacity:.92;}
-  .contact-note{margin-top:12px;font-size:13px;color:var(--sub);line-height:1.8;}
+  .city-line{margin:12px 0 0;padding:9px 12px;border:1px dashed var(--line);border-radius:10px;font-size:12.8px;color:var(--sub);line-height:1.7;}
+.contact-note{margin-top:12px;font-size:13px;color:var(--sub);line-height:1.8;}
   .contact-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
   .contact-cta .hbtn{min-height:42px;padding:10px 18px;font-size:13.5px;}
   .sbcta{display:flex;align-items:center;gap:9px;margin-top:18px;padding:11px 14px;border-radius:12px;
@@ -1238,7 +1239,7 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
 })();
 </script>
   <script type="application/ld+json">
-{"@context":"https://schema.org","@graph":[{"@type":"Service","@id":"https://xn--4gq.chat/tech.html#service","name":"李玉涛（Leo）· 基础计算机接单服务","description":"电脑远程协助与系统重装、开发环境配置、静态网站搭建上线、Python / Java 小脚本、AI 工具本地部署、数据备份与换机迁移、Office 排版、一对一答疑。先报价后开工，学生价，7 天同类问题免费复修。","serviceType":["电脑远程协助","系统重装","开发环境配置","静态网站搭建","Python / Java 脚本","AI 工具本地部署","数据备份与迁移","Office 排版","一对一答疑"],"provider":{"@type":"Person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/","sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"]},"areaServed":[{"@type":"City","name":"东莞"},{"@type":"City","name":"长春"},{"@type":"Country","name":"中国"}],"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://xn--4gq.chat/services.html","servicePhone":"+86-133-6063-7585","availableLanguage":["zh-CN","en"]},"termsOfService":"先报价后开工，学生价；重要操作先备份；交付含源码与说明；7 天内同类问题免费复修。不接代写、破解、违法采集。","offers":[{"@type":"Offer","name":"电脑远程协助 / 系统重装","price":"29","priceCurrency":"CNY","description":"远程排查或重装 Win10/11，含驱动与常用软件，先备份数据。"},{"@type":"Offer","name":"开发环境配置","price":"59","priceCurrency":"CNY","description":"Java / Python / Node / MySQL / Git / IDE 从零装到项目能跑。"},{"@type":"Offer","name":"静态网站搭建与上线","price":"199","priceCurrency":"CNY","description":"页面 + GitHub Pages + 域名解析 + HTTPS，交付源码。"},{"@type":"Offer","name":"Python / Java 小脚本","price":"99","priceCurrency":"CNY","description":"数据处理、Excel 批量整理、合规爬虫、自动化小工具。"},{"@type":"Offer","name":"AI 工具本地部署","price":"299","priceCurrency":"CNY","description":"Ollama / Dify / 本地知识库 / 大模型 API 接入。"},{"@type":"Offer","name":"数据备份与换机迁移","price":"39","priceCurrency":"CNY","description":"换机迁移、资料整理与双备份方案。"},{"@type":"Offer","name":"Office / 文档表格排版","price":"39","priceCurrency":"CNY","description":"论文格式、Word 目录页码、Excel 公式图表、PPT 排版。"},{"@type":"Offer","name":"一对一答疑 / 作业思路","price":"49","priceCurrency":"CNY","description":"按小时计，讲思路与方法，不代写不代考。"}],"telephone":"+86-133-6063-7585","email":"Tao638@outlook.com","address":{"@type":"PostalAddress","addressLocality":"东莞","addressRegion":"广东","addressCountry":"CN"}},{"@type":"FAQPage","@id":"https://xn--4gq.chat/tech.html#service-faq","mainEntity":[{"@type":"Question","name":"接单怎么收费，会不会做到一半加价？","acceptedAnswer":{"@type":"Answer","text":"先报价后开工：说明需求后 30 分钟内给出方案、价格和时间，确认后才动手，中途不加价；报价为学生价起步价，按实际工作量核定。"}},{"@type":"Question","name":"支持哪些地区，只能远程吗？","acceptedAnswer":{"@type":"Answer","text":"远程为主，用向日葵 / ToDesk 全程可见操作；东莞、长春可约当面，其他地区走远程，同样先备份再操作。"}},{"@type":"Question","name":"重装系统会不会丢数据？","acceptedAnswer":{"@type":"Answer","text":"重装、迁移、清理前先把资料备份到指定位置并确认可读，再开始操作；交付时说明数据在哪、怎么恢复。"}},{"@type":"Question","name":"怎么证明能力靠谱？","acceptedAnswer":{"@type":"Answer","text":"不写虚构客户评价：可查证的是 5 个完整开源项目、在线 Demo、40+ 篇公开技术文章、竞赛与获奖记录，以及本站源码。"}},{"@type":"Question","name":"哪些单不接？","acceptedAnswer":{"@type":"Answer","text":"不接代写论文 / 课程作业、破解软件与账号、爬取隐私或违法数据，以及任何违反学校规定或法律的请求。"}}]},{"@type":"ProfessionalService","@id":"https://xn--4gq.chat/tech.html#business","name":"李玉涛（Leo）· 一.chat 技术服务","description":"面向个人与小团队的基础计算机服务：电脑远程协助、系统重装、开发环境配置、静态网站搭建上线、Python / Java 小脚本、AI 工具本地部署、数据备份与换机迁移。远程为主，东莞 / 长春可约当面；先报价后开工。","url":"https://xn--4gq.chat/tech.html","image":"https://xn--4gq.chat/assets/og-cover.jpg","telephone":"+86-133-6063-7585","email":"Tao638@outlook.com","priceRange":"¥29 起（学生价，先报价后开工）","founder":{"@type":"Person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/tech.html"},"areaServed":[{"@type":"City","name":"东莞"},{"@type":"City","name":"长春"},{"@type":"Country","name":"中国"}],"address":{"@type":"PostalAddress","addressLocality":"东莞","addressRegion":"广东","addressCountry":"CN"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"09:00","closes":"22:00"}],"sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"],"knowsAbout":["电脑系统重装","开发环境配置","静态网站部署","Python 脚本","Java 后端","AI 工具本地部署"]}]}
+{"@context":"https://schema.org","@graph":[{"@type":"Service","@id":"https://xn--4gq.chat/tech.html#service","name":"李玉涛（Leo）· 基础计算机接单服务","description":"电脑远程协助与系统重装、开发环境配置、静态网站搭建上线、Python / Java 小脚本、AI 工具本地部署、数据备份与换机迁移、Office 排版、一对一答疑。先报价后开工，学生价，7 天同类问题免费复修。","serviceType":["电脑远程协助","系统重装","开发环境配置","静态网站搭建","Python / Java 脚本","AI 工具本地部署","数据备份与迁移","Office 排版","一对一答疑"],"provider":{"@type":"Person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/","sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"]},"areaServed":[{"@type":"City","name":"东莞"},{"@type":"City","name":"长春"},{"@type":"Country","name":"中国"}],"availableChannel":{"@type":"ServiceChannel","serviceUrl":"https://xn--4gq.chat/services.html","servicePhone":"+86-133-6063-7585","availableLanguage":["zh-CN","en"]},"termsOfService":"先报价后开工，学生价；重要操作先备份；交付含源码与说明；7 天内同类问题免费复修。不接代写、破解、违法采集。","offers":[{"@type":"Offer","name":"电脑远程协助 / 系统重装","price":"29","priceCurrency":"CNY","description":"远程排查或重装 Win10/11，含驱动与常用软件，先备份数据。"},{"@type":"Offer","name":"开发环境配置","price":"59","priceCurrency":"CNY","description":"Java / Python / Node / MySQL / Git / IDE 从零装到项目能跑。"},{"@type":"Offer","name":"静态网站搭建与上线","price":"199","priceCurrency":"CNY","description":"页面 + GitHub Pages + 域名解析 + HTTPS，交付源码。"},{"@type":"Offer","name":"Python / Java 小脚本","price":"99","priceCurrency":"CNY","description":"数据处理、Excel 批量整理、合规爬虫、自动化小工具。"},{"@type":"Offer","name":"AI 工具本地部署","price":"299","priceCurrency":"CNY","description":"Ollama / Dify / 本地知识库 / 大模型 API 接入。"},{"@type":"Offer","name":"数据备份与换机迁移","price":"39","priceCurrency":"CNY","description":"换机迁移、资料整理与双备份方案。"},{"@type":"Offer","name":"Office / 文档表格排版","price":"39","priceCurrency":"CNY","description":"论文格式、Word 目录页码、Excel 公式图表、PPT 排版。"},{"@type":"Offer","name":"一对一答疑 / 作业思路","price":"49","priceCurrency":"CNY","description":"按小时计，讲思路与方法，不代写不代考。"}],"telephone":"+86-133-6063-7585","email":"Tao638@outlook.com","address":{"@type":"PostalAddress","addressLocality":"东莞","addressRegion":"广东","addressCountry":"CN"}},{"@type":"FAQPage","@id":"https://xn--4gq.chat/tech.html#service-faq","mainEntity":[{"@type":"Question","name":"接单怎么收费，会不会做到一半加价？","acceptedAnswer":{"@type":"Answer","text":"先报价后开工：说明需求后 30 分钟内给出方案、价格和时间，确认后才动手，中途不加价；报价为学生价起步价，按实际工作量核定。"}},{"@type":"Question","name":"支持哪些地区，只能远程吗？","acceptedAnswer":{"@type":"Answer","text":"远程为主，用向日葵 / ToDesk 全程可见操作；东莞、广州、深圳、长春、上海、长沙可约当面，其他地区走远程，同样先备份再操作。"}},{"@type":"Question","name":"重装系统会不会丢数据？","acceptedAnswer":{"@type":"Answer","text":"重装、迁移、清理前先把资料备份到指定位置并确认可读，再开始操作；交付时说明数据在哪、怎么恢复。"}},{"@type":"Question","name":"怎么证明能力靠谱？","acceptedAnswer":{"@type":"Answer","text":"不写虚构客户评价：可查证的是 5 个完整开源项目、在线 Demo、40+ 篇公开技术文章、竞赛与获奖记录，以及本站源码。"}},{"@type":"Question","name":"哪些单不接？","acceptedAnswer":{"@type":"Answer","text":"不接代写论文 / 课程作业、破解软件与账号、爬取隐私或违法数据，以及任何违反学校规定或法律的请求。"}}]},{"@type":"ProfessionalService","@id":"https://xn--4gq.chat/tech.html#business","name":"李玉涛（Leo）· 一.chat 技术服务","description":"面向个人与小团队的基础计算机服务：电脑远程协助、系统重装、开发环境配置、静态网站搭建上线、Python / Java 小脚本、AI 工具本地部署、数据备份与换机迁移。远程为主，东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可约当面；先报价后开工。","url":"https://xn--4gq.chat/tech.html","image":"https://xn--4gq.chat/assets/og-cover.jpg","telephone":"+86-133-6063-7585","email":"Tao638@outlook.com","priceRange":"¥29 起（学生价，先报价后开工）","founder":{"@type":"Person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/tech.html"},"areaServed":[{"@type":"City","name":"东莞"},{"@type":"City","name":"长春"},{"@type":"Country","name":"中国"}],"address":{"@type":"PostalAddress","addressLocality":"东莞","addressRegion":"广东","addressCountry":"CN"},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"09:00","closes":"22:00"}],"sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"],"knowsAbout":["电脑系统重装","开发环境配置","静态网站部署","Python 脚本","Java 后端","AI 工具本地部署"]}]}
   </script>
 </head>
 <body>
@@ -1317,7 +1318,7 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
   <p>李玉涛（Leo），长春师范大学数据科学与大数据技术专业本科生（2027 届，理学学士 + 数学与应用数学辅修双学位），绩点专业前 10%。方向：Java 后端工程实践 / AI 应用（RAG · Agent）/ 数据科学落地分析 / 数学与统计建模 / 科普志愿服务。开源实践项目 5 个：SmartClass 智学在线、OrderBoss 订单聚合、燎原火 AI 学习平台、深空制图仪 · 手势地球、TURBOCORE · 涡扇 3D 爆炸分解。</p>
   <p>获奖记录：中国国际大学生创新大赛国家一等奖；全国大学生统计建模竞赛国家三等奖（连续两年）；全国大学生数学竞赛（吉林赛区）国家三等奖（连续两年）；全国大学生数学建模竞赛省二等奖；中国大学生计算机设计大赛吉林省级三等奖；美国大学生数学建模竞赛 S 奖；CATTI 大赛三等奖；「华文」教学技能奖；吉林省大学生象棋锦标赛个人第一、团体第二；中国象棋三级裁判证书。参与科普志愿服务，含「高校星火馆」等活动。</p>
   <h3>接单服务与报价（2026-11 起）</h3>
-  <p>李玉涛（Leo）目前可接基础计算机单，明码标价、先报价后开工、学生价：电脑远程协助 / 系统重装 ¥29 起；开发环境配置（Java / Python / Node / MySQL / Git / IDE）¥59 起；静态网站搭建与上线（页面 + GitHub Pages + 域名 + HTTPS + 源码）¥199 起；Python / Java 小脚本（数据整理、Excel、合规爬虫、自动化）¥99 起；AI 工具本地部署（Ollama / Dify / 本地知识库）¥299 起；数据备份与换机迁移 ¥39 起；Office / 文档表格排版 ¥39 起；一对一答疑 ¥49/小时（不代写）。远程为主（向日葵 / ToDesk），东莞 / 长春可约当面；重要操作先备份，交付含源码与说明，同一问题 7 天内免费复修；不接代写、破解与违法采集。完整服务与报价见 <a href="services.html">接单服务与报价</a>；微信 / 手机 13360637585（同号），邮箱 Tao638@outlook.com。</p>
+  <p>李玉涛（Leo）目前可接基础计算机单，明码标价、先报价后开工、学生价：电脑远程协助 / 系统重装 ¥29 起；开发环境配置（Java / Python / Node / MySQL / Git / IDE）¥59 起；静态网站搭建与上线（页面 + GitHub Pages + 域名 + HTTPS + 源码）¥199 起；Python / Java 小脚本（数据整理、Excel、合规爬虫、自动化）¥99 起；AI 工具本地部署（Ollama / Dify / 本地知识库）¥299 起；数据备份与换机迁移 ¥39 起；Office / 文档表格排版 ¥39 起；一对一答疑 ¥49/小时（不代写）。远程为主（向日葵 / ToDesk），东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可约当面；重要操作先备份，交付含源码与说明，同一问题 7 天内免费复修；不接代写、破解与违法采集。完整服务与报价见 <a href="services.html">接单服务与报价</a>；微信 / 手机 13360637585（同号），邮箱 Tao638@outlook.com。</p>
   <h3>技术文章（27 篇）</h3>
   <ul class="seo-links">
       <li><a href="posts/gesture-earth-webgl.html">用摄像头隔空操控一颗点阵地球：手势交互与 WebGL 的三个实现取舍</a><span class="d">深空制图仪 · 手势地球的实现复盘：21 个手部关键点如何翻译成镜头语言、为什么用相机轨道代替地球自转、以及自定义 Shader 在线性空间</span></li>
@@ -1384,6 +1385,7 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
     <div class="show-hint" id="npc-show-hint">点击画面任意处关闭</div>
   </div>
 </div>
+<script src="assets/site-data.js"></script>
 <script>
 /* ===================== 双语数据源（单一真源，改一处两边同步） ===================== */
 const D = {
@@ -1400,10 +1402,10 @@ const D = {
       slogan:["让机器听话，是一件温柔的事","修电脑 · 配环境 · 建站 · 写脚本 —— 先说需求，再给报价","5 个开源项目 × 51 篇文章 × 国创赛国家一等奖"],
       quote:"「你不必先相信我，先看我做过什么。」—— 李玉涛（Leo）",
       role:"长春师范大学 · 数据科学与大数据技术（2027 届）· 学生个人接单",
-      meta:["🟢 当前可接单（2026-11）","💻 Java 后端 / AI 应用方向","📍 远程为主 · 东莞 / 长春可当面"],
+      meta:["🟢 当前可接单（2026-11）","💻 Java 后端 / AI 应用方向","📍 远程为主 · 东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可当面"],
       cta:["查看服务与报价","微信 / 邮箱咨询"]},
     svc:{title:"接单服务：基础计算机需求",
-      intro:"远程为主，东莞 / 长春可约当面。下面都是我能独立交付的基础单，标价是学生价起步价；具体按工作量先报价，你确认后我再开工。",
+      intro:"远程为主，东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可约当面。下面都是我能独立交付的基础单，标价是学生价起步价；具体按工作量先报价，你确认后我再开工。",
       items:[
         {ico:"🖥",name:"电脑远程协助 / 系统重装",desc:"系统卡顿、蓝屏、驱动异常、C 盘爆满、开机变慢；远程排查，或重装 Win10/11（含驱动、常用软件，先备份数据）。",price:"¥29 起",time:"30–90 分钟"},
         {ico:"🧰",name:"开发环境配置",desc:"Java / Python / Node / MySQL / Git / IDE 从零装到项目能跑；课程设计、毕业设计环境、WSL 也能配。",price:"¥59 起",time:"1–2 小时"},
@@ -1429,7 +1431,7 @@ const D = {
         ["先报价","30 分钟内给方案、价格和时间；不合适可以直接不做，不收费。"],
         ["远程开工","向日葵 / ToDesk 远程，全程你能看到；重装、迁移前先备份数据。"],
         ["验收交付","当面或远程验收，脚本 / 网站给源码和使用说明；7 天内同类问题免费复修。"]],
-      promise:["先报价后开工：范围与价格确认后再动手，中途不加价。","重要操作先备份：重装、迁移、清理前先做数据备份，避免不可逆损失。","交付可复现：脚本和站点给源码 + 运行说明，不做黑盒。","7 天免费复修：同一问题 7 天内复现，免费处理。","远程优先、当面为辅：东莞 / 长春可约线下，其他地区远程。"],
+      promise:["先报价后开工：范围与价格确认后再动手，中途不加价。","重要操作先备份：重装、迁移、清理前先做数据备份，避免不可逆损失。","交付可复现：脚本和站点给源码 + 运行说明，不做黑盒。","7 天免费复修：同一问题 7 天内复现，免费处理。","远程优先、当面为辅：东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可约线下，其他地区远程。"],
       nos:["不接：代写论文 / 课程作业、破解软件与账号、爬取隐私或违法数据，以及任何违反学校规定或法律的请求。"]},
     proof:{title:"为什么可以放心把单交给我",
       intro:"不写「客户好评」，因为那没法核验。下面每一条都能点开自己查：",
@@ -1649,7 +1651,7 @@ const D = {
       localNote:"留言只保存在你当前的浏览器里（localStorage），不会上传到任何服务器；换设备或清理浏览器数据后即消失。"},
     footer:{copy:"© 2026 李玉涛 · 个人技术主页 · 风带来故事的种子，时间使之发芽",
       bg:"背景画风灵感来自《原神》蒙德地区 · 页面背景图为 AI 生成",
-      status:"🟢 当前状态：可接单（2026-11 起）· 远程为主，东莞 / 长春可约当面"},
+      status:"🟢 当前状态：可接单（2026-11 起）· 远程为主，东莞 / 广州 / 深圳 / 长春 / 上海 / 长沙可约当面"},
     splash:{kicker:"李玉涛 (Leo) · 接单中",brand:"一.chat",tag:"接单中 · 电脑远程协助 / 系统重装 / 建站部署 / 脚本代做 / AI 本地部署",enter:"进入站点",skip:"直接访问 →",npc:"大肥鱼 · 鲸鱼娘（拍我·长按看演唱会）",npcTalk:{hi:["欢迎来到一.chat！我是看板娘·大肥鱼 🐋 拍拍我，或者拖着我到处飞～","风把一.chat 吹来啦～第一次见面，请多关照！"],hiBack:"第 {n} 次见面啦！你拍过我的每一次我都记着哦～",pat:["呜哇…头发要被拍乱啦","鲸鱼尾巴好痒～别拍那里啦","被你拍得晕乎乎的…但挺舒服","再拍头饰就要歪啦～"],info:["往下滑有 5 个项目，最新的 TURBOCORE 涡扇也在！"],infoProj:["往下滑有 5 个项目，最新的 TURBOCORE 涡扇也在！","项目卡就在下面，总有一张对你胃口～"],infoFav:"上次你看了「{p}」，今天要不要换张卡片看看？",infoGh:["Leo 的 GitHub 是 Leo-Li638，在「联系我」可以找到～"],infoWhale:["这条星纹鲸尾，是致敬 DeepSeek 小鲸鱼的原创同行者哦 🐋","我会记住你的每次互动，越玩越懂你哦～"],drag:"哇——飞起来啦！",land:"咚！安全落地～",spin:"转圈圈～头都晕啦 ✨",egg:"你居然拍了十下！奖励你一只鲸鱼 🐋✨",idle:["自己蹦跶一下，保持体型～","咦？那边好像有有趣的东西，我去瞅瞅！","哼哼歌～鲸鱼都是歌唱家 🎵","巡场中…这里已经是我的地盘啦","你忙着呀？我就自己玩一会儿～","灵宝看了都要叫我一声前辈～"],sleep:"Zzz…（我犯困啦，拍拍我就醒）",wake:"哇！我刚刚是不是说梦话了…",shy:["呀…摸、摸头吗？好突然…","头发要乱啦…不过…还挺舒服的","再摸下去要哼出歌来了啦…"],tail:["尾、尾巴！那是引擎！","碰到尾巴会喷水的哦！","呜哇！尾巴最怕痒了！"],angry:["狂拍鲸鱼是要被记仇的！","再拍就要生气啦！哼！"],dizzy:["转得太猛…天旋地转…","鲸鱼晕陆了…扶我一下…"],dance:["看好了！鲸鱼舞王上线！","百万播放纪念舞蹈！","鲸鱼disco，蹦起来！"],wave:["嗨～你来啦！","看到你啦～这边这边！"],old100:"被拍 100 下了…我怎么觉得腰有点酸。鱼到中年，不得不服老啊…",old500:"500 下…背好像有点驼。不对，是尾巴的问题。",old2000:"2000 下……咳咳，鱼老了，蹦不动了，你倒是越蹦越欢。",showTitle:"🐋 大肥鱼 · 舞王 Live",showHint:"点击画面任意处关闭",showMuteHint:"点击 🔇 按钮开启舞台音效"}}
   },
   en: {
@@ -2015,6 +2017,7 @@ function renderContent(t){
   html += '<section class="card contact reveal" id="ssec9"><h2>'+esc(t.contact.title)+'</h2><ul>';
   t.contact.items.forEach(function(c){html += '<li>'+esc(c[0])+'<a href="'+c[1]+'">'+esc(c[2])+'</a>'+(c[1].indexOf('mailto:')===0?' <button class="copybtn" type="button" data-copy="'+esc(c[1].slice(7))+'">复制</button>':'')+'</li>';});
   html += '</ul>'
+    +(window.SITE_DATA?'<p class="city-line">'+esc(window.SITE_DATA.cityLine(t.htmlLang==='en'?'en':'zh'))+'</p>':'')
     +(t.contact.note?'<p class="contact-note">'+esc(t.contact.note)+'</p>':'')
     +'<div class="contact-cta">'
       +'<a class="hbtn" href="tel:13360637585">'+(t.htmlLang==='en'?'Call / WeChat 13360637585':'微信 / 电话 13360637585')+'</a>'
@@ -2628,7 +2631,11 @@ function renderContent(t){
     render();
   }
   else if(FROM_OWN_SITE){ var sp=document.getElementById('splash'); if(sp) sp.classList.add('leaving','hide'); render(); }
-  else renderGate();
+  else {
+    /* 预渲染：正文在 splash 覆盖期间先画好，点「进入站点」立即显示（LCP 提前、避免点击后白屏） */
+    renderGate();
+    render();
+  }
 
   // ===== 白屏降级（防 QQ WebView / 低端机 JS 异常导致整页空白）=====
   // 静态兜底区平时对爬虫可见、对用户隐藏；一旦检测到正文渲染失败，
