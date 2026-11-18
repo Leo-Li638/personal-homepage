@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统 · 李玉涛的个人主页</title>
+<meta name="description" content="人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，&quot;被忘记&quot;不再是隐喻，而是字面事实。">
+<link rel="canonical" href="https://xn--4gq.chat/posts/forget-not-important-multi-agent.html">
+<meta property="og:title" content="你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统">
+<meta property="og:description" content="人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，&quot;被忘记&quot;不再是隐喻，而是字面事实。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/forget-not-important-multi-agent.html">
+<meta name="author" content="李玉涛（Leo）">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+"headline":"你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统","description":"人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，&quot;被忘记&quot;不再是隐喻，而是字面事实。",
+"author":{"@type":"Person","name":"李玉涛（Leo）","url":"https://xn--4gq.chat"},
+"datePublished":"2026-11-17","dateModified":"2026-11-17",
+"mainEntityOfPage":{"@type":"WebPage","@id":"https://xn--4gq.chat/posts/forget-not-important-multi-agent.html"},
+"publisher":{"@type":"Person","name":"李玉涛（Leo）","url":"https://xn--4gq.chat"}}
+</script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="../index.html">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统</h1>
+    <div class="sub">人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，&quot;被忘记&quot;不再是隐喻，而是字面事实。</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-11-17</span>
+      <span>一.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一-人类的遗忘-一个无声的优先级投票">一、人类的遗忘：一个无声的优先级投票</a></li><li style="margin-left:0px"><a href="#s-二-agent-的-遗忘-不是隐喻-是字面事实">二、Agent 的"遗忘"：不是隐喻，是字面事实</a></li><li style="margin-left:0px"><a href="#s-三-多-agent-并行-真正的难点不是-同时做几件事">三、多 Agent 并行：真正的难点不是"同时做几件事"</a></li><li style="margin-left:0px"><a href="#s-四-这对人意味着什么-把自己变成-不会被忘掉-的信息">四、这对人意味着什么：把自己变成"不会被忘掉"的信息</a></li><li style="margin-left:0px"><a href="#s-faq">FAQ</a></li></ol></details>
+  <article class="paper">
+<h1>你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统</h1>
+<p>"你都忘了，说明这件事不那么重要。"</p>
+<p>这句话每个人都听过，多半是在被人提醒某件答应过的小事、而你确实忘得一干二净的时候。它残忍的地方在于逻辑闭环：重要的事你会记住，你没记住，所以它不重要——责任瞬间从"我忘了"转移到"它本来就不值得记"。</p>
+<p>以前我觉得这是人际话术。直到最近同时跑多个 AI Agent 干活，发现这句话在我的工作流里是字面意义上的物理定律：<strong>一个 Agent 的上下文满了会被压缩成摘要，没写进摘要的信息不是"变得模糊"，是直接消失，仿佛从未存在过。</strong></p>
+<p>这篇文章聊聊这个翻译过程：人类的遗忘和 Agent 的"遗忘"是不是同一套机制，多 Agent 并行时"谁来记住全局"这个真问题，以及——如果你是人——怎么把自己变成一个"不会被忘掉"的协作者。</p>
+<p><h## id="s-一-人类的遗忘-一个无声的优先级投票">一、人类的遗忘：一个无声的优先级投票</h##></p>
+<p>认知心理学对遗忘最友好的解释来自艾宾浩斯：记忆随时间衰减，重复巩固。但更贴合这句话的是另一个视角——<strong>遗忘是大脑的主动过滤器，不是存储故障。</strong></p>
+<p>每天涌入的感官信息、对话、念头，远超大脑愿意分配的资源。大脑的处理方式很像一个偷懒但务实的项目经理：默认全部不记，只给"被再次检索到"的内容续费。你反复想起一件事，说明它持续命中当前目标；你想不起来，说明它已经被移出活跃清单。</p>
+<p>所以"忘了=不重要"在人类语境里有一半是成立的：它描述的是<strong>你用行为投出的票</strong>。你没有回头去翻那个待办、没有第二次想起那句话，这本身就是一次无声的优先级投票。</p>
+<p>问题在于，人类的遗忘是渐进的、模糊的、可被触发的——一首歌、一个场景就可能捞回一段"以为忘了"的记忆。这让它足够宽容：记错了可以核对，漏掉了可能被提醒。</p>
+<p>而 Agent 的遗忘，没有这层宽容。</p>
+<p><h## id="s-二-agent-的-遗忘-不是隐喻-是字面事实">二、Agent 的"遗忘"：不是隐喻，是字面事实</h##></p>
+<p>大语言模型没有记忆，只有上下文窗口。所谓"Agent 记住了什么"，实际是"当前塞进上下文里还有什么"。这带来三个非常硬的删除机制：</p>
+<p><strong>1. 压缩即删除。</strong> 长任务跑到窗口上限，系统会把前面的对话压缩成一份摘要（compaction），然后丢弃原始内容。摘要写了什么，Agent 就"记得"什么；摘要没写的，对它而言从未发生。这是一次彻底的、不可逆的删除——没有"模糊印象"，只有"不存在"。</p>
+<p><strong>2. 子任务返回即删。</strong> 主 Agent 把一个子任务派给子 Agent，子 Agent 干活时打开自己独立的上下文，跑几万 token，最后交回主 Agent 的只有一条最终消息——通常是几百字的总结。子 Agent 过程里的所有试错、报错、临场决策，默认全部蒸发。<strong>父级看到的只是它要的那句话。</strong></p>
+<p><strong>3. 没落盘即删。</strong> Agent 的上下文是易失的：会话结束、进程重启，一切归零。唯一持久的层是文件系统——todo 清单、memory 文件、日志、代码本身。没写进文件的判断和发现，随着会话关闭物理消失。</p>
+<p>发现规律了吗？这三个机制和"你都忘了，说明这件事不那么重要"是同一句话的工程版：<strong>系统不会替你保留任何东西，保存是一个显式动作，而显式保存的配额永远稀缺。</strong></p>
+<p>在人类那里，遗忘是渐进的信号；在这里，遗忘是即刻的、二值的、由一次压缩操作触发的删除。这就是为什么多 Agent 并行时，"重要性设计"从修养问题变成了架构问题。</p>
+<p><h## id="s-三-多-agent-并行-真正的难点不是-同时做几件事">三、多 Agent 并行：真正的难点不是"同时做几件事"</h##></p>
+<p>单个 Agent 的记忆问题已经够麻烦，多个 Agent 并行时会叠加两个新问题：</p>
+<p><strong>每个并行单元都是局部视野。</strong> 你派三个 Agent 分头干活——一个查资料、一个写代码、一个跑测试——每个只看得见自己分到的那段指令和自己上下文里的东西。没有任何一个 Agent 天然拥有全局图景。如果中途出现了重要的新信息（比如你临时改了需求、比如某个方案被证明走不通），它<strong>只存在于发现它的那个 Agent 的上下文里</strong>。不主动上报，其他所有 Agent 都会在错误的前提上继续干活。</p>
+<p><strong>并行写入会打架。</strong> 两个 Agent 同时改同一个文件、同时往同一份统计里追加记录，结果不是"两份都保留"，而是互相覆盖——我真实踩过这个坑：一边做网页发布、一边做数据采样，两个自动化任务同时操作同一个浏览器和同一份数据，最后后启动的把先启动的挤掉了。教训很朴素：<strong>读可以并行，写必须排队。</strong>关键的"记忆载体"（状态文件、清单、日志）必须有单一写入者，或者显式串行化。</p>
+<p>所以多 Agent 并行的核心问题，从来不是调度和提速——那些框架都能解决——而是：<strong>谁负责记住全局，以及全局状态放在哪里。</strong></p>
+<p>成熟的解法几乎是共识：</p>
+<ol>
+<li><strong>单一事实来源。</strong> 全局状态写在一个所有 Agent 都能读的地方：一个 todo 清单、一份状态文件、一个看板。任何 Agent 需要知道"现在到哪了"，去读它，而不是靠各自的上下文回忆。</li>
+<li><strong>结构化交接（handoff）。</strong> 子 Agent 交回的不是"自由发挥的感想"，而是固定格式：结论、关键证据、未完成事项、下一步。交接格式决定了什么能穿过删除机制活下来。</li>
+<li><strong>重要性写进优先级。</strong> 什么值得进摘要，要有明确排序：<strong>用户的纠正 &gt; 关键错误与失败教训 &gt; 当前进度与阻塞 &gt; 计划 &gt; 过程叙事。</strong>过程细节第一个被丢，因为它最占地方且最可重建；你的纠正和踩过的坑最后被丢，因为丢了它们，后续所有工作都会重蹈覆辙。</li>
+</ol>
+<p>看到这里你会发现，这整套设计其实是在回答开头那句话：既然系统注定会"忘"，那就<strong>预先决定什么不配被忘</strong>。写进 todo 的、写进 memory 的、写进交接摘要的——这些是被判定为"重要到不许遗忘"的信息。其余的一切，系统会替你忘得干干净净，而且忘得理直气壮。</p>
+<p><h## id="s-四-这对人意味着什么-把自己变成-不会被忘掉-的信息">四、这对人意味着什么：把自己变成"不会被忘掉"的信息</h##></p>
+<p>把这套逻辑反向投回人类协作，会得到几个挺有用的推论：</p>
+<p><strong>给别人的摘要，就是你的重要性声明。</strong> 会议纪要、周报、交接文档，本质上就是 handoff 消息。你写进纪要的事会被执行，你没写进纪要的事下周等于没发生——不是别人不重视，是它注定会从所有人的上下文里被"压缩"掉。抱怨"上次明明说过"之前，先检查它有没有出现在任何一份持久化载体里。</p>
+<p><strong>重要的事要主动"落盘"，不能指望被想起。</strong> 人类记忆和 Agent 记忆的共同点是：默认路径都是删除。区别只是人类的删除慢一点。所以关键约定必须写下来、发出去、变成清单上的一行——对抗遗忘的唯一有效动作，是把它变成外部状态的一部分。</p>
+<p><strong>判断一件事的真实权重，看它在系统里占不占存储。</strong> 这句话的原版逻辑依然成立，只是现在可以诚实地翻译了：如果一件事重要到值得做，它就应该重要到值得被记录。重要却没有任何持久化痕迹的事，其实在你自己那里就已经被投过票了——这个观察对人和 Agent 同样适用，而且对两者同样扎心。</p>
+<p>说到底，"你都忘了，说明这件事不那么重要"不是一句指责，而是一条系统定律：<strong>任何记忆系统，无论是碳基的还是硅基的，都在用"留下什么"来定义"什么重要"。</strong>区别只在于，硅基系统把这份优先级清单摆到了明面上——todo、memory、交接格式，全都是可以 review 的显式配置。</p>
+<p>这反而是人可以从 Agent 那里学的：把自己的优先级清单也写下来，让它接受检查。到时候你会发现，自己真正重视的东西，和以为自己重视的东西，未必是同一份清单。（我平时把这类 Agent 协作实践持续记录在<a href="https://xn--4gq.chat">一.chat</a> 上，多 Agent 采样与任务编排的完整过程也都可以在那里查到。）</p>
+<p><h## id="s-faq">FAQ</h##></p>
+<p><strong>Q1：Agent 真的会"遗忘"吗？它不是能记住整个对话吗？</strong>
+在单次会话、上下文未超限时确实能"记住"全部内容。但长任务必然触发上下文压缩，多 Agent 协作时子任务过程也只以摘要形式返回上层。所谓"记住"永远以当前窗口内容为限——窗口之外的信息，需要靠外部文件（todo、memory、日志）才能重新进入视野。</p>
+<p><strong>Q2：多 Agent 并行相比单 Agent，效率提升真的存在吗？</strong>
+适合并行的是相互独立的读取型、探索型任务（比如同时查多个资料源、跑多个平台的采样）。存在依赖关系、尤其涉及共享文件写入的任务，并行反而引入冲突协调成本。判断标准：任务之间有没有写冲突，以及结果需不需要互相印证。</p>
+<p><strong>Q3：怎么防止重要信息在 Agent 交接中丢失？</strong>
+三件事：一是固定交接格式（结论/证据/未完成/下一步），二是按"用户纠正 &gt; 失败教训 &gt; 当前状态 &gt; 计划 &gt; 过程"的优先级决定什么进摘要，三是任何跨任务的关键状态一律落盘到共享文件，不依赖任何一方的上下文记忆。</p>
+<p><strong>Q4：这个理论对人的日常协作有什么可操作的建议？</strong>
+一条就够：重要的事在说完之后 10 分钟内，出现在某个持久化载体里——纪要、共享文档、任务清单。没有落盘的事，无论当时多投入，都会在所有人的"上下文"里被渐进压缩掉。这条规则对人比对 Agent 更需要，因为人的删除没有日志，查无可查。</p>
+<p><strong>Q5：为什么说"写下来"比"记住"更可靠？</strong>
+因为写下来是把信息从易失存储（上下文/生物记忆）迁移到持久存储（文件/纸面），并且让它可以被检索、被核对、被多个执行体共享。记住是被动的、私有的、会衰减的；写下来是主动的、共享的、可重放的。在一个"遗忘是默认行为"的系统里，唯一可靠的记忆就是外部化。</p>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+</body>
+</html>
