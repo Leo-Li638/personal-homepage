@@ -2384,7 +2384,12 @@ function renderContent(t){
   // ⚠️ 用 ssGet 兜底 —— 裸调用在 QQ WebView 跨页后可能抛异常，
   //    抛异常会中断整个 script → render() 不跑 → 页面全白
   var GATE_KEY = 'onechat_entered:' + location.pathname;
-  if(ssGet(GATE_KEY)==='1') render();
+  // 兼容旧键 onechat_entered（上一版 preloader 在同会话任意页面写入）：只要进过站，就不再抛全屏开场
+  var LEGACY_ENTERED = (ssGet('onechat_entered')==='1');
+  if(ssGet(GATE_KEY)==='1' || LEGACY_ENTERED){
+    var sp0=document.getElementById('splash'); if(sp0) sp0.classList.add('leaving','hide');
+    render();
+  }
   else renderGate();
 
   // ===== 白屏降级（防 QQ WebView / 低端机 JS 异常导致整页空白）=====

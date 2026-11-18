@@ -29,7 +29,11 @@
   function dismissGate(attempt){
     attempt=attempt||0;
     var splash=document.getElementById("splash");
-    if(!splash||splash.classList.contains("leaving")||splash.classList.contains("hide"))return;
+    if(!splash||splash.classList.contains("leaving")||splash.classList.contains("hide")){
+      /* splash 已被别处退场（同会话二次进入）：仍必须保证正文渲染 */
+      dispatchEvent(new CustomEvent("portfolio:enter"));
+      return;
+    }
     if(typeof window.__dismissSplash==="function"){
       window.__dismissSplash();
       return;
@@ -37,6 +41,8 @@
     /* __dismissSplash 尚未就绪（脚本加载顺序）：直接施加退场状态，
        不派发按钮 click —— 会被本文件捕获阶段 click 监听拦截并二次 begin() */
     splash.classList.add("leaving");
+    /* 即使 __dismissSplash 未就绪，也先让页面把正文渲染出来 */
+    dispatchEvent(new CustomEvent("portfolio:enter"));
     setTimeout(function(){
       if(splash) splash.classList.add("hide");
     },460);
@@ -150,12 +156,13 @@
     root.classList.remove("cp-active");
     layer.style.display="none";
     layer.setAttribute("aria-hidden","true");
-    /* 同会话二次访问：直接展示已渲染的主页，跳过退场动画（避免 transition
-       拖长导致 splash 长时间残留遮挡主页） */
-    var spG=document.getElementById("splash");
-    if(spG){ spG.style.transition="none"; spG.classList.add("leaving"); spG.classList.add("hide"); }
-    if(document.readyState==="loading")addEventListener("DOMContentLoaded",function(){dismissGate();},{once:true});
-    else dismissGate();
+    /* 同会话二次访问：交给 dismissGate 完成退场并触发正文渲染。
+       ⚠️ 不要在这里预先给 splash 加 leaving/hide —— 那会让 dismissGate 的守卫
+       提前 return，__dismissSplash 与 portfolio:enter 都不再派发，
+       页面正文永不渲染 → 白屏（此前的线上 bug） */
+    function finishEntered(){ dispatchEvent(new CustomEvent("portfolio:enter")); dismissGate(); }
+    if(document.readyState==="loading")addEventListener("DOMContentLoaded",finishEntered,{once:true});
+    else finishEntered();
     return;
   }
   if(reduce){

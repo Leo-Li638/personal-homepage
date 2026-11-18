@@ -2561,7 +2561,12 @@ function renderContent(t){
   var GATE_KEY = 'onechat_entered:' + location.pathname;
   // 从本站其它页面（入口页 / 文章页 / 项目页）点进来时直接进正文，不再抛一次全屏开场，避免二次点击流失
   var FROM_OWN_SITE = (function(){ try { var r=document.referrer; if(!r) return false; var u=new URL(r); return u.origin===location.origin; } catch(e){ return false; } })();
-  if(ssGet(GATE_KEY)==='1') render();
+  // 兼容旧键 onechat_entered（上一版 preloader 在同会话任意页面写入）：只要进过站，就不再抛全屏开场
+  var LEGACY_ENTERED = (ssGet('onechat_entered')==='1');
+  if(ssGet(GATE_KEY)==='1' || LEGACY_ENTERED){
+    var sp0=document.getElementById('splash'); if(sp0) sp0.classList.add('leaving','hide');
+    render();
+  }
   else if(FROM_OWN_SITE){ var sp=document.getElementById('splash'); if(sp) sp.classList.add('leaving','hide'); render(); }
   else renderGate();
 
