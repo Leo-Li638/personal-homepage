@@ -4,6 +4,159 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统 · 李玉涛的个人主页</title>
+<meta name="keywords" content="你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统">
+<meta property="article:published_time" content="2026-11-01">
+<meta property="article:modified_time" content="2026-11-01">
+<meta property="og:site_name" content="一.chat">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Article",
+   "@id": "https://xn--4gq.chat/posts/forget-not-important-multi-agent.html#article",
+   "headline": "你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统",
+   "description": "人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，\"被忘记\"不再是隐喻，而是字面事实。",
+   "author": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "publisher": {
+    "@type": "Person",
+    "name": "李玉涛（Leo）",
+    "url": "https://xn--4gq.chat",
+    "alternateName": [
+     "Leo",
+     "Leo-Li638"
+    ],
+    "affiliation": {
+     "@type": "CollegeOrUniversity",
+     "name": "长春师范大学"
+    },
+    "knowsAbout": [
+     "Java 后端工程实践",
+     "AI 应用（RAG / Agent）",
+     "数据科学落地分析",
+     "数学与统计建模",
+     "科普志愿服务"
+    ]
+   },
+   "datePublished": "2026-11-01",
+   "dateModified": "2026-11-01",
+   "inLanguage": "zh-CN",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://xn--4gq.chat/posts/forget-not-important-multi-agent.html"
+   },
+   "isPartOf": {
+    "@type": "WebSite",
+    "name": "一.chat",
+    "url": "https://xn--4gq.chat"
+   },
+   "articleSection": "技术文章",
+   "keywords": "你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统",
+   "about": [
+    {
+     "@type": "Thing",
+     "name": "长春师范大学"
+    },
+    {
+     "@type": "Thing",
+     "name": "李玉涛"
+    }
+   ]
+  },
+  {
+   "@type": "BreadcrumbList",
+   "@id": "https://xn--4gq.chat/posts/forget-not-important-multi-agent.html#breadcrumb",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "一.chat",
+     "item": "https://xn--4gq.chat"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "技术文章",
+     "item": "https://xn--4gq.chat/#ssec4"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统",
+     "item": "https://xn--4gq.chat/posts/forget-not-important-multi-agent.html"
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "@id": "https://xn--4gq.chat/posts/forget-not-important-multi-agent.html#faq",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Agent 真的会\"遗忘\"吗？它不是能记住整个对话吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "在单次会话、上下文未超限时确实能\"记住\"全部内容。但长任务必然触发上下文压缩，多 Agent 协作时子任务过程也只以摘要形式返回上层。所谓\"记住\"永远以当前窗口内容为限——窗口之外的信息，需要靠外部文件（todo、memory、日志）才能重新进入视野。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "多 Agent 并行相比单 Agent，效率提升真的存在吗？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "适合并行的是相互独立的读取型、探索型任务（比如同时查多个资料源、跑多个平台的采样）。存在依赖关系、尤其涉及共享文件写入的任务，并行反而引入冲突协调成本。判断标准：任务之间有没有写冲突，以及结果需不需要互相印证。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "怎么防止重要信息在 Agent 交接中丢失？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "三件事：一是固定交接格式（结论/证据/未完成/下一步），二是按\"用户纠正 > 失败教训 > 当前状态 > 计划 > 过程\"的优先级决定什么进摘要，三是任何跨任务的关键状态一律落盘到共享文件，不依赖任何一方的上下文记忆。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "这个理论对人的日常协作有什么可操作的建议？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "一条就够：重要的事在说完之后 10 分钟内，出现在某个持久化载体里——纪要、共享文档、任务清单。没有落盘的事，无论当时多投入，都会在所有人的\"上下文\"里被渐进压缩掉。这条规则对人比对 Agent 更需要，因为人的删除没有日志，查无可查。"
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "为什么说\"写下来\"比\"记住\"更可靠？",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "因为写下来是把信息从易失存储（上下文/生物记忆）迁移到持久存储（文件/纸面），并且让它可以被检索、被核对、被多个执行体共享。记住是被动的、私有的、会衰减的；写下来是主动的、共享的、可重放的。在一个\"遗忘是默认行为\"的系统里，唯一可靠的记忆就是外部化。"
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+
 <meta name="description" content="人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，&quot;被忘记&quot;不再是隐喻，而是字面事实。">
 <link rel="canonical" href="https://xn--4gq.chat/posts/forget-not-important-multi-agent.html">
 <meta property="og:title" content="你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统">
@@ -11,14 +164,6 @@
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://xn--4gq.chat/posts/forget-not-important-multi-agent.html">
 <meta name="author" content="李玉涛（Leo）">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting",
-"headline":"你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统","description":"人类用遗忘做优先级排序，Agent 系统用上下文压缩做同一件事。当多个 Agent 并行干活，&quot;被忘记&quot;不再是隐喻，而是字面事实。",
-"author":{"@type":"Person","name":"李玉涛（Leo）","url":"https://xn--4gq.chat"},
-"datePublished":"2026-11-17","dateModified":"2026-11-17",
-"mainEntityOfPage":{"@type":"WebPage","@id":"https://xn--4gq.chat/posts/forget-not-important-multi-agent.html"},
-"publisher":{"@type":"Person","name":"李玉涛（Leo）","url":"https://xn--4gq.chat"}}
-</script>
 <style>
 :root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
   --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
@@ -84,7 +229,7 @@ footer a{color:var(--brand);text-decoration:none;}
   </header>
   <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一-人类的遗忘-一个无声的优先级投票">一、人类的遗忘：一个无声的优先级投票</a></li><li style="margin-left:0px"><a href="#s-二-agent-的-遗忘-不是隐喻-是字面事实">二、Agent 的"遗忘"：不是隐喻，是字面事实</a></li><li style="margin-left:0px"><a href="#s-三-多-agent-并行-真正的难点不是-同时做几件事">三、多 Agent 并行：真正的难点不是"同时做几件事"</a></li><li style="margin-left:0px"><a href="#s-四-这对人意味着什么-把自己变成-不会被忘掉-的信息">四、这对人意味着什么：把自己变成"不会被忘掉"的信息</a></li><li style="margin-left:0px"><a href="#s-faq">FAQ</a></li></ol></details>
   <article class="paper">
-<h1>你都忘了，说明这件事不那么重要——把这句人际潜规则翻译给多 Agent 并行系统</h1>
+
 <p>"你都忘了，说明这件事不那么重要。"</p>
 <p>这句话每个人都听过，多半是在被人提醒某件答应过的小事、而你确实忘得一干二净的时候。它残忍的地方在于逻辑闭环：重要的事你会记住，你没记住，所以它不重要——责任瞬间从"我忘了"转移到"它本来就不值得记"。</p>
 <p>以前我觉得这是人际话术。直到最近同时跑多个 AI Agent 干活，发现这句话在我的工作流里是字面意义上的物理定律：<strong>一个 Agent 的上下文满了会被压缩成摘要，没写进摘要的信息不是"变得模糊"，是直接消失，仿佛从未存在过。</strong></p>
@@ -133,16 +278,6 @@ footer a{color:var(--brand);text-decoration:none;}
 <p><strong>Q5：为什么说"写下来"比"记住"更可靠？</strong>
 因为写下来是把信息从易失存储（上下文/生物记忆）迁移到持久存储（文件/纸面），并且让它可以被检索、被核对、被多个执行体共享。记住是被动的、私有的、会衰减的；写下来是主动的、共享的、可重放的。在一个"遗忘是默认行为"的系统里，唯一可靠的记忆就是外部化。</p>
   </article>
-  <div class="platforms" style="background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px 30px;margin-top:22px;">
-    <h2 style="font-size:17px;margin:0 0 10px;color:#111827;">同步发布平台</h2>
-    <p style="font-size:13.5px;color:#6b7280;margin:0 0 8px;">本文同一内容已同步发布至以下平台，以本站为 canonical 原发：</p>
-    <ul style="list-style:none;padding:0;margin:0;font-size:14px;line-height:2.1;">
-      <li>· 本站（一.chat，原发）：<a href="https://xn--4gq.chat/posts/forget-not-important-multi-agent.html" style="color:#2563eb;text-decoration:none;">https://xn--4gq.chat/posts/forget-not-important-multi-agent.html</a></li>
-      <li>· 掘金：<a href="https://juejin.cn/post/7708737627927609354" style="color:#2563eb;text-decoration:none;" target="_blank" rel="noopener">juejin.cn/post/7708737627927609354</a></li>
-      <li>· 知乎专栏：<a href="https://zhuanlan.zhihu.com/p/2105973430675836969" style="color:#2563eb;text-decoration:none;" target="_blank" rel="noopener">zhuanlan.zhihu.com/p/2105973430675836969</a></li>
-      <li>· CSDN：<a href="https://blog.csdn.net/2401_84773010/article/details/170909469" style="color:#2563eb;text-decoration:none;" target="_blank" rel="noopener">blog.csdn.net/…/article/details/170909469</a></li>
-    </ul>
-  </div>
   <footer>
     © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
   </footer>

@@ -1,2 +1,4 @@
 .posts_snapshots/
-tests/shots/
+
+# 备份目录：不进版本库（避免 Pages 发布重复页面伤害 SEO）
+_bak_*/
