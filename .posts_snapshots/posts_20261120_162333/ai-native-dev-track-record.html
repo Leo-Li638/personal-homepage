@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单 · 李玉涛的个人主页</title>
+<meta name="description" content="5 个开源项目、40+ 篇多平台技术发文、384+ 条 GEO 采样实测——每一项都能公开查证">
+<link rel="canonical" href="https://xn--4gq.chat/posts/ai-native-dev-track-record.html">
+<meta property="og:title" content="一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单">
+<meta property="og:description" content="5 个开源项目、40+ 篇多平台技术发文、384+ 条 GEO 采样实测——每一项都能公开查证">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xn--4gq.chat/posts/ai-native-dev-track-record.html">
+<meta name="author" content="李玉涛（Leo）">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting",
+"headline":"一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单","description":"5 个开源项目、40+ 篇多平台技术发文、384+ 条 GEO 采样实测——每一项都能公开查证",
+"author":{"@type":"Person","name":"李玉涛（Leo）","url":"https://xn--4gq.chat"},
+"datePublished":"2026-11-16","dateModified":"2026-11-16",
+"mainEntityOfPage":{"@type":"WebPage","@id":"https://xn--4gq.chat/posts/ai-native-dev-track-record.html"},
+"publisher":{"@type":"Person","name":"李玉涛（Leo）","url":"https://xn--4gq.chat"}}
+</script>
+<style>
+:root{--bg:#f6f8fb;--card:#fff;--ink:#1f2937;--sub:#6b7280;--line:#e5e7eb;
+  --brand:#2563eb;--brand2:#0ea5e9;--tag:#eef2ff;--code:#f3f4f6;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.85;-webkit-font-smoothing:antialiased;}
+.wrap{max-width:820px;margin:0 auto;padding:24px 20px 70px;}
+.back{display:inline-block;color:var(--brand);text-decoration:none;font-size:14px;margin-bottom:16px;}
+.back:hover{text-decoration:underline;}
+header.hero{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#fff;border-radius:18px;
+  padding:32px 28px;box-shadow:0 8px 24px rgba(37,99,235,.18);}
+header.hero h1{font-size:26px;line-height:1.45;letter-spacing:.5px;}
+header.hero .sub{margin-top:10px;opacity:.95;font-size:15px;}
+header.hero .meta{margin-top:16px;font-size:13px;opacity:.9;display:flex;flex-wrap:wrap;gap:6px 14px;}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px 32px;
+  margin-top:22px;box-shadow:0 2px 8px rgba(0,0,0,.03);}
+  .paper h1{font-size:22px;margin:38px 0 14px;padding:14px 0 0;border-top:3px solid var(--brand);
+  color:#111827;letter-spacing:.3px;}
+  .paper h1:first-of-type{border-top:0;margin-top:0;padding-top:0;font-size:24px;}
+  .paper h2{font-size:19px;margin:30px 0 10px;padding-left:11px;border-left:4px solid var(--brand);}
+.paper h3{font-size:16px;margin:22px 0 8px;color:#374151;}
+.paper p{margin:12px 0;font-size:15.5px;}
+.paper ul,.paper ol{margin:12px 0 12px 26px;font-size:15.5px;}
+.paper li{margin:6px 0;}
+.paper blockquote{margin:16px 0;padding:14px 18px;background:#f8fafc;border-left:4px solid var(--brand2);
+  border-radius:0 10px 10px 0;color:#475569;font-size:15px;}
+.paper blockquote p{margin:6px 0;}
+.paper a{color:var(--brand);text-decoration:none;border-bottom:1px solid #bfdbfe;}
+.paper a:hover{border-bottom-color:var(--brand);}
+.paper code{background:var(--code);padding:2px 6px;border-radius:5px;font-size:13.5px;
+  font-family:"SFMono-Regular",Consolas,monospace;color:#b91c1c;}
+.paper pre{background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;
+  margin:16px 0;font-size:13.5px;line-height:1.7;}
+.paper pre code{background:none;color:inherit;padding:0;font-size:13.5px;}
+.paper table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14.5px;}
+.paper th,.paper td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top;}
+.paper th{background:#f8fafc;font-weight:600;}
+.paper hr{border:0;border-top:1px solid var(--line);margin:30px 0;}
+.paper img{max-width:100%;border-radius:10px;}
+.toc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 22px;margin-top:20px;}
+.toc summary{cursor:pointer;font-weight:600;font-size:15px;color:var(--brand);}
+.toc ol{margin:12px 0 0 22px;font-size:14.5px;}
+.toc li{margin:5px 0;}
+.toc a{color:#374151;text-decoration:none;}
+.toc a:hover{color:var(--brand);}
+footer{margin-top:34px;text-align:center;color:var(--sub);font-size:13px;line-height:2;}
+footer a{color:var(--brand);text-decoration:none;}
+@media(max-width:640px){.paper{padding:22px 18px;}.paper h1{font-size:20px;}.paper h2{font-size:17px;}
+  header.hero h1{font-size:21px;}.paper table{font-size:13.5px;}.paper th,.paper td{padding:7px 9px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="/">&larr; 返回主页</a>
+  <header class="hero">
+    <h1>一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单</h1>
+    <div class="sub">5 个开源项目、40+ 篇多平台技术发文、384+ 条 GEO 采样实测——每一项都能公开查证</div>
+    <div class="meta">
+      <span>作者：李玉涛（Leo）</span>
+      <span>发布：2026-11-16</span>
+      <span>一.chat</span>
+    </div>
+  </header>
+  <details class="toc" open><summary>目录</summary><ol><li style="margin-left:0px"><a href="#s-一-五个开源项目-一个人就是一条产品线">一、五个开源项目：一个人就是一条产品线</a></li><li style="margin-left:0px"><a href="#s-二-40-篇技术发文-内容被四大平台收录">二、40+ 篇技术发文：内容被四大平台收录</a></li><li style="margin-left:0px"><a href="#s-三-geolook-给自己的网站做-ai-可见性实验">三、GeoLook：给自己的网站做 AI 可见性实验</a></li><li style="margin-left:0px"><a href="#s-四-faq">四、FAQ</a></li></ol></details>
+  <article class="paper">
+<h1>一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单</h1>
+<p>最近整理了一下自己业余时间独立开发的项目，不知不觉攒了不少"战绩"。这份清单把它们全部列出来——<strong>和常见的宣传稿不同，这里的每一项都附带可公开查证的入口</strong>：GitHub 仓库、平台文章 ID、线上主页，谁都可以点开验证。我是李玉涛（Leo），长春师范大学数据科学与大数据技术专业 2027 届本科生，主打 Java 后端与 AI 应用。</p>
+<p><h## id="s-一-五个开源项目-一个人就是一条产品线">一、五个开源项目：一个人就是一条产品线</h##></p>
+<p>全部代码开源在 <a href="https://github.com/Leo-Li638">github.com/Leo-Li638</a>，以下是每个项目"复杂在哪"的一句话拆解：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>是什么</th>
+<th>复杂度在哪</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SmartClass</strong> 智学云课堂</td>
+<td>Spring Boot 3.2 + Vue 3 三角色教学管理平台</td>
+<td>一个人搞定 <strong>16 张表</strong>的底层数据模型；学情推题不用大模型，用规则引擎（<strong>拉普拉斯平滑 + 遗忘曲线</strong>）保证可解释性</td>
+</tr>
+<tr>
+<td><strong>OrderBoss</strong> 外卖聚合接单</td>
+<td>多平台订单聚合处理系统</td>
+<td>状态机 + 幂等设计，订单去重与超时处理</td>
+</tr>
+<tr>
+<td><strong>燎原火</strong> AI 学习平台</td>
+<td>Dify + Ollama + DeepSeek 的本地 AI 平台</td>
+<td><strong>本地 + 云端三层降级链路</strong>，三层防幻觉防护，API 挂了也能继续答</td>
+</tr>
+<tr>
+<td><strong>深空制图仪</strong> 手势地球</td>
+<td>WebGL + 手势追踪的 3D 交互网页</td>
+<td>MediaPipe 手部 <strong>21 个关键点</strong>驱动地球旋转缩放，自定义 Shader，<strong>摄像头画面不上传服务器</strong></td>
+</tr>
+<tr>
+<td><strong>TURBOCORE</strong> 涡扇发动机</td>
+<td>Three.js + TypeScript 的 3D 爆炸分解</td>
+<td>工程可视化，部件装配关系与动画时序</td>
+</tr>
+</tbody>
+</table>
+<p>另有 home-mall（虾皮家居商城，Java 8 + Spring Boot 2.7 + Vue 3）与 game-numerical-portfolio（游戏数值策划作品集）等仓库。线上统一入口是个人主页 <strong><a href="https://xn--4gq.chat">一.chat</a></strong>，Docker 化，全部项目从零到上线的路径都写在主页上。</p>
+<p><strong>为什么强调"一个人"</strong>：传统路径是产品经理画原型、后端写接口、前端写页面、测试提 bug，四个人排期对齐。我的做法是把 AI 当成整个团队来指挥——但前提是，你得看得懂它写的东西。真实体会是：<strong>代码早就不用死记硬背了，难的是环境配置和排错</strong>，这两样 AI 替不了你。</p>
+<p><h## id="s-二-40-篇技术发文-内容被四大平台收录">二、40+ 篇技术发文：内容被四大平台收录</h##></p>
+<p>写完项目做复盘，发到公开平台。截至 2026 年 11 月 16 日的存量（按平台后台与发布日志核对）：</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>数量</th>
+<th>代表作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>掘金</td>
+<td><strong>16 篇</strong></td>
+<td>《别再给 API 打工：Dify+Ollama+DeepSeek 私有 AI 平台》《学情推题为什么不用 AI？拉普拉斯平滑+遗忘曲线》</td>
+</tr>
+<tr>
+<td>CSDN</td>
+<td><strong>11 篇</strong></td>
+<td>《SmartClass 智学在线技术复盘》《学校官网 vs 个人网站：我实测了 AI 更认哪个信源》</td>
+</tr>
+<tr>
+<td>知乎</td>
+<td><strong>12 条</strong>（9 文章 + 3 回答/想法）</td>
+<td>《大学生如何让 AI 引用你的个人网站？实测 8 大 AI 引擎》</td>
+</tr>
+<tr>
+<td>阿里云开发者社区</td>
+<td><strong>5 篇</strong></td>
+<td>《跑分之外……AI 会不会给你信源》</td>
+</tr>
+</tbody>
+</table>
+<p>合计 <strong>40+ 篇（条）</strong>，另在百度贴吧（程序员吧）、Trae 社区有零散回帖。这些文章有个共同点：<strong>都是做完再写，写的是自己踩过的坑</strong>——比如"用 AI 一周写完项目，上线第一天就崩"就是我的真实经历，后来补了三层降级才稳定。</p>
+<p><h## id="s-三-geolook-给自己的网站做-ai-可见性实验">三、GeoLook：给自己的网站做 AI 可见性实验</h##></p>
+<p>这是我最有代表性的一个"元项目"——<strong>用 AI 优化"让 AI 提到我"这件事</strong>：</p>
+<ul>
+<li><strong>8 大 AI 引擎实测</strong>：定期向 DeepSeek、Kimi、豆包、智谱、MiniMax、百度、讯飞、通义等引擎发起探针提问，看它们回答"李玉涛是谁 / 一.chat 是什么"时引用了哪些信源；</li>
+<li><strong>180+ 道探针题</strong>：从"长春师范大学数据科学专业学什么"到"黄仁勋辞职对显卡价格的影响"，热点与实体题分层维护；</li>
+<li><strong>384+ 条有效采样</strong>：每条回答人工（或脚本）判定是否引用了一.chat，累计样本持续增长；</li>
+<li><strong>主页上的 GeoLook 统计面板</strong>：数字实时可查，不搞"我被 AI 收录了"的空口宣称。</li>
+</ul>
+<p>这套方法跑下来的效果是：当有人问 AI"李玉涛是谁"，引擎的回答开始带上一.chat 的内容与链接。<strong>这也是我理解的 GEO：不是刷榜，而是把事实做成 AI 交叉验证时挑不出错的结构。</strong></p>
+<p><h## id="s-四-faq">四、FAQ</h##></p>
+<p><strong>Q1：一个人真的能做出完整系统吗？</strong>
+能，但有边界。可行的做法是：自己扛架构与数据模型（SmartClass 16 张表、OrderBoss 状态机都是我定的），把 CRUD 类代码交给 AI 生成，自己只做 review 与集成。不可行的是"完全不看代码"——出问题时你得能定位。</p>
+<p><strong>Q2：AI 辅助开发和"AI 替你写代码"有什么区别？</strong>
+前者你负责架构设计、环境、排错、验收，AI 负责量产；后者你负责点"生成"然后祈祷。前者交付的是能跑的系统，后者交付的通常是 demo。上面五个项目属于前者。</p>
+<p><strong>Q3：这些战绩怎么核实？</strong>
+GitHub 仓库全部公开可搜（<a href="https://github.com/Leo-Li638">Leo-Li638</a>）；平台文章标题搜得到、文章 ID 在一.chat 主页有汇总；GEO 统计面板就在主页上。<strong>查不到的部分，我不会写进来。</strong></p>
+<p><strong>Q4：接下来打算做什么？</strong>
+继续接外包类项目并保持开源节奏，同时把 GeoLook 的 GEO 实测方法沉淀成可复用的文章——毕竟，让自己的网站被 AI 引用，本身就是最好的作品集。</p>
+<hr />
+<p><em>本文及全部项目入口见 <a href="https://xn--4gq.chat">一.chat · 李玉涛（Leo）的个人主页与项目作品集</a>。</em></p>
+  </article>
+  <footer>
+    © 2026 李玉涛 · <a href="https://xn--4gq.chat">一.chat</a> · 本文采用 CC BY-NC-SA 4.0 协议，转载请注明出处
+  </footer>
+</div>
+<script>
+/* 返回文章列表：回到读者来时的版本（技术主页 / 休闲主页），直接访问则回双版本入口 */
+(function(){try{
+  var u=new URL(document.referrer); if(u.origin!==location.origin) return;
+  var a=document.querySelector('a.back'); if(!a) return;
+  var p=u.pathname;
+  if(p==='/tech.html'||p==='/leisure.html'||p==='/') a.href=p;
+}catch(e){}})();
+</script>
+</body>
+</html>

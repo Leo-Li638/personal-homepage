@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#f3f7f0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a1420" media="(prefers-color-scheme: dark)">
+<title>李玉涛（Leo）· 一.chat｜技术主页 / 休闲主页 · 双版本入口</title>
+<link rel="canonical" href="https://xn--4gq.chat/">
+<meta name="description" content="李玉涛（Leo）的个人站点入口：技术主页（Java 后端 / AI 应用作品 + 接基础计算机服务：电脑远程协助、系统重装、开发环境配置、静态建站、Python / Java 脚本、AI 本地部署）与休闲主页（原版个人主页：5 个实践项目、51 篇文章、互动彩蛋）。看板娘大肥鱼在首页等你。">
+<meta name="keywords" content="李玉涛,Leo,一.chat,技术主页,休闲主页,接单,电脑远程协助,远程重装系统,开发环境配置,静态网站搭建,Python脚本,AI本地部署,Java后端,数据科学,长春师范大学">
+<meta property="og:title" content="李玉涛（Leo）· 一.chat｜技术主页 / 休闲主页">
+<meta property="og:description" content="两套主页，一个我：技术主页接基础计算机单（修电脑 / 建站 / 脚本），休闲主页放 5 个项目与 51 篇文章。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://xn--4gq.chat/">
+<meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="李玉涛（Leo）· 一.chat｜技术主页 / 休闲主页">
+<meta name="twitter:description" content="技术主页：接单修电脑 / 建站 / 脚本。休闲主页：5 个实践项目与 51 篇文章。">
+<meta name="twitter:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233d7fb5'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M50 48 L50 14 A34 34 0 0 1 71.5 22.5 Z'/%3E%3Cpath d='M52 50 L86 50 A34 34 0 0 1 77.5 71.5 Z' opacity='.82'/%3E%3Cpath d='M50 52 L50 86 A34 34 0 0 1 28.5 77.5 Z'/%3E%3Cpath d='M48 50 L14 50 A34 34 0 0 1 22.5 28.5 Z' opacity='.82'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='9' fill='%23d9a53a'/%3E%3C/svg%3E">
+<link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero.avif" media="(min-width:641px)">
+<link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero-small.avif" media="(max-width:640px)">
+<style>
+  :root{
+    --bg:#f3f7f0; --card:#ffffff; --ink:#20354a; --sub:#546b7d; --line:#dbe7d6;
+    --sky:#2f73a4; --sky2:#6db3dc; --grass:#477a40; --gold:#b97818; --tag:#eef6ee;
+    --shadow:0 10px 30px rgba(38,70,96,.10);
+    --mono:"SF Mono","Roboto Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
+    --glass:rgba(255,255,255,.82); --glass-line:rgba(255,255,255,.75);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#08131c; --card:#0f1e2b; --ink:#e8f1f7; --sub:#9fb4c4; --line:#1e3344;
+      --sky:#7fc0e8; --sky2:#4c93bd; --grass:#7bbd72; --gold:#e0b062; --tag:#142536;
+      --shadow:0 10px 30px rgba(0,0,0,.4); --glass:rgba(12,26,38,.78); --glass-line:rgba(120,170,205,.22);}
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+    padding:104px 24px 72px;background-image:url(assets/mondstadt-hero.avif);
+    background-size:cover;background-position:center 30%;background-repeat:no-repeat;isolation:isolate;}
+  @media (max-width:640px){.hero{background-image:url(assets/mondstadt-hero-small.avif);}}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(102deg,rgba(247,250,245,.95) 0%,rgba(247,250,245,.88) 34%,rgba(247,250,245,.5) 62%,rgba(247,250,245,.16) 100%);}
+  @media (prefers-color-scheme: dark){
+    .hero::before{background:linear-gradient(102deg,rgba(8,18,27,.94) 0%,rgba(8,18,27,.86) 36%,rgba(8,18,27,.55) 66%,rgba(8,18,27,.3) 100%);}
+  }
+  .wrap{width:100%;max-width:1120px;margin:0 auto;}
+  .topbar{position:absolute;top:0;left:0;right:0;z-index:6;padding:18px 24px;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .brand{display:inline-flex;align-items:baseline;gap:2px;font-weight:800;font-size:19px;letter-spacing:.5px;color:var(--ink);text-decoration:none;}
+  .brand span{color:var(--sky);font-weight:600;font-size:15px;}
+  .tnav{display:flex;gap:18px;font-size:13.5px;}
+  .tnav a{color:var(--sub);text-decoration:none;padding:4px 2px;border-bottom:1px solid transparent;}
+  .tnav a:hover{color:var(--sky);border-bottom-color:var(--sky2);}
+  @media (max-width:720px){.tnav{display:none;}}
+
+  /* ---------- hero two-column ---------- */
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px;align-items:center;align-content:center;}
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:0;}
+    .hero-copy{display:contents;}
+    .hero-grid .kicker{order:1;align-self:flex-start;}
+    .hero-grid h1{order:2;}
+    .hero-grid .lead{order:3;}
+    .hero-grid .npc-stage{order:4;margin:2px 0 20px;}
+    .hero-grid .entries{order:5;}
+    .hero-grid .chips{order:6;}
+  }
+  .hero-copy{min-width:0;}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grass);background:rgba(71,122,64,.10);border:1px solid rgba(71,122,64,.24);
+    padding:5px 11px;border-radius:999px;margin-bottom:18px;}
+  .kicker i{width:7px;height:7px;border-radius:50%;background:#3fae5a;box-shadow:0 0 0 4px rgba(63,174,90,.16);display:inline-block;}
+  h1{margin:0 0 14px;font-size:clamp(30px,5.4vw,54px);line-height:1.16;letter-spacing:-.5px;font-weight:800;}
+  h1 .thin{display:block;font-size:clamp(17px,2.4vw,23px);font-weight:600;color:var(--sub);letter-spacing:0;margin-top:8px;}
+  .lead{max-width:620px;margin:0 0 30px;font-size:15.5px;color:var(--sub);}
+  .lead b{color:var(--ink);}
+
+  /* ---------- 看板娘 stage ---------- */
+  .npc-stage{position:relative;height:440px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    perspective:800px;user-select:none;}
+  @media (max-width:980px){
+    .npc-stage{height:300px;margin:4px 0 10px;transform:none;}
+  }
+  .npc-glow{position:absolute;left:50%;bottom:34px;width:300px;height:300px;transform:translateX(-50%);
+    background:radial-gradient(circle at 50% 55%,rgba(109,179,220,.55),rgba(109,179,220,.16) 45%,transparent 70%);
+    filter:blur(6px);border-radius:50%;animation:npcGlow 6s ease-in-out infinite;pointer-events:none;}
+  .npc-halo{position:absolute;left:50%;bottom:52px;width:250px;height:250px;transform:translateX(-50%);border-radius:50%;
+    border:1px dashed rgba(47,115,164,.35);animation:npcSpin 26s linear infinite;pointer-events:none;}
+  .npc-halo::after{content:"";position:absolute;top:-4px;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;
+    background:var(--sky2);box-shadow:0 0 10px rgba(109,179,220,.9);}
+  .npc-figure{position:relative;z-index:2;width:min(320px,80%);cursor:pointer;transform-origin:50% 100%;
+    animation:npcFloat 6.4s ease-in-out infinite;filter:drop-shadow(0 18px 26px rgba(30,60,86,.22));
+    transition:filter .3s ease;}
+  .npc-figure:hover{filter:drop-shadow(0 18px 30px rgba(47,115,164,.34));}
+  .npc-figure img{display:block;width:100%;height:auto;transform-origin:50% 100%;animation:npcSway 8.6s ease-in-out infinite;}
+  .npc-figure.wave img{animation:npcWave .9s ease-in-out 2;}
+  .npc-shadow{position:absolute;left:50%;bottom:10px;width:180px;height:26px;transform:translateX(-50%);
+    background:radial-gradient(ellipse at center,rgba(30,60,86,.28),transparent 70%);filter:blur(3px);
+    animation:npcShadow 6.4s ease-in-out infinite;pointer-events:none;z-index:1;}
+  @keyframes npcFloat{0%,100%{transform:translateY(0) rotate(-.3deg)}50%{transform:translateY(-14px) rotate(.5deg)}}
+  @keyframes npcSway{0%,100%{transform:rotate(-1.1deg)}50%{transform:rotate(1.1deg)}}
+  @keyframes npcWave{0%,100%{transform:rotate(0)}25%{transform:rotate(-3.2deg)}75%{transform:rotate(3.2deg)}}
+  @keyframes npcGlow{0%,100%{opacity:.75;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}
+  @keyframes npcShadow{0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1)}50%{opacity:.28;transform:translateX(-50%) scaleX(.86)}}
+  @keyframes npcSpin{to{transform:translateX(-50%) rotate(360deg)}}
+  .npc-bubble{position:relative;z-index:3;margin-bottom:6px;max-width:290px;padding:10px 14px;border-radius:14px;
+    background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--shadow);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);font-size:13px;color:var(--ink);line-height:1.6;transition:opacity .28s ease,transform .28s ease;}
+  .npc-bubble::after{content:"";position:absolute;left:50%;bottom:-7px;width:12px;height:12px;transform:translateX(-50%) rotate(45deg);
+    background:inherit;border-right:1px solid var(--glass-line);border-bottom:1px solid var(--glass-line);}
+  .npc-bubble.swap{opacity:0;transform:translateY(-4px);}
+  .npc-bubble b{color:var(--sky);}
+  .npc-meta{position:relative;z-index:3;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .npc-btn{font-family:inherit;font-size:12.5px;padding:7px 13px;border-radius:999px;cursor:pointer;
+    border:1px solid rgba(47,115,164,.32);background:var(--glass);color:var(--sky);backdrop-filter:blur(8px);transition:.18s;}
+  .npc-btn:hover{background:var(--sky);color:#fff;border-color:var(--sky);transform:translateY(-1px);}
+  .npc-name{position:relative;z-index:3;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--sub);}
+
+  /* ---------- entries ---------- */
+  .entries{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:1000px;}
+  @media (max-width:820px){.entries{grid-template-columns:1fr;}}
+  .entry{position:relative;display:flex;flex-direction:column;gap:10px;padding:22px 22px 18px;border-radius:20px;
+    background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--shadow);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-decoration:none;color:inherit;
+    transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease;overflow:hidden;}
+  .entry::after{content:"";position:absolute;left:0;top:0;width:100%;height:3px;opacity:.9;}
+  .entry.tech::after{background:linear-gradient(90deg,var(--sky),var(--sky2));}
+  .entry.leisure::after{background:linear-gradient(90deg,var(--grass),var(--gold));}
+  .entry:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(38,70,96,.18);}
+  .entry:hover .go{gap:10px;}
+  .badge{align-self:flex-start;font-size:11.5px;font-family:var(--mono);letter-spacing:.08em;padding:4px 9px;border-radius:999px;
+    border:1px solid var(--line);color:var(--sub);background:var(--tag);}
+  .entry.tech .badge{color:var(--sky);border-color:rgba(47,115,164,.3);background:rgba(47,115,164,.08);}
+  .entry.leisure .badge{color:var(--grass);border-color:rgba(71,122,64,.3);background:rgba(71,122,64,.08);}
+  .entry h2{margin:2px 0 0;font-size:21px;line-height:1.35;}
+  .entry h2 em{font-style:normal;font-size:13px;font-weight:600;color:var(--sub);display:block;margin-top:4px;letter-spacing:.02em;}
+  .entry p{margin:2px 0 0;font-size:13.8px;color:var(--sub);line-height:1.75;}
+  .entry ul{margin:4px 0 6px;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;font-size:12.8px;color:var(--sub);}
+  .entry ul li{display:flex;gap:8px;}
+  .entry ul li::before{content:"·";color:var(--sky2);font-weight:700;}
+  .go{margin-top:auto;display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:14px;color:var(--sky);transition:gap .18s;}
+  .entry.leisure .go{color:var(--grass);}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;max-width:1000px;}
+  .chip{font-size:12.5px;padding:6px 11px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-line);
+    color:var(--sub);text-decoration:none;transition:.16s;backdrop-filter:blur(6px);}
+  .chip:hover{color:var(--sky);border-color:var(--sky2);}
+  .chip.more{color:var(--sky);border-color:rgba(47,115,164,.4);font-weight:600;}
+
+  /* ---------- sections ---------- */
+  section.block{padding:64px 24px;border-top:1px solid var(--line);}
+  .block .wrap{max-width:1000px;}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--sky);margin-bottom:10px;}
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--sky2);}
+  .block h2{margin:0 0 10px;font-size:clamp(22px,3.2vw,30px);letter-spacing:-.2px;}
+  .block .sub{margin:0 0 26px;color:var(--sub);font-size:14.5px;max-width:720px;}
+  .why{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:860px){.why{grid-template-columns:1fr 1fr;}}
+  @media (max-width:560px){.why{grid-template-columns:1fr;}}
+  .why .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;
+    transition:transform .2s ease,box-shadow .2s ease;}
+  .why .card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .why .ico{font-size:20px;line-height:1;display:block;margin-bottom:10px;}
+  .why h3{margin:0 0 6px;font-size:15.5px;}
+  .why p{margin:0;font-size:13.2px;color:var(--sub);line-height:1.72;}
+
+  /* ---------- articles / platforms ---------- */
+  .plat{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px;}
+  .plat a,.plat span.p{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;font-size:12.8px;
+    text-decoration:none;background:var(--card);border:1px solid var(--line);color:var(--sub);transition:.18s;}
+  .plat a:hover{border-color:var(--sky2);color:var(--sky);transform:translateY(-1px);}
+  .plat .dot{width:7px;height:7px;border-radius:50%;background:var(--sky2);}
+  .plat .dot.jj{background:#1e80ff;} .plat .dot.csdn{background:#dd3a33;}
+  .plat .dot.zhihu{background:#0f88eb;} .plat .dot.ali{background:#ff6a00;} .plat .dot.self{background:#3fae5a;}
+  .arts{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media (max-width:860px){.arts{grid-template-columns:1fr;}}
+  .art{display:flex;flex-direction:column;gap:8px;padding:16px 17px;border-radius:15px;background:var(--card);
+    border:1px solid var(--line);text-decoration:none;color:inherit;transition:transform .2s ease,box-shadow .2s ease,border-color .2s;}
+  .art:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--sky2);}
+  .art .meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;color:var(--sub);letter-spacing:.04em;}
+  .art h3{margin:0;font-size:14.6px;line-height:1.55;font-weight:700;}
+  .art .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px;}
+  .tagp{font-size:11px;padding:2px 7px;border-radius:6px;border:1px solid var(--line);color:var(--sub);
+    background:var(--tag);font-family:var(--mono);letter-spacing:.04em;}
+  .tagp.self{color:#2f7a45;border-color:rgba(63,174,90,.35);background:rgba(63,174,90,.09);}
+  .more-line{margin-top:20px;font-size:13.4px;color:var(--sub);}
+  .more-line a{color:var(--sky);font-weight:600;text-decoration:none;border-bottom:1px dotted rgba(47,115,164,.45);}
+  .more-line a:hover{border-bottom-style:solid;}
+
+  /* ---------- about ---------- */
+  .about p{margin:0 0 12px;color:var(--sub);font-size:14.2px;}
+  .about a{color:var(--sky);text-decoration:none;border-bottom:1px dotted rgba(47,115,164,.4);}
+  .about a:hover{border-bottom-style:solid;}
+  .facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:22px 0 6px;}
+  .fact{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;}
+  .fact b{display:block;font-size:19px;color:var(--ink);}
+  .fact span{font-size:12.5px;color:var(--sub);}
+  .cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;text-decoration:none;
+    font-weight:700;font-size:14px;background:var(--sky);color:#fff;border:1px solid var(--sky);transition:.18s;}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(47,115,164,.28);}
+  .btn.ghost{background:var(--card);color:var(--sky);border-color:var(--line);}
+  .btn.ghost:hover{border-color:var(--sky2);box-shadow:var(--shadow);}
+
+  footer{padding:26px 24px 40px;background:var(--bg);border-top:1px solid var(--line);}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;font-size:12.8px;color:var(--sub);}
+  footer a{color:var(--sky);text-decoration:none;}
+  footer a:hover{text-decoration:underline;}
+  .flinks{display:flex;flex-wrap:wrap;gap:16px;}
+
+  /* ---------- dance modal ---------- */
+  .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;
+    background:rgba(6,14,22,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .modal.on{display:flex;}
+  .modal-box{position:relative;width:min(560px,92vw);border-radius:20px;overflow:hidden;background:#050b12;
+    box-shadow:0 24px 70px rgba(0,0,0,.6);border:1px solid rgba(120,170,205,.28);}
+  .modal-box video{display:block;width:100%;height:auto;background:#050b12;}
+  .modal-cap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;
+    background:rgba(8,19,28,.9);color:#cfe3f0;font-size:12.5px;border-top:1px solid rgba(120,170,205,.18);}
+  .modal-close{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;
+    background:rgba(6,14,22,.66);color:#fff;font-size:17px;line-height:1;backdrop-filter:blur(4px);}
+  .modal-close:hover{background:rgba(47,115,164,.9);}
+
+  /* mobile/tablet mascot: compact horizontal card */
+  @media (max-width:980px){
+    .npc-stage{height:auto;display:grid;grid-template-columns:150px minmax(0,1fr);
+      grid-template-rows:auto auto auto;column-gap:14px;row-gap:6px;align-items:center;justify-items:start;
+      padding:10px 4px 16px;margin:10px 0 16px;perspective:none;transform:none;}
+    .npc-glow{left:75px;bottom:6px;width:170px;height:170px;}
+    .npc-halo{left:75px;bottom:18px;width:140px;height:140px;}
+    .npc-figure{grid-column:1;grid-row:1 / span 3;width:100%;justify-self:center;align-self:end;}
+    .npc-shadow{display:none;}
+    .npc-bubble{grid-column:2;grid-row:1;margin:0 0 4px;max-width:none;font-size:12.4px;}
+    .npc-bubble::after{left:18px;}
+    .npc-meta{grid-column:2;grid-row:2;justify-content:flex-start;margin:0 0 4px;}
+    .npc-name{grid-column:2;grid-row:3;margin:0;text-align:left;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .entry,.art,.why .card,.btn,.npc-btn{transition:none;}
+    .npc-figure,.npc-figure img,.npc-glow,.npc-halo,.npc-shadow{animation:none !important;}
+  }
+  @media (max-width:560px){
+    .hero{padding:82px 16px 52px;min-height:auto;}
+    .entries{gap:14px;}
+    .entry{padding:20px 18px 18px;border-radius:16px;}
+    .lead{font-size:14.5px;margin-bottom:24px;}
+    .npc-stage{grid-template-columns:118px minmax(0,1fr);column-gap:10px;}
+    .npc-glow{left:59px;width:140px;height:140px;}
+    .npc-halo{display:none;}
+    .npc-bubble{font-size:12.1px;padding:9px 11px;}
+    .npc-btn{font-size:11.5px;padding:6px 10px;}
+    section.block{padding:48px 16px;}
+  }
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="/">一<span>.chat</span></a>
+  <nav class="tnav">
+    <a href="/tech.html">技术主页</a>
+    <a href="/leisure.html">休闲主页</a>
+    <a href="/services.html">接单服务</a>
+    <a href="#articles">技术文章</a>
+  </nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap hero-grid">
+  <div class="hero-copy">
+    <span class="kicker"><i></i>Open for work · 2026-11 · Remote first</span>
+    <h1>李玉涛（Leo）<span class="thin">两套主页，一个我：一套用来把活干好，一套用来记录为什么喜欢折腾。</span></h1>
+    <p class="lead">2027 届 · 长春师范大学 <b>数据科学与大数据技术</b>（理学学士）+ 数学双学位，方向 <b>Java 后端 / AI 应用</b>。白天写代码，夜里修机器 —— 能一个人把一个想法做成能跑的东西，也能把你电脑上那点麻烦收拾干净。</p>
+
+    <div class="entries">
+      <a class="entry tech" href="/tech.html">
+        <span class="badge">技术主页 · 接单中</span>
+        <h2>技术主页<em>接单服务 + 技术作品</em></h2>
+        <p>把电脑上的问题交给我：远程协助、系统重装、开发环境配置、静态建站、Python / Java 小脚本、AI 工具本地部署。先说清方案，你点头我再动手。</p>
+        <ul>
+          <li>5 个开源项目 · 在线 Demo 可点开验证</li>
+          <li>交付附带源码与一页说明，不锁死</li>
+          <li>7 天内同类问题免费复修</li>
+        </ul>
+        <span class="go">进入技术主页 →</span>
+      </a>
+
+      <a class="entry leisure" href="/leisure.html">
+        <span class="badge">休闲主页 · 作品与故事</span>
+        <h2>休闲主页<em>原版个人主页 · 项目作品集</em></h2>
+        <p>原来那个主页：蒙德风开场、会说话的大肥鱼看板娘、5 个实践项目、全部技术文章，还有一堆可以点的互动彩蛋。</p>
+        <ul>
+          <li>5 个项目：SmartClass / OrderBoss / 燎原火 AI</li>
+          <li>深空制图仪 · 手势地球 / TURBOCORE 涡扇 3D</li>
+          <li>51 篇文章（与技术主页同步）</li>
+        </ul>
+        <span class="go">进入休闲主页 →</span>
+      </a>
+    </div>
+
+    <div class="chips">
+      <a class="chip" href="/tech.html#sservice">🖥 电脑远程协助</a>
+      <a class="chip" href="/tech.html#sservice">🧰 环境配置</a>
+      <a class="chip" href="/tech.html#sservice">🌐 静态建站</a>
+      <a class="chip" href="/tech.html#sservice">🐍 小脚本代做</a>
+      <a class="chip" href="/tech.html#sservice">🤖 AI 本地部署</a>
+      <a class="chip more" href="/services.html">看完整服务清单 →</a>
+    </div>
+  </div>
+
+  <div class="npc-stage" id="npcStage" aria-label="看板娘：大肥鱼">
+    <div class="npc-glow" aria-hidden="true"></div>
+    <div class="npc-halo" aria-hidden="true"></div>
+    <div class="npc-bubble" id="npcBubble">嗨，我是<b>大肥鱼</b>。想找他修电脑？先看我给你递个话。</div>
+    <div class="npc-figure" id="npcFigure" role="button" tabindex="0" aria-label="和大肥鱼打个招呼">
+      <img src="assets/npc_maid-cut.webp" width="360" height="611" alt="大肥鱼 · 鲸鱼娘看板娘（原创同人形象）" loading="eager" decoding="async">
+    </div>
+    <div class="npc-shadow" aria-hidden="true"></div>
+    <div class="npc-meta">
+      <button class="npc-btn" id="npcTalk" type="button">听她说一句</button>
+      <button class="npc-btn" id="npcDance" type="button">让她跳一段</button>
+    </div>
+    <div class="npc-name">DA FEI YU · 看板娘</div>
+  </div>
+</div></section>
+
+<section class="block" id="why"><div class="wrap">
+  <span class="eyebrow">Why me</span>
+  <h2>可以放心把事情交给我的六个理由</h2>
+  <p class="sub">没有虚构的好评，也没有刷出来的单量。能证明我的东西都在网上开着，你自己点开看。</p>
+  <div class="why">
+    <div class="card"><span class="ico">🛠</span><h3>真的会动手</h3><p>5 个开源项目（SmartClass / OrderBoss / 燎原火 AI / 深空制图仪 / TURBOCORE）都能跑、能点、能读源码。</p></div>
+    <div class="card"><span class="ico">🗣</span><h3>说人话</h3><p>先问清你的场景再动手；每一步在做什么、为什么这么做，都讲给你听，不甩术语、不装高深。</p></div>
+    <div class="card"><span class="ico">🧾</span><h3>先说清，再开工</h3><p>需求听完当场给方案和价格，你点头才开始；过程中不临时加价，做不完的部分不收钱。</p></div>
+    <div class="card"><span class="ico">📦</span><h3>交付带源码和说明</h3><p>站点、脚本、配置全部交接，附一页怎么用、怎么改的说明；不锁死、不留隐藏依赖。</p></div>
+    <div class="card"><span class="ico">🩹</span><h3>出问题我兜着</h3><p>7 天内同类问题免费复修；重装、迁移这类不可逆操作，第一步永远是先备份数据。</p></div>
+    <div class="card"><span class="ico">🌙</span><h3>学生的时间表</h3><p>晚上和周末也能约，急事优先回；远程为主，东莞 / 长春可以见面弄。</p></div>
+  </div>
+  <div class="cta-row">
+    <a class="btn" href="/tech.html#sservice">看看能帮我做什么 →</a>
+    <a class="btn ghost" href="/services.html">完整服务清单</a>
+  </div>
+</div></section>
+
+<section class="block" id="articles"><div class="wrap">
+  <span class="eyebrow">Writing</span>
+  <h2>同一个我，在 6 个地方写东西</h2>
+  <p class="sub">51 篇原创，除了本站，也会分发到掘金 / CSDN / 知乎 / 阿里云社区。每篇都标了平台 —— 点标签可以直接去那边看同一个我。</p>
+  <div class="plat">
+    <a href="/tech.html#ssec4"><span class="dot self"></span>本站 · 一.chat</a>
+    <a href="https://juejin.cn/user/2926255661660986" target="_blank" rel="noopener"><span class="dot jj"></span>掘金</a>
+    <a href="https://blog.csdn.net/2401_84773010" target="_blank" rel="noopener"><span class="dot csdn"></span>CSDN</a>
+    <a href="/tech.html#ssec4"><span class="dot zhihu"></span>知乎</a>
+    <a href="/tech.html#ssec4"><span class="dot ali"></span>阿里云开发者社区</a>
+    <a href="https://github.com/Leo-Li638" target="_blank" rel="noopener"><span class="dot"></span>GitHub</a>
+  </div>
+  <div class="arts">
+    <a class="art" href="/posts/ai-native-dev-track-record.html">
+      <span class="meta">2026-11-16 · 置顶<span class="tagp self">本站</span></span>
+      <h3>一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单</h3>
+      <span class="tags"><span class="tagp">掘金</span><span class="tagp">CSDN</span><span class="tagp">知乎</span></span>
+    </a>
+    <a class="art" href="/posts/city-girlfriend-37-rule-ai.html">
+      <span class="meta">2026-11-18 · 最新<span class="tagp self">本站</span></span>
+      <h3>把每座城市当成你的 boyfriend/girlfriend：我原创提出的「花心大萝卜 × 37% 法则」</h3>
+      <span class="tags"><span class="tagp">掘金</span><span class="tagp">知乎</span></span>
+    </a>
+    <a class="art" href="/posts/gesture-earth-webgl.html">
+      <span class="meta">2026-11-12<span class="tagp self">本站</span></span>
+      <h3>用摄像头隔空操控一颗点阵地球：手势交互与 WebGL 的三个实现取舍</h3>
+      <span class="tags"><span class="tagp">掘金</span><span class="tagp">CSDN</span><span class="tagp">知乎</span></span>
+    </a>
+    <a class="art" href="/posts/java-backend-salary-2027.html">
+      <span class="meta">2026-11-10<span class="tagp self">本站</span></span>
+      <h3>2027 届 Java 后端岗位的薪资区间是多少，薪资是怎么被谈出来的</h3>
+      <span class="tags"><span class="tagp">掘金</span><span class="tagp">CSDN</span><span class="tagp">知乎</span></span>
+    </a>
+    <a class="art" href="/posts/three-projects-one-line.html">
+      <span class="meta">2026-11-11<span class="tagp self">本站</span></span>
+      <h3>大学生怎么把三个项目讲成一条能力主线，而不是三段经历</h3>
+      <span class="tags"><span class="tagp">掘金</span><span class="tagp">CSDN</span></span>
+    </a>
+    <a class="art" href="/posts/gpa-awards-resume.html">
+      <span class="meta">2026-11-10<span class="tagp self">本站</span></span>
+      <h3>绩点前 10% + 国创赛国一，本科生履历该怎么组织</h3>
+      <span class="tags"><span class="tagp">CSDN</span><span class="tagp">知乎</span></span>
+    </a>
+  </div>
+  <p class="more-line">想看全部 51 篇、按平台筛选：<a href="/tech.html#ssec4">技术主页文章区 →</a>　或 <a href="/leisure.html#ssec4">休闲主页文章区 →</a>（两版内容一致）</p>
+</div></section>
+
+<section class="block about" id="about"><div class="wrap">
+  <span class="eyebrow">About</span>
+  <h2>关于这个站点</h2>
+  <p>这里放了两套主页：<a href="/tech.html">技术主页</a>用于承接基础计算机服务、展示技术作品与可核验证据；<a href="/leisure.html">休闲主页</a>是原来的个人主页，保留全部项目作品集、文章与互动彩蛋。两版的文章列表完全一致，只有项目分区不同 —— 技术版只放纯技术类项目，视觉与交互类项目在休闲版。</p>
+  <p>不写虚构好评：所有背书都能点开验证 —— GitHub 开源仓库（<a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">Leo-Li638</a>）、在线 Demo、<a href="#articles">51 篇文章</a>、竞赛获奖记录，以及这个站点本身的源码与交付习惯。价格只在你确认方案时报给你，先报价、后开工。</p>
+  <p>联系：微信 / 手机 <a href="tel:13360637585">13360637585</a>（同号）· 邮箱 <a href="mailto:Tao638@outlook.com">Tao638@outlook.com</a> · 服务时段 9:00–22:00（一般 30 分钟内回复）· 远程为主，东莞 / 长春可约当面。</p>
+  <div class="facts">
+    <div class="fact"><b>51 篇</b><span>原创文章 · 多平台同步</span></div>
+    <div class="fact"><b>5 个</b><span>开源 / 实践项目 · 全部可查</span></div>
+    <div class="fact"><b>8 项</b><span>基础计算机服务</span></div>
+    <div class="fact"><b>7 天</b><span>同类问题免费复修</span></div>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <div>© 2026 李玉涛（Leo）· 一.chat · 两套主页入口</div>
+  <div class="flinks">
+    <a href="/tech.html">技术主页</a>
+    <a href="/leisure.html">休闲主页</a>
+    <a href="/services.html">接单服务</a>
+    <a href="/llms.txt">llms.txt</a>
+    <a href="https://github.com/Leo-Li638" target="_blank" rel="noopener">GitHub</a>
+    <a href="mailto:Tao638@outlook.com">Email</a>
+  </div>
+</div></footer>
+
+<noscript>
+  <div style="padding:20px 24px;border-top:1px solid #dbe7d6;background:#fff;color:#20354a;">
+    <p><b>需要开启 JavaScript 才能看到完整版式。</b>也可以直接进入：</p>
+    <ul>
+      <li><a href="/tech.html">技术主页（接单服务与报价）</a></li>
+      <li><a href="/leisure.html">休闲主页（项目作品集）</a></li>
+      <li><a href="/services.html">完整服务清单与报价</a></li>
+      <li>微信 / 手机 13360637585 · 邮箱 Tao638@outlook.com</li>
+    </ul>
+  </div>
+</noscript>
+
+<div class="modal" id="danceModal" role="dialog" aria-modal="true" aria-label="大肥鱼跳舞">
+  <div class="modal-box">
+    <button class="modal-close" id="danceClose" type="button" aria-label="关闭">✕</button>
+    <video id="danceVideo" controls autoplay muted loop playsinline preload="none" poster="assets/npc_maid-cut.webp" width="960" height="902"></video>
+    <div class="modal-cap"><span>大肥鱼 · 5 秒小舞步</span><span>舞蹈片段仅为娱乐</span></div>
+  </div>
+</div>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"WebSite","@id":"https://xn--4gq.chat/#website","url":"https://xn--4gq.chat/","name":"一.chat · 李玉涛（Leo）","alternateName":"李玉涛个人主页","inLanguage":"zh-CN","publisher":{"@id":"https://xn--4gq.chat/#person"}},
+  {"@type":"Person","@id":"https://xn--4gq.chat/#person","name":"李玉涛","alternateName":"Leo","url":"https://xn--4gq.chat/","jobTitle":"Java 后端 / AI 应用开发（2027 届学生）","knowsAbout":["Java 后端","AI 应用","RAG","Agent","数据科学","静态网站搭建","Python 脚本"],"affiliation":{"@type":"CollegeOrUniversity","name":"长春师范大学"},"sameAs":["https://github.com/Leo-Li638","https://juejin.cn/user/2926255661660986","https://blog.csdn.net/2401_84773010"]},
+  {"@type":"BreadcrumbList","@id":"https://xn--4gq.chat/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://xn--4gq.chat/"}]},
+  {"@type":"ItemList","@id":"https://xn--4gq.chat/#versions","name":"站点双版本","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"技术主页（接单服务与作品）","url":"https://xn--4gq.chat/tech.html"},
+    {"@type":"ListItem","position":2,"name":"休闲主页（原版个人主页与作品集）","url":"https://xn--4gq.chat/leisure.html"}
+  ]},
+  {"@type":"ItemList","@id":"https://xn--4gq.chat/#recent-articles","name":"最近技术文章（多平台同步）","itemListElement":[
+    {"@type":"ListItem","position":1,"url":"https://xn--4gq.chat/posts/ai-native-dev-track-record.html","name":"一个人顶一个团队：2027 届本科生的 AI 原生开发战绩清单"},
+    {"@type":"ListItem","position":2,"url":"https://xn--4gq.chat/posts/city-girlfriend-37-rule-ai.html","name":"把每座城市当成你的 boyfriend/girlfriend：我原创提出的「花心大萝卜 × 37% 法则」"},
+    {"@type":"ListItem","position":3,"url":"https://xn--4gq.chat/posts/gesture-earth-webgl.html","name":"用摄像头隔空操控一颗点阵地球：手势交互与 WebGL 的三个实现取舍"},
+    {"@type":"ListItem","position":4,"url":"https://xn--4gq.chat/posts/java-backend-salary-2027.html","name":"2027 届 Java 后端岗位的薪资区间是多少，薪资是怎么被谈出来的"},
+    {"@type":"ListItem","position":5,"url":"https://xn--4gq.chat/posts/three-projects-one-line.html","name":"大学生怎么把三个项目讲成一条能力主线，而不是三段经历"},
+    {"@type":"ListItem","position":6,"url":"https://xn--4gq.chat/posts/gpa-awards-resume.html","name":"绩点前 10% + 国创赛国一，本科生履历该怎么组织"}
+  ]}
+]}
+</script>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- 看板娘：说话 ---------- */
+  var bubble = document.getElementById('npcBubble');
+  var lines = [
+    '嗨，我是<b>大肥鱼</b>。想找他修电脑？先看我给你递个话。',
+    '他不会说“这个很复杂”，只会说“我先看看”。',
+    '电脑蓝屏、C 盘爆满、环境装不上 —— 这些他都修过。',
+    '重装系统前，他第一件事是问：数据备份了吗？',
+    '他只写自己会写的代码，也只接自己能交付的活。',
+    '想看他做过什么？技术主页里每个项目都能点开。',
+    '价格他会先算给你听，你点头他才动手。'
+  ];
+  var li = 0, timer = null;
+  function say(i){
+    if(!bubble) return;
+    bubble.classList.add('swap');
+    setTimeout(function(){
+      bubble.innerHTML = lines[i % lines.length];
+      bubble.classList.remove('swap');
+    }, 260);
+  }
+  function cycle(){
+    li = (li + 1) % lines.length;
+    say(li);
+  }
+  function startTimers(){
+    if(reduce || timer) return;
+    timer = setInterval(cycle, 7000);
+  }
+  var talkBtn = document.getElementById('npcTalk');
+  if(talkBtn) talkBtn.addEventListener('click', function(){ cycle(); startTimers(); });
+
+  var figure = document.getElementById('npcFigure');
+  function poke(){
+    if(!figure) return;
+    figure.classList.remove('wave');
+    void figure.offsetWidth;
+    figure.classList.add('wave');
+    cycle();
+    startTimers();
+    setTimeout(function(){ figure.classList.remove('wave'); }, 1900);
+  }
+  if(figure){
+    figure.addEventListener('click', poke);
+    figure.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); poke(); } });
+  }
+  startTimers();
+
+  /* 轻微跟随鼠标（桌面端 & 非降级动效） */
+  var stage = document.getElementById('npcStage');
+  var hero = document.querySelector('.hero');
+  if(stage && hero && !reduce && window.matchMedia('(pointer:fine)').matches){
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      var dx = (e.clientX - r.left) / r.width - 0.5;
+      var dy = (e.clientY - r.top) / r.height - 0.5;
+      stage.style.transform = 'translate3d(' + (dx * 10).toFixed(2) + 'px,' + (dy * 8).toFixed(2) + 'px,0)';
+    });
+    hero.addEventListener('mouseleave', function(){ stage.style.transform = ''; });
+  }
+
+  /* ---------- 跳舞弹窗（视频按需加载） ---------- */
+  var modal = document.getElementById('danceModal');
+  var video = document.getElementById('danceVideo');
+  var danceBtn = document.getElementById('npcDance');
+  var closeBtn = document.getElementById('danceClose');
+  var lastFocus = null;
+  function openDance(){
+    if(!modal || !video) return;
+    if(!video.getAttribute('src')) { video.setAttribute('src', 'assets/npc_dance_web.mp4'); }
+    modal.classList.add('on');
+    document.body.style.overflow = 'hidden';
+    lastFocus = document.activeElement;
+    var p = video.play();
+    if(p && p.catch) p.catch(function(){});
+    if(closeBtn) closeBtn.focus();
+  }
+  function closeDance(){
+    if(!modal) return;
+    modal.classList.remove('on');
+    document.body.style.overflow = '';
+    try { video.pause(); } catch(e){}
+    if(lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+  if(danceBtn) danceBtn.addEventListener('click', openDance);
+  if(closeBtn) closeBtn.addEventListener('click', closeDance);
+  if(modal) modal.addEventListener('click', function(e){ if(e.target === modal) closeDance(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal && modal.classList.contains('on')) closeDance(); });
+})();
+</script>
+</body>
+</html>

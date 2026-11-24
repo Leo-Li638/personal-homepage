@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>燎原火 AI 学习平台 | 一.chat</title>
+  <meta name="description" content="燎原火 AI 项目详情：Docker + Dify + Ollama + DeepSeek 的本地优先、云端兜底私有 AI 平台。">
+  <link rel="canonical" href="https://xn--4gq.chat/liaoyuanhuo.html">
+  <meta property="og:title" content="燎原火 AI 学习平台 | 一.chat">
+  <meta property="og:description" content="15 容器架构、双通道分流与双层记忆的本地优先 AI 平台。">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://xn--4gq.chat/liaoyuanhuo.html">
+  <meta property="og:image" content="https://xn--4gq.chat/assets/og-cover.jpg">
+  <link rel="stylesheet" href="portfolio-pages.css">
+</head>
+<body>
+  <main class="page-shell">
+    <nav class="page-nav"><a class="brand" href="./">一.chat</a><div class="page-nav-links"><a href="./">主页</a><a href="./#ssec2">GeoLook</a><a href="./#ssec3">项目列表</a></div></nav>
+    <header class="hero-project">
+      <div class="eyebrow">Project 03 / Applied AI</div>
+      <h1>燎原火 AI 学习平台</h1>
+      <p>本地优先、云端兜底的私有 AI 平台。使用 Docker、Dify、Ollama 与 DeepSeek 组织模型路由、知识库和对话记忆，探索 RAG 与 Agent 应用的工程化落地。</p>
+      <div class="hero-actions"><a class="button" href="https://developer.aliyun.com/article/1766786" target="_blank" rel="noopener">阅读架构文章</a><a class="button secondary" href="./#ssec3">返回项目列表</a></div>
+    </header>
+    <div class="content-grid">
+      <div class="main-column">
+        <section class="panel">
+          <h2>背景与目标</h2>
+          <p>纯云端 API 成本不可控，纯本地模型又受显存和模型能力限制。项目把两类模型放入同一套路由体系：本地模型承担隐私和日常任务，云端模型负责复杂推理与兜底。</p>
+          <div class="metrics"><div class="metric"><b>15 容器</b><span>模型、编排、存储和前台服务分层</span></div><div class="metric"><b>双通道</b><span>本地 Ollama / 云端 DeepSeek 分流</span></div><div class="metric"><b>双层记忆</b><span>会话上下文与长期知识分离</span></div></div>
+        </section>
+        <section class="panel">
+          <h2>关键做法</h2>
+          <div class="flow">
+            <div class="flow-step"><i>01</i><div><b>Docker 分层部署</b><p>使用 Compose 管理模型服务、Dify、数据库、缓存和前端入口，降低本地复现成本。</p></div></div>
+            <div class="flow-step"><i>02</i><div><b>模型路由</b><p>根据任务、可用资源和成本策略选择本地或云端模型，避免所有请求都依赖外部 API。</p></div></div>
+            <div class="flow-step"><i>03</i><div><b>RAG 知识库</b><p>将文档切分、索引、检索和生成拆分，保留引用来源，便于追踪错误答案。</p></div></div>
+            <div class="flow-step"><i>04</i><div><b>长期记忆与上下文</b><p>短期会话和长期知识分开存储，控制上下文长度并减少无关记忆污染。</p></div></div>
+          </div>
+        </section>
+        <section class="panel">
+          <h2>系统架构</h2>
+          <img class="project-image" src="assets/article-liaoyuanhuo-arch.png" alt="燎原火 AI 平台容器与模型路由架构图" width="1400" height="640" loading="lazy" decoding="async">
+          <div class="stack"><span>Docker Compose</span><span>Dify</span><span>Ollama</span><span>DeepSeek</span><span>RAG</span><span>Agent</span><span>PostgreSQL</span><span>Redis</span></div>
+        </section>
+        <section class="panel">
+          <h2>结果与验证</h2>
+          <ul><li>整理出 15 个 Docker 容器的可复现架构和依赖关系。</li><li>落地本地与云端双通道路由，支持按任务选择模型。</li><li>记录 <code>OLLAMA_KEEP_ALIVE</code>、<code>num_predict</code> 和容器编排三个实际部署问题。</li><li>公开文章包含架构图、部署过程和可迁移的踩坑记录。</li></ul>
+        </section>
+      </div>
+      <aside class="side-column">
+        <section class="panel"><h2>项目信息</h2><ul class="aside-list"><li><span>角色</span><b>架构与实践</b></li><li><span>编排</span><b>Dify</b></li><li><span>本地模型</span><b>Ollama</b></li><li><span>云端模型</span><b>DeepSeek</b></li><li><span>部署</span><b>Docker</b></li></ul></section>
+        <section class="panel"><h2>公开材料</h2><p>由于项目没有公开代码仓库，本页只引用已发布文章与本站原有文案，不编造运行数据。</p><a class="button secondary" href="https://developer.aliyun.com/article/1766786" target="_blank" rel="noopener">打开阿里云文章</a></section>
+      </aside>
+    </div>
+    <footer class="page-footer"><span>© 2026 李玉涛（Leo）</span><a href="./">返回一.chat</a></footer>
+  </main>
+</body>
+</html>
