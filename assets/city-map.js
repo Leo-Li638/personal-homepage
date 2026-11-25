@@ -43,6 +43,66 @@
     });
   }
 
+  /* ---------- 重叠标记扇开（spiderfy-lite，纯视觉） ----------
+     东莞 / 广州 / 深圳在低缩放级别屏幕上几乎重合，直接点必然点错。
+     真实坐标永远不改（数据文件里的 lat/lng 是唯一事实），只动“显示位置”：
+     投影后把互相 < 18px 的标记归成一组，按固定角度散到半径 22px 的圆上，
+     再用一条 2 3 虚线连回真实点；缩放变大后自动归位、虚线移除。 */
+  var SPIDER = { gap: 18, radius: 22, start: -90 };
+
+  function updateSpider(entry) {
+    var map = entry.map;
+    var items = entry.items || [];
+    if (!items.length) return;
+
+    /* ① 先全部归位，按真坐标算屏幕位置（containerPoint 与平移无关，只看缩放） */
+    var i, j;
+    for (i = 0; i < items.length; i++) {
+      items[i].mk.setLatLng(items[i].ll);
+      if (items[i].line && map.hasLayer(items[i].line)) map.removeLayer(items[i].line);
+    }
+    var pts = [];
+    for (i = 0; i < items.length; i++) pts.push(map.latLngToContainerPoint(items[i].ll));
+
+    /* ② 并查集：互相 <gap 的点并成一组 */
+    var parent = [];
+    for (i = 0; i < items.length; i++) parent.push(i);
+    function find(a) { while (parent[a] !== a) { parent[a] = parent[parent[a]]; a = parent[a]; } return a; }
+    for (i = 0; i < pts.length; i++) {
+      for (j = i + 1; j < pts.length; j++) {
+        if (pts[i].distanceTo(pts[j]) < SPIDER.gap) {
+          var ra = find(i), rb = find(j);
+          if (ra !== rb) parent[rb] = ra;
+        }
+      }
+    }
+
+    /* ③ 组内 >1 个点：以组心为圆心等角扇开（n=3 时相邻间距 ≈ 38px，> 18px 达标） */
+    var groups = {}, keys = [];
+    for (i = 0; i < items.length; i++) {
+      var k = find(i);
+      if (!groups[k]) { groups[k] = []; keys.push(k); }
+      groups[k].push(i);
+    }
+    for (var g = 0; g < keys.length; g++) {
+      var members = groups[keys[g]];
+      if (members.length < 2) continue;
+      var cx = 0, cy = 0;
+      for (i = 0; i < members.length; i++) { cx += pts[members[i]].x; cy += pts[members[i]].y; }
+      cx /= members.length; cy /= members.length;
+      var step = 360 / members.length;
+      for (i = 0; i < members.length; i++) {
+        var it = items[members[i]];
+        var a = (SPIDER.start + step * i) * Math.PI / 180;
+        var at = map.containerPointToLatLng(
+          L.point(cx + Math.cos(a) * SPIDER.radius, cy + Math.sin(a) * SPIDER.radius)
+        );
+        it.mk.setLatLng(at);                       /* 只改显示位置，it.ll 才是真坐标 */
+        it.line.setLatLngs([at, it.ll]).addTo(map); /* 虚线从偏移点连回真点 */
+      }
+    }
+  }
+
   function buildChips(host, pts) {
     if (!host) return;
     var html = pts.map(function (p) {
@@ -56,7 +116,7 @@
   function focusPoint(entry, id) {
     var mk = entry.markers[id];
     if (!mk) return;
-    var ll = mk.getLatLng();
+    var ll = mk.__trueLL || mk.getLatLng();   /* 扇开时标记被挪过，定位一律用真坐标 */
     var zoom = Math.max(entry.map.getZoom(), 12);
     var at = entry.map.getCenter();
     var same = Math.abs(at.lat - ll.lat) < 0.0008 && Math.abs(at.lng - ll.lng) < 0.0008 &&
@@ -91,8 +151,11 @@
 
     L.tileLayer(TILES.url, TILES.options).addTo(map);
 
-    var entry = { map: map, markers: {}, box: box, lang: lang };
+    var entry = { map: map, markers: {}, items: [], box: box, lang: lang };
     var bounds = L.latLngBounds([]);
+    /* 虚线单独用一个 SVG 渲染器：线条极少，SVG 比 canvas 清晰，
+       也让「哪几个点被扇开了」在 DOM 里可查（[data-city-map] svg path 数量） */
+    var spiderRenderer = L.svg({ padding: 0.3 });
 
     pts.forEach(function (p) {
       var mk = L.marker([p.lat, p.lng], {
@@ -127,6 +190,18 @@
       /* 移动端走 tap，桌面端走 click，两个都绑、内部去重，两端行为一致 */
       mk.on("tap click", activate);
 
+      var it = {
+        id: p.id,
+        ll: L.latLng(p.lat, p.lng),         /* 真坐标，任何情况下都不改 */
+        mk: mk,
+        /* 扇开时用来连回真点的虚线；默认不在地图上，只有偏移时才 addTo */
+        line: L.polyline([], {
+          renderer: spiderRenderer,
+          dashArray: "2 3", weight: 1, opacity: 0.5, color: "#2f73a4", interactive: false
+        })
+      };
+      mk.__trueLL = L.latLng(p.lat, p.lng);
+      entry.items.push(it);
       entry.markers[p.id] = mk;
       bounds.extend([p.lat, p.lng]);
     });
@@ -171,6 +246,19 @@
       map.setView([31.2304, 121.4737], 5);
     }
 
+    /* 扇开重算：缩放 / 平移 / 容器尺寸变化都会改变相对屏幕距离。
+       用 setTimeout 而不是 requestAnimationFrame：后台标签页里 rAF 会被暂停，
+       切回来时扇开状态就过期了（这是真实踩到过的问题）。 */
+    var spiderTimer = 0;
+    function scheduleSpider() {
+      clearTimeout(spiderTimer);
+      spiderTimer = setTimeout(updateSpider, 40, entry);
+    }
+    map.whenReady(scheduleSpider);
+    map.on("zoomend moveend resize", scheduleSpider);
+    entry.__reschedule = scheduleSpider;   /* 供 document 级 resize / visibilitychange 统一重算 */
+    scheduleSpider();
+
     /* 切换标签页 / 旋转屏幕后 Leaflet 尺寸会算错，补一次 invalidateSize */
     var rzTimer = null;
     function refresh() {
@@ -190,6 +278,13 @@
   function triggerId(node) {
     var el = node.closest ? node.closest("[data-city]") : null;
     return el ? el.getAttribute("data-city") : null;
+  }
+
+  /* 窗口尺寸变化 / 切回标签页时，把所有地图实例的扇开重算一次 */
+  function rescheduleAll() {
+    for (var i = 0; i < maps.length; i++) {
+      if (typeof maps[i].__reschedule === "function") maps[i].__reschedule();
+    }
   }
 
   function onClick(e) {
@@ -297,6 +392,9 @@
       mounted = true;
       document.addEventListener("click", onClick, false);
       document.addEventListener("keydown", onKey, false);
+      /* 窗口尺寸 / 标签页可见性变化：扇开位置要重算（只挂一次，不随地图重建累积） */
+      window.addEventListener("resize", rescheduleAll, { passive: true });
+      document.addEventListener("visibilitychange", rescheduleAll, false);
     }
   }
 
