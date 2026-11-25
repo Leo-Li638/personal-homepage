@@ -33,10 +33,12 @@
 
   function iconFor(p) {
     /* 图标盒子给到 36px（>= 44px 视觉热区的一半以上），里面画 16/20px 的小点，
-       手指不用精确戳到圆点也能点中 */
+       手指不用精确戳到圆点也能点中。
+       城市 id 写在 <i> 上：联动高亮 / 自动化核对按 [data-pin] 反查图标节点，
+       不依赖 Leaflet 内部私有字段，也不改数据文件。 */
     return L.divIcon({
       className: "cm-pin" + (p.type === "campus" ? " cm-pin-campus" : ""),
-      html: "<i></i>",
+      html: '<i data-pin="' + p.id + '"></i>',
       iconSize: [36, 36],
       iconAnchor: [18, 18],
       popupAnchor: [0, -16]
@@ -131,6 +133,26 @@
     entry.map.once("moveend", function () { mk.openPopup(); });
   }
 
+  /* 弹窗可见性兜底：卡片被滚到视口中央后，气泡可能落到屏幕外。
+     延迟到平滑滚动落定（约 600ms）再量，只滚「露不出来」的那点距离，不会二次跳远。 */
+  var revealTimer = 0;
+  function revealPopup(pop) {
+    clearTimeout(revealTimer);
+    revealTimer = setTimeout(function () {
+      var pn = pop && pop.getElement ? pop.getElement() : null;
+      if (!pn || !pn.isConnected) return;
+      var r = pn.getBoundingClientRect();
+      var vw = window.innerWidth || document.documentElement.clientWidth;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (r.top < 0 || r.bottom > vh || r.left < 0 || r.right > vw) {
+        pn.scrollIntoView({
+          block: "nearest", inline: "nearest",
+          behavior: reduceMotion ? "auto" : "smooth"
+        });
+      }
+    }, 640);
+  }
+
   function initMap(box) {
     var lang = langOf(box);
     var pts = SD.mapPoints(lang);
@@ -185,6 +207,7 @@
         if (now - lastFire < 400) return;   /* tap 与 click 双绑定时的去重 */
         lastFire = now;
         if (e && e.originalEvent) L.DomEvent.stop(e.originalEvent);
+        selectCity(p.id, "center");         /* 标记 → 卡片：滚到视口并标 aria-current */
         mk.openPopup();
       }
       /* 移动端走 tap，桌面端走 click，两个都绑、内部去重，两端行为一致 */
@@ -214,25 +237,23 @@
       };
     }
 
-    /* 弹窗溢出修复：
-       ① 先按题目要求的 panInsideLatLng(latlng, {padding:[60,60]}) 把坐标拉进可视区；
-       ② 再把「弹窗自身高度」计入顶部留白 —— 气泡默认长在标记正上方，
-         只保证坐标可见的话，靠近上沿的标记弹窗依旧会被容器裁掉。 */
+    /* 弹窗不溢出、也不压住控件：
+       气泡长在标记正上方，所以「标记点到容器上沿」的留白必须 >= 气泡高度 + 一点空隙；
+       水平方向按气泡宽度的一半再外加 44px，保证气泡左边缘不会伸到左上角缩放控件下面。 */
     map.on("popupopen", function (e) {
       var src = e.popup && e.popup._source;
       if (!src || !src.getLatLng) return;
-      var pad = 60;
-      map.panInsideLatLng(src.getLatLng(), { padding: [pad, pad], animate: !reduceMotion });
-
       var node = e.popup.getElement();
+      var pw = node ? node.offsetWidth : 0;
       var ph = node ? node.offsetHeight : 0;
-      if (ph > 0) {
-        map.panInside(src.getLatLng(), {
-          paddingTopLeft: [pad, pad + ph],
-          paddingBottomRight: [pad, pad],
-          animate: !reduceMotion
-        });
-      }
+      var ll = src.__trueLL || src.getLatLng();
+      map.panInside(ll, {
+        paddingTopLeft: [Math.max(60, pw / 2 + 44), Math.max(60, ph + 20)],
+        paddingBottomRight: [Math.max(60, pw / 2 + 12), 60],
+        animate: !reduceMotion
+      });
+      /* 气泡被页面滚出视口就等于没打开：等「滚到卡片」的平滑滚动落定后再补一次最小滚动 */
+      revealPopup(e.popup);
     });
 
     /* 初始视野：全部点位进画面，单点时给个合适级别 */
@@ -280,6 +301,70 @@
     return el ? el.getAttribute("data-city") : null;
   }
 
+  /* 选中态：全部 [data-city] 里只有当前这个带 aria-current="true"（其余移除）。
+     scroll 为 "center" 时把对应卡片滚到视口中央（标记点击用，题目要求）；
+     为 "nearest" 时只在卡片不在视口内才滚（chip 点击用，少打断阅读）。 */
+  function selectCity(id, scroll) {
+    var nodes = document.querySelectorAll("[data-city]");
+    var i;
+    for (i = 0; i < nodes.length; i++) {
+      if (nodes[i].getAttribute("data-city") === id) nodes[i].setAttribute("aria-current", "true");
+      else nodes[i].removeAttribute("aria-current");
+    }
+    if (!scroll) return;
+    var card = document.querySelector("#cityList .city[data-city='" + id + "']") ||
+      document.querySelector("#cityList [data-city='" + id + "']");
+    if (!card || typeof card.scrollIntoView !== "function") return;
+    card.scrollIntoView({
+      block: scroll === "center" ? "center" : "nearest",
+      behavior: reduceMotion ? "auto" : "smooth"
+    });
+  }
+
+  /* 卡片 / chip 悬停或聚焦 → 对应标记加 .is-hot（缩放 + 光晕在 map.css，
+     只作用在图标内层 <i>，不碰 Leaflet 用来定位的 translate3d） */
+  function cityOf(node) {
+    var el = node && node.closest ? node.closest("[data-city]") : null;
+    if (!el) return null;
+    if (el.closest && !el.closest("#cityList, #cityMapChips, .citymap-chips")) return null;
+    return el.getAttribute("data-city");
+  }
+
+  function setHot(id, on) {
+    var pins = document.querySelectorAll('[data-pin="' + id + '"]');
+    for (var i = 0; i < pins.length; i++) {
+      var box = pins[i].closest ? pins[i].closest(".cm-pin") : null;
+      if (!box) continue;
+      if (on) box.classList.add("is-hot");
+      else box.classList.remove("is-hot");
+    }
+  }
+
+  function onHover(e) {
+    var id = cityOf(e.target);
+    if (id) setHot(id, true);
+  }
+
+  function onHoverOut(e) {
+    var id = cityOf(e.target);
+    if (!id) return;
+    /* mouseout 在子元素之间会反复触发：从卡片内部移到卡片内部不算离开 */
+    var from = e.target.closest ? e.target.closest("[data-city]") : null;
+    var to = e.relatedTarget;
+    if (from && to && from.contains && from.contains(to)) return;
+    setHot(id, false);
+  }
+
+  function onFocusIn(e) {
+    var id = cityOf(e.target);
+    if (id) setHot(id, true);
+  }
+
+  function onFocusOut(e) {
+    var id = cityOf(e.target);
+    if (id) setHot(id, false);
+  }
+
   /* 窗口尺寸变化 / 切回标签页时，把所有地图实例的扇开重算一次 */
   function rescheduleAll() {
     for (var i = 0; i < maps.length; i++) {
@@ -295,14 +380,11 @@
     if (!has) return;
     /* 校区卡本身是外链，有地图时不跳转，改成定位 + 弹窗；弹窗里仍留“导航到这里” */
     if (e.target.closest && e.target.closest("a[data-city]")) e.preventDefault();
+    /* 先标选中态并让卡片进视口，再飞地图（顺序反了会被 smooth scroll 打断动画） */
+    selectCity(id, "nearest");
     for (var j = 0; j < maps.length; j++) {
       if (maps[j].markers[id]) {
         focusPoint(maps[j], id);
-        /* 卡片高亮 */
-        var nodes = document.querySelectorAll('[data-city="' + id + '"]');
-        for (var k = 0; k < nodes.length; k++) {
-          nodes[k].setAttribute("aria-current", "true");
-        }
         break;
       }
     }
@@ -330,7 +412,7 @@
       '<div class="citymap-head"><span class="citymap-label">' +
       (isEn ? "Where to meet" : "可约当面 · 分布图") + '</span>' +
       '<span class="citymap-hint">' +
-      (isEn ? "Pinch to zoom, drag with one finger to scroll the page" : "两指缩放地图，单指滚动页面") +
+      (isEn ? "One finger scrolls the page; use + / \u2212 to zoom the map" : "单指上下滑页面，缩放用 +/- 按钮") +
       '</span></div>' +
       '<div class="citymap-chips"></div>' +
       '<div class="citymap-canvas" data-city-map></div>';
@@ -373,7 +455,7 @@
       var lb = autos[a].querySelector(".citymap-label");
       var hm = autos[a].querySelector(".citymap-hint");
       if (lb) lb.textContent = en ? "Where to meet" : "可约当面 · 分布图";
-      if (hm) hm.textContent = en ? "Pinch to zoom, drag with one finger to scroll the page" : "两指缩放地图，单指滚动页面";
+      if (hm) hm.textContent = en ? "One finger scrolls the page; use + / \u2212 to zoom the map" : "单指上下滑页面，缩放用 +/- 按钮";
     }
 
     mountFallback();
@@ -390,8 +472,13 @@
     }
     if (!mounted) {
       mounted = true;
+      /* 全部走 document 级委托：卡片 / chips 是动态渲染的，不能逐个绑 */
       document.addEventListener("click", onClick, false);
       document.addEventListener("keydown", onKey, false);
+      document.addEventListener("mouseover", onHover, false);
+      document.addEventListener("mouseout", onHoverOut, false);
+      document.addEventListener("focusin", onFocusIn, false);
+      document.addEventListener("focusout", onFocusOut, false);
       /* 窗口尺寸 / 标签页可见性变化：扇开位置要重算（只挂一次，不随地图重建累积） */
       window.addEventListener("resize", rescheduleAll, { passive: true });
       document.addEventListener("visibilitychange", rescheduleAll, false);
