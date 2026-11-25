@@ -123,6 +123,13 @@
       '</a>';
   };
 
+  /* 高德深链（统一入口）：弹窗里的「在高德打开」只走这一个函数，
+     坐标顺序是 <lng>,<lat>，名称按当前语言 encodeURIComponent */
+  DATA.amapHref = function (lat, lng, name) {
+    return "https://uri.amap.com/marker?position=" + lng + "," + lat +
+      "&name=" + encodeURIComponent(name || "");
+  };
+
   /* 地图点位：城市 + 校区统一成同一形状，供 assets/city-map.js 渲染 marker */
   DATA.mapPoints = function (lang) {
     var pts = DATA.cities.map(function (c) {
@@ -135,6 +142,8 @@
         note: byLang(c.note, lang),
         lat: c.lat,
         lng: c.lng,
+        /* 新增字段（不改既有语义）：弹窗内的「在高德打开」深链 */
+        nav: { amap: DATA.amapHref(c.lat, c.lng, lang === "en" ? c.en : c.zh) },
         mapHref: lang === "en"
           ? "https://www.google.com/maps/search/?api=1&query=" + c.lat + "," + c.lng
           : "https://uri.amap.com/marker?position=" + c.lng + "," + c.lat +
@@ -151,23 +160,31 @@
       note: byLang(cp.note, lang),
       lat: cp.lat,
       lng: cp.lng,
+      nav: { amap: DATA.amapHref(cp.lat, cp.lng, lang === "en" ? cp.en : cp.zh) },
       mapHref: DATA.campusMapHref(lang)
     });
     return pts;
   };
 
-  /* 统一弹窗模板：城市和校区共用一套，避免多写一份样式 */
+  /* 统一弹窗模板：城市和校区共用一套，避免多写一份样式。
+     所有弹窗内容只从这里出，city-map.js 不拼任何内联 HTML。
+     两个链接都是普通 <a>（无 onclick 字符串），点击走浏览器默认行为 + 地图的委托监听。 */
   DATA.mapPopupHTML = function (p, lang) {
     var tag = p.type === "campus"
       ? '<span class="cm-pop-tag">' + (lang === "en" ? "Campus" : "校区") + '</span>'
       : '<span class="cm-pop-tag">' + (lang === "en" ? "Service city" : "可约当面") + '</span>';
+    var amap = p.nav && p.nav.amap;
     return '<div class="cm-pop">' +
       '<div class="cm-pop-head">' + tag + '<b class="cm-pop-name">' + p.name + '</b>' +
       (p.sub ? '<span class="cm-pop-sub">' + p.sub + '</span>' : '') + '</div>' +
       (p.address ? '<p class="cm-pop-addr">' + p.address + '</p>' : '') +
       (p.note ? '<p class="cm-pop-note">' + p.note + '</p>' : '') +
+      '<div class="cm-pop-links">' +
       '<a class="cm-pop-go" href="' + p.mapHref + '" target="_blank" rel="noopener">' +
       (lang === "en" ? "Open in maps ↗" : "导航到这里 ↗") + '</a>' +
+      (amap ? '<a class="cm-pop-go cm-pop-amap" href="' + amap + '" target="_blank" rel="noopener">' +
+        (lang === "en" ? "Open in AMap ↗" : "在高德打开 ↗") + '</a>' : '') +
+      '</div>' +
       '</div>';
   };
 
