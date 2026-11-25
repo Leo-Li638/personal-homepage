@@ -14,3 +14,4 @@ tests/shots/
 # 本地静态服日志
 serve.log
 serve.err.log
+_probe/

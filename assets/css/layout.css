@@ -1,0 +1,69 @@
+  /* ---------- hero two-column ---------- */
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px;align-items:center;align-content:center;}
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;gap:0;}
+    .hero-copy{display:contents;}
+    .hero-grid .kicker{order:1;align-self:flex-start;}
+    .hero-grid h1{order:2;}
+    .hero-grid .lead{order:3;}
+    .hero-grid .npc-stage{order:4;margin:2px 0 20px;}
+    .hero-grid .entries{order:5;}
+    .hero-grid .chips{order:6;}
+  }
+  .hero-copy{min-width:0;}
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--grass);background:rgba(71,122,64,.10);border:1px solid rgba(71,122,64,.24);
+    padding:5px 11px;border-radius:999px;margin-bottom:18px;}
+  .kicker i{width:7px;height:7px;border-radius:50%;background:#3fae5a;box-shadow:0 0 0 4px rgba(63,174,90,.16);display:inline-block;}
+  h1{margin:0 0 14px;font-size:clamp(30px,5.4vw,54px);line-height:1.16;letter-spacing:-.5px;font-weight:800;}
+  h1 .thin{display:block;font-size:clamp(17px,2.4vw,23px);font-weight:600;color:var(--sub);letter-spacing:0;margin-top:8px;}
+  .lead{max-width:620px;margin:0 0 30px;font-size:15.5px;color:var(--sub);}
+  .lead b{color:var(--ink);}
+
+  /* ---------- 看板娘 stage ---------- */
+  .npc-stage{position:relative;height:440px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    perspective:800px;user-select:none;}
+  @media (max-width:980px){
+    .npc-stage{height:300px;margin:4px 0 10px;transform:none;}
+  }
+  .npc-glow{position:absolute;left:50%;bottom:34px;width:300px;height:300px;transform:translateX(-50%);
+    background:radial-gradient(circle at 50% 55%,rgba(109,179,220,.55),rgba(109,179,220,.16) 45%,transparent 70%);
+    filter:blur(6px);border-radius:50%;animation:npcGlow 6s ease-in-out infinite;pointer-events:none;}
+  .npc-halo{position:absolute;left:50%;bottom:52px;width:250px;height:250px;transform:translateX(-50%);border-radius:50%;
+    border:1px dashed rgba(47,115,164,.35);animation:npcSpin 26s linear infinite;pointer-events:none;}
+  .npc-halo::after{content:"";position:absolute;top:-4px;left:calc(50% - 4px);width:8px;height:8px;border-radius:50%;
+    background:var(--sky2);box-shadow:0 0 10px rgba(109,179,220,.9);}
+  .npc-figure{position:relative;z-index:2;width:min(320px,80%);cursor:pointer;transform-origin:50% 100%;
+    animation:npcFloat 6.4s ease-in-out infinite;filter:drop-shadow(0 18px 26px rgba(30,60,86,.22));
+    transition:filter .3s ease;}
+  .npc-figure:hover{filter:drop-shadow(0 18px 30px rgba(47,115,164,.34));}
+  .npc-figure img{display:block;width:100%;height:auto;transform-origin:50% 100%;animation:npcSway 8.6s ease-in-out infinite;}
+  .npc-figure.wave img{animation:npcWave .9s ease-in-out 2;}
+  .npc-shadow{position:absolute;left:50%;bottom:10px;width:180px;height:26px;transform:translateX(-50%);
+    background:radial-gradient(ellipse at center,rgba(30,60,86,.28),transparent 70%);filter:blur(3px);
+    animation:npcShadow 6.4s ease-in-out infinite;pointer-events:none;z-index:1;}
+  @keyframes npcFloat{0%,100%{transform:translateY(0) rotate(-.3deg)}50%{transform:translateY(-14px) rotate(.5deg)}}
+  @keyframes npcSway{0%,100%{transform:rotate(-1.1deg)}50%{transform:rotate(1.1deg)}}
+  @keyframes npcWave{0%,100%{transform:rotate(0)}25%{transform:rotate(-3.2deg)}75%{transform:rotate(3.2deg)}}
+  @keyframes npcGlow{0%,100%{opacity:.75;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.06)}}
+  @keyframes npcShadow{0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1)}50%{opacity:.28;transform:translateX(-50%) scaleX(.86)}}
+  @keyframes npcSpin{to{transform:translateX(-50%) rotate(360deg)}}
+  /* 视口外 / 后台标签页：暂停装饰动画（animation-play-state 不占额外合成层） */
+  .npc-stage.is-paused .npc-glow,.npc-stage.is-paused .npc-halo,.npc-stage.is-paused .npc-figure,
+  .npc-stage.is-paused .npc-figure img,.npc-stage.is-paused .npc-shadow{animation-play-state:paused;}
+  /* 弱网 / 省流量：只留静态贴图 */
+  .npc-stage.is-lite .npc-glow,.npc-stage.is-lite .npc-halo{display:none;}
+  .npc-stage.is-lite .npc-figure,.npc-stage.is-lite .npc-figure img,.npc-stage.is-lite .npc-shadow{animation:none;}
+  .npc-bubble{position:relative;z-index:3;margin-bottom:6px;max-width:290px;padding:10px 14px;border-radius:14px;
+    background:var(--glass);border:1px solid var(--glass-line);box-shadow:var(--shadow);backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);font-size:13px;color:var(--ink);line-height:1.6;transition:opacity .28s ease,transform .28s ease;}
+  .npc-bubble::after{content:"";position:absolute;left:50%;bottom:-7px;width:12px;height:12px;transform:translateX(-50%) rotate(45deg);
+    background:inherit;border-right:1px solid var(--glass-line);border-bottom:1px solid var(--glass-line);}
+  .npc-bubble.swap{opacity:0;transform:translateY(-4px);}
+  .npc-bubble b{color:var(--sky);}
+  .npc-meta{position:relative;z-index:3;margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;}
+  .npc-btn{font-family:inherit;font-size:12.5px;padding:7px 13px;border-radius:999px;cursor:pointer;
+    border:1px solid rgba(47,115,164,.32);background:var(--glass);color:var(--sky);backdrop-filter:blur(8px);transition:.18s;}
+  .npc-btn:hover{background:var(--sky);color:#fff;border-color:var(--sky);transform:translateY(-1px);}
+  .npc-name{position:relative;z-index:3;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--sub);}

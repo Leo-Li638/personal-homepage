@@ -1,0 +1,52 @@
+  /* ============ 城市地图（本地 Leaflet，assets/city-map.js） ============ */
+  .citymap{margin-top:22px;}
+  .citymap-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin-bottom:10px;}
+  .citymap-label{font-size:12.4px;font-weight:700;letter-spacing:.06em;color:var(--sky);}
+  .citymap-hint{margin-left:auto;font-size:12.1px;color:var(--sub);}
+  .citymap-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;}
+  .cm-chip{appearance:none;-webkit-appearance:none;min-height:36px;padding:7px 13px;border-radius:999px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:12.8px;
+    line-height:1.2;cursor:pointer;touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+  .cm-chip:hover{border-color:var(--sky);color:var(--sky);}
+  .cm-chip.is-campus{border-style:dashed;border-color:rgba(47,115,164,.5);color:var(--sky);}
+  .citymap-canvas{height:380px;border-radius:14px;border:1px solid var(--line);overflow:hidden;background:#e8edf1;
+    position:relative;}
+  /* 注意：不要给 .citymap-canvas 写 touch-action，Leaflet 会按 touch-drag / touch-zoom 自己管理 */
+  .citymap-compact .citymap-canvas{height:300px;}
+  .citymap-compact .citymap-hint{display:none;}
+  @media (max-width:640px){
+    .citymap-hint{display:none;}
+    .citymap-canvas{height:320px;}
+    .citymap-compact .citymap-canvas{height:280px;}
+    /* 手机上把气泡压紧一点，给自动平移留出余量 */
+    .cm-popup .leaflet-popup-content{margin:10px 12px 9px;font-size:12.4px;line-height:1.55;}
+    .cm-pop .cm-pop-name{font-size:14.6px;}
+    .cm-pop .cm-pop-go{min-height:34px;margin-top:7px;padding:5px 10px;font-size:12px;}
+  }
+  .city[aria-current="true"]{border-color:var(--sky);box-shadow:0 0 0 2px rgba(47,115,164,.16);}
+  /* 地图标记：36px 的透明命中区里放一颗小圆点，手指好点、视觉不臃肿 */
+  .cm-pin{display:flex;align-items:center;justify-content:center;background:none;border:0;}
+  .cm-pin i{display:block;width:16px;height:16px;border-radius:50%;background:var(--sky);
+    box-shadow:0 0 0 3px rgba(47,115,164,.22),0 2px 6px rgba(20,40,60,.3);}
+  .cm-pin-campus i{width:20px;height:20px;border-radius:6px;background:var(--gold);
+    box-shadow:0 0 0 3px rgba(185,120,24,.22),0 2px 6px rgba(20,40,60,.3);}
+  /* 弹窗：沿用站点卡片观感 */
+  .leaflet-container{font:inherit;background:#e8edf1;-webkit-tap-highlight-color:transparent;}
+  .cm-popup .leaflet-popup-content-wrapper{background:var(--card);color:var(--ink);
+    border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(30,55,80,.18);}
+  .cm-popup .leaflet-popup-tip{background:var(--card);border:1px solid var(--line);}
+  .cm-popup .leaflet-popup-content{margin:12px 14px 11px;font-size:13px;line-height:1.65;}
+  .cm-pop .cm-pop-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 8px;}
+  .cm-pop .cm-pop-tag{font-size:10.5px;font-weight:700;letter-spacing:.05em;padding:2px 7px;border-radius:999px;
+    background:rgba(47,115,164,.12);border:1px solid rgba(47,115,164,.3);color:var(--sky);}
+  .cm-pop .cm-pop-name{font-size:15.4px;}
+  .cm-pop .cm-pop-sub{font-size:11.4px;color:var(--sub);}
+  .cm-pop .cm-pop-addr{margin:6px 0 0;color:var(--sub);font-size:12.3px;overflow-wrap:anywhere;}
+  .cm-pop .cm-pop-note{margin:4px 0 0;color:var(--grass);font-size:12.1px;}
+  .cm-pop .cm-pop-go{display:inline-flex;align-items:center;min-height:36px;margin-top:9px;padding:6px 12px;
+    border-radius:999px;background:rgba(47,115,164,.12);border:1px solid rgba(47,115,164,.34);color:var(--sky);
+    font-size:12.3px;font-weight:650;text-decoration:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .cm-pop .cm-pop-go:hover{background:rgba(47,115,164,.2);}
+  .leaflet-control-zoom a{background:var(--card) !important;color:var(--ink) !important;border-color:var(--line) !important;}
+  .leaflet-control-attribution{background:rgba(255,255,255,.82) !important;color:#5b6b7b !important;font-size:11px !important;}

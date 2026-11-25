@@ -1,0 +1,17 @@
+<section class="block" id="cities"><div class="wrap">
+  <span class="eyebrow">Coverage</span>
+  <h2>我能去的城市，和暂时去不了的城市</h2>
+  <p class="sub">大多数单子远程就能解决，全国都能接；下面这些城市可以约当面。城市名单只维护一份数据（assets/site-data.js），两套主页共用同一份。</p>
+  <div class="cities" id="cityList"></div>
+  <noscript><p class="cities-note">东莞 · 广州 · 深圳 · 长春 · 上海 · 长沙（更多城市接入中，其余地区远程）</p></noscript>
+  <p class="cities-note" id="cityNote"></p>
+  <div class="citymap" id="cityMapBlock">
+    <div class="citymap-head">
+      <span class="citymap-label">MAP · 可约当面</span>
+      <span class="citymap-hint">点地名或地图标记定位，弹窗里可直接导航</span>
+    </div>
+    <div class="citymap-chips" id="cityMapChips"></div>
+    <div class="citymap-canvas" data-city-map data-lang="zh" role="region" aria-label="服务城市与长春师范大学校区分布地图"></div>
+    <noscript><style>.citymap-canvas{display:none}</style><p class="cities-note">地图需要 JavaScript，城市名单见上方卡片。</p></noscript>
+  </div>
+</div></section>

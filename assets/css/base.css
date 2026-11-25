@@ -1,0 +1,34 @@
+  :root{
+    --bg:#f3f7f0; --card:#ffffff; --ink:#20354a; --sub:#546b7d; --line:#dbe7d6;
+    --sky:#2f73a4; --sky2:#6db3dc; --grass:#477a40; --gold:#b97818; --tag:#eef6ee;
+    --shadow:0 10px 30px rgba(38,70,96,.10);
+    --mono:"SF Mono","Roboto Mono",ui-monospace,"Cascadia Code",Consolas,monospace;
+    --glass:rgba(255,255,255,.82); --glass-line:rgba(255,255,255,.75);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#08131c; --card:#0f1e2b; --ink:#e8f1f7; --sub:#9fb4c4; --line:#1e3344;
+      --sky:#7fc0e8; --sky2:#4c93bd; --grass:#7bbd72; --gold:#e0b062; --tag:#142536;
+      --shadow:0 10px 30px rgba(0,0,0,.4); --glass:rgba(12,26,38,.78); --glass-line:rgba(120,170,205,.22);}
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  .hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    padding:104px 24px 72px;background-image:url(/assets/mondstadt-hero.avif);
+    background-size:cover;background-position:center 30%;background-repeat:no-repeat;isolation:isolate;}
+  @media (max-width:640px){.hero{background-image:url(/assets/mondstadt-hero-small.avif);}}
+  .hero::before{content:"";position:absolute;inset:0;z-index:-1;
+    background:linear-gradient(102deg,rgba(247,250,245,.95) 0%,rgba(247,250,245,.88) 34%,rgba(247,250,245,.5) 62%,rgba(247,250,245,.16) 100%);}
+  @media (prefers-color-scheme: dark){
+    .hero::before{background:linear-gradient(102deg,rgba(8,18,27,.94) 0%,rgba(8,18,27,.86) 36%,rgba(8,18,27,.55) 66%,rgba(8,18,27,.3) 100%);}
+  }
+  .wrap{width:100%;max-width:1120px;margin:0 auto;}
+  .topbar{position:absolute;top:0;left:0;right:0;z-index:6;padding:18px 24px;}
+  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+  .brand{display:inline-flex;align-items:baseline;gap:2px;font-weight:800;font-size:19px;letter-spacing:.5px;color:var(--ink);text-decoration:none;}
+  .brand span{color:var(--sky);font-weight:600;font-size:15px;}
+  .tnav{display:flex;gap:18px;font-size:13.5px;}
+  .tnav a{color:var(--sub);text-decoration:none;padding:4px 2px;border-bottom:1px solid transparent;}
+  .tnav a:hover{color:var(--sky);border-bottom-color:var(--sky2);}
+  @media (max-width:720px){.tnav{display:none;}}

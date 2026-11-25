@@ -1,0 +1,45 @@
+  /* ---------- dance modal ---------- */
+  .modal{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:20px;
+    background:rgba(6,14,22,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .modal.on{display:flex;}
+  .modal-box{position:relative;width:min(560px,92vw);border-radius:20px;overflow:hidden;background:#050b12;
+    box-shadow:0 24px 70px rgba(0,0,0,.6);border:1px solid rgba(120,170,205,.28);}
+  .modal-box video{display:block;width:100%;height:auto;background:#050b12;}
+  .modal-cap{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;
+    background:rgba(8,19,28,.9);color:#cfe3f0;font-size:12.5px;border-top:1px solid rgba(120,170,205,.18);}
+  .modal-close{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;border:0;cursor:pointer;
+    background:rgba(6,14,22,.66);color:#fff;font-size:17px;line-height:1;backdrop-filter:blur(4px);}
+  .modal-close:hover{background:rgba(47,115,164,.9);}
+
+  /* mobile/tablet mascot: compact horizontal card */
+  @media (max-width:980px){
+    .npc-stage{height:auto;display:grid;grid-template-columns:150px minmax(0,1fr);
+      grid-template-rows:auto auto auto;column-gap:14px;row-gap:6px;align-items:center;justify-items:start;
+      padding:10px 4px 16px;margin:10px 0 16px;perspective:none;transform:none;}
+    .npc-glow{left:75px;bottom:6px;width:170px;height:170px;}
+    .npc-halo{left:75px;bottom:18px;width:140px;height:140px;}
+    .npc-figure{grid-column:1;grid-row:1 / span 3;width:100%;justify-self:center;align-self:end;}
+    .npc-shadow{display:none;}
+    .npc-bubble{grid-column:2;grid-row:1;margin:0 0 4px;max-width:none;font-size:12.4px;}
+    .npc-bubble::after{left:18px;}
+    .npc-meta{grid-column:2;grid-row:2;justify-content:flex-start;margin:0 0 4px;}
+    .npc-name{grid-column:2;grid-row:3;margin:0;text-align:left;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .entry,.art,.why .card,.btn,.npc-btn,.chip,.city{transition:none;}
+    .entry:hover,.art:hover,.why .card:hover,.city:hover,.btn:hover{transform:none;}
+    .npc-figure,.npc-figure img,.npc-glow,.npc-halo,.npc-shadow{animation:none !important;}
+    .npc-bubble{transition:none;}
+  }
+  @media (max-width:560px){
+    .hero{padding:82px 16px 52px;min-height:auto;}
+    .entries{gap:14px;}
+    .entry{padding:20px 18px 18px;border-radius:16px;}
+    .lead{font-size:14.5px;margin-bottom:24px;}
+    .npc-stage{grid-template-columns:118px minmax(0,1fr);column-gap:10px;}
+    .npc-glow{left:59px;width:140px;height:140px;}
+    .npc-halo{display:none;}
+    .npc-bubble{font-size:12.1px;padding:9px 11px;}
+    .npc-btn{font-size:11.5px;padding:6px 10px;}
+    section.block{padding:48px 16px;}
+  }

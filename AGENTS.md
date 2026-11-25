@@ -28,24 +28,54 @@
 |---|---|---|---|
 | `AGENTS.md` | 本契约 | lead | 提建议给 lead |
 | `src/pages/index.page.html` | 页面骨架，只含 `<!-- @include: … -->` 与少量容器 | lead | 提 PR |
-| `src/partials/head.meta.html` | `<head>` 内 meta / favicon / preload / JSON-LD | lead | 提 PR |
-| `src/partials/head.assets.html` | `<head>` 内样式与外链脚本引用 | lead | 提 PR |
-| `src/partials/*.html`（hero/cities/why/articles/about/footer 等） | 区块结构 | A | 拿锁后自改 |
+| `src/partials/head.meta.html` | `<head>` 内 meta / title / canonical / og / twitter / favicon / preload | lead | 提 PR |
+| `src/partials/head.assets.html` | `<head>` 内样式表引用（leaflet + 5 个 css，顺序固定） | lead | 提 PR |
+| `src/partials/scripts.html` | `</body>` 前的脚本引用与**加载顺序** | lead | 提 PR |
+| `src/partials/structured-data.html` | JSON-LD（含 `{{AREA_SERVED}}`） | lead | 提 PR |
+| `src/partials/header.html` `hero.html` `footer.html` `noscript.html` `dance-modal.html` | 区块结构 | A | 拿锁后自改 |
+| `src/partials/cities.html` `why.html` `articles.html` `about.html` | 区块结构 | A 建容器、B 填城市区数据 | 拿锁后自改 |
 | `assets/css/base.css` | 设计令牌、reset、顶栏、排版基线 | lead | 提 PR |
+| `assets/css/layout.css` | hero 两栏、看板娘舞台、动效降级与暂停 | A | 拿锁后自改 |
 | `assets/css/components.css` | 卡片/城市/文章/关于 等通用组件 | A | 拿锁后自改 |
 | `assets/css/mascot.css` | 看板娘与跳舞弹窗 | A | 拿锁后自改 |
 | `assets/css/map.css` | 地图与 Leaflet 覆盖样式 | B | 拿锁后自改 |
-| `assets/js/main.js` | 公共总线：`window.YI` 命名空间、语言切换广播、通用工具 | lead | 提 PR |
-| `assets/js/npc.js` | 看板娘台词/互动/跳舞弹窗 | A | 拿锁后自改 |
+| `assets/js/main.js` | 公共总线：`window.YI`（`reduce`/`sd`）、整站预取 | lead | 提 PR |
+| `assets/js/npc.js` | 看板娘台词/互动/视差/跳舞弹窗；导出 `YI.npc.start/stop` | A | 拿锁后自改 |
 | `assets/js/cities.js` | 城市卡片渲染、`#cityNote` 文案 | B | 拿锁后自改 |
 | `assets/city-map.js` | Leaflet 地图：瓦片、标记、chips、弹窗 | B | 拿锁后自改（**改名必须 lead 批准**：`tech.html`/`leisure.html` 也引用它） |
-| `assets/js/perf.js` | 视口外暂停动画、弱网降级、空闲预取 | C | 拿锁后自改 |
+| `assets/js/perf.js` | 视口外暂停动画、后台标签页停表、弱网降级、视频元数据预取 | C | 拿锁后自改 |
 | `assets/site-data.js` | **唯一数据源**：cities/campus/文章/项目 | B | 拿锁后自改；改城市必须同步 `llms.txt` 与 JSON-LD |
 | `assets/leaflet/**` | 本地 Leaflet 库（第三方，勿改） | B | 只允许整包替换 |
 | `tools/**` | 构建、锁、校验、冒烟、发布脚本 | lead | 提 PR |
 | `assets/*.avif` `*.png` `*.woff2` 等二进制 | 静态资源 | C | 同名替换前须备份 |
 
 **A = 骨架与样式；B = 数据与地图；C = 性能与资源；lead = 契约、总线、三张产物、发布。**
+
+### 2.1 当前首页的模块清单（v1.1 拆分后，可作为起手式）
+
+```
+src/pages/index.page.html          # 骨架：只含 head/body 与 include 指令
+src/partials/head.meta.html        # 24 行：meta / title / canonical / og / twitter / favicon / 2 个 avif preload
+src/partials/head.assets.html      #  6 行：leaflet.css + base/layout/components/mascot/map
+src/partials/header.html           #  9 行：顶栏
+src/partials/hero.html             # 57 行：首屏 + 看板娘舞台
+src/partials/cities.html           # 17 行：#cityList / #cityNote / #cityMapBlock>#cityMapChips / [data-city-map]
+src/partials/why.html              # 17 行：为什么找我
+src/partials/articles.html         # 61 行：文章/平台
+src/partials/about.html            # 16 行：关于
+src/partials/footer.html           # 11 行：页脚
+src/partials/noscript.html         # 11 行：无 JS 兜底入口
+src/partials/dance-modal.html      #  7 行：跳舞弹窗
+src/partials/structured-data.html  # 27 行：JSON-LD（含 {{AREA_SERVED}}）
+src/partials/scripts.html          #  7 行：7 个 script 的加载顺序
+
+assets/css/base.css(35) layout.css(70) components.css(119) mascot.css(46) map.css(52)
+assets/js/main.js(20) npc.js(95) cities.js(16) perf.js(52)  city-map.js(322, B)
+```
+
+加载顺序（`scripts.html`，**不可随意调换**）：
+`leaflet.js → site-data.js → js/main.js → js/npc.js → js/cities.js → js/perf.js → city-map.js`
+（`main` 建 `YI`；`npc` 依赖 `YI.reduce` 并导出 `YI.npc`；`perf` 依赖 `YI.npc`，缺失时静默降级；`city-map` 自轮询挂载，放最后。）
 
 ---
 
@@ -220,3 +250,4 @@ node tools/sync-deploy.mjs         # 真正同步：pull --ff-only → 复制白
 | 版本 | 日期 | 变更 | 作者 |
 |---|---|---|---|
 | v1.0 | 2026-11-25 | 首版：确立三条铁律、目录所有权、include 构建、DOM 契约、锁机制、G1–G6 闸门、发布流程 | lead |
+| v1.1 | 2026-11-25 | 完成首页拆分并据实修正：补 `assets/css/layout.css`、`src/partials/scripts.html`、`structured-data.html`；首页确认单语无 `#langBtn`；`npc.js` 导出 `YI.npc.start/stop` 供 `perf.js` 复用；补 §2.1 模块清单与脚本加载顺序 | lead |
