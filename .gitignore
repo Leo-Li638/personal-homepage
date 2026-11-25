@@ -1,4 +1,16 @@
-.posts_snapshots/
-
 # 备份目录：不进版本库（避免 Pages 发布重复页面伤害 SEO）
 _bak_*/
+.posts_snapshots/
+
+# 测试产物
+tests/shots/
+
+# 并行协作锁（本地状态，不入库）
+.coordination/
+
+# 历史垃圾目录（脚本曾把 %SystemDrive% 当目录名创建）
+%SystemDrive%/
+
+# 本地静态服日志
+serve.log
+serve.err.log

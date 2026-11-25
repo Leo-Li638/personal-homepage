@@ -26,6 +26,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%233d7fb5'/%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M50 48 L50 14 A34 34 0 0 1 71.5 22.5 Z'/%3E%3Cpath d='M52 50 L86 50 A34 34 0 0 1 77.5 71.5 Z' opacity='.82'/%3E%3Cpath d='M50 52 L50 86 A34 34 0 0 1 28.5 77.5 Z'/%3E%3Cpath d='M48 50 L14 50 A34 34 0 0 1 22.5 28.5 Z' opacity='.82'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='9' fill='%23d9a53a'/%3E%3C/svg%3E">
 <link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero.avif" media="(min-width:641px)">
 <link rel="preload" as="image" type="image/avif" href="assets/mondstadt-hero-small.avif" media="(max-width:640px)">
+<link rel="stylesheet" href="assets/leaflet/leaflet.css">
 <style>
   /* QQ/微信 内置浏览器提示条 */
   #qqBrowserTip{position:fixed;left:12px;right:12px;bottom:12px;z-index:10080;display:flex;align-items:flex-start;gap:9px;
@@ -721,6 +722,47 @@
   footer .fver{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(120,150,180,.18);font-size:12.5px;}
   footer .fver a{color:var(--sky);text-decoration:none;}
   footer .fver a:hover{text-decoration:underline;}
+
+  /* ============ 城市地图（本地 Leaflet，assets/city-map.js） ============ */
+  .citymap{margin:16px 0 4px;}
+  .citymap-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 10px;margin-bottom:9px;}
+  .citymap-label{font-size:12px;font-weight:700;letter-spacing:.05em;color:var(--sky);}
+  .citymap-hint{margin-left:auto;font-size:11.8px;color:var(--sub);}
+  .citymap-chips{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 9px;}
+  .cm-chip{appearance:none;-webkit-appearance:none;min-height:36px;padding:6px 12px;border-radius:999px;
+    border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:12.5px;
+    line-height:1.2;cursor:pointer;touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
+  .cm-chip:hover{border-color:var(--sky);color:var(--sky);}
+  .cm-chip.is-campus{border-style:dashed;border-color:rgba(47,115,164,.5);color:var(--sky);}
+  .citymap-canvas{height:300px;border-radius:12px;border:1px solid var(--line);overflow:hidden;background:#e8edf1;position:relative;}
+  /* 不要给 .citymap-canvas 写 touch-action：Leaflet 按 touch-drag / touch-zoom 自行管理 */
+  @media (max-width:640px){ .citymap-hint{display:none;} .citymap-canvas{height:290px;}
+    .cm-popup .leaflet-popup-content{margin:9px 11px 8px;font-size:12.2px;line-height:1.55;}
+    .cm-pop .cm-pop-go{min-height:34px;margin-top:7px;padding:5px 10px;} }
+  .leaflet-container{font:inherit;background:#e8edf1;-webkit-tap-highlight-color:transparent;}
+  .cm-pin{display:flex;align-items:center;justify-content:center;background:none;border:0;}
+  .cm-pin i{display:block;width:16px;height:16px;border-radius:50%;background:var(--sky);
+    box-shadow:0 0 0 3px rgba(47,115,164,.22),0 2px 6px rgba(20,40,60,.3);}
+  .cm-pin-campus i{width:20px;height:20px;border-radius:6px;background:var(--gold);
+    box-shadow:0 0 0 3px rgba(185,120,24,.22),0 2px 6px rgba(20,40,60,.3);}
+  .cm-popup .leaflet-popup-content-wrapper{background:var(--card);color:var(--ink);
+    border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(30,55,80,.18);}
+  .cm-popup .leaflet-popup-tip{background:var(--card);border:1px solid var(--line);}
+  .cm-popup .leaflet-popup-content{margin:11px 13px 10px;font-size:12.6px;line-height:1.65;}
+  .cm-pop .cm-pop-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;}
+  .cm-pop .cm-pop-tag{font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:999px;
+    background:rgba(47,115,164,.12);border:1px solid rgba(47,115,164,.3);color:var(--sky);}
+  .cm-pop .cm-pop-name{font-size:14.8px;}
+  .cm-pop .cm-pop-sub{font-size:11.2px;color:var(--sub);}
+  .cm-pop .cm-pop-addr{margin:5px 0 0;color:var(--sub);font-size:12px;overflow-wrap:anywhere;}
+  .cm-pop .cm-pop-note{margin:4px 0 0;color:var(--grass);font-size:11.8px;}
+  .cm-pop .cm-pop-go{display:inline-flex;align-items:center;min-height:36px;margin-top:8px;padding:6px 11px;
+    border-radius:999px;background:rgba(47,115,164,.12);border:1px solid rgba(47,115,164,.34);color:var(--sky);
+    font-size:12px;font-weight:650;text-decoration:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
+  .cm-pop .cm-pop-go:hover{background:rgba(47,115,164,.2);}
+  .leaflet-control-zoom a{background:var(--card) !important;color:var(--ink) !important;border-color:var(--line) !important;}
+  .leaflet-control-attribution{background:rgba(255,255,255,.82) !important;color:#5b6b7b !important;font-size:10.5px !important;}
 </style>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
 <script defer src="preloader.js"></script>
@@ -1276,6 +1318,7 @@ function ssDel(k){ try{ window.sessionStorage.removeItem(k); }catch(e){} }
     <div class="show-hint" id="npc-show-hint">点击画面任意处关闭</div>
   </div>
 </div>
+<script src="assets/leaflet/leaflet.js"></script>
 <script src="assets/site-data.js"></script>
 <script>
 /* ===================== 双语数据源（单一真源，改一处两边同步） ===================== */
@@ -3299,5 +3342,6 @@ function renderContent(t){
   setTimeout(tryShow,9000);
 })();
 </script>
+<script src="assets/city-map.js"></script>
 </body>
 </html>
