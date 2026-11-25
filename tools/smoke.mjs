@@ -196,30 +196,17 @@ async function run() {
     }
   }
 
-  // 语言切换冒烟（仅在 index 时做一次，桌面尺寸）
+  // 首页是单语（zh）：确认没有语言切换残留、地图锚点 data-lang 固定为 zh
   if (!ONLY.length || ONLY.includes('index')) {
     await send('Emulation.setDeviceMetricsOverride', { width: 1366, height: 900, deviceScaleFactor: 1, mobile: false });
     await send('Page.navigate', { url: BASE + '/index.html' });
     await sleep(2200);
     await dismissPreloader();
     await sleep(800);
-    const before = await evl("(document.querySelector('#cityList .city b')||{}).textContent || ''");
-    const hasBtn = await evl("!!document.getElementById('langBtn')");
-    if (hasBtn) {
-      await evl("(() => { localStorage.setItem('lang','en'); return true; })()");
-      await send('Page.navigate', { url: BASE + '/index.html' });
-      await sleep(2200);
-      await dismissPreloader();
-      await sleep(1400);
-      const after = await evl("(document.querySelector('#cityList .city b')||{}).textContent || ''");
-      const chipsEn = await evl("document.querySelectorAll('#cityMapChips .cm-chip').length");
-      const pinsEn = await evl("document.querySelectorAll('[data-city-map] .cm-pin').length");
-      await shot('index-desktop-en-full');
-      report.lang = { before, after, chipsEn, pinsEn };
-      if (before === after) report.failures.push(`lang: 切换英文后城市名未变化（${before}）`);
-      if (chipsEn < 7 || pinsEn < 7) report.failures.push(`lang: 英文态地图 chips=${chipsEn} pins=${pinsEn} < 7`);
-      await evl("(() => { localStorage.setItem('lang','zh'); return true; })()");
-    }
+    const lang = await evl("(() => ({ html: document.documentElement.lang, mapLang: (document.querySelector('[data-city-map]')||{}).getAttribute ? document.querySelector('[data-city-map]').getAttribute('data-lang') : null, hasBtn: !!document.getElementById('langBtn') }))()");
+    report.lang = lang;
+    if (!/^zh/.test(lang.html)) report.failures.push(`lang: <html lang> 应为 zh，实际 ${lang.html}`);
+    if (lang.hasBtn) report.failures.push('lang: 首页不应出现语言切换按钮（单语设计）');
   }
 
   await send('Target.closeTarget', { targetId }).catch(() => {});
