@@ -15,7 +15,8 @@ const STRICT = argv.includes('--strict');
 const ONLY = (arg('pages', '') || '').split(',').map(s => s.trim()).filter(Boolean);
 const VIEWPORT = { width: 1366, height: 900, dsf: 1 };
 const PAGES = [
-  { path: '/index.html', name: 'index', settle: 800, quiet: 6000 },
+  // settle 4.5s：首页空闲预取（requestIdleCallback timeout 4000）会拉一次视频元数据，等它发生再结算
+  { path: '/index.html', name: 'index', settle: 4500, quiet: 6000 },
   { path: '/tech.html', name: 'tech', settle: 600, quiet: 4000 },
   { path: '/leisure.html', name: 'leisure', settle: 600, quiet: 4000 },
   // 两个图片密集的项目页：用于验证本轮图片压缩的实际收益（不参与首页预算）
@@ -93,6 +94,9 @@ async function measure(pg) {
   await send('Network.enable');
   await send('Network.setCacheDisabled', { cacheDisabled: true });  // 冷缓存口径，避免第二次跑偏小
   await send('Runtime.enable');
+  // 新 target 默认在后台（document.hidden=true），页面里的空闲预取会被跳过；
+  // 置前才能复现「用户真的在看首页」时的网络行为（尤其 preload=metadata 的视频）。
+  await send('Page.bringToFront').catch(() => {});
   const evl = async expr => {
     const r = await send('Runtime.evaluate', { expression: expr, returnByValue: true, awaitPromise: true });
     return r.result ? r.result.value : undefined;

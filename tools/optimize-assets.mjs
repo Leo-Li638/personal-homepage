@@ -14,7 +14,7 @@
  * 策略表（与 2026-11-25 的 C 角色压缩结果一一对应，改策略就在这里改）：
  *   jpg  -q:v 4~7 + 原色度采样；og-cover 额外限制 ≤120KB
  *   webp -quality 60（原 305KB → 78%）
- *   png  -8 色调色板 + 无抖动（水彩插画实测 34%，抖动会引入可辨的颗粒）
+ *   png  -8 色调色板 + 无抖动（PNG 唯一可行手段；带 alpha 的会丢透明，见下方 SKIP）
  *
  * 说明：任务要求 >150KB，但 turbocore-0*.jpg / deep-space-*.jpg 也被点名关注，
  *       因此默认阈值取 100KB 一并评估；avif/mp4/glb 永远跳过。
@@ -46,9 +46,8 @@ const JPG_Q = {
 };
 const JPG_PIX = { 'deep-space-chart.jpg': 'yuvj444p' };
 const WEBP_Q = { 'mondstadt-hero.webp': 60 };
-const PNG_RULE = {
-  'article-site-hero.png': { colors: 256, dither: 'none' },
-};
+// 当前 assets 下无 >100KB 的 PNG；如再出现，默认 256 色调色板 + 无抖动
+const PNG_RULE = {};
 /* 明确跳过 + 原因（会打印到表格里，报告直接引用） */
 const SKIP = {
   'npc_maid.png': 'rgba 立绘，调色板化会丢 alpha（ffmpeg 限制），保持无损',
