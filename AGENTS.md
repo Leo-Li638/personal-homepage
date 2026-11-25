@@ -196,14 +196,22 @@ node tools/lock.mjs release assets/js/main.js --agent b
 
 ## 7. 验收闸门（合并前必须全绿）
 
+一条命令跑完 G1–G4 与 G6（自动起 8098 端口静态服、复用 9333 的 Chrome，最后列出 G5 截图清单）：
+
+```powershell
+node tools/merge-gate.mjs                      # 全绿输出 GATE PASS
+node tools/merge-gate.mjs --base http://127.0.0.1:8099   # 复用已有服务
+node tools/merge-gate.mjs --skip g4            # 临时跳过冒烟（仅限定位问题）
+```
+
 | 闸门 | 命令 | 通过标准 |
 |---|---|---|
 | G1 产物一致 | `node tools/build.mjs --check` | 退出码 0，无 "产物过期" |
 | G2 城市数据一致 | `node tools/check-city-consistency.mjs` | 输出「全部通过。」 |
 | G3 所有权合规 | `node tools/check-ownership.mjs` | 无越权改动（对比 `integration`） |
 | G4 浏览器冒烟 | `node tools/smoke.mjs --strict` | `SMOKE PASS`，0 console error，0 异常，无横向溢出 |
-| G5 视觉不回退 | 对比 `tests/shots/*-full.png` 与基线 `..\_baseline_<date>\` | 差异仅限本次预期改动 |
-| G6 发布红线 | `node tools/sync-deploy.mjs --dry` | `CNAME` 仍为 `xn--4gq.chat`，`llms.txt`/`sitemap.xml`/`robots.txt` 未被意外改动 |
+| G5 视觉不回退 | 对比 `tests/shots/*-full.png` 与基线 `..\_baseline_20261125\` | 差异仅限本次预期改动 |
+| G6 发布红线 | `.coordination/publish-baseline.json` 的 sha256 比对 + CNAME 断言 | 红线文件未变，`CNAME` = `xn--4gq.chat` |
 
 G1–G6 的证据（命令输出 + 截图）贴在合并说明里；缺证据的 PR 不合。
 
