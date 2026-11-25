@@ -20,6 +20,7 @@
     }, {threshold:0}).observe(stage);
     document.addEventListener('visibilitychange', function(){
       stage.classList.toggle('is-paused', document.hidden || offscreen);
+      /* YI.npc 不存在（npc.js 未加载/被阻断）时 npcStop/npcStart 内部已判空，静默跳过 */
       if(document.hidden){
         npcStop();
       }else{
@@ -44,14 +45,22 @@
   })();
 
   /* ---------- 空闲时只预取视频元数据（不下载整段视频） ---------- */
+  /* 幂等保护：已有 src / 已开始加载 / 页面隐藏时不重复触发，避免隐藏标签页偷跑流量 */
   function prefetchDance(){
-    if(!video || video.getAttribute('src')) return;
+    if(!video || video.getAttribute('src') || video.readyState > 0 || document.hidden) return;
     var c = navigator.connection || {};
     if(c.saveData || /^(slow-2g|2g|3g)$/.test(c.effectiveType || '')) return;
     video.preload = 'metadata';
     video.setAttribute('src', 'assets/npc_dance_web.mp4');
     try{ video.load(); }catch(e){}
   }
+  function prefetchDanceWhenVisible(){
+    if(document.hidden) return; /* 恢复可见后由 visibilitychange 再补一次 */
+    prefetchDance();
+  }
+  document.addEventListener('visibilitychange', function(){
+    if(!document.hidden) prefetchDanceWhenVisible();
+  });
   if('requestIdleCallback' in window){
     requestIdleCallback(prefetchDance, {timeout:4000});
   }else{
