@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://xn--4gq.chat/sitemap.xml
