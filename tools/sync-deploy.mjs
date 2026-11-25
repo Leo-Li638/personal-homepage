@@ -19,11 +19,29 @@ const EXPECT_CNAME = 'xn--4gq.chat';
 const RED_LINE = ['CNAME', 'robots.txt', 'sitemap.xml', 'llms.txt', '404.html', '_headers'];
 const FORBIDDEN_TRACKED = [/^_bak_/, /^%SystemDrive%/, /\.log$/];
 
+// 本机的 github.com 走 hosts 指向的本地代理，HTTP/2 会被重置：
+// `error: RPC failed; curl 55 Recv failure: Connection was reset`。
+// 所有联网操作（push / pull）统一降到 HTTP/1.1 并放大 postBuffer，重试一次。
+const NET_CFG = ['-c', 'http.version=HTTP/1.1', '-c', 'http.postBuffer=157286400'];
 const run = (cwd, args, dryRun = false) => {
   const cmd = 'git ' + args.join(' ');
   if (dryRun) { console.log(`   [dry] ${cmd}`); return ''; }
   return execFileSync('git', args, { cwd, encoding: 'utf8' }).trim();
 };
+
+function runNet(cwd, args, dryRun = false) {
+  const tries = 2;
+  for (let i = 1; i <= tries; i++) {
+    try {
+      return run(cwd, [...NET_CFG, ...args], dryRun);
+    } catch (e) {
+      const msg = String((e.stderr || '') + (e.stdout || ''));
+      const transient = /Connection was reset|RPC failed|early EOF|Recv failure/i.test(msg);
+      if (i === tries || !transient) throw e;
+      console.log(`  … 网络抖动，重试 ${i}/${tries - 1}：${args.join(' ')}`);
+    }
+  }
+}
 const sha = f => existsSync(f) ? createHash('sha256').update(readFileSync(f)).digest('hex') : null;
 const step = t => console.log(`\n== ${t} ==`);
 const die = m => { console.error('\n✗ ' + m); process.exit(1); };
@@ -81,7 +99,7 @@ const localHead = run(ROOT, ['rev-parse', 'HEAD']);
 const remoteHead = run(ROOT, ['rev-parse', 'origin/master']);
 if (localHead !== remoteHead) {
   console.log(`  · master 领先远端 ${run(ROOT, ['rev-list', '--count', 'origin/master..HEAD'])} 个提交`);
-  run(ROOT, ['push', 'origin', 'master'], DRY);
+  runNet(ROOT, ['push', 'origin', 'master'], DRY);
 } else {
   console.log('  ✓ origin/master 已是最新');
 }
@@ -91,7 +109,7 @@ if (!existsSync(join(DEPLOY, '.git'))) die(`deploy 目录不是 git 仓库：${D
 const dStatus = run(DEPLOY, ['status', '--porcelain']);
 if (dStatus) die(`deploy 目录有未提交改动（只读镜像禁止手改！先备份后还原）：\n${dStatus}`);
 console.log('  ✓ deploy 工作区干净');
-run(DEPLOY, ['pull', '--ff-only'], DRY);
+runNet(DEPLOY, ['pull', '--ff-only'], DRY);
 
 if (!DRY) {
   const dHead = run(DEPLOY, ['rev-parse', 'HEAD']);
