@@ -29,21 +29,27 @@
   .chip.more{color:var(--sky);border-color:rgba(47,115,164,.4);font-weight:600;}
 
   /* ---------- 服务城市（数据来自 assets/site-data.js，单一数据源） ---------- */
-  .cities{display:grid;grid-template-columns:repeat(auto-fit,minmax(154px,1fr));gap:12px;}
-  .city{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border-radius:14px;
+  /* 240px 起跳 + auto-fit：1/2/3/4 列随容器自动收敛；grid 默认拉伸使同一行卡片等高 */
+  .cities{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;align-items:stretch;}
+  .city{display:flex;flex-direction:column;gap:2px;min-height:100%;padding:16px 18px;border-radius:14px;
     background:var(--card);border:1px solid var(--line);transition:transform .2s ease,border-color .2s ease;}
   .city:hover{transform:translateY(-2px);border-color:var(--sky2);}
   .city b{font-size:16px;line-height:1.3;}
   .city span{font-size:11.5px;color:var(--sub);font-family:var(--mono);letter-spacing:.06em;}
-  .city em{font-style:normal;margin-top:6px;font-size:12.4px;color:var(--sub);}
-  .city.is-soon{opacity:.5;border-style:dashed;background:transparent;cursor:not-allowed;}
-  .city.is-soon:hover{transform:none;border-color:var(--line);}
+  /* em 吸底：等高卡片里说明文字底部对齐，不随卡片内文本行数上下浮动 */
+  .city em{font-style:normal;margin-top:auto;padding-top:6px;font-size:12.4px;color:var(--sub);}
+  /* 未开通城市：虚线描边 + 降权色，但不用整体 opacity（opacity:.5 时正文对比度仅 2.1:1）；
+     改用 --sub（浅色卡片 5.6:1 / 深色 7.9:1）保留“次要”观感同时达到 4.5:1 */
+  .city.is-soon{opacity:1;border-style:dashed;border-color:var(--line);background:transparent;
+    color:var(--sub);cursor:not-allowed;}
+  .city.is-soon b,.city.is-soon span{color:var(--sub);font-weight:600;}
+  .city.is-soon:hover{transform:none;border-color:var(--line);box-shadow:none;}
   /* 校区卡（长春师范大学）：独立标记，整卡可点，手机点开直接进系统地图 */
-  .city.campus{border-style:dashed;border-color:rgba(47,115,164,.42);text-decoration:none;color:inherit;
+  .city.campus{border:1.5px dashed var(--sky);background:var(--tag);text-decoration:none;color:inherit;
     touch-action:manipulation;-webkit-tap-highlight-color:transparent;
     user-select:none;-webkit-user-select:none;}
-  .city.campus:hover{transform:translateY(-2px);border-color:var(--sky);}
-  .city.campus b{font-size:15.4px;}
+  .city.campus:hover{transform:translateY(-2px);border-color:var(--sky);box-shadow:0 8px 22px rgba(47,115,164,.14);}
+  .city.campus b{font-size:15.4px;color:var(--sky);}
   .city.campus em{overflow-wrap:anywhere;word-break:break-word;}
   .city.campus .campus-go{margin-top:8px;font-style:normal;font-size:12.2px;font-weight:650;color:var(--sky);}
   .cities-note{margin:14px 0 0;font-size:12.8px;color:var(--sub);}
@@ -116,3 +122,24 @@
   footer a{color:var(--sky);text-decoration:none;}
   footer a:hover{text-decoration:underline;}
   .flinks{display:flex;flex-wrap:wrap;gap:16px;}
+
+  /* ---------- 键盘可达性 ---------- */
+  /* 统一焦点环：2px 实线 + 2px 偏移，颜色走 --ink（浅色深墨 / 深色浅青，均 ≥ 4.5:1） */
+  :where(a,button,[tabindex],input,select,textarea,summary):focus-visible{
+    outline:2px solid var(--ink);outline-offset:2px;
+  }
+  /* 跳转到服务城市：默认视觉隐藏（移出视野 + 透明），键盘聚焦时立刻出现 */
+  .skip{position:fixed;left:12px;top:12px;z-index:55;padding:10px 16px;border-radius:10px;
+    display:inline-flex;align-items:center;min-height:44px;min-width:44px;
+    background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:700;text-decoration:none;
+    box-shadow:var(--shadow);transform:translateY(-160%);opacity:0;pointer-events:none;
+    transition:transform .16s ease,opacity .16s ease;}
+  .skip:focus,.skip:focus-visible{transform:none;opacity:1;pointer-events:auto;}
+  /* 跳转落点：容器接受程序化焦点（读屏可续读），但不给整块区域画焦点环 */
+  .block:focus{outline:none;}
+
+  /* 触屏命中区 ≥44×44（WCAG 2.5.5）；.chip 原本是行内元素，需 inline-flex 才能吃到 min-height */
+  @media (max-width:1024px), (pointer:coarse){
+    .btn,.chip,.plat a{min-height:44px;}
+    .chip{display:inline-flex;align-items:center;justify-content:center;}
+  }
