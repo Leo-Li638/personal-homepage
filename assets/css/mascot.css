@@ -11,8 +11,8 @@
     background:rgba(6,14,22,.66);color:#fff;font-size:17px;line-height:1;backdrop-filter:blur(4px);}
   .modal-close:hover{background:rgba(47,115,164,.9);}
 
-  /* mobile/tablet mascot: compact horizontal card */
-  @media (max-width:980px){
+  /* mobile/tablet mascot: compact horizontal card（断点与 .hero-grid 同步，≤1024） */
+  @media (max-width:1024px){
     .npc-stage{height:auto;display:grid;grid-template-columns:150px minmax(0,1fr);
       grid-template-rows:auto auto auto;column-gap:14px;row-gap:6px;align-items:center;justify-items:start;
       padding:10px 4px 16px;margin:10px 0 16px;perspective:none;transform:none;}
@@ -25,9 +25,11 @@
     .npc-meta{grid-column:2;grid-row:2;justify-content:flex-start;margin:0 0 4px;}
     .npc-name{grid-column:2;grid-row:3;margin:0;text-align:left;}
   }
+  /* 减少动效：禁用所有 hover 位移/缩放与装饰动画，保留可读性（不改变布局与颜色） */
   @media (prefers-reduced-motion:reduce){
-    .entry,.art,.why .card,.btn,.npc-btn,.chip,.city{transition:none;}
-    .entry:hover,.art:hover,.why .card:hover,.city:hover,.btn:hover{transform:none;}
+    html{scroll-behavior:auto;}
+    .entry,.entry::after,.art,.why .card,.btn,.npc-btn,.chip,.plat a,.city,.go,.modal-close,.skip{transition:none;}
+    .entry:hover,.art:hover,.why .card:hover,.city:hover,.btn:hover,.chip:hover,.plat a:hover,.npc-btn:hover{transform:none;}
     .npc-figure,.npc-figure img,.npc-glow,.npc-halo,.npc-shadow{animation:none !important;}
     .npc-bubble{transition:none;}
   }
@@ -39,7 +41,21 @@
     .npc-stage{grid-template-columns:118px minmax(0,1fr);column-gap:10px;}
     .npc-glow{left:59px;width:140px;height:140px;}
     .npc-halo{display:none;}
-    .npc-bubble{font-size:12.1px;padding:9px 11px;}
+    .npc-bubble{max-width:min(78vw,320px);font-size:12.1px;padding:9px 11px;}
     .npc-btn{font-size:11.5px;padding:6px 10px;}
     section.block{padding:48px 16px;}
+  }
+  @media (max-width:420px){
+    .hero{padding:78px 14px 46px;}
+    .npc-stage{grid-template-columns:104px minmax(0,1fr);column-gap:8px;}
+    .npc-glow{left:52px;width:120px;height:120px;}
+    .npc-bubble{font-size:11.8px;padding:8px 10px;}
+    .npc-btn{font-size:11px;padding:6px 9px;}
+    .entry{padding:18px 15px 16px;}
+    section.block{padding:44px 14px;}
+  }
+  /* 触屏命中区 ≥44×44（WCAG 2.5.5）：看板娘按钮与弹窗关闭钮 */
+  @media (max-width:1024px), (pointer:coarse){
+    .npc-btn{min-height:44px;min-width:44px;}
+    .modal-close{width:44px;height:44px;top:8px;right:8px;font-size:19px;}
   }

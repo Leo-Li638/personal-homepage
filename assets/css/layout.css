@@ -1,6 +1,8 @@
   /* ---------- hero two-column ---------- */
+  /* 两栏只在 >1024px 生效：1024 及以下（iPad 横竖屏、手机）统一单栏，
+     看板娘作为横向卡片排在导语与 CTA 之间，不与 .entries/.chips 争列宽 */
   .hero-grid{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:28px;align-items:center;align-content:center;}
-  @media (max-width:980px){
+  @media (max-width:1024px){
     .hero-grid{grid-template-columns:1fr;gap:0;}
     .hero-copy{display:contents;}
     .hero-grid .kicker{order:1;align-self:flex-start;}
@@ -17,13 +19,18 @@
   .kicker i{width:7px;height:7px;border-radius:50%;background:#3fae5a;box-shadow:0 0 0 4px rgba(63,174,90,.16);display:inline-block;}
   h1{margin:0 0 14px;font-size:clamp(30px,5.4vw,54px);line-height:1.16;letter-spacing:-.5px;font-weight:800;}
   h1 .thin{display:block;font-size:clamp(17px,2.4vw,23px);font-weight:600;color:var(--sub);letter-spacing:0;margin-top:8px;}
+  /* 小屏：标题跟随 vw 收窄，避免 390/360/320 上顿挫换行 */
+  @media (max-width:420px){
+    h1{font-size:clamp(24px,7.4vw,30px);letter-spacing:-.4px;}
+    h1 .thin{font-size:clamp(15px,4.2vw,17px);margin-top:6px;}
+  }
   .lead{max-width:620px;margin:0 0 30px;font-size:15.5px;color:var(--sub);}
   .lead b{color:var(--ink);}
 
   /* ---------- 看板娘 stage ---------- */
   .npc-stage{position:relative;height:440px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
     perspective:800px;user-select:none;}
-  @media (max-width:980px){
+  @media (max-width:1024px){
     .npc-stage{height:300px;margin:4px 0 10px;transform:none;}
   }
   .npc-glow{position:absolute;left:50%;bottom:34px;width:300px;height:300px;transform:translateX(-50%);
