@@ -23,7 +23,16 @@ const glob2re = g => new RegExp('^' + g
 const OWNERS = {
   lead: ['**'],
   a: [
-    'src/partials/*.html',
+    'src/partials/header.html',
+    'src/partials/hero.html',
+    'src/partials/cities.html',
+    'src/partials/why.html',
+    'src/partials/articles.html',
+    'src/partials/about.html',
+    'src/partials/footer.html',
+    'src/partials/noscript.html',
+    'src/partials/dance-modal.html',
+    'assets/css/layout.css',
     'assets/css/components.css',
     'assets/css/mascot.css',
     'assets/js/npc.js',
@@ -39,20 +48,34 @@ const OWNERS = {
   ],
   c: [
     'assets/js/perf.js',
-    'assets/css/**',
     'assets/**/*.avif',
+    'assets/**/*.jpg',
+    'assets/**/*.jpeg',
     'assets/**/*.png',
     'assets/**/*.webp',
+    'assets/**/*.mp4',
     'assets/**/*.woff2',
+    'assets/*.avif',
+    'assets/*.jpg',
+    'assets/*.jpeg',
+    'assets/*.png',
+    'assets/*.webp',
+    'assets/*.mp4',
+    'assets/*.woff2',
     'tools/optimize-assets.mjs',
     'tools/perf-budget.mjs',
+    'tools/serve.mjs',
+    '_bak_*/**',
+    '_shot*',
+    '_npc_*',
   ],
 };
 
-// 任何非 lead 都不许碰（产物 / 发布红线 / 构建设施）
+// 任何非 lead 都不许碰（产物 / 发布红线 / 构建设施）。
+// 例外：若某文件同时出现在该 agent 的 OWNERS 白名单里（如 C 被授权的 tools/serve.mjs），则以白名单为准。
 const FORBIDDEN_NON_LEAD = [
   'index.html', 'tech.html', 'leisure.html', 'CNAME', 'robots.txt', 'sitemap.xml', 'llms.txt',
-  '404.html', '_headers', 'tools/*.mjs', 'src/pages/*', 'assets/js/main.js', 'assets/css/base.css',
+  '404.html', '_headers', 'src/pages/*', 'assets/js/main.js', 'assets/css/base.css',
   'AGENTS.md', 'package.json',
 ];
 
@@ -94,11 +117,12 @@ const violations = [];
 const warnings = [];
 
 for (const f of files) {
-  if (forbidden.some(re => re.test(f))) {
+  const ok = allowed.some(re => re.test(f));
+  if (!ok && forbidden.some(re => re.test(f))) {
     violations.push(`${f} — 禁止非 lead 修改（产物/发布红线/构建设施）`);
     continue;
   }
-  if (!allowed.some(re => re.test(f))) {
+  if (!ok) {
     violations.push(`${f} — 不在 ${agent} 的 Owner 范围内`);
   }
 }
@@ -108,7 +132,7 @@ if (files.includes('assets/site-data.js')) {
   warnings.push('改了 assets/site-data.js：记得同步 llms.txt / sitemap.xml，并跑 node tools/check-city-consistency.mjs');
 }
 if (files.some(f => f.startsWith('src/partials/') || f.startsWith('src/pages/'))) {
-  warnings.push('改了 src/：提交前必须 node tools/build.mjs 并一起提交产物');
+  warnings.push('改了 src/：提交前必须 node tools/build.mjs --check 通过；index.html 由 lead 在合并后统一重新生成，分支里不要提交产物（git restore index.html）');
 }
 
 if (violations.length) {

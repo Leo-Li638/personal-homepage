@@ -46,8 +46,9 @@
 | `assets/js/perf.js` | 视口外暂停动画、后台标签页停表、弱网降级、视频元数据预取 | C | 拿锁后自改 |
 | `assets/site-data.js` | **唯一数据源**：cities/campus/文章/项目 | B | 拿锁后自改；改城市必须同步 `llms.txt` 与 JSON-LD |
 | `assets/leaflet/**` | 本地 Leaflet 库（第三方，勿改） | B | 只允许整包替换 |
-| `tools/**` | 构建、锁、校验、冒烟、发布脚本 | lead | 提 PR |
-| `assets/*.avif` `*.png` `*.woff2` 等二进制 | 静态资源 | C | 同名替换前须备份 |
+| `tools/**` | 构建、锁、校验、冒烟、发布脚本 | lead | 提 PR（例外见下） |
+| `tools/optimize-assets.mjs` `tools/perf-budget.mjs` `tools/serve.mjs` | 资源压缩、性能预算、本地带 gzip 的静态服 | C | 拿锁后自改 |
+| `assets/*.avif` `*.png` `*.jpg` `*.webp` `*.mp4` `*.woff2` 等二进制 | 静态资源 | C | 同名替换前须备份到 `..\_bak_assets_<date>\` |
 
 **A = 骨架与样式；B = 数据与地图；C = 性能与资源；lead = 契约、总线、三张产物、发布。**
 
