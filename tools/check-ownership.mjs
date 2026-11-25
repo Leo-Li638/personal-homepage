@@ -83,11 +83,30 @@ function sh(args) {
   return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
 }
 
+// 注意：不能对 `git status --porcelain` 的输出做 trim()。
+// 未暂存改动的状态行是 " M path"，首行恰好以空格开头；trim 掉首部空格后
+// 再 slice(3) 就多吃一个字符，产出 "ssets/css/components.css" 这种幻影路径。
+// 这里改用 -z（NUL 分隔、不转义不引号）逐条解析，路径里带空格/中文也安全。
+function statusFiles() {
+  let out = '';
+  try {
+    out = execFileSync('git', ['status', '--porcelain', '-z'], { cwd: ROOT, encoding: 'utf8' });
+  } catch { return []; }
+  const parts = out.split('\0').filter(Boolean);
+  const names = [];
+  for (const p of parts) {
+    // "XY <path>" 是状态条目；重命名的另一侧是没有状态前缀的裸路径
+    const isEntry = /^[ MADRCU?!]{2} /.test(p);
+    names.push(isEntry ? p.slice(3) : p);
+  }
+  return names;
+}
+
 function changedFiles(base) {
   const files = new Set();
   const add = s => s.split('\n').map(x => x.trim()).filter(Boolean).forEach(x => files.add(x.replace(/\\/g, '/')));
   try { add(sh(['diff', '--name-only', base])); } catch { /* base 不存在时忽略 */ }
-  try { add(sh(['status', '--porcelain']).split('\n').map(l => l.slice(3)).join('\n')); } catch { /* 无 git */ }
+  statusFiles().forEach(f => files.add(f.replace(/\\/g, '/')));
   return [...files].filter(f => !f.startsWith('.coordination/') && !f.startsWith('tests/shots/'));
 }
 
