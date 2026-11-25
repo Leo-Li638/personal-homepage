@@ -122,3 +122,24 @@
   footer a{color:var(--sky);text-decoration:none;}
   footer a:hover{text-decoration:underline;}
   .flinks{display:flex;flex-wrap:wrap;gap:16px;}
+
+  /* ---------- 键盘可达性 ---------- */
+  /* 统一焦点环：2px 实线 + 2px 偏移，颜色走 --ink（浅色深墨 / 深色浅青，均 ≥ 4.5:1） */
+  :where(a,button,[tabindex],input,select,textarea,summary):focus-visible{
+    outline:2px solid var(--ink);outline-offset:2px;
+  }
+  /* 跳转到服务城市：默认视觉隐藏（移出视野 + 透明），键盘聚焦时立刻出现 */
+  .skip{position:fixed;left:12px;top:12px;z-index:55;padding:10px 16px;border-radius:10px;
+    display:inline-flex;align-items:center;min-height:44px;min-width:44px;
+    background:var(--ink);color:var(--bg);font-size:13.5px;font-weight:700;text-decoration:none;
+    box-shadow:var(--shadow);transform:translateY(-160%);opacity:0;pointer-events:none;
+    transition:transform .16s ease,opacity .16s ease;}
+  .skip:focus,.skip:focus-visible{transform:none;opacity:1;pointer-events:auto;}
+  /* 跳转落点：容器接受程序化焦点（读屏可续读），但不给整块区域画焦点环 */
+  .block:focus{outline:none;}
+
+  /* 触屏命中区 ≥44×44（WCAG 2.5.5）；.chip 原本是行内元素，需 inline-flex 才能吃到 min-height */
+  @media (max-width:1024px), (pointer:coarse){
+    .btn,.chip,.plat a{min-height:44px;}
+    .chip{display:inline-flex;align-items:center;justify-content:center;}
+  }
