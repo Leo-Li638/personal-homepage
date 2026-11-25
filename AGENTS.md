@@ -260,3 +260,4 @@ node tools/sync-deploy.mjs         # 真正同步：pull --ff-only → 复制白
 |---|---|---|---|
 | v1.0 | 2026-11-25 | 首版：确立三条铁律、目录所有权、include 构建、DOM 契约、锁机制、G1–G6 闸门、发布流程 | lead |
 | v1.1 | 2026-11-25 | 完成首页拆分并据实修正：补 `assets/css/layout.css`、`src/partials/scripts.html`、`structured-data.html`；首页确认单语无 `#langBtn`；`npc.js` 导出 `YI.npc.start/stop` 供 `perf.js` 复用；补 §2.1 模块清单与脚本加载顺序 | lead |
+| v1.2 | 2026-11-25 | 首轮三 Agent 并行（A/B/C）落地后的复盘修订：① G3 修正 `status --porcelain` 的 trim 吃字符 bug（改用 `-z`）；② 验收收敛为单命令 `tools/merge-gate.mjs`（G1–G4+G6，G5 人工比对基线）；③ 发布通道统一 HTTP/1.1 + 自动重试（本机代理会 reset HTTP/2）；④ 明确「任务分支合入后由 lead 重建并提交 `index.html`」，各任务提交前必须 `git restore index.html` | lead |
